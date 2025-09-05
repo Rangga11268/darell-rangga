@@ -59,7 +59,7 @@ export function AboutSection() {
           >
             <h3 className="text-2xl font-bold mb-6">My Journey</h3>
             <p className="text-muted-foreground mb-6">
-              I'm a passionate full-stack developer with over 5 years of experience building 
+              I&apos;m a passionate full-stack developer with over 5 years of experience building 
               web applications. I specialize in creating responsive, accessible, and performant 
               websites using modern technologies.
             </p>
@@ -111,12 +111,12 @@ export function AboutSection() {
               </p>
               
               {/* Running text animation for skills */}
-              <div className="overflow-hidden py-4 rounded-lg bg-secondary/30 border border-border mb-8">
+              <div className="overflow-hidden py-4 rounded-lg bg-secondary/20 border border-border mb-8">
                 <div className="flex animate-marquee space-x-4 w-max">
                   {[...skills, ...skills].map((skill, index) => (
                     <div 
                       key={index} 
-                      className="bg-background border border-border rounded-lg px-4 py-2 text-center whitespace-nowrap shadow-sm"
+                      className="bg-background/80 border border-border rounded-lg px-4 py-2 text-center whitespace-nowrap shadow-sm"
                     >
                       {skill}
                     </div>

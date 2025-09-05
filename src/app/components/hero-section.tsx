@@ -21,7 +21,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Hi, I'm <span className="text-primary">Darell</span>
+              Hi, I&apos;m <span className="text-primary">Darell</span>
               <br />
               Web Developer
             </motion.h1>
@@ -62,8 +62,8 @@ export function HeroSection() {
             className="flex justify-center"
           >
             <div className="relative">
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-primary/10 blur-3xl absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-primary/5 blur-2xl absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl dark:border-gray-800">
                 <img 
                   src="/img/me3.jpeg" 
                   alt="Darell Rangga" 

@@ -54,7 +54,7 @@ export function Navigation() {
   ]
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-sm border-b border-border/50" : "bg-transparent"}`}>
+    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-sm border-b border-border" : "bg-transparent"}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 font-bold text-xl">
@@ -129,7 +129,7 @@ export function Navigation() {
       
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border/50">
+        <div className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <a

@@ -101,14 +101,14 @@ export function ContactSection() {
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
                     <div className="flex gap-4 mt-2">
-                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
-                        <Github className="h-5 w-5 text-foreground" />
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                        <Github className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
-                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
-                        <Twitter className="h-5 w-5 text-foreground" />
+                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                        <Twitter className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
-                        <Linkedin className="h-5 w-5 text-foreground" />
+                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                        <Linkedin className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
                     </div>
                   </div>
@@ -131,7 +131,7 @@ export function ContactSection() {
               <CardHeader>
                 <CardTitle>Send me a message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and I'll get back to you as soon as possible
+                  Fill out the form below and I&apos;ll get back to you as soon as possible
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -147,6 +147,7 @@ export function ContactSection() {
                       onChange={handleChange}
                       required
                       disabled={isSubmitting}
+                      className="bg-background"
                     />
                   </div>
                   
@@ -162,6 +163,7 @@ export function ContactSection() {
                       onChange={handleChange}
                       required
                       disabled={isSubmitting}
+                      className="bg-background"
                     />
                   </div>
                   
@@ -177,12 +179,13 @@ export function ContactSection() {
                       rows={5}
                       required
                       disabled={isSubmitting}
+                      className="bg-background"
                     />
                   </div>
                   
                   {submitSuccess && (
                     <div className="text-green-600 dark:text-green-400 text-sm">
-                      Message sent successfully! I'll get back to you soon.
+                      Message sent successfully! I&apos;ll get back to you soon.
                     </div>
                   )}
                   
