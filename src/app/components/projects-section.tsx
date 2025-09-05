@@ -70,8 +70,10 @@ export function ProjectsSection() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View Project
+                  <Button variant="outline" className="w-full" asChild>
+                    <a href="#">
+                      View Project
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -86,8 +88,10 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Button size="lg">
-            View All Projects
+          <Button size="lg" asChild>
+            <a href="#">
+              View All Projects
+            </a>
           </Button>
         </motion.div>
       </div>

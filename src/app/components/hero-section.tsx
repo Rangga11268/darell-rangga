@@ -42,11 +42,15 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Button size="lg">
-                View Projects
+              <Button size="lg" asChild>
+                <a href="#projects">
+                  View Projects
+                </a>
               </Button>
-              <Button variant="outline" size="lg">
-                Contact Me
+              <Button variant="outline" size="lg" asChild>
+                <a href="#contact">
+                  Contact Me
+                </a>
               </Button>
             </motion.div>
           </motion.div>
@@ -73,8 +77,10 @@ export function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <Button variant="ghost" size="icon" className="animate-bounce">
-            <ArrowDown className="h-6 w-6" />
+          <Button variant="ghost" size="icon" className="animate-bounce" asChild>
+            <a href="#about">
+              <ArrowDown className="h-6 w-6" />
+            </a>
           </Button>
         </motion.div>
       </div>

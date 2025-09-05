@@ -23,8 +23,10 @@ export function Footer() {
           </div>
           
           <div className="mt-4 md:mt-0">
-            <Button variant="ghost" size="sm">
-              Back to top
+            <Button variant="ghost" size="sm" asChild>
+              <a href="#">
+                Back to top
+              </a>
             </Button>
           </div>
         </div>

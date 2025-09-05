@@ -61,7 +61,11 @@ export function Navigation() {
                 <Sun className="h-5 w-5" />
               )}
             </Button>
-            <Button>Contact Me</Button>
+            <Button asChild>
+              <a href="#contact">
+                Contact Me
+              </a>
+            </Button>
           </div>
           
           {/* Mobile menu button */}
@@ -110,7 +114,11 @@ export function Navigation() {
               </a>
             ))}
             <div className="pt-4 pb-2 border-t border-border/50">
-              <Button className="w-full">Contact Me</Button>
+              <Button className="w-full" asChild>
+                <a href="#contact">
+                  Contact Me
+                </a>
+              </Button>
             </div>
           </div>
         </div>
