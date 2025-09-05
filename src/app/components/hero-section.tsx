@@ -21,9 +21,9 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Hi, I'm <span className="text-primary">Alex</span>
+              Hi, I'm <span className="text-primary">Darell</span>
               <br />
-              Full Stack Developer
+              Web Developer
             </motion.h1>
             
             <motion.p 
@@ -32,8 +32,8 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              I build exceptional digital experiences that are fast, accessible, visually appealing, and responsive. 
-              Even if you don't hire me, these qualities make your product better.
+              Saya seorang Web Developer yang bersemangat dalam membangun aplikasi web yang fungsional dan menarik. 
+              Saya memiliki pengalaman dengan tumpukan teknologi modern dan selalu antusias untuk mempelajari hal-hal baru.
             </motion.p>
             
             <motion.div 
@@ -63,9 +63,12 @@ export function HeroSection() {
           >
             <div className="relative">
               <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-primary/10 blur-3xl absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/10"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-gray-200 border-2 border-dashed rounded-xl w-48 h-48 md:w-60 md:h-60" />
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                <img 
+                  src="/img/me3.jpeg" 
+                  alt="Darell Rangga" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </motion.div>

@@ -3,23 +3,33 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ExternalLink, Github } from "lucide-react"
 
 export function ProjectsSection() {
   const projects = [
     {
       title: "E-Commerce Platform",
-      description: "A full-featured online shopping platform with payment integration",
-      tags: ["React", "Node.js", "MongoDB"],
+      description: "A full-featured online shopping platform with payment integration, user authentication, and admin dashboard.",
+      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=E-Commerce",
+      githubUrl: "https://github.com",
+      liveUrl: "https://example.com"
     },
     {
       title: "Task Management App",
-      description: "A productivity application for teams to manage projects and tasks",
-      tags: ["Next.js", "TypeScript", "PostgreSQL"],
+      description: "A productivity application for teams to manage projects and tasks with real-time collaboration features.",
+      tags: ["Next.js", "TypeScript", "PostgreSQL", "Socket.io"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Task+App",
+      githubUrl: "https://github.com",
+      liveUrl: "https://example.com"
     },
     {
       title: "Portfolio Website",
-      description: "A responsive portfolio website with animations and dark mode",
+      description: "A responsive portfolio website with animations, dark mode, and smooth scrolling navigation.",
       tags: ["React", "Framer Motion", "Tailwind CSS"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Portfolio",
+      githubUrl: "https://github.com",
+      liveUrl: "https://example.com"
     },
   ]
   
@@ -49,11 +59,17 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full flex flex-col">
-                <CardHeader>
-                  <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-48" />
+              <Card className="h-full flex flex-col hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <CardHeader className="p-0">
+                  <div className="rounded-t-xl overflow-hidden">
+                    <img 
+                      src={project.imageUrl} 
+                      alt={project.title} 
+                      className="w-full h-48 object-cover"
+                    />
+                  </div>
                 </CardHeader>
-                <CardContent className="flex-grow">
+                <CardContent className="flex-grow pt-6">
                   <CardTitle className="mb-2">{project.title}</CardTitle>
                   <CardDescription className="mb-4">
                     {project.description}
@@ -62,17 +78,24 @@ export function ProjectsSection() {
                     {project.tags.map((tag) => (
                       <span 
                         key={tag} 
-                        className="text-xs bg-secondary px-2 py-1 rounded"
+                        className="text-xs bg-secondary px-2 py-1 rounded-full"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full" asChild>
-                    <a href="#">
-                      View Project
+                <CardFooter className="flex gap-2">
+                  <Button variant="outline" className="w-1/2" asChild>
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                      <Github className="h-4 w-4 mr-2" />
+                      Code
+                    </a>
+                  </Button>
+                  <Button className="w-1/2" asChild>
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Demo
                     </a>
                   </Button>
                 </CardFooter>
@@ -89,7 +112,7 @@ export function ProjectsSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Button size="lg" asChild>
-            <a href="#">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
               View All Projects
             </a>
           </Button>

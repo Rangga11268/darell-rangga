@@ -18,9 +18,37 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Add scroll offset for fixed header
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      const link = target.closest('a')
+      
+      if (link && link.getAttribute('href')?.startsWith('#')) {
+        e.preventDefault()
+        const href = link.getAttribute('href')
+        if (href) {
+          const targetElement = document.querySelector(href)
+          if (targetElement) {
+            const headerHeight = document.querySelector('header')?.clientHeight || 0
+            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 20
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            })
+          }
+        }
+      }
+    }
+
+    document.addEventListener('click', handleAnchorClick)
+    return () => document.removeEventListener('click', handleAnchorClick)
+  }, [])
+
   const navItems = [
     { name: "Home", href: "#" },
     { name: "About", href: "#about" },
+    { name: "Services", href: "#services" },
     { name: "Projects", href: "#projects" },
     { name: "Contact", href: "#contact" },
   ]
@@ -30,7 +58,7 @@ export function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 font-bold text-xl">
-            Portfolio
+            Darell Rangga
           </div>
           
           {/* Desktop Navigation */}

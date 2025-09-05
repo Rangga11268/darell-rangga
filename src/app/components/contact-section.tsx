@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { Mail, MapPin, Github, Twitter, Linkedin, Loader2 } from "lucide-react"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -14,17 +15,35 @@ export function ContactSection() {
     message: "",
   })
   
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
   }
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real app, you would send this data to your backend
-    console.log("Form submitted:", formData)
-    alert("Message sent! (This is a demo)")
-    setFormData({ name: "", email: "", message: "" })
+    setIsSubmitting(true)
+    setSubmitError("")
+    setSubmitSuccess(false)
+    
+    try {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1500))
+      
+      // In a real app, you would send this data to your backend
+      console.log("Form submitted:", formData)
+      
+      setSubmitSuccess(true)
+      setFormData({ name: "", email: "", message: "" })
+    } catch (error) {
+      setSubmitError("Failed to send message. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
   
   return (
@@ -51,7 +70,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Card>
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Contact Information</CardTitle>
                 <CardDescription>
@@ -61,7 +80,7 @@ export function ContactSection() {
               <CardContent className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
+                    <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-bold">Email</h3>
@@ -71,7 +90,7 @@ export function ContactSection() {
                 
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
+                    <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h3 className="font-bold">Location</h3>
@@ -81,15 +100,21 @@ export function ContactSection() {
                 
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-6 h-6" />
+                    <div className="flex gap-4 mt-2">
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
+                        <Github className="h-5 w-5 text-foreground" />
+                      </a>
+                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
+                        <Twitter className="h-5 w-5 text-foreground" />
+                      </a>
+                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors">
+                        <Linkedin className="h-5 w-5 text-foreground" />
+                      </a>
+                    </div>
                   </div>
                   <div>
                     <h3 className="font-bold">Social</h3>
-                    <div className="flex gap-4 mt-2">
-                      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8" />
-                      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8" />
-                      <div className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8" />
-                    </div>
+                    <p className="text-muted-foreground">Connect with me on social media</p>
                   </div>
                 </div>
               </CardContent>
@@ -102,7 +127,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Card>
+            <Card className="h-full">
               <CardHeader>
                 <CardTitle>Send me a message</CardTitle>
                 <CardDescription>
@@ -121,6 +146,7 @@ export function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   
@@ -135,6 +161,7 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   
@@ -149,11 +176,31 @@ export function ContactSection() {
                       onChange={handleChange}
                       rows={5}
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
                   
-                  <Button type="submit" className="w-full">
-                    Send Message
+                  {submitSuccess && (
+                    <div className="text-green-600 dark:text-green-400 text-sm">
+                      Message sent successfully! I'll get back to you soon.
+                    </div>
+                  )}
+                  
+                  {submitError && (
+                    <div className="text-destructive text-sm">
+                      {submitError}
+                    </div>
+                  )}
+                  
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </form>
               </CardContent>
