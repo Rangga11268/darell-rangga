@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { Heart, Github, Linkedin, Twitter } from "lucide-react"
 
 export function Footer() {

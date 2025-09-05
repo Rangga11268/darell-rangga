@@ -8,33 +8,33 @@ export function ServicesSection() {
   const services = [
     {
       icon: Code,
-      title: "Web Development",
-      description: "Building responsive, accessible, and performant websites using modern technologies like React, Next.js, and TypeScript."
+      title: "Frontend Web Development",
+      description: "Building responsive, accessible, and performant websites using modern technologies like React, Next.js, and Tailwind CSS."
     },
     {
       icon: Palette,
-      title: "UI/UX Design",
-      description: "Creating beautiful and intuitive user interfaces with a focus on user experience and accessibility."
+      title: "UI Design",
+      description: "Creating beautiful and intuitive user interfaces with a focus on user experience and responsive design."
     },
     {
       icon: Smartphone,
-      title: "Mobile Apps",
-      description: "Developing cross-platform mobile applications using React Native for both iOS and Android."
-    },
-    {
-      icon: Database,
-      title: "Backend Services",
-      description: "Building robust and scalable server-side applications with Node.js, Express, and databases."
+      title: "Responsive Design",
+      description: "Developing websites that look and function perfectly on all devices, from mobile phones to desktop computers."
     },
     {
       icon: Zap,
       title: "Performance Optimization",
-      description: "Optimizing websites and applications for speed, efficiency, and search engine visibility."
+      description: "Optimizing websites for speed, efficiency, and search engine visibility to improve user experience."
+    },
+    {
+      icon: Database,
+      title: "API Integration",
+      description: "Connecting frontend applications with backend services and third-party APIs to create dynamic web experiences."
     },
     {
       icon: Rocket,
-      title: "Deployment & DevOps",
-      description: "Managing deployment pipelines, cloud infrastructure, and CI/CD processes with Docker and AWS."
+      title: "Deployment & Hosting",
+      description: "Deploying websites to hosting platforms like Vercel or Netlify with proper configuration and optimization."
     }
   ]
 

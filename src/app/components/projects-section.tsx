@@ -8,26 +8,26 @@ import { ExternalLink, Github } from "lucide-react"
 export function ProjectsSection() {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-featured online shopping platform with payment integration, user authentication, and admin dashboard.",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"],
+      title: "Personal Portfolio Website",
+      description: "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Portfolio",
+      githubUrl: "https://github.com",
+      liveUrl: "https://example.com"
+    },
+    {
+      title: "E-Commerce Landing Page",
+      description: "A modern e-commerce landing page with responsive design and interactive elements built with React and Tailwind CSS.",
+      tags: ["React", "Tailwind CSS", "Responsive Design"],
       imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=E-Commerce",
       githubUrl: "https://github.com",
       liveUrl: "https://example.com"
     },
     {
       title: "Task Management App",
-      description: "A productivity application for teams to manage projects and tasks with real-time collaboration features.",
-      tags: ["Next.js", "TypeScript", "PostgreSQL", "Socket.io"],
+      description: "A productivity application for managing tasks with a clean, intuitive interface built with React and local storage.",
+      tags: ["React", "JavaScript", "CSS3", "LocalStorage"],
       imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Task+App",
-      githubUrl: "https://github.com",
-      liveUrl: "https://example.com"
-    },
-    {
-      title: "Portfolio Website",
-      description: "A responsive portfolio website with animations, dark mode, and smooth scrolling navigation.",
-      tags: ["React", "Framer Motion", "Tailwind CSS"],
-      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Portfolio",
       githubUrl: "https://github.com",
       liveUrl: "https://example.com"
     },

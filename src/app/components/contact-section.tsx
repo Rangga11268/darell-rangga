@@ -39,7 +39,7 @@ export function ContactSection() {
       
       setSubmitSuccess(true)
       setFormData({ name: "", email: "", message: "" })
-    } catch (error) {
+    } catch {
       setSubmitError("Failed to send message. Please try again.")
     } finally {
       setIsSubmitting(false)
@@ -58,8 +58,8 @@ export function ContactSection() {
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Have a project in mind or want to discuss potential opportunities? 
-            Feel free to reach out!
+            Interested in collaborating on a project or have any questions? 
+            Feel free to reach out! I&apos;m always excited to connect with fellow developers and potential collaborators.
           </p>
         </motion.div>
         

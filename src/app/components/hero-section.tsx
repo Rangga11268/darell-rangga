@@ -32,8 +32,8 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Saya seorang Web Developer yang bersemangat dalam membangun aplikasi web yang fungsional dan menarik. 
-              Saya memiliki pengalaman dengan tumpukan teknologi modern dan selalu antusias untuk mempelajari hal-hal baru.
+              I&apos;m a passionate frontend web developer who is currently pursuing my degree in Information Systems at Bina Sarana Informatika University. 
+              I specialize in creating responsive and modern websites using cutting-edge technologies.
             </motion.p>
             
             <motion.div 
