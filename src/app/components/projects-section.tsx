@@ -17,8 +17,8 @@ export function ProjectsSection() {
     },
     {
       title: "CRUD Manajemen APP Pegawai",
-      description: "A simple employee management application with full CRUD functionality built with HTML, CSS, and JavaScript.",
-      tags: ["HTML", "CSS", "JavaScript", "CRUD"],
+      description: "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
+      tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
       imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Employee+App",
       githubUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
       liveUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple"
