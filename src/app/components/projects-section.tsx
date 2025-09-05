@@ -8,28 +8,28 @@ import { ExternalLink, Github } from "lucide-react"
 export function ProjectsSection() {
   const projects = [
     {
+      title: "ApaPesan Laravel Project",
+      description: "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
+      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=ApaPesan",
+      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+      liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project"
+    },
+    {
+      title: "CRUD Manajemen APP Pegawai",
+      description: "A simple employee management application with full CRUD functionality built with HTML, CSS, and JavaScript.",
+      tags: ["HTML", "CSS", "JavaScript", "CRUD"],
+      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Employee+App",
+      githubUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+      liveUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple"
+    },
+    {
       title: "Personal Portfolio Website",
       description: "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
       tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
       imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Portfolio",
-      githubUrl: "https://github.com",
-      liveUrl: "https://example.com"
-    },
-    {
-      title: "E-Commerce Landing Page",
-      description: "A modern e-commerce landing page with responsive design and interactive elements built with React and Tailwind CSS.",
-      tags: ["React", "Tailwind CSS", "Responsive Design"],
-      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=E-Commerce",
-      githubUrl: "https://github.com",
-      liveUrl: "https://example.com"
-    },
-    {
-      title: "Task Management App",
-      description: "A productivity application for managing tasks with a clean, intuitive interface built with React and local storage.",
-      tags: ["React", "JavaScript", "CSS3", "LocalStorage"],
-      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=Task+App",
-      githubUrl: "https://github.com",
-      liveUrl: "https://example.com"
+      githubUrl: "https://github.com/Rangga11268/darell-rangga",
+      liveUrl: "https://github.com/Rangga11268/darell-rangga"
     },
   ]
   

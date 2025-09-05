@@ -28,15 +28,14 @@ export function AboutSection() {
     "HTML5",
     "CSS3",
     "JavaScript",
-    "TypeScript",
-    "React.js",
-    "Next.js",
-    "Tailwind CSS",
-    "Figma",
+    "PHP",
+    "Laravel",
+    "MySQL",
+    "Bootstrap",
     "Git",
     "Responsive Design",
-    "UI/UX Basics",
-    "API Integration",
+    "CRUD Operations",
+    "RESTful APIs",
   ];
 
   return (

@@ -8,13 +8,18 @@ export function ServicesSection() {
   const services = [
     {
       icon: Code,
-      title: "Frontend Web Development",
-      description: "Building responsive, accessible, and performant websites using modern technologies like React, Next.js, and Tailwind CSS."
+      title: "Web Application Development",
+      description: "Building full-stack web applications using Laravel, PHP, and modern frontend technologies like HTML, CSS, and JavaScript."
+    },
+    {
+      icon: Database,
+      title: "Database Management",
+      description: "Designing and managing MySQL databases with CRUD operations for data-driven applications."
     },
     {
       icon: Palette,
-      title: "UI Design",
-      description: "Creating beautiful and intuitive user interfaces with a focus on user experience and responsive design."
+      title: "Frontend Development",
+      description: "Creating responsive and user-friendly interfaces using HTML, CSS, JavaScript, and modern frameworks."
     },
     {
       icon: Smartphone,
@@ -24,17 +29,12 @@ export function ServicesSection() {
     {
       icon: Zap,
       title: "Performance Optimization",
-      description: "Optimizing websites for speed, efficiency, and search engine visibility to improve user experience."
-    },
-    {
-      icon: Database,
-      title: "API Integration",
-      description: "Connecting frontend applications with backend services and third-party APIs to create dynamic web experiences."
+      description: "Optimizing web applications for speed, efficiency, and search engine visibility to improve user experience."
     },
     {
       icon: Rocket,
-      title: "Deployment & Hosting",
-      description: "Deploying websites to hosting platforms like Vercel or Netlify with proper configuration and optimization."
+      title: "Project Deployment",
+      description: "Deploying web applications to hosting platforms with proper configuration and optimization."
     }
   ]
 

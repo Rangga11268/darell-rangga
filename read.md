@@ -98,3 +98,11 @@ src/
 -   Konfigurasi environment variables untuk data sensitif.
 
 Dengan stack ini, portfolio Anda akan memiliki performa tinggi, desain modern, dan mudah dikembangkan. Selamat membangun!
+
+
+
+Link project 1 : https://github.com/Rangga11268/ApaPesan-Laravel-project
+
+Link project 2 : https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple
+
+Link project 3: https://github.com/Rangga11268/darell-rangga
