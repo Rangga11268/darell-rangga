@@ -30,7 +30,7 @@ export function Navigation() {
       if (link && link.getAttribute('href')?.startsWith('#')) {
         e.preventDefault()
         const href = link.getAttribute('href')
-        if (href) {
+        if (href && href !== '#') { // Skip empty hash links
           const targetElement = document.querySelector(href)
           if (targetElement) {
             const headerHeight = document.querySelector('header')?.clientHeight || 0
@@ -40,6 +40,12 @@ export function Navigation() {
               behavior: 'smooth'
             })
           }
+        } else if (href === '#') {
+          // For home link, scroll to top
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
         }
       }
     }
