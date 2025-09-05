@@ -63,7 +63,7 @@ export function ContactSection() {
           </p>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -100,14 +100,14 @@ export function ContactSection() {
                 
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
-                    <div className="flex gap-4 mt-2">
-                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                    <div className="flex gap-3 mt-2">
+                      <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
                         <Github className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
-                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
                         <Twitter className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-8 h-8 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
+                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700">
                         <Linkedin className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
                     </div>
@@ -195,7 +195,7 @@ export function ContactSection() {
                     </div>
                   )}
                   
-                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                  <Button type="submit" className="w-full py-6 text-base" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

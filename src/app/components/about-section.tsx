@@ -111,12 +111,12 @@ export function AboutSection() {
               </p>
               
               {/* Running text animation for skills */}
-              <div className="overflow-hidden py-4 rounded-lg bg-secondary/20 border border-border mb-8">
-                <div className="flex animate-marquee space-x-4 w-max">
+              <div className="overflow-hidden py-3 rounded-lg bg-secondary/20 border border-border mb-6">
+                <div className="flex animate-marquee space-x-3 w-max">
                   {[...skills, ...skills].map((skill, index) => (
                     <div 
                       key={index} 
-                      className="bg-background/80 border border-border rounded-lg px-4 py-2 text-center whitespace-nowrap shadow-sm"
+                      className="bg-background/80 border border-border rounded-lg px-3 py-2 text-center whitespace-nowrap shadow-sm text-sm"
                     >
                       {skill}
                     </div>
@@ -124,7 +124,7 @@ export function AboutSection() {
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {skills.map((skill, index) => (
                   <motion.div
                     key={skill}
@@ -132,9 +132,9 @@ export function AboutSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="bg-background border border-border rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow duration-300"
+                    className="bg-background border border-border rounded-lg p-3 text-center shadow-sm hover:shadow-md transition-shadow duration-300"
                   >
-                    <div className="font-medium">{skill}</div>
+                    <div className="font-medium text-sm">{skill}</div>
                   </motion.div>
                 ))}
               </div>

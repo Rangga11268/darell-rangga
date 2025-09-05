@@ -3,16 +3,16 @@ import { Heart, Github, Linkedin, Twitter } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="py-8 border-t border-border bg-background/30 backdrop-blur-sm">
+    <footer className="py-6 border-t border-border bg-background/30 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <p className="text-muted-foreground">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="text-center sm:text-left">
+            <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Darell Rangga. All rights reserved.
             </p>
           </div>
           
-          <div className="flex items-center gap-4 mb-4 md:mb-0">
+          <div className="flex items-center gap-4">
             <a 
               href="https://github.com" 
               target="_blank" 
@@ -42,7 +42,7 @@ export function Footer() {
             </a>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-center">
             <p className="text-muted-foreground text-sm">
               Made with
             </p>
