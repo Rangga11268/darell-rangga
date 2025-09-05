@@ -1,4 +1,4 @@
-import { Heart, Github, Linkedin, Twitter } from "lucide-react"
+import { Heart, Github, Linkedin, Twitter } from "lucide-react";
 
 export function Footer() {
   return (
@@ -10,29 +10,29 @@ export function Footer() {
               © {new Date().getFullYear()} Darell Rangga. All rights reserved.
             </p>
           </div>
-          
+
           <div className="flex items-center gap-4">
-            <a 
-              href="https://github.com" 
-              target="_blank" 
+            <a
+              href="https://x.com/ranggsdarell"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="GitHub"
             >
               <Github className="h-5 w-5" />
             </a>
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
+            <a
+              href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin className="h-5 w-5" />
             </a>
-            <a 
-              href="https://twitter.com" 
-              target="_blank" 
+            <a
+              href="https://github.com/Rangga11268/"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Twitter"
@@ -40,11 +40,9 @@ export function Footer() {
               <Twitter className="h-5 w-5" />
             </a>
           </div>
-          
+
           <div className="flex items-center gap-2 text-center">
-            <p className="text-muted-foreground text-sm">
-              Made with
-            </p>
+            <p className="text-muted-foreground text-sm">Made with</p>
             <Heart className="h-4 w-4 text-red-500 fill-current" />
             <p className="text-muted-foreground text-sm">
               using Next.js & Tailwind CSS
@@ -53,5 +51,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
