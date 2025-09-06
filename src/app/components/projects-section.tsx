@@ -30,7 +30,7 @@ export function ProjectsSection() {
       tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
       imageUrl: "/img/app quiz.png",
       githubUrl: "https://github.com/Rangga11268/App-quiz",
-      liveUrl: "superlative-pothos-2638e8.netlify.app",
+      liveUrl: "https://superlative-pothos-2638e8.netlify.app/",
     },
     {
       title: "SRB Motor",
