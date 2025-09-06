@@ -32,6 +32,7 @@ export function AboutSection() {
     "Laravel",
     "MySQL",
     "Bootstrap",
+    "Tailwind CSS",
     "Git",
     "Responsive Design",
     "CRUD Operations",

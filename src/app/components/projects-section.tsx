@@ -15,6 +15,15 @@ import { ExternalLink, Github } from "lucide-react";
 export function ProjectsSection() {
   const projects = [
     {
+      title: "Kopi Kupu",
+      description:
+        "A coffee shop website with product catalog and online ordering system.",
+      tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
+      imageUrl: "/img/kopi kupu.png",
+      githubUrl: "https://github.com/Rangga11268/KopiKupu",
+      liveUrl: "https://kopi-kupu.vercel.app/",
+    },
+    {
       title: "App Quiz",
       description:
         "An interactive quiz application with multiple categories and score tracking functionality.",
