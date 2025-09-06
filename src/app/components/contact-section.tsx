@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Github, Twitter, Linkedin, Loader2 } from "lucide-react";
+import { Mail, MapPin, Github, Twitter, Linkedin, Loader2, Phone, Instagram } from "lucide-react";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -107,6 +107,18 @@ export function ContactSection() {
 
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 p-3 rounded-full">
+                    <Phone className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold">Phone</h3>
+                    <p className="text-muted-foreground">
+                      +62 8978638973
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 p-3 rounded-full">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
@@ -141,6 +153,14 @@ export function ContactSection() {
                         className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700"
                       >
                         <Linkedin className="h-5 w-5 text-foreground dark:text-white" />
+                      </a>
+                      <a
+                        href="https://www.instagram.com/darellrangga17/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-gray-200 border-2 border-dashed rounded-xl w-10 h-10 flex items-center justify-center hover:bg-primary/20 transition-colors dark:bg-gray-700"
+                      >
+                        <Instagram className="h-5 w-5 text-foreground dark:text-white" />
                       </a>
                     </div>
                   </div>

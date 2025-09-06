@@ -119,7 +119,7 @@ export function ProjectsSection() {
                         key={tag}
                         className="text-xs bg-secondary px-2 py-1 rounded-full"
                       >
-                        {tag}
+                      {tag}
                       </span>
                     ))}
                   </div>
