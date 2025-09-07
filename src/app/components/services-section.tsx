@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Code, Palette, Rocket, Zap, Smartphone, Database, Phone, Instagram } from "lucide-react"
+import { Code, Palette, Rocket, Zap, Smartphone, Database } from "lucide-react"
 
 export function ServicesSection() {
   const services = [
@@ -35,20 +35,6 @@ export function ServicesSection() {
       icon: Rocket,
       title: "Project Deployment",
       description: "Deploying web applications to hosting platforms with proper configuration and optimization."
-    }
-  ]
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: "Phone",
-      description: "+62 8978638973"
-    },
-    {
-      icon: Instagram,
-      title: "Instagram",
-      description: "darellrangga17",
-      link: "https://www.instagram.com/darellrangga17/"
     }
   ]
 
@@ -89,44 +75,6 @@ export function ServicesSection() {
                   <CardContent>
                     <CardDescription>
                       {service.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          })}
-          
-          {contactInfo.map((contact, index) => {
-            const Icon = contact.icon
-            return (
-              <motion.div
-                key={contact.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (services.length + index) * 0.1 }}
-              >
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
-                  <CardHeader>
-                    <div className="bg-primary/10 p-3 rounded-full w-fit">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="mt-4">{contact.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>
-                      {contact.link ? (
-                        <a 
-                          href={contact.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="hover:underline"
-                        >
-                          {contact.description}
-                        </a>
-                      ) : (
-                        contact.description
-                      )}
                     </CardDescription>
                   </CardContent>
                 </Card>
