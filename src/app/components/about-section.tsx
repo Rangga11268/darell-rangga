@@ -73,7 +73,7 @@ export function AboutSection() {
           className="bg-primary h-2 rounded-full"
           initial={{ width: 0 }}
           whileInView={{ width: `${level}%` }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 1, delay: 0.2 }}
         />
       </div>
