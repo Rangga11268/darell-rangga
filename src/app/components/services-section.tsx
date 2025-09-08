@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Code, Palette, Rocket, Zap, Smartphone, Database } from "lucide-react"
+import { SectionTitle } from "@/app/components/section-title"
 
 export function ServicesSection() {
   const services = [
@@ -39,20 +40,18 @@ export function ServicesSection() {
   ]
 
   return (
-    <section id="services" className="py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">My Services</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            I offer a range of services to help businesses establish and enhance their digital presence
-          </p>
-        </motion.div>
+    <section id="services" className="py-20 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-secondary/5 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <SectionTitle 
+          title="My Services" 
+          subtitle="I offer a range of services to help businesses establish and enhance their digital presence"
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
@@ -64,19 +63,28 @@ export function ServicesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
               >
-                <Card className="h-full hover:shadow-lg transition-shadow duration-300">
+                <Card className="h-full hover:shadow-xl transition-all duration-300 group border-border">
                   <CardHeader>
-                    <div className="bg-primary/10 p-3 rounded-full w-fit">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="mt-4">{service.title}</CardTitle>
+                    <motion.div 
+                      className="bg-primary/10 p-3 rounded-full w-fit group-hover:bg-primary/20 transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      <Icon className="h-6 w-6 text-primary group-hover:text-primary/80 transition-colors" />
+                    </motion.div>
+                    <CardTitle className="mt-4 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription>
+                    <CardDescription className="group-hover:text-foreground/80 transition-colors">
                       {service.description}
                     </CardDescription>
                   </CardContent>
+                  {/* Decorative accent */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-primary rounded-t-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </Card>
               </motion.div>
             )
