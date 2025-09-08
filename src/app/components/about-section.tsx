@@ -39,7 +39,7 @@ export function AboutSection() {
         { name: "Next.js", level: 70 },
         { name: "Tailwind CSS", level: 85 },
         { name: "Bootstrap", level: 80 },
-      ]
+      ],
     },
     {
       category: "Backend",
@@ -48,7 +48,7 @@ export function AboutSection() {
         { name: "Laravel", level: 70 },
         { name: "MySQL", level: 70 },
         { name: "RESTful APIs", level: 75 },
-      ]
+      ],
     },
     {
       category: "Tools & Others",
@@ -56,14 +56,13 @@ export function AboutSection() {
         { name: "Git", level: 80 },
         { name: "Responsive Design", level: 85 },
         { name: "CRUD Operations", level: 80 },
-      ]
-    }
+      ],
+    },
   ];
 
   const [activeCategory, setActiveCategory] = useState(0);
 
-  // Skill level indicator component
-  const SkillBar = ({ name, level }) => (
+  const SkillBar = ({ name, level }: { name: string; level: number }) => (
     <div className="mb-4">
       <div className="flex justify-between mb-1">
         <span className="text-sm font-medium">{name}</span>
@@ -84,8 +83,8 @@ export function AboutSection() {
   return (
     <section id="about" className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle 
-          title="About Me" 
+        <SectionTitle
+          title="About Me"
           subtitle="Get to know me better and discover my skills and experience"
         />
 
@@ -98,8 +97,9 @@ export function AboutSection() {
           >
             <h3 className="text-2xl font-bold mb-6">My Journey</h3>
             <p className="text-muted-foreground mb-6">
-              I&apos;m a passionate full-stack developer with experience building web applications. 
-              I specialize in creating responsive, accessible, and performant websites using modern technologies.
+              I&apos;m a passionate full-stack developer with experience
+              building web applications. I specialize in creating responsive,
+              accessible, and performant websites using modern technologies.
             </p>
 
             <div className="space-y-8">
@@ -159,9 +159,7 @@ export function AboutSection() {
             <div>
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold">Skills</h3>
-                <p className="text-muted-foreground">
-                  Proficiency Level
-                </p>
+                <p className="text-muted-foreground">Proficiency Level</p>
               </div>
               <p className="text-muted-foreground mb-6">
                 Here are some of the technologies and tools I work with:
