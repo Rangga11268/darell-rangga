@@ -1,102 +1,52 @@
-## Error Type
-Build Error
-
-## Error Message
-Parsing ecmascript source code failed
-
-## Build Output
-./my-portfolio/src/app/components/hero-section.tsx:21:1
-Parsing ecmascript source code failed
-  19 |
-  20 |   return (
-> 21 | <<<<<<< HEAD
-     | ^^^^^^^
-  22 |     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-  23 |       {/* Background Elements */}
-  24 |       <div className="absolute inset-0 w-full h-full bg-background">
-
-Merge conflict marker encountered.
-
-Import traces:
-  Client Component Browser:
-    ./my-portfolio/src/app/components/hero-section.tsx [Client Component Browser]
-    ./my-portfolio/src/app/page.tsx [Client Component Browser]
-    ./my-portfolio/src/app/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./my-portfolio/src/app/components/hero-section.tsx [Client Component SSR]
-    ./my-portfolio/src/app/page.tsx [Client Component SSR]
-    ./my-portfolio/src/app/page.tsx [Server Component]
-
-Next.js version: 15.5.2 (Turbopack)
-## Error Type
-Console Error
-
-## Error Message
-A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-https://react.dev/link/hydration-mismatch
-
-  ...
-    <HotReload assetPrefix="" globalError={[...]}>
-      <AppDevOverlayErrorBoundary globalError={[...]}>
-        <ReplaySsrOnlyErrors>
-        <DevRootHTTPAccessFallbackBoundary>
-          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <Head>
-                  <__next_root_layout_boundary__>
-                    <SegmentViewNode type="layout" pagePath="/my-portfo...">
-                      <SegmentTrieNode>
-                      <link>
-                      <script>
-                      <script>
-                      <RootLayout>
-                        <html
-                          lang="en"
-+                         className="scroll-smooth"
--                         className="scroll-smooth dark"
--                         style={{color-scheme:"dark"}}
-                        >
-                  ...
-
-
-
-    at createConsoleError (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_4974cf23._.js:1605:71)
-    at handleConsoleError (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_4974cf23._.js:2203:54)
-    at console.error (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_4974cf23._.js:2354:57)
-    at <unknown> (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:3013:25)
-    at runWithFiberInDEV (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:886:74)
-    at emitPendingHydrationWarnings (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:3012:13)
-    at completeWork (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:6296:102)
-    at runWithFiberInDEV (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:886:131)
-    at completeUnitOfWork (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:8363:23)
-    at performUnitOfWork (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:8300:28)
-    at workLoopConcurrentByScheduler (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:8294:58)
-    at renderRootConcurrent (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:8276:71)
-    at performWorkOnRoot (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:7908:176)
-    at performWorkOnRootViaSchedulerTask (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_react-dom_5c2a1560._.js:8882:9)
-    at MessagePort.performWorkUntilDeadline (file://D:/Ngoding/WEB Poject/my-portfolio/.next/static/chunks/26b9f_next_dist_compiled_0a2b95e2._.js:2601:64)
-    at html (<anonymous>:null:null)
-    at RootLayout (src\app\layout.tsx:27:5)
-
-## Code Frame
-  25 | }>) {
-  26 |   return (
-> 27 |     <html lang="en" className="scroll-smooth">
-     |     ^
-  28 |       <body
-  29 |         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-  30 |       >
-
-Next.js version: 15.5.2 (Turbopack)
+18:06:48.731 Running build in Washington, D.C., USA (East) – iad1
+18:06:48.732 Build machine configuration: 2 cores, 8 GB
+18:06:48.862 Cloning github.com/Rangga11268/darell-rangga (Branch: master, Commit: 331add5)
+18:06:48.863 Previous build caches not available.
+18:06:49.215 Cloning completed: 353.000ms
+18:06:50.661 Running "vercel build"
+18:06:51.072 Vercel CLI 48.10.3
+18:06:51.431 Installing dependencies...
+18:07:05.056 
+18:07:05.059 added 353 packages in 13s
+18:07:05.060 
+18:07:05.060 143 packages are looking for funding
+18:07:05.060   run `npm fund` for details
+18:07:05.137 Detected Next.js version: 15.5.2
+18:07:05.141 Running "npm run build"
+18:07:05.270 
+18:07:05.271 > my-portfolio@0.1.0 build
+18:07:05.271 > next build --turbopack
+18:07:05.271 
+18:07:06.089 Attention: Next.js now collects completely anonymous telemetry regarding usage.
+18:07:06.089 This information is used to shape Next.js' roadmap and prioritize features.
+18:07:06.089 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+18:07:06.089 https://nextjs.org/telemetry
+18:07:06.089 
+18:07:06.144    ▲ Next.js 15.5.2 (Turbopack)
+18:07:06.144 
+18:07:06.217    Creating an optimized production build ...
+18:07:15.715  ✓ Finished writing to disk in 9ms
+18:07:15.742  ✓ Compiled successfully in 8.8s
+18:07:15.748    Linting and checking validity of types ...
+18:07:20.065 
+18:07:20.069 ./src/app/components/hero-section.tsx
+18:07:20.070 111:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+18:07:20.070 
+18:07:20.070 ./src/app/components/projects-section.tsx
+18:07:20.070 105:17  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+18:07:20.071 
+18:07:20.071 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+18:07:22.252 Failed to compile.
+18:07:22.252 
+18:07:22.253 ./src/app/components/navigation.tsx:4:10
+18:07:22.253 Type error: Module '"@/app/providers/theme-provider"' has no exported member 'useTheme'.
+18:07:22.253 
+18:07:22.253 [0m [90m 2 |[39m
+18:07:22.253  [90m 3 |[39m [36mimport[39m { useState[33m,[39m useEffect } [36mfrom[39m [32m"react"[39m
+18:07:22.254 [31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m { useTheme } [36mfrom[39m [32m"@/app/providers/theme-provider"[39m
+18:07:22.254  [90m   |[39m          [31m[1m^[22m[39m
+18:07:22.254  [90m 5 |[39m [36mimport[39m { [33mButton[39m } [36mfrom[39m [32m"@/components/ui/button"[39m
+18:07:22.254  [90m 6 |[39m [36mimport[39m { [33mMoon[39m[33m,[39m [33mSun[39m[33m,[39m [33mMenu[39m[33m,[39m [33mX[39m } [36mfrom[39m [32m"lucide-react"[39m
+18:07:22.254  [90m 7 |[39m[0m
+18:07:22.273 Next.js build worker exited with code: 1 and signal: null
+18:07:22.296 Error: Command "npm run build" exited with 1

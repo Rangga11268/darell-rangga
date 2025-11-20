@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
@@ -108,10 +109,12 @@ export function HeroSection() {
               {/* Image container */}
               <div className="absolute inset-8 rounded-full overflow-hidden border-4 border-background shadow-2xl shadow-primary/20">
                 <div className="w-full h-full bg-gradient-to-br from-primary/20 to-purple-500/20 absolute inset-0 z-10 mix-blend-overlay" />
-                <img 
+                <Image 
                   src="/img/me3.jpeg" 
                   alt="Darell Rangga" 
-                  className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
+                  fill
+                  className="object-cover transform hover:scale-110 transition-transform duration-700"
+                  priority
                 />
               </div>
 
