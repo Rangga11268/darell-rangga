@@ -48,15 +48,9 @@ export default function Home() {
   }
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
       <FloatingNavbar />
       <main>
-=======
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <main id="main-content" tabIndex={-1}>
->>>>>>> e19bd6ed532cb4aa4ba322640529640a100dc51c
         <HeroSection />
         <AboutSection />
         <ServicesSection />

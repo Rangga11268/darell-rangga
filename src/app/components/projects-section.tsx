@@ -1,232 +1,168 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Filter } from "lucide-react";
-import { SectionTitle } from "@/app/components/section-title";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const projects = [
+  {
+    title: "Kopi Kupu",
+    description: "A coffee shop website with product catalog and online ordering system.",
+    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
+    imageUrl: "/img/kopi kupu.png",
+    githubUrl: "https://github.com/Rangga11268/KopiKupu",
+    liveUrl: "https://kopi-kupu.vercel.app/",
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "App Quiz",
+    description: "An interactive quiz application with multiple categories and score tracking functionality.",
+    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
+    imageUrl: "/img/app quiz.png",
+    githubUrl: "https://github.com/Rangga11268/App-quiz",
+    liveUrl: "https://superlative-pothos-2638e8.netlify.app/",
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "SRB Motor",
+    description: "A motorcycle sales and service website with product catalog and appointment booking system.",
+    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
+    imageUrl: "/img/srb motor.png",
+    githubUrl: "https://github.com/Rangga11268/Srb-Motor",
+    liveUrl: "https://srb-motor.vercel.app/",
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "ApaPesan Laravel Project",
+    description: "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
+    tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
+    imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=ApaPesan",
+    githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+    liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+    colSpan: "md:col-span-2",
+  },
+  {
+    title: "CRUD Manajemen APP Pegawai",
+    description: "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
+    tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
+    imageUrl: "/img/manajemenPegawai.png",
+    githubUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+    liveUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+    colSpan: "md:col-span-1",
+  },
+  {
+    title: "Personal Portfolio Website",
+    description: "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    imageUrl: "/img/portfolio.png",
+    githubUrl: "https://github.com/Rangga11268/darell-rangga",
+    liveUrl: "https://darell-rangga.vercel.app/",
+    colSpan: "md:col-span-3",
+  },
+];
 
 export function ProjectsSection() {
-  const projects = [
-    {
-      title: "Kopi Kupu",
-      description:
-        "A coffee shop website with product catalog and online ordering system.",
-      tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
-      imageUrl: "/img/kopi kupu.png",
-      githubUrl: "https://github.com/Rangga11268/KopiKupu",
-      liveUrl: "https://kopi-kupu.vercel.app/",
-    },
-    {
-      title: "App Quiz",
-      description:
-        "An interactive quiz application with multiple categories and score tracking functionality.",
-      tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
-      imageUrl: "/img/app quiz.png",
-      githubUrl: "https://github.com/Rangga11268/App-quiz",
-      liveUrl: "https://superlative-pothos-2638e8.netlify.app/",
-    },
-    {
-      title: "SRB Motor",
-      description:
-        "A motorcycle sales and service website with product catalog and appointment booking system.",
-      tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
-      imageUrl: "/img/srb motor.png",
-      githubUrl: "https://github.com/Rangga11268/Srb-Motor",
-      liveUrl: "https://srb-motor.vercel.app/",
-    },
-    {
-      title: "ApaPesan Laravel Project",
-      description:
-        "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
-      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-      imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=ApaPesan",
-      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-      liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-    },
-    {
-      title: "CRUD Manajemen APP Pegawai",
-      description:
-        "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
-      tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
-      imageUrl: "/img/manajemenPegawai.png",
-      githubUrl:
-        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
-      liveUrl:
-        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
-    },
-    {
-      title: "Personal Portfolio Website",
-      description:
-        "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      imageUrl: "/img/portfolio.png",
-      githubUrl: "https://github.com/Rangga11268/darell-rangga",
-      liveUrl: "https://darell-rangga.vercel.app/",
-    },
-  ];
-
-  const [filter, setFilter] = useState("All");
-  const [filteredProjects, setFilteredProjects] = useState(projects);
-  
-  // Get unique tags for filter options
-  const allTags = ["All", ...new Set(projects.flatMap(project => project.tags))];
-  
-  const handleFilter = (tag) => {
-    setFilter(tag);
-    if (tag === "All") {
-      setFilteredProjects(projects);
-    } else {
-      const filtered = projects.filter(project => 
-        project.tags.includes(tag)
-      );
-      setFilteredProjects(filtered);
-    }
-  };
-
   return (
-    <section id="projects" className="py-20 bg-secondary/20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle 
-          title="My Projects" 
-          subtitle="Here are some of my recent projects. Each project reflects my passion for creating exceptional digital experiences."
-        />
+    <section id="projects" className="py-24 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-secondary/30 -z-10" />
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[100px] rounded-full" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-purple-500/5 blur-[100px] rounded-full" />
 
-        {/* Filter buttons */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-3 mb-12"
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16 space-y-4"
         >
-          {allTags.map((tag) => (
-            <Button
-              key={tag}
-              variant={filter === tag ? "default" : "outline"}
-              size="sm"
-              className="rounded-full px-4 py-2 transition-all duration-300 hover:shadow-md"
-              onClick={() => handleFilter(tag)}
-            >
-              {tag === "All" ? (
-                <>
-                  <Filter className="w-4 h-4 mr-2" />
-                  {tag}
-                </>
-              ) : (
-                tag
-              )}
-            </Button>
-          ))}
+          <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-pink-500">
+            Featured Projects
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            A collection of my work, ranging from web applications to design systems.
+            Each project represents a unique challenge and solution.
+          </p>
         </motion.div>
 
-        {/* Projects grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          layout
-        >
-          {filteredProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+          {projects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              layout
+              className={cn(
+                "group relative rounded-3xl overflow-hidden bg-card border border-white/10 hover:border-primary/50 transition-all duration-500 shadow-lg hover:shadow-primary/10",
+                project.colSpan
+              )}
             >
-              <Card className="h-full flex flex-col hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group border-border">
-                <CardHeader className="p-0">
-                  <div className="rounded-t-xl overflow-hidden relative">
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-grow pt-6">
-                  <CardTitle className="mb-2 group-hover:text-primary transition-colors">
-                    {project.title}
-                  </CardTitle>
-                  <CardDescription className="mb-4">
-                    {project.description}
-                  </CardDescription>
-                  <div className="flex flex-wrap gap-2">
+              {/* Image Background */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-90 z-10" />
+              </div>
+
+              {/* Content */}
+              <div className="relative z-20 h-full flex flex-col justify-end p-6 sm:p-8">
+                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className={`text-xs px-2 py-1 rounded-full transition-all duration-300 ${
-                          filter === tag 
-                            ? "bg-primary text-primary-foreground" 
-                            : "bg-secondary hover:bg-primary/20"
-                        }`}
+                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
-                </CardContent>
-                <CardFooter className="flex gap-2">
-                  <Button variant="outline" className="w-1/2 group/github hover:shadow-md" asChild>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github className="h-4 w-4 mr-2 group-hover/github:scale-110 transition-transform" />
-                      Code
-                    </a>
-                  </Button>
-                  <Button className="w-1/2 group/demo hover:shadow-md" asChild>
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2 group-hover/demo:rotate-12 transition-transform" />
-                      Demo
-                    </a>
-                  </Button>
-                </CardFooter>
-              </Card>
+                  
+                  <h3 className="text-2xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500">
+                    {project.description}
+                  </p>
+
+                  <div className="flex gap-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                    <Button size="sm" className="rounded-full" asChild>
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Live Demo
+                      </a>
+                    </Button>
+                    <Button size="sm" variant="outline" className="rounded-full bg-background/50 backdrop-blur-sm" asChild>
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="w-4 h-4 mr-2" />
+                        Source
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {filteredProjects.length === 0 && (
-          <motion.div
-            className="text-center py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <p className="text-muted-foreground">No projects found with this filter.</p>
-          </motion.div>
-        )}
+        </div>
 
         <motion.div
-          className="text-center mt-12"
+          className="text-center mt-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button size="lg" asChild className="group hover:shadow-lg">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View All Projects
-              <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          <Button variant="ghost" size="lg" className="group text-lg" asChild>
+            <a href="https://github.com/Rangga11268" target="_blank" rel="noopener noreferrer">
+              View More on GitHub
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
         </motion.div>
