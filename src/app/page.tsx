@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Navigation } from "@/app/components/navigation";
+import { FloatingNavbar } from "@/app/components/floating-navbar";
 import { HeroSection } from "@/app/components/hero-section";
 import { AboutSection } from "@/app/components/about-section";
 import { ServicesSection } from "@/app/components/services-section";
@@ -27,8 +27,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <div className="min-h-screen bg-background selection:bg-primary/20 selection:text-primary">
+      <FloatingNavbar />
       <main>
         <HeroSection />
         <AboutSection />
