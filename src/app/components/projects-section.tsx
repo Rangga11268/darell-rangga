@@ -38,7 +38,7 @@ const projects = [
     title: "ApaPesan Laravel Project",
     description: "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
     tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-    imageUrl: "https://placehold.co/600x400/202020/FFFFFF?text=ApaPesan",
+    imageUrl: "/img/Apapesan.png",
     githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
     liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
     colSpan: "md:col-span-2",
