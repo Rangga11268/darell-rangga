@@ -8,21 +8,21 @@ import Image from "next/image";
 
 const projects = [
   {
-    title: "Kopi Kupu",
-    description: "A coffee shop website with product catalog and online ordering system.",
-    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
-    imageUrl: "/img/kopi kupu.png",
-    githubUrl: "https://github.com/Rangga11268/KopiKupu",
-    liveUrl: "https://kopi-kupu.vercel.app/",
+    title: "Navara Trans",
+    description: "A modern transportation rental website with booking system and fleet management.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    imageUrl: "/img/navara.png",
+    githubUrl: "https://github.com/Rangga11268/navara-trans",
+    liveUrl: "https://navara-trans.vercel.app/",
     colSpan: "md:col-span-1",
   },
   {
-    title: "App Quiz",
-    description: "An interactive quiz application with multiple categories and score tracking functionality.",
-    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
-    imageUrl: "/img/app quiz.png",
-    githubUrl: "https://github.com/Rangga11268/App-quiz",
-    liveUrl: "https://superlative-pothos-2638e8.netlify.app/",
+    title: "Tujago",
+    description: "Tunggal Jaya Transport - A comprehensive transportation service management system.",
+    tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
+    imageUrl: "/img/tujago.png",
+    githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
+    liveUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
     colSpan: "md:col-span-1",
   },
   {
