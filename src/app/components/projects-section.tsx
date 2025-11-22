@@ -114,7 +114,7 @@ export function ProjectsSection() {
 
               {/* Content */}
               <div className="relative z-20 h-full flex flex-col justify-end p-6 sm:p-8">
-                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span
@@ -134,7 +134,7 @@ export function ProjectsSection() {
                     {project.description}
                   </p>
 
-                  <div className="flex gap-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                  <div className="flex gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100">
                     <Button size="sm" className="rounded-full" asChild>
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" />
