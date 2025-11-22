@@ -10,7 +10,7 @@ const projects = [
   {
     title: "Navara Trans",
     description: "A modern transportation rental website with booking system and fleet management.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    tags: ["React.js", "JavaScript", "Tailwind CSS"],
     imageUrl: "/img/navara.png",
     githubUrl: "https://github.com/Rangga11268/navara-trans",
     liveUrl: "https://navara-trans.vercel.app/",
