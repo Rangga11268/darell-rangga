@@ -39,13 +39,13 @@ const projects = [
     colSpan: "md:col-span-1",
   },
   {
-    title: "SRB Motor",
+    title: "SRB MotorV2",
     description:
-      "A motorcycle sales and service website with product catalog and appointment booking system.",
-    tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
+      "A motorcycle sales and service website with product catalog and buying system.",
+    tags: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
     imageUrl: "/img/srb motor.png",
-    githubUrl: "https://github.com/Rangga11268/Srb-Motor",
-    liveUrl: "https://srb-motor.vercel.app/",
+    githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
+    liveUrl: "https://github.com/Rangga11268/SrbMotorV2",
     colSpan: "md:col-span-1",
   },
   {
