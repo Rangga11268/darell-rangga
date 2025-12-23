@@ -7,6 +7,7 @@ import { Star, Compass, Scroll, Gem } from "lucide-react";
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     // Simulate loading progress
@@ -14,7 +15,7 @@ export function LoadingScreen() {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => setIsLoading(false), 500);
+          setIsReady(true);
           return 100;
         }
         // Randomize speed for "organic" feel
@@ -24,6 +25,10 @@ export function LoadingScreen() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleEnter = () => {
+    setIsLoading(false);
+  };
 
   if (!isLoading) return null;
 
@@ -37,7 +42,7 @@ export function LoadingScreen() {
         className="fixed inset-0 bg-[#0c0a09] z-[100] flex items-center justify-center overflow-hidden"
       >
         {/* Ambient Background Effects */}
-        <div className="absolute inset-0 bg-[url('/img/dark-texture.png')] opacity-30 mix-blend-overlay pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('/img/BgExample.png')] opacity-30 mix-blend-overlay pointer-events-none"></div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none"></div>
 
         <div className="flex flex-col items-center relative z-10 p-10">
@@ -84,7 +89,10 @@ export function LoadingScreen() {
                 ],
               }}
               transition={{ duration: 3, repeat: Infinity }}
-              className="w-32 h-32 bg-[#c5a059]/10 rounded-full border border-[#c5a059] flex items-center justify-center backdrop-blur-sm relative"
+              className="w-32 h-32 bg-[#c5a059]/10 rounded-full border border-[#c5a059] flex items-center justify-center backdrop-blur-sm relative cursor-pointer"
+              onClick={isReady ? handleEnter : undefined}
+              whileHover={isReady ? { scale: 1.05 } : {}}
+              whileTap={isReady ? { scale: 0.95 } : {}}
             >
               <Gem className="text-[#c5a059] w-12 h-12 stroke-[1px]" />
 
@@ -107,25 +115,48 @@ export function LoadingScreen() {
             className="text-center space-y-4"
           >
             <h2 className="text-3xl font-sans text-[#d4c5a9] tracking-[0.2em] font-bold uppercase drop-shadow-md">
-              Unsealing Artifacts
+              {isReady ? "Seal Broken" : "Unsealing Artifacts"}
             </h2>
-            <div className="flex items-center gap-3 justify-center text-[#8d6e63] font-serif italic text-sm">
-              <Scroll size={14} />
-              <span>Gathering mana... {Math.round(progress)}%</span>
-              <Compass size={14} />
-            </div>
+
+            <AnimatePresence mode="wait">
+              {isReady ? (
+                <motion.button
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onClick={handleEnter}
+                  className="px-8 py-2 bg-[#c5a059] text-[#2c241b] rounded-sm font-serif font-bold tracking-widest hover:bg-[#d4af37] transition-colors border border-[#8d6e63] shadow-lg animate-pulse"
+                >
+                  ENTER REALM
+                </motion.button>
+              ) : (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-3 justify-center text-[#8d6e63] font-serif italic text-sm"
+                >
+                  <Scroll size={14} />
+                  <span>Gathering mana... {Math.round(progress)}%</span>
+                  <Compass size={14} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           {/* Progress Bar (Mana Bar) */}
-          <div className="w-64 h-1 bg-[#2c241b] rounded-full mt-8 overflow-hidden border border-[#5d4037]/50 relative">
-            <motion.div
-              className="h-full bg-gradient-to-r from-[#8d6e63] via-[#c5a059] to-[#d4af37]"
-              initial={{ width: "0%" }}
-              animate={{ width: `${progress}%` }}
-              transition={{ ease: "easeOut" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full -translate-x-full animate-shimmer"></div>
-          </div>
+          {!isReady && (
+            <div className="w-64 h-1 bg-[#2c241b] rounded-full mt-8 overflow-hidden border border-[#5d4037]/50 relative">
+              <motion.div
+                className="h-full bg-gradient-to-r from-[#8d6e63] via-[#c5a059] to-[#d4af37]"
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: "easeOut" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full -translate-x-full animate-shimmer"></div>
+            </div>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>
