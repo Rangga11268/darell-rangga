@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Heart, Github, Linkedin, Twitter, Instagram } from "lucide-react";
+import {
+  Heart,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Diamond,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Footer() {
@@ -55,8 +62,8 @@ export function Footer() {
             <p className="text-muted-foreground text-sm">
               © {new Date().getFullYear()} Darell Rangga. All rights reserved.
             </p>
-            <p className="text-muted-foreground text-xs mt-2">
-              Crafted with passion and dedication
+            <p className="text-[#8d6e63] text-xs font-serif italic">
+              "Forged in the fires of code."
             </p>
           </motion.div>
 

@@ -6,7 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Github, Twitter, Linkedin, Loader2, Phone, Instagram, Send } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Github,
+  Twitter,
+  Linkedin,
+  Loader2,
+  Phone,
+  Instagram,
+  Send,
+  Feather,
+  Scroll,
+} from "lucide-react";
+import { SectionTitle } from "./section-title";
 
 const contactInfo = [
   {

@@ -83,11 +83,21 @@ export function AboutSection() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="space-y-4">
-              <h3 className="text-2xl md:text-3xl font-bold">My Journey</h3>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                I&apos;m a passionate full-stack developer with experience building web applications. 
-                I specialize in creating responsive, accessible, and performant websites using modern technologies.
+            <div className="space-y-4 parchment p-8 relative">
+              {/* Wax seal decoration */}
+              <div className="absolute -top-3 -right-3 w-12 h-12 bg-red-800 rounded-full shadow-lg flex items-center justify-center border-4 border-red-900/50">
+                <Feather className="w-6 h-6 text-red-200" />
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-3 font-sans text-[#3e2723] dark:text-[#d7ccc8]">
+                <Scroll className="w-8 h-8 text-primary" />
+                My Journey
+              </h3>
+              <p className="text-lg leading-relaxed font-serif italic">
+                "I am a passionate artificer of the digital realm, weaving
+                spells of code to build robust web applications. I specialize in
+                creating responsive, accessible, and performant artifacts using
+                modern technologies."
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 As a student and aspiring developer, I combine academic knowledge with hands-on project 
