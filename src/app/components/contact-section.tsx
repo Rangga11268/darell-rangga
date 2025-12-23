@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
+import { MessengerPigeon } from "./messenger-pigeon";
 
 const contactInfo = [
   {
@@ -207,131 +208,134 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2"
           >
-            <Card className="h-full bg-[#f4e4bc] dark:bg-[#2c241b] border-2 border-[#8d6e63] shadow-xl relative overflow-hidden">
-              {/* Decorative stamp */}
-              <div className="absolute top-4 right-4 opacity-50 pointer-events-none">
-                <div className="w-24 h-24 rounded-full border-4 border-[#8d6e63] flex items-center justify-center rotate-[-15deg]">
-                  <div className="w-20 h-20 rounded-full border-2 border-[#8d6e63] flex items-center justify-center">
-                    <span className="font-serif font-bold text-[#8d6e63] text-xl">
-                      POST
-                    </span>
+            <Card className="h-full bg-[#f4e4bc] dark:bg-[#2c241b] border-2 border-[#8d6e63] shadow-xl relative overflow-visible">
+              <MessengerPigeon isSending={isSubmitting} />
+              <div className="overflow-hidden h-full rounded-sm">
+                {/* Decorative stamp */}
+                <div className="absolute top-4 right-4 opacity-50 pointer-events-none">
+                  <div className="w-24 h-24 rounded-full border-4 border-[#8d6e63] flex items-center justify-center rotate-[-15deg]">
+                    <div className="w-20 h-20 rounded-full border-2 border-[#8d6e63] flex items-center justify-center">
+                      <span className="font-serif font-bold text-[#8d6e63] text-xl">
+                        POST
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <CardContent className="p-8 relative z-10">
-                <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] flex items-center gap-2">
-                  <Scroll className="w-6 h-6" />
-                  {t.contact.formTitle}
-                </h3>
-                <p className="text-[#5d4037] dark:text-[#a1887f] mb-8 font-serif italic">
-                  {t.contact.formDesc}
-                </p>
+                <CardContent className="p-8 relative z-10">
+                  <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] flex items-center gap-2">
+                    <Scroll className="w-6 h-6" />
+                    {t.contact.formTitle}
+                  </h3>
+                  <p className="text-[#5d4037] dark:text-[#a1887f] mb-8 font-serif italic">
+                    {t.contact.formDesc}
+                  </p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
-                      >
-                        {t.contact.nameLabel}
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        disabled={isSubmitting}
-                        className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
-                        placeholder={t.contact.namePlaceholder}
-                      />
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
+                        >
+                          {t.contact.nameLabel}
+                        </label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          required
+                          disabled={isSubmitting}
+                          className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
+                          placeholder={t.contact.namePlaceholder}
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
+                        >
+                          {t.contact.emailLabel}
+                        </label>
+                        <Input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          disabled={isSubmitting}
+                          className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
+                          placeholder={t.contact.emailPlaceholder}
+                        />
+                      </div>
                     </div>
 
                     <div>
                       <label
-                        htmlFor="email"
+                        htmlFor="message"
                         className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
                       >
-                        {t.contact.emailLabel}
+                        {t.contact.messageLabel}
                       </label>
-                      <Input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
                         onChange={handleChange}
+                        rows={6}
                         required
                         disabled={isSubmitting}
-                        className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
-                        placeholder={t.contact.emailPlaceholder}
+                        className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors resize-none font-serif text-lg"
+                        placeholder={t.contact.messagePlaceholder}
                       />
                     </div>
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
-                    >
-                      {t.contact.messageLabel}
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      required
+                    {submitStatus === "success" && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 rounded-sm bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-sm font-serif"
+                      >
+                        {t.contact.success}
+                      </motion.div>
+                    )}
+
+                    {submitStatus === "error" && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 rounded-sm bg-destructive/10 border border-destructive/20 text-destructive text-sm font-serif"
+                      >
+                        {t.contact.error}
+                      </motion.div>
+                    )}
+
+                    <Button
+                      type="submit"
+                      className="w-full h-14 text-lg rounded-sm shadow-lg hover:shadow-xl transition-all font-serif font-bold tracking-widest bg-primary text-[#3e2723] border-2 border-[#3e2723] relative overflow-hidden group"
                       disabled={isSubmitting}
-                      className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors resize-none font-serif text-lg"
-                      placeholder={t.contact.messagePlaceholder}
-                    />
-                  </div>
-
-                  {submitStatus === "success" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-4 rounded-sm bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-sm font-serif"
                     >
-                      {t.contact.success}
-                    </motion.div>
-                  )}
-
-                  {submitStatus === "error" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-4 rounded-sm bg-destructive/10 border border-destructive/20 text-destructive text-sm font-serif"
-                    >
-                      {t.contact.error}
-                    </motion.div>
-                  )}
-
-                  <Button
-                    type="submit"
-                    className="w-full h-14 text-lg rounded-sm shadow-lg hover:shadow-xl transition-all font-serif font-bold tracking-widest bg-primary text-[#3e2723] border-2 border-[#3e2723] relative overflow-hidden group"
-                    disabled={isSubmitting}
-                  >
-                    <span className="relative z-10 flex items-center justify-center">
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          {t.contact.submitting}
-                        </>
-                      ) : (
-                        <>
-                          <Feather className="mr-2 h-5 w-5" />
-                          {t.contact.submitButton}
-                        </>
-                      )}
-                    </span>
-                    <div className="absolute inset-0 bg-[#d4af37] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left z-0"></div>
-                  </Button>
-                </form>
-              </CardContent>
+                      <span className="relative z-10 flex items-center justify-center">
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            {t.contact.submitting}
+                          </>
+                        ) : (
+                          <>
+                            <Feather className="mr-2 h-5 w-5" />
+                            {t.contact.submitButton}
+                          </>
+                        )}
+                      </span>
+                      <div className="absolute inset-0 bg-[#d4af37] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left z-0"></div>
+                    </Button>
+                  </form>
+                </CardContent>
+              </div>
             </Card>
           </motion.div>
         </div>

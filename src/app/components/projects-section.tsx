@@ -9,7 +9,23 @@ import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 import { Map } from "lucide-react";
 
-const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  imageUrl: string;
+  githubUrl: string;
+  liveUrl: string;
+  colSpan: string;
+}
+
+const ProjectCard = ({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) => {
   const { t } = useLanguage();
 
   // 3D Tilt Logic

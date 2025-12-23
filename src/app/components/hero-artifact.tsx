@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Stars, Text, useTexture } from "@react-three/drei";
+import { Float, Stars } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 

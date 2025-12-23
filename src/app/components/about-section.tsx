@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
+import { SkillsConstellation } from "./skills-constellation";
 
 const skills = [
   "HTML5",
@@ -94,8 +95,11 @@ export function AboutSection() {
             </div>
 
             {/* Experience */}
-            <div className="space-y-4">
-              <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2">
+            <div className="space-y-4 relative">
+              {/* Journey Map Path - Dashed Line */}
+              <div className="absolute left-[7px] top-10 bottom-0 w-1 bg-gradient-to-b from-[#c5a059] to-transparent opacity-30"></div>
+
+              <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2 relative z-10 bg-background/50 backdrop-blur-sm">
                 <Map className="w-5 h-5 text-primary" />
                 {t.about.experience}
               </h4>
@@ -106,9 +110,14 @@ export function AboutSection() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="parchment p-6 relative ml-4 border-l-4 border-l-primary/50"
+                  className="parchment p-6 relative ml-6 border-l-4 border-l-primary/50 group"
                   style={{ borderRadius: "0 0.5rem 0.5rem 0" }}
                 >
+                  {/* Map Point Node */}
+                  <div className="absolute -left-[31px] top-6 w-4 h-4 rounded-full border-2 border-[#c5a059] bg-[#2c241b] group-hover:bg-[#c5a059] group-hover:scale-125 transition-all duration-300 z-10 shadow-[0_0_10px_#c5a059]">
+                    <div className="absolute inset-0 rounded-full animate-ping bg-[#c5a059]/50 opacity-0 group-hover:opacity-100"></div>
+                  </div>
+
                   <h5 className="font-bold text-lg font-sans text-[#3e2723] dark:text-[#d7ccc8]">
                     {exp.title}
                   </h5>
@@ -185,7 +194,6 @@ export function AboutSection() {
               ))}
             </div>
 
-            {/* Skills Marquee */}
             <div className="mt-8 pt-8 border-t border-primary/20">
               <div className="text-center mb-6">
                 <h3 className="text-2xl md:text-3xl font-bold mb-2 font-sans">
@@ -193,20 +201,9 @@ export function AboutSection() {
                 </h3>
               </div>
 
-              <div className="relative overflow-hidden py-4 bg-[#2c241b]/10 rounded-lg border border-[#8d6e63]/30">
-                <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#f4e4bc] dark:from-[#1a1614] to-transparent z-10" />
-                <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#f4e4bc] dark:from-[#1a1614] to-transparent z-10" />
-
-                <div className="flex gap-4 animate-marquee whitespace-nowrap">
-                  {[...skills, ...skills].map((skill, index) => (
-                    <div
-                      key={index}
-                      className="inline-flex items-center px-6 py-2 rounded-sm border-2 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] text-[#3e2723] dark:text-[#d7ccc8] text-sm font-bold font-serif tracking-wider shadow-sm"
-                    >
-                      {skill}
-                    </div>
-                  ))}
-                </div>
+              <div className="relative w-full">
+                <div className="absolute inset-0 bg-transparent z-0" />
+                <SkillsConstellation />
               </div>
             </div>
           </motion.div>

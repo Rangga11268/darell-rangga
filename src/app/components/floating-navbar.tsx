@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X, Globe } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 
@@ -105,14 +105,32 @@ export function FloatingNavbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary"
+              className="rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary relative overflow-hidden"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             >
-              {theme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
+              <AnimatePresence mode="wait">
+                {theme === "dark" ? (
+                  <motion.div
+                    key="moon"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Moon className="h-5 w-5 text-blue-200 drop-shadow-[0_0_8px_rgba(191,219,254,0.8)]" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="sun"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Sun className="h-5 w-5 text-yellow-500 drop-shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <span className="sr-only">Toggle theme</span>
             </Button>
 
