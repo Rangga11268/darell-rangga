@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, Map } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { SectionTitle } from "./section-title";
 
 const projects = [
   {
@@ -76,36 +77,23 @@ const projects = [
     imageUrl: "/img/portfolio.png",
     githubUrl: "https://github.com/Rangga11268/darell-rangga",
     liveUrl: "https://darell-rangga.vercel.app/",
-    colSpan: "md:col-span-3",
+    colSpan: "md:col-span-2",
   },
 ];
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
+    <section
+      id="projects"
+      className="py-24 relative overflow-hidden bg-[url('/img/dark-texture.png')]"
+    >
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-secondary/30 -z-10" />
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 blur-[100px] rounded-full" />
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-purple-500/5 blur-[100px] rounded-full" />
+      <div className="absolute inset-0 bg-[#3e2723]/5 -z-10" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16 space-y-4"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-pink-500">
-            Featured Projects
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            A collection of my work, ranging from web applications to design
-            systems. Each project represents a unique challenge and solution.
-          </p>
-        </motion.div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <SectionTitle title="My Creations" subtitle="Artifacts I Have Forged" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(300px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[minmax(350px,auto)]">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -114,58 +102,68 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={cn(
-                "group relative rounded-3xl overflow-hidden bg-card border border-white/10 hover:border-primary/50 transition-all duration-500 shadow-lg hover:shadow-primary/10",
+                "group relative rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500",
                 project.colSpan
               )}
             >
               {/* Image Background */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-x-2 top-2 h-1/2 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm">
                 <Image
                   src={project.imageUrl}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 sepia-[.3] group-hover:sepia-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent opacity-90 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#f4e4bc] dark:from-[#2c241b] via-transparent to-transparent opacity-80 z-10" />
               </div>
 
               {/* Content */}
-              <div className="relative z-20 h-full flex flex-col justify-end p-6 sm:p-8">
-                <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="flex flex-wrap gap-2 mb-4">
+              <div className="relative z-20 h-full flex flex-col justify-end p-6 pt-[55%]">
+                {/* Decorative rivets */}
+                <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+                <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+                <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+                <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+
+                <div className="transform translate-y-0 transition-transform duration-500 text-center">
+                  <div className="flex flex-wrap justify-center gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm"
+                        className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-sm bg-[#8d6e63]/20 text-[#3e2723] dark:text-[#d7ccc8] border border-[#8d6e63]/50"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <h3 className="text-2xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] group-hover:text-primary transition-colors uppercase tracking-wide">
                     {project.title}
                   </h3>
 
-                  <p className="text-muted-foreground mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500">
+                  <p className="text-[#5d4037] dark:text-[#a1887f] mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500 font-serif text-sm px-4">
                     {project.description}
                   </p>
 
-                  <div className="flex gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100">
-                    <Button size="sm" className="rounded-full" asChild>
+                  <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100">
+                    <Button
+                      size="sm"
+                      className="rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 font-serif font-bold tracking-wider border border-[#3e2723]"
+                      asChild
+                    >
                       <a
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Live Demo
+                        Visit
                       </a>
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="rounded-full bg-background/50 backdrop-blur-sm"
+                      className="rounded-sm bg-transparent border-[#8d6e63] text-[#3e2723] dark:text-[#d7ccc8] hover:bg-[#8d6e63]/20 font-serif"
                       asChild
                     >
                       <a
@@ -174,7 +172,7 @@ export function ProjectsSection() {
                         rel="noopener noreferrer"
                       >
                         <Github className="w-4 h-4 mr-2" />
-                        Source
+                        Code
                       </a>
                     </Button>
                   </div>
@@ -191,13 +189,19 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button variant="ghost" size="lg" className="group text-lg" asChild>
+          <Button
+            variant="ghost"
+            size="lg"
+            className="group text-lg font-serif text-[#3e2723] dark:text-[#d7ccc8] hover:text-primary hover:bg-[#3e2723]/10"
+            asChild
+          >
             <a
               href="https://github.com/Rangga11268"
               target="_blank"
               rel="noopener noreferrer"
             >
-              View More on GitHub
+              <Map className="mr-2 w-5 h-5" />
+              Explore More Archives
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
