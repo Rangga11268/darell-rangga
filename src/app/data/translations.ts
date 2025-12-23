@@ -89,7 +89,7 @@ export const translations = {
       quote: `"Forged in the fires of code."`,
       madeWith: "Etched with",
       using: "using Rare Artifacts",
-      chronicle: "Chronicle",
+      chronicle: "Local Time",
     },
     loading: {
       unsealing: "Unsealing Artifacts",
@@ -116,7 +116,7 @@ export const translations = {
       contactMe: "Kirim Surat",
       badgeFast: "Cepat & Modern",
       badgeFull: "Full Stack",
-      scrollText: "Mulai Petualangan",
+      scrollText: "Jelajahi",
     },
     about: {
       title: "Tentang Saya",
@@ -188,7 +188,7 @@ export const translations = {
       quote: `"Ditempa dalam api kode."`,
       madeWith: "Diukir dengan",
       using: "menggunakan Artefak Langka",
-      chronicle: "Kronik",
+      chronicle: "Waktu Lokal",
     },
     loading: {
       unsealing: "Membuka Segel Artefak",

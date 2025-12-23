@@ -104,12 +104,12 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={cn(
-                "group relative rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500",
+                "group relative rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 flex flex-col",
                 project.colSpan
               )}
             >
-              {/* Image Background */}
-              <div className="absolute inset-x-2 top-2 h-1/2 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm">
+              {/* Image Section */}
+              <div className="relative h-48 md:h-56 m-2 mb-0 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm shrink-0">
                 <Image
                   src={project.imageUrl}
                   alt={project.title}
@@ -119,15 +119,16 @@ export function ProjectsSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#f4e4bc] dark:from-[#2c241b] via-transparent to-transparent opacity-80 z-10" />
               </div>
 
-              {/* Content */}
-              <div className="relative z-20 h-full flex flex-col justify-end p-6 pt-[55%]">
+              {/* Content Section */}
+              <div className="relative z-20 flex-1 flex flex-col justify-between p-6">
                 {/* Decorative rivets */}
                 <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
                 <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
                 <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
                 <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
 
-                <div className="transform translate-y-0 transition-transform duration-500 text-center">
+                <div className="transform translate-y-0 transition-transform duration-500 text-center flex-1 flex flex-col">
+                  {/* Tags Group */}
                   <div className="flex flex-wrap justify-center gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span
@@ -147,7 +148,7 @@ export function ProjectsSection() {
                     {project.description}
                   </p>
 
-                  <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100">
+                  <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100 mt-auto">
                     <Button
                       size="sm"
                       className="rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 font-serif font-bold tracking-wider border border-[#3e2723]"
