@@ -114,10 +114,7 @@ export function ContactSection() {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-24 relative overflow-hidden bg-[url('/img/paper-texture.png')]"
-    >
+    <section id="contact" className="py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[#2c241b]/5 -z-10" />
 

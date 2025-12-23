@@ -50,7 +50,8 @@ export function Footer() {
   return (
     <footer className="py-10 border-t-4 border-[#8d6e63] bg-[#1a1614] text-[#d7ccc8] relative">
       {/* Texture overlay */}
-      <div className="absolute inset-0 bg-[url('/img/dark-texture.png')] opacity-20 pointer-events-none"></div>
+      {/* Texture overlay - Removed per user request */}
+      {/* <div className="absolute inset-0 bg-[url('/img/dark-texture.png')] opacity-20 pointer-events-none"></div> */}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">

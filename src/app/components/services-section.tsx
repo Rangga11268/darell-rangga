@@ -62,10 +62,7 @@ export function ServicesSection() {
   ];
 
   return (
-    <section
-      id="services"
-      className="py-20 relative overflow-hidden bg-[url('/img/paper-texture.png')] bg-repeat"
-    >
+    <section id="services" className="py-20 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-[#2c241b]/5 pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">

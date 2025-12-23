@@ -79,10 +79,7 @@ const highlights = [
 
 export function AboutSection() {
   return (
-    <section
-      id="about"
-      className="py-24 relative overflow-hidden bg-[url('/img/paper-texture.png')] bg-repeat"
-    >
+    <section id="about" className="py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[#2c241b]/5 pointer-events-none" />
 

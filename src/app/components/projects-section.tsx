@@ -83,10 +83,7 @@ const projects = [
 
 export function ProjectsSection() {
   return (
-    <section
-      id="projects"
-      className="py-24 relative overflow-hidden bg-[url('/img/dark-texture.png')]"
-    >
+    <section id="projects" className="py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[#3e2723]/5 -z-10" />
 

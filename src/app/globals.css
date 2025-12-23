@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -195,7 +195,7 @@
 
   body {
     @apply bg-background text-foreground antialiased selection:bg-[#8d6e63]/30 selection:text-primary font-mono;
-    background-image: url("/img/noise.png"); /* Adding a subtle noise texture if available, or fall back to color */
+    /* background-image: url("/img/noise.png"); */
     background-blend-mode: overlay;
 
     /* Ancient Cursor (optional fallback) */
