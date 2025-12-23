@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Github, Linkedin, Twitter, Instagram, Diamond } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function Footer() {
+  const { t } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -53,10 +55,10 @@ export function Footer() {
             transition={{ duration: 0.5 }}
           >
             <p className="text-[#a1887f] text-sm font-sans tracking-widest uppercase">
-              © {new Date().getFullYear()} Darell Rangga.
+              © {new Date().getFullYear()} {t.footer.copyright}
             </p>
             <p className="text-[#8d6e63] text-xs font-serif italic">
-              &quot;Forged in the fires of code.&quot;
+              {t.footer.quote}
             </p>
           </motion.div>
 
@@ -102,17 +104,17 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="flex items-center gap-2 text-center text-[#a1887f] text-sm font-serif">
-              <span>Etched with</span>
+              <span>{t.footer.madeWith}</span>
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <Diamond className="h-3 w-3 text-primary fill-current" />
               </motion.div>
-              <span>using Rare Artifacts</span>
+              <span>{t.footer.using}</span>
             </div>
             <p className="text-[#5d4037] text-xs font-mono">
-              Chronicle:{" "}
+              <span>{t.footer.chronicle}:</span>
               {currentTime.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",

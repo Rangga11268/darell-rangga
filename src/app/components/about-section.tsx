@@ -13,6 +13,7 @@ import {
   Map,
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
+import { useLanguage } from "@/app/providers/language-provider";
 
 const skills = [
   "HTML5",
@@ -52,39 +53,41 @@ const education = [
   },
 ];
 
-const highlights = [
-  {
-    icon: Code2,
-    title: "Clean Code",
-    description:
-      "Scribing maintainable and scalable runes following best practices",
-  },
-  {
-    icon: Palette,
-    title: "Artistic Design",
-    description:
-      "Creating beautiful, user-friendly interfaces with attention to detail",
-  },
-  {
-    icon: Rocket,
-    title: "Performance",
-    description: "Optimizing for speed and efficiency in every project",
-  },
-  {
-    icon: Zap,
-    title: "Fast Learner",
-    description: "Quickly adapting to new technologies and frameworks",
-  },
-];
-
 export function AboutSection() {
+  const { t } = useLanguage();
+
+  const highlights = [
+    {
+      icon: Code2,
+      title: "Clean Code",
+      description:
+        "Scribing maintainable and scalable runes following best practices",
+    },
+    {
+      icon: Palette,
+      title: "Artistic Design",
+      description:
+        "Creating beautiful, user-friendly interfaces with attention to detail",
+    },
+    {
+      icon: Rocket,
+      title: "Performance",
+      description: "Optimizing for speed and efficiency in every project",
+    },
+    {
+      icon: Zap,
+      title: "Fast Learner",
+      description: "Quickly adapting to new technologies and frameworks",
+    },
+  ];
+
   return (
     <section id="about" className="py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[#2c241b]/5 pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionTitle title="About Me" subtitle="The Story So Far" />
+        <SectionTitle title={t.about.title} subtitle={t.about.subtitle} />
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
@@ -104,28 +107,19 @@ export function AboutSection() {
 
               <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-3 font-sans text-[#3e2723] dark:text-[#d7ccc8]">
                 <Scroll className="w-8 h-8 text-primary" />
-                My Journey
+                {t.about.journeyTitle}
               </h3>
               <p className="text-lg leading-relaxed font-serif italic">
-                &quot;I am a passionate artificer of the digital realm, weaving
-                spells of code to build robust web applications. I specialize in
-                creating responsive, accessible, and performant artifacts using
-                modern technologies.&quot;
+                {t.about.journeyText}
               </p>
-              <p className="leading-relaxed">
-                As a scholar and aspiring developer, I combine academic
-                knowledge with hands-on project experience to create modern,
-                responsive websites. I focus on clean code, user-friendly
-                interfaces, and staying up-to-date with the latest web
-                technologies.
-              </p>
+              <p className="leading-relaxed">{t.about.journeyDesc}</p>
             </div>
 
             {/* Experience */}
             <div className="space-y-4">
               <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2">
                 <Map className="w-5 h-5 text-primary" />
-                Experience
+                {t.about.experience}
               </h4>
               {experiences.map((exp, index) => (
                 <motion.div
@@ -152,7 +146,7 @@ export function AboutSection() {
             <div className="space-y-4">
               <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2">
                 <BookOpen className="w-5 h-5 text-primary" />
-                Education
+                {t.about.education}
               </h4>
               {education.map((edu, index) => (
                 <motion.div
@@ -185,7 +179,7 @@ export function AboutSection() {
             className="space-y-6"
           >
             <h3 className="text-2xl md:text-3xl font-bold text-center lg:text-left font-sans">
-              Arsenal
+              {t.about.arsenal}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {highlights.map((highlight, index) => (
@@ -217,7 +211,7 @@ export function AboutSection() {
             <div className="mt-8 pt-8 border-t border-primary/20">
               <div className="text-center mb-6">
                 <h3 className="text-2xl md:text-3xl font-bold mb-2 font-sans">
-                  Known Incantations
+                  {t.about.incantations}
                 </h3>
               </div>
 

@@ -11,8 +11,11 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="home"
@@ -43,7 +46,7 @@ export function HeroSection() {
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm border border-[#8d6e63] bg-[#f4e4bc] text-[#3e2723] text-sm font-bold font-serif tracking-wide shadow-sm"
               >
                 <Sparkles className="w-3 h-3 text-[#d4af37]" />
-                <span>Available for Quest</span>
+                <span>{t.hero.available}</span>
               </motion.div>
 
               <motion.h1
@@ -52,12 +55,12 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                Hi, I&apos;m{" "}
+                {t.hero.greeting}{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#c5a059] to-[#8d6e63] drop-shadow-sm">
                   Darell
                 </span>
                 <br />
-                <span className="text-[#a1887f]">Web Artificer</span>
+                <span className="text-[#a1887f]">{t.hero.role}</span>
               </motion.h1>
 
               <motion.p
@@ -66,9 +69,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                Forging exceptional digital artifacts with ancient wisdom and
-                modern technologies. Specializing in full-stack sorcery with
-                Laravel, PHP, and Next.js.
+                {t.hero.description}
               </motion.p>
             </div>
 
@@ -83,7 +84,7 @@ export function HeroSection() {
                 className="rounded-sm text-lg px-8 h-12 shadow-lg shadow-[#c5a059]/20 hover:shadow-[#c5a059]/40 transition-all bg-[#c5a059] text-[#2c241b] hover:bg-[#d4af37] font-serif font-bold border-2 border-[#8d6e63]"
                 asChild
               >
-                <a href="#projects">View Artifacts</a>
+                <a href="#projects">{t.hero.viewWork}</a>
               </Button>
               <Button
                 variant="outline"
@@ -91,7 +92,7 @@ export function HeroSection() {
                 className="rounded-sm text-lg px-8 h-12 border-2 border-[#8d6e63] text-[#8d6e63] hover:bg-[#8d6e63]/10 hover:text-[#c5a059] font-serif font-bold"
                 asChild
               >
-                <a href="#contact">Send Missive</a>
+                <a href="#contact">{t.hero.contactMe}</a>
               </Button>
             </motion.div>
 
@@ -170,7 +171,7 @@ export function HeroSection() {
               >
                 <span className="text-xl">⚡</span>
                 <span className="text-xs font-bold font-serif text-[#3e2723]">
-                  Swift & Modern
+                  {t.hero.badgeFast}
                 </span>
               </motion.div>
 
@@ -188,7 +189,7 @@ export function HeroSection() {
                   <Scroll size={20} />
                 </div>
                 <span className="text-xs font-bold font-serif text-[#3e2723]">
-                  Full Stack
+                  {t.hero.badgeFull}
                 </span>
               </motion.div>
             </div>
@@ -206,7 +207,7 @@ export function HeroSection() {
             className="flex flex-col items-center gap-2 text-[#8d6e63] hover:text-[#d4af37] transition-colors group"
           >
             <span className="text-sm font-serif font-bold tracking-widest uppercase">
-              Begin Journey
+              {t.hero.scrollText}
             </span>
             <ArrowDown className="w-5 h-5 animate-bounce" />
           </a>

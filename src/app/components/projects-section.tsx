@@ -2,93 +2,98 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, ArrowRight, Map } from "lucide-react";
+import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";
-
-const projects = [
-  {
-    title: "Navara Trans",
-    description:
-      "A modern transportation rental website with booking system and fleet management.",
-    tags: ["React.js", "JavaScript", "Tailwind CSS"],
-    imageUrl: "/img/navara.png",
-    githubUrl: "https://github.com/Rangga11268/navara-trans",
-    liveUrl: "https://navara-trans.vercel.app/",
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "PHD Trans",
-    description:
-      "A premium bus rental service website featuring fleet showcase, booking system, and destination packages with modern UI/UX.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    imageUrl: "/img/PhdTrans.png",
-    githubUrl: "https://github.com/Rangga11268/phd-trans",
-    liveUrl: "https://phd-trans.vercel.app/",
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Tujago",
-    description:
-      "Tunggal Jaya Transport - A comprehensive transportation service management system.",
-    tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-    imageUrl: "/img/tujago.png",
-    githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-    liveUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "SRB MotorV2",
-    description:
-      "A motorcycle sales and service website with product catalog and buying system.",
-    tags: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
-    imageUrl: "/img/srb motor.png",
-    githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
-    liveUrl: "https://github.com/Rangga11268/SrbMotorV2",
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "ApaPesan Laravel Project",
-    description:
-      "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
-    tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-    imageUrl: "/img/Apapesan.png",
-    githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-    liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-    colSpan: "md:col-span-2",
-  },
-  {
-    title: "CRUD Manajemen APP Pegawai",
-    description:
-      "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
-    tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
-    imageUrl: "/img/manajemenPegawai.png",
-    githubUrl:
-      "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
-    liveUrl: "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
-    colSpan: "md:col-span-1",
-  },
-  {
-    title: "Personal Portfolio Website",
-    description:
-      "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    imageUrl: "/img/portfolio.png",
-    githubUrl: "https://github.com/Rangga11268/darell-rangga",
-    liveUrl: "https://darell-rangga.vercel.app/",
-    colSpan: "md:col-span-2",
-  },
-];
+import { useLanguage } from "@/app/providers/language-provider";
+import { Map } from "lucide-react";
 
 export function ProjectsSection() {
+  const { t } = useLanguage();
+
+  const projects = [
+    {
+      title: "Navara Trans",
+      description:
+        "A modern transportation rental website with booking system and fleet management.",
+      tags: ["React.js", "JavaScript", "Tailwind CSS"],
+      imageUrl: "/img/navara.png",
+      githubUrl: "https://github.com/Rangga11268/navara-trans",
+      liveUrl: "https://navara-trans.vercel.app/",
+      colSpan: "md:col-span-1",
+    },
+    {
+      title: "PHD Trans",
+      description:
+        "A premium bus rental service website featuring fleet showcase, booking system, and destination packages with modern UI/UX.",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      imageUrl: "/img/PhdTrans.png",
+      githubUrl: "https://github.com/Rangga11268/phd-trans",
+      liveUrl: "https://phd-trans.vercel.app/",
+      colSpan: "md:col-span-1",
+    },
+    {
+      title: "Tujago",
+      description:
+        "Tunggal Jaya Transport - A comprehensive transportation service management system.",
+      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
+      imageUrl: "/img/tujago.png",
+      githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
+      liveUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
+      colSpan: "md:col-span-1",
+    },
+    {
+      title: "SRB MotorV2",
+      description:
+        "A motorcycle sales and service website with product catalog and buying system.",
+      tags: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
+      imageUrl: "/img/srb motor.png",
+      githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
+      liveUrl: "https://github.com/Rangga11268/SrbMotorV2",
+      colSpan: "md:col-span-1",
+    },
+    {
+      title: "ApaPesan Laravel Project",
+      description:
+        "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
+      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
+      imageUrl: "/img/Apapesan.png",
+      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+      liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+      colSpan: "md:col-span-2",
+    },
+    {
+      title: "CRUD Manajemen APP Pegawai",
+      description:
+        "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
+      tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
+      imageUrl: "/img/manajemenPegawai.png",
+      githubUrl:
+        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+      liveUrl:
+        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+      colSpan: "md:col-span-1",
+    },
+    {
+      title: "Personal Portfolio Website",
+      description:
+        "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
+      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      imageUrl: "/img/portfolio.png",
+      githubUrl: "https://github.com/Rangga11268/darell-rangga",
+      liveUrl: "https://darell-rangga.vercel.app/",
+      colSpan: "md:col-span-2",
+    },
+  ];
+
   return (
     <section id="projects" className="py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[#3e2723]/5 -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionTitle title="My Creations" subtitle="Artifacts I Have Forged" />
+        <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[minmax(350px,auto)]">
           {projects.map((project, index) => (
@@ -154,7 +159,7 @@ export function ProjectsSection() {
                         rel="noopener noreferrer"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Visit
+                        {t.projects.viewProject}
                       </a>
                     </Button>
                     <Button
@@ -169,7 +174,7 @@ export function ProjectsSection() {
                         rel="noopener noreferrer"
                       >
                         <Github className="w-4 h-4 mr-2" />
-                        Code
+                        {t.projects.sourceCode}
                       </a>
                     </Button>
                   </div>

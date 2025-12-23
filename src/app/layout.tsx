@@ -3,6 +3,7 @@ import { Cinzel, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { BackgroundAudio } from "@/app/components/background-audio";
+import { LanguageProvider } from "@/app/providers/language-provider";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -29,8 +30,10 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${cinzel.variable} ${cormorant.variable} antialiased`}>
         <ThemeProvider>
-          <BackgroundAudio />
-          {children}
+          <LanguageProvider>
+            <BackgroundAudio />
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

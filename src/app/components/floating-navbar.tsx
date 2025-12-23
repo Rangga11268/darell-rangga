@@ -4,22 +4,24 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
-
-const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function FloatingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { t, language, toggleLanguage } = useLanguage();
   const [mounted, setMounted] = useState(false);
+
+  const navItems = [
+    { name: t.nav.home, href: "#home" },
+    { name: t.nav.about, href: "#about" },
+    { name: t.nav.services, href: "#services" },
+    { name: t.nav.projects, href: "#projects" },
+    { name: t.nav.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -90,6 +92,16 @@ export function FloatingNavbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary font-bold font-serif w-10 h-10 border border-transparent hover:border-[#d4af37]/50"
+              onClick={toggleLanguage}
+            >
+              <span className="text-xs">{language === "en" ? "EN" : "ID"}</span>
+              <span className="sr-only">Toggle language</span>
+            </Button>
+
             <Button
               variant="ghost"
               size="icon"

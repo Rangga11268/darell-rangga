@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Compass, Scroll, Gem } from "lucide-react";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function LoadingScreen() {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [isReady, setIsReady] = useState(false);
@@ -115,7 +117,7 @@ export function LoadingScreen() {
             className="text-center space-y-4"
           >
             <h2 className="text-3xl font-sans text-[#d4c5a9] tracking-[0.2em] font-bold uppercase drop-shadow-md">
-              {isReady ? "Seal Broken" : "Unsealing Artifacts"}
+              {isReady ? t.loading.sealBroken : t.loading.unsealing}
             </h2>
 
             <AnimatePresence mode="wait">
@@ -127,7 +129,7 @@ export function LoadingScreen() {
                   onClick={handleEnter}
                   className="px-8 py-2 bg-[#c5a059] text-[#2c241b] rounded-sm font-serif font-bold tracking-widest hover:bg-[#d4af37] transition-colors border border-[#8d6e63] shadow-lg animate-pulse"
                 >
-                  ENTER REALM
+                  {t.loading.enter}
                 </motion.button>
               ) : (
                 <motion.div
@@ -138,7 +140,9 @@ export function LoadingScreen() {
                   className="flex items-center gap-3 justify-center text-[#8d6e63] font-serif italic text-sm"
                 >
                   <Scroll size={14} />
-                  <span>Gathering mana... {Math.round(progress)}%</span>
+                  <span>
+                    {t.loading.gathering} {Math.round(progress)}%
+                  </span>
                   <Compass size={14} />
                 </motion.div>
               )}

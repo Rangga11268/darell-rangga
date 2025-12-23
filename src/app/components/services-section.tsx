@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import {
   Card,
@@ -10,44 +9,41 @@ import {
 } from "@/components/ui/card";
 import { Code, Palette, Rocket, Zap, Smartphone, Database } from "lucide-react";
 import { SectionTitle } from "@/app/components/section-title";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function ServicesSection() {
+  const { t } = useLanguage();
+
   const services = [
     {
       icon: Code,
-      title: "Web Artificing",
-      description:
-        "Building full-stack web applications using Laravel, PHP, and modern frontend technologies like HTML, CSS, and JavaScript.",
+      title: t.services.items.web.title,
+      description: t.services.items.web.desc,
     },
     {
       icon: Database,
-      title: "Scroll Keeping",
-      description:
-        "Designing and managing MySQL databases with CRUD operations for data-driven applications.",
+      title: t.services.items.db.title,
+      description: t.services.items.db.desc,
     },
     {
       icon: Palette,
-      title: "Visual Sorcery",
-      description:
-        "Creating responsive and user-friendly interfaces using HTML, CSS, JavaScript, and modern frameworks.",
+      title: t.services.items.visual.title,
+      description: t.services.items.visual.desc,
     },
     {
       icon: Smartphone,
-      title: "Mobile Enchantment",
-      description:
-        "Developing websites that look and function perfectly on all devices, from mobile phones to desktop computers.",
+      title: t.services.items.mobile.title,
+      description: t.services.items.mobile.desc,
     },
     {
       icon: Zap,
-      title: "Speed Alchemy",
-      description:
-        "Optimizing web applications for speed, efficiency, and search engine visibility to improve user experience.",
+      title: t.services.items.speed.title,
+      description: t.services.items.speed.desc,
     },
     {
       icon: Rocket,
-      title: "Deployment Rituals",
-      description:
-        "Deploying web applications to hosting platforms with proper configuration and optimization.",
+      title: t.services.items.deploy.title,
+      description: t.services.items.deploy.desc,
     },
   ];
 
@@ -61,7 +57,7 @@ export function ServicesSection() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionTitle title="My Services" subtitle="Artifacts I Can Provide" />
+        <SectionTitle title={t.services.title} subtitle={t.services.subtitle} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {

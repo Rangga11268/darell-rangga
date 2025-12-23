@@ -19,6 +19,7 @@ import {
   Scroll,
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
+import { useLanguage } from "@/app/providers/language-provider";
 
 const contactInfo = [
   {
@@ -65,6 +66,7 @@ const socialLinks = [
 ];
 
 export function ContactSection() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -118,7 +120,7 @@ export function ContactSection() {
       <div className="absolute inset-0 bg-[#2c241b]/5 -z-10" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionTitle title="Send a Dove" subtitle="I Await Your Missive" />
+        <SectionTitle title={t.contact.title} subtitle={t.contact.subtitle} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Contact Info Cards */}
@@ -176,7 +178,7 @@ export function ContactSection() {
               <Card className="bg-[#f4e4bc] dark:bg-[#2c241b] border-2 border-[#8d6e63] shadow-md">
                 <CardContent className="p-6">
                   <h3 className="font-bold mb-4 font-sans text-[#3e2723] dark:text-[#d7ccc8]">
-                    Follow Me
+                    {t.contact.followMe}
                   </h3>
                   <div className="flex gap-3">
                     {socialLinks.map((social, index) => (
@@ -220,10 +222,10 @@ export function ContactSection() {
               <CardContent className="p-8 relative z-10">
                 <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] flex items-center gap-2">
                   <Scroll className="w-6 h-6" />
-                  Scribe a Message
+                  {t.contact.formTitle}
                 </h3>
                 <p className="text-[#5d4037] dark:text-[#a1887f] mb-8 font-serif italic">
-                  Fill out the parchment and I shall reply with haste.
+                  {t.contact.formDesc}
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -233,7 +235,7 @@ export function ContactSection() {
                         htmlFor="name"
                         className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
                       >
-                        Name
+                        {t.contact.nameLabel}
                       </label>
                       <Input
                         id="name"
@@ -243,7 +245,7 @@ export function ContactSection() {
                         required
                         disabled={isSubmitting}
                         className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
-                        placeholder="Sir John Doe"
+                        placeholder={t.contact.namePlaceholder}
                       />
                     </div>
 
@@ -252,7 +254,7 @@ export function ContactSection() {
                         htmlFor="email"
                         className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
                       >
-                        Email
+                        {t.contact.emailLabel}
                       </label>
                       <Input
                         type="email"
@@ -263,7 +265,7 @@ export function ContactSection() {
                         required
                         disabled={isSubmitting}
                         className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors h-12 font-serif text-lg"
-                        placeholder="john@example.com"
+                        placeholder={t.contact.emailPlaceholder}
                       />
                     </div>
                   </div>
@@ -273,7 +275,7 @@ export function ContactSection() {
                       htmlFor="message"
                       className="block text-sm font-bold mb-2 text-[#3e2723] dark:text-[#d7ccc8] uppercase tracking-wider"
                     >
-                      Message
+                      {t.contact.messageLabel}
                     </label>
                     <Textarea
                       id="message"
@@ -284,7 +286,7 @@ export function ContactSection() {
                       required
                       disabled={isSubmitting}
                       className="bg-[#fff8e1] dark:bg-[#3e2723] border-[#8d6e63] focus:border-primary transition-colors resize-none font-serif text-lg"
-                      placeholder="Your words here..."
+                      placeholder={t.contact.messagePlaceholder}
                     />
                   </div>
 
@@ -294,7 +296,7 @@ export function ContactSection() {
                       animate={{ opacity: 1, y: 0 }}
                       className="p-4 rounded-sm bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-sm font-serif"
                     >
-                      ✓ Message successfully given to the courier!
+                      {t.contact.success}
                     </motion.div>
                   )}
 
@@ -304,7 +306,7 @@ export function ContactSection() {
                       animate={{ opacity: 1, y: 0 }}
                       className="p-4 rounded-sm bg-destructive/10 border border-destructive/20 text-destructive text-sm font-serif"
                     >
-                      ✗ The courier stumbled. Please try again.
+                      {t.contact.error}
                     </motion.div>
                   )}
 
@@ -317,12 +319,12 @@ export function ContactSection() {
                       {isSubmitting ? (
                         <>
                           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                          Sealing...
+                          {t.contact.submitting}
                         </>
                       ) : (
                         <>
                           <Feather className="mr-2 h-5 w-5" />
-                          Seal & Send
+                          {t.contact.submitButton}
                         </>
                       )}
                     </span>
