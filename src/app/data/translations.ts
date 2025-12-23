@@ -30,6 +30,44 @@ export const translations = {
       education: "Education",
       arsenal: "Arsenal",
       incantations: "Known Incantations",
+      history: {
+        jobs: [
+          {
+            title: "Freelance Web Developer",
+            company: "Self-employed",
+            period: "2023 - Present",
+            description:
+              "Forging responsive websites and web applications for various patrons using modern artifacts like React, Next.js, and Tailwind CSS.",
+          },
+        ],
+        schools: [
+          {
+            degree: "Bachelor of Information Systems",
+            school: "Bina Sarana Informatika University",
+            period: "2024 - Present",
+            description:
+              "Currently pursuing knowledge in Information Systems with a focus on web development and software engineering.",
+          },
+        ],
+      },
+      highlights: {
+        cleanCode: {
+          title: "Clean Code",
+          desc: "Scribing maintainable and scalable runes following best practices",
+        },
+        artistic: {
+          title: "Artistic Design",
+          desc: "Creating beautiful, user-friendly interfaces with attention to detail",
+        },
+        performance: {
+          title: "Performance",
+          desc: "Optimizing for speed and efficiency in every project",
+        },
+        fastLearner: {
+          title: "Fast Learner",
+          desc: "Quickly adapting to new technologies and frameworks",
+        },
+      },
     },
     projects: {
       title: "My Creations",
@@ -129,6 +167,44 @@ export const translations = {
       education: "Pendidikan",
       arsenal: "Persenjataan",
       incantations: "Mantra yang Dikuasai",
+      history: {
+        jobs: [
+          {
+            title: "Pengembang Web Lepas",
+            company: "Wiraswasta",
+            period: "2023 - Sekarang",
+            description:
+              "Menempa situs web dan aplikasi responsif untuk berbagai pelanggan menggunakan artefak modern seperti React, Next.js, dan Tailwind CSS.",
+          },
+        ],
+        schools: [
+          {
+            degree: "Sarjana Sistem Informasi",
+            school: "Universitas Bina Sarana Informatika",
+            period: "2024 - Sekarang",
+            description:
+              "Saat ini sedang menimba ilmu Sistem Informasi dengan fokus pada pengembangan web dan rekayasa perangkat lunak.",
+          },
+        ],
+      },
+      highlights: {
+        cleanCode: {
+          title: "Kode Bersih",
+          desc: "Menulis rune yang dapat dipelihara dan diskalakan mengikuti praktik terbaik",
+        },
+        artistic: {
+          title: "Desain Artistik",
+          desc: "Menciptakan antarmuka yang indah dan ramah pengguna dengan perhatian pada detail",
+        },
+        performance: {
+          title: "Performa",
+          desc: "Mengoptimalkan kecepatan dan efisiensi di setiap proyek",
+        },
+        fastLearner: {
+          title: "Pembelajar Cepat",
+          desc: "Beradaptasi dengan cepat terhadap teknologi dan kerangka kerja baru",
+        },
+      },
     },
     projects: {
       title: "Ciptaan Saya",

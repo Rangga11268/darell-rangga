@@ -33,51 +33,29 @@ const skills = [
   "Framer Motion",
 ];
 
-const experiences = [
-  {
-    title: "Freelance Web Developer",
-    company: "Self-employed",
-    period: "2023 - Present",
-    description:
-      "Forging responsive websites and web applications for various patrons using modern artifacts like React, Next.js, and Tailwind CSS.",
-  },
-];
-
-const education = [
-  {
-    degree: "Bachelor of Information Systems",
-    school: "Bina Sarana Informatika University",
-    period: "2024 - Present",
-    description:
-      "Currently pursuing knowledge in Information Systems with a focus on web development and software engineering.",
-  },
-];
-
 export function AboutSection() {
   const { t } = useLanguage();
 
   const highlights = [
     {
       icon: Code2,
-      title: "Clean Code",
-      description:
-        "Scribing maintainable and scalable runes following best practices",
+      title: t.about.highlights.cleanCode.title,
+      description: t.about.highlights.cleanCode.desc,
     },
     {
       icon: Palette,
-      title: "Artistic Design",
-      description:
-        "Creating beautiful, user-friendly interfaces with attention to detail",
+      title: t.about.highlights.artistic.title,
+      description: t.about.highlights.artistic.desc,
     },
     {
       icon: Rocket,
-      title: "Performance",
-      description: "Optimizing for speed and efficiency in every project",
+      title: t.about.highlights.performance.title,
+      description: t.about.highlights.performance.desc,
     },
     {
       icon: Zap,
-      title: "Fast Learner",
-      description: "Quickly adapting to new technologies and frameworks",
+      title: t.about.highlights.fastLearner.title,
+      description: t.about.highlights.fastLearner.desc,
     },
   ];
 
@@ -121,7 +99,7 @@ export function AboutSection() {
                 <Map className="w-5 h-5 text-primary" />
                 {t.about.experience}
               </h4>
-              {experiences.map((exp, index) => (
+              {t.about.history.jobs.map((exp, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
@@ -148,7 +126,7 @@ export function AboutSection() {
                 <BookOpen className="w-5 h-5 text-primary" />
                 {t.about.education}
               </h4>
-              {education.map((edu, index) => (
+              {t.about.history.schools.map((edu, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
