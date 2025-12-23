@@ -26,7 +26,7 @@ export function FloatingNavbar() {
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -38,144 +38,160 @@ export function FloatingNavbar() {
     <>
       <motion.header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center pt-4 px-4",
-          isScrolled ? "pt-2" : "pt-6"
+          "fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500",
+          isScrolled ? "pt-2 pb-2" : "pt-6 pb-4"
         )}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <nav
-          className={cn(
-            "flex items-center justify-between px-6 py-3 rounded-lg transition-all duration-300 w-full max-w-5xl",
-            isScrolled || isMobileMenuOpen
-              ? "bg-[#2c241b]/90 dark:bg-[#1a1614]/90 backdrop-blur-md border-[3px] border-[#8d6e63] shadow-xl"
-              : "bg-transparent border-transparent"
-          )}
-          style={{
-            boxShadow: isScrolled
-              ? "0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)"
-              : "none",
-          }}
-        >
-          {/* Logo */}
-          <a
-            href="#"
-            className="text-xl font-bold tracking-tighter flex items-center gap-2 group"
+        <div className="relative w-full max-w-5xl px-4">
+          {/* Main Glass Container */}
+          <nav
+            className={cn(
+              "relative flex items-center justify-between px-6 py-3 rounded-2xl transition-all duration-500",
+              isScrolled
+                ? "bg-background/80 backdrop-blur-xl border border-border/50 shadow-2xl shadow-primary/5"
+                : "bg-transparent border border-transparent"
+            )}
           >
-            <div className="w-10 h-10 rounded-sm bg-primary border-2 border-[#3e2723] flex items-center justify-center text-[#3e2723] font-serif font-bold text-2xl rotate-45 group-hover:rotate-0 transition-transform duration-500 shadow-md">
-              <span className="-rotate-45 group-hover:rotate-0 transition-transform duration-500">
-                D
-              </span>
-            </div>
-            <span className="hidden sm:inline-block font-sans tracking-widest text-primary drop-shadow-md">
-              DARELL
-            </span>
-          </a>
-
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-2">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="px-4 py-2 relative group overflow-hidden"
-                >
-                  <span className="relative z-10 text-sm font-bold text-[#d4c5a9] group-hover:text-[#3e2723] transition-colors duration-300 font-sans tracking-wide uppercase">
-                    {item.name}
-                  </span>
-                  <span className="absolute inset-0 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left -z-0"></span>
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary font-bold font-serif w-10 h-10 border border-transparent hover:border-[#d4af37]/50"
-              onClick={toggleLanguage}
-            >
-              <span className="text-xs">{language === "en" ? "EN" : "ID"}</span>
-              <span className="sr-only">Toggle language</span>
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary relative overflow-hidden"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              <AnimatePresence mode="wait">
-                {theme === "dark" ? (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Moon className="h-5 w-5 text-blue-200 drop-shadow-[0_0_8px_rgba(191,219,254,0.8)]" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Sun className="h-5 w-5 text-yellow-500 drop-shadow-[0_0_8px_rgba(234,179,8,0.8)]" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden rounded-full text-[#d4c5a9] hover:bg-primary/20 hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
+            {/* Glowing Bottom Line (Visible on Scroll) */}
+            <div
+              className={cn(
+                "absolute bottom-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent transition-opacity duration-500",
+                isScrolled ? "opacity-100" : "opacity-0"
               )}
-            </Button>
-          </div>
-        </nav>
+            />
+
+            {/* Logo */}
+            <a
+              href="#"
+              className="relative z-10 text-xl font-bold tracking-tighter flex items-center gap-3 group"
+            >
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                <div className="absolute inset-0 bg-primary/20 rounded-lg rotate-45 group-hover:rotate-90 transition-transform duration-500" />
+                <div className="absolute inset-0 border-2 border-primary rounded-lg rotate-45 group-hover:rotate-0 transition-transform duration-500" />
+                <span className="relative font-serif font-bold text-2xl text-primary">
+                  D
+                </span>
+              </div>
+              <span className="hidden sm:inline-block font-sans font-bold tracking-[0.2em] text-foreground text-xl uppercase group-hover:text-primary transition-colors duration-300">
+                Darell
+              </span>
+            </a>
+
+            {/* Desktop Navigation */}
+            <ul className="hidden md:flex items-center gap-1">
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    className="relative px-4 py-2 text-lg font-bold tracking-wide text-muted-foreground hover:text-primary transition-colors duration-300 group overflow-hidden rounded-md block"
+                  >
+                    <span className="relative z-10">{item.name}</span>
+                    {/* Hover Glow Background */}
+                    <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md" />
+                    {/* Bottom Line Indicator */}
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            {/* Actions */}
+            <div className="flex items-center gap-1">
+              {/* Language Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                onClick={toggleLanguage}
+              >
+                <span className="text-base font-bold font-sans tracking-wider">
+                  {language === "en" ? "EN" : "ID"}
+                </span>
+              </Button>
+
+              {/* Theme Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors relative"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                <AnimatePresence mode="wait">
+                  {theme === "dark" ? (
+                    <motion.div
+                      key="moon"
+                      initial={{ rotate: -90, scale: 0 }}
+                      animate={{ rotate: 0, scale: 1 }}
+                      exit={{ rotate: 90, scale: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Moon className="h-4 w-4" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="sun"
+                      initial={{ rotate: 90, scale: 0 }}
+                      animate={{ rotate: 0, scale: 1 }}
+                      exit={{ rotate: -90, scale: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Sun className="h-4 w-4" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Button>
+
+              {/* Mobile Menu Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </Button>
+            </div>
+          </nav>
+        </div>
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - "Unrolling Scroll" Effect */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-x-4 top-24 z-40 md:hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed top-[80px] left-4 right-4 z-40 md:hidden overflow-hidden"
           >
-            <div className="bg-[#2c241b] border-2 border-[#8d6e63] rounded-lg shadow-2xl p-4 flex flex-col gap-2 relative overflow-hidden">
-              {/* Decorative corners */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary"></div>
-              <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary"></div>
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary"></div>
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary"></div>
+            <div className="bg-background/95 backdrop-blur-xl border border-primary/20 rounded-2xl shadow-xl p-2 flex flex-col relative">
+              {/* Decorative Pattern Background */}
+              <div className="absolute inset-0 bg-[url('/img/noise.png')] opacity-5 pointer-events-none" />
 
-              {navItems.map((item) => (
-                <a
+              {navItems.map((item, index) => (
+                <motion.a
                   key={item.name}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.05 }}
                   href={item.href}
-                  className="px-4 py-3 text-center text-[#d4c5a9] hover:bg-[#3e2723] hover:text-primary border-b border-[#3e2723] last:border-0 transition-colors font-sans uppercase tracking-widest"
+                  className="px-4 py-3 text-center text-lg font-bold tracking-widest uppercase text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-xl transition-all duration-300"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
-                </a>
+                </motion.a>
               ))}
+
+              {/* Decorative Rune Footer */}
+              <div className="h-1 w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent mt-2" />
             </div>
           </motion.div>
         )}
