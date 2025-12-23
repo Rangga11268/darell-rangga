@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,146 @@ import Image from "next/image";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 import { Map } from "lucide-react";
+
+const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  const { t } = useLanguage();
+
+  // 3D Tilt Logic
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useTransform(y, [-100, 100], [10, -10]);
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+
+  // Shiny border effect
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct * 200);
+    y.set(yPct * 200);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      style={{
+        perspective: 1000,
+      }}
+      className={cn("h-full", project.colSpan)}
+    >
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        className={cn(
+          "group relative h-full rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-[#c5a059]/30 transition-shadow duration-500 flex flex-col"
+        )}
+      >
+        {/* Shiny Edge Effect */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-30">
+          <div className="absolute inset-[-150%] bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent rotate-[25deg] translate-x-[-100%] group-hover:animate-shine" />
+        </div>
+
+        {/* Image Section - Pop Effect */}
+        <div
+          className="relative h-48 md:h-56 m-2 mb-0 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm shrink-0"
+          style={{ transform: "translateZ(20px)" }}
+        >
+          <Image
+            src={project.imageUrl}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-110 sepia-[.3] group-hover:sepia-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#f4e4bc] dark:from-[#2c241b] via-transparent to-transparent opacity-80 z-10" />
+        </div>
+
+        {/* Content Section */}
+        <div
+          className="relative z-20 flex-1 flex flex-col justify-between p-6"
+          style={{ transform: "translateZ(30px)" }}
+        >
+          {/* Decorative rivets */}
+          <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+          <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+          <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+          <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
+
+          <div className="transform translate-y-0 transition-transform duration-500 text-center flex-1 flex flex-col">
+            {/* Tags Group */}
+            <div className="flex flex-wrap justify-center gap-2 mb-4">
+              {project.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-sm bg-[#8d6e63]/20 text-[#3e2723] dark:text-[#d7ccc8] border border-[#8d6e63]/50"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] group-hover:text-primary transition-colors uppercase tracking-wide">
+              {project.title}
+            </h3>
+
+            <p className="text-[#5d4037] dark:text-[#a1887f] mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500 font-serif text-sm px-4">
+              {project.description}
+            </p>
+
+            <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100 mt-auto">
+              <Button
+                size="sm"
+                className="rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 font-serif font-bold tracking-wider border border-[#3e2723] shadow-md hover:shadow-lg"
+                asChild
+              >
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  {t.projects.viewProject}
+                </a>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="rounded-sm bg-transparent border-[#8d6e63] text-[#3e2723] dark:text-[#d7ccc8] hover:bg-[#8d6e63]/20 font-serif"
+                asChild
+              >
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="w-4 h-4 mr-2" />
+                  {t.projects.sourceCode}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 export function ProjectsSection() {
   const { t } = useLanguage();
@@ -97,91 +237,7 @@ export function ProjectsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[minmax(350px,auto)]">
           {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={cn(
-                "group relative rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 flex flex-col",
-                project.colSpan
-              )}
-            >
-              {/* Image Section */}
-              <div className="relative h-48 md:h-56 m-2 mb-0 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm shrink-0">
-                <Image
-                  src={project.imageUrl}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110 sepia-[.3] group-hover:sepia-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#f4e4bc] dark:from-[#2c241b] via-transparent to-transparent opacity-80 z-10" />
-              </div>
-
-              {/* Content Section */}
-              <div className="relative z-20 flex-1 flex flex-col justify-between p-6">
-                {/* Decorative rivets */}
-                <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-                <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-                <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-                <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-
-                <div className="transform translate-y-0 transition-transform duration-500 text-center flex-1 flex flex-col">
-                  {/* Tags Group */}
-                  <div className="flex flex-wrap justify-center gap-2 mb-4">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-sm bg-[#8d6e63]/20 text-[#3e2723] dark:text-[#d7ccc8] border border-[#8d6e63]/50"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] group-hover:text-primary transition-colors uppercase tracking-wide">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-[#5d4037] dark:text-[#a1887f] mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500 font-serif text-sm px-4">
-                    {project.description}
-                  </p>
-
-                  <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100 mt-auto">
-                    <Button
-                      size="sm"
-                      className="rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 font-serif font-bold tracking-wider border border-[#3e2723]"
-                      asChild
-                    >
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        {t.projects.viewProject}
-                      </a>
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-sm bg-transparent border-[#8d6e63] text-[#3e2723] dark:text-[#d7ccc8] hover:bg-[#8d6e63]/20 font-serif"
-                      asChild
-                    >
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="w-4 h-4 mr-2" />
-                        {t.projects.sourceCode}
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
 

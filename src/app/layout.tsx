@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { BackgroundAudio } from "@/app/components/background-audio";
 import { LanguageProvider } from "@/app/providers/language-provider";
+import { MagicCanvas } from "@/app/components/magic-canvas";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <BackgroundAudio />
+            <MagicCanvas />
             {children}
           </LanguageProvider>
         </ThemeProvider>

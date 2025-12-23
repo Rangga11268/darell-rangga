@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
+import { HeroArtifact } from "./hero-artifact";
 
 export function HeroSection() {
   const { t } = useLanguage();
@@ -128,9 +129,14 @@ export function HeroSection() {
             className="flex justify-center lg:justify-end relative"
           >
             <div className="relative w-72 h-72 sm:w-96 sm:h-96">
+              {/* 3D Artifact Background - Subtle Magic Behind Portrait */}
+              <div className="absolute inset-[-50%] z-0 opacity-60 pointer-events-none">
+                <HeroArtifact />
+              </div>
+
               {/* Ancient Runes Rings */}
               {/* Outer Ring */}
-              <div className="absolute inset-[-20px] rounded-full border border-[#8d6e63]/30 animate-[spin_20s_linear_infinite]">
+              <div className="absolute inset-[-20px] rounded-full border border-[#8d6e63]/30 animate-[spin_20s_linear_infinite] z-10">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
@@ -138,10 +144,10 @@ export function HeroSection() {
               </div>
 
               {/* Middle Ring (Dashed) */}
-              <div className="absolute inset-[-10px] rounded-full border border-dashed border-[#c5a059]/40 animate-[spin_15s_linear_infinite_reverse]" />
+              <div className="absolute inset-[-10px] rounded-full border border-dashed border-[#c5a059]/40 animate-[spin_15s_linear_infinite_reverse] z-10" />
 
               {/* Inner Decorative Ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-[#8d6e63] shadow-2xl overflow-hidden group">
+              <div className="absolute inset-0 rounded-full border-4 border-[#8d6e63] shadow-2xl overflow-hidden group z-20">
                 {/* Image Container */}
                 <div className="absolute inset-0 z-0">
                   <Image
@@ -161,7 +167,7 @@ export function HeroSection() {
 
               {/* Floating Parchment Badges */}
               <motion.div
-                className="absolute -right-8 top-10 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl rotate-[5deg]"
+                className="absolute -right-8 top-10 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl rotate-[5deg] z-30"
                 animate={{ y: [0, -8, 0], rotate: [5, 3, 5] }}
                 transition={{
                   duration: 4,
@@ -176,7 +182,7 @@ export function HeroSection() {
               </motion.div>
 
               <motion.div
-                className="absolute -left-8 bottom-16 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl -rotate-[3deg]"
+                className="absolute -left-8 bottom-16 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl -rotate-[3deg] z-30"
                 animate={{ y: [0, 8, 0], rotate: [-3, -5, -3] }}
                 transition={{
                   duration: 5,
