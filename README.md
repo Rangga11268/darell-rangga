@@ -84,10 +84,12 @@ Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 ## 📊 Statistik Penyihir (GitHub Stats)
 
 <div align="center">
-[![Rangga's Stats](https://github-readme-stats.vercel.app/api?username=Rangga11268&show_icons=true&theme=tokyonight&hide_border=true)](https://github.com/Rangga11268)
-
-[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Rangga11268&layout=compact&theme=tokyonight&hide_border=true)](https://github.com/Rangga11268)
-
+  <a href="https://github.com/Rangga11268">
+    <img src="https://github-readme-stats.vercel.app/api?username=Rangga11268&show_icons=true&theme=tokyonight&hide_border=true" alt="Rangga's Stats" />
+  </a>
+  <a href="https://github.com/Rangga11268">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rangga11268&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages" />
+  </a>
 </div>
 
 ---
