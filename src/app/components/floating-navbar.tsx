@@ -45,7 +45,7 @@ export function FloatingNavbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="relative w-full max-w-5xl px-4">
+        <div className="relative w-full max-w-7xl px-4">
           {/* Main Glass Container */}
           <nav
             className={cn(
@@ -75,18 +75,18 @@ export function FloatingNavbar() {
                   D
                 </span>
               </div>
-              <span className="hidden sm:inline-block font-sans font-bold tracking-[0.2em] text-foreground text-xl uppercase group-hover:text-primary transition-colors duration-300">
+              <span className="hidden sm:inline-block font-sans font-bold tracking-[0.2em] text-foreground text-xl xl:text-2xl uppercase group-hover:text-primary transition-colors duration-300">
                 Darell
               </span>
             </a>
 
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex items-center gap-1">
+            <ul className="hidden md:flex items-center gap-1 xl:gap-2">
               {navItems.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="relative px-4 py-2 text-lg font-bold tracking-wide text-muted-foreground hover:text-primary transition-colors duration-300 group overflow-hidden rounded-md block"
+                    className="relative px-4 py-2 text-lg xl:text-xl font-bold tracking-wide text-muted-foreground hover:text-primary transition-colors duration-300 group overflow-hidden rounded-md block"
                   >
                     <span className="relative z-10">{item.name}</span>
                     {/* Hover Glow Background */}
@@ -107,7 +107,7 @@ export function FloatingNavbar() {
                 className="rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                 onClick={toggleLanguage}
               >
-                <span className="text-base font-bold font-sans tracking-wider">
+                <span className="text-base xl:text-lg font-bold font-sans tracking-wider">
                   {language === "en" ? "EN" : "ID"}
                 </span>
               </Button>
