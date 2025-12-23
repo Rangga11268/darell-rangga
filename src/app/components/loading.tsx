@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Star, Compass, Scroll, Gem } from "lucide-react";
+import { Star, Compass, Scroll, Gem } from "lucide-react";
 
 export function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);

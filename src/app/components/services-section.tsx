@@ -8,17 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Code,
-  Palette,
-  Rocket,
-  Zap,
-  Smartphone,
-  Database,
-  Scroll,
-  Hammer,
-  Gem,
-} from "lucide-react";
+import { Code, Palette, Rocket, Zap, Smartphone, Database } from "lucide-react";
 import { SectionTitle } from "@/app/components/section-title";
 
 export function ServicesSection() {

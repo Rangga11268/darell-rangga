@@ -15,7 +15,6 @@ import {
   Loader2,
   Phone,
   Instagram,
-  Send,
   Feather,
   Scroll,
 } from "lucide-react";

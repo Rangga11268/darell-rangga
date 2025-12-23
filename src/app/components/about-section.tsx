@@ -107,10 +107,10 @@ export function AboutSection() {
                 My Journey
               </h3>
               <p className="text-lg leading-relaxed font-serif italic">
-                "I am a passionate artificer of the digital realm, weaving
+                &quot;I am a passionate artificer of the digital realm, weaving
                 spells of code to build robust web applications. I specialize in
                 creating responsive, accessible, and performant artifacts using
-                modern technologies."
+                modern technologies.&quot;
               </p>
               <p className="leading-relaxed">
                 As a scholar and aspiring developer, I combine academic
