@@ -84,8 +84,10 @@ Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 ## 📊 Statistik Penyihir (GitHub Stats)
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Rangga11268&show_icons=true&theme=gotham&hide_border=true&bg_color=00000000" alt="Rangga's Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rangga11268&layout=compact&theme=gotham&hide_border=true&bg_color=00000000" alt="Top Languages" />
+[![Rangga's Stats](https://github-readme-stats.vercel.app/api?username=Rangga11268&show_icons=true&theme=tokyonight&hide_border=true)](https://github.com/Rangga11268)
+
+[![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Rangga11268&layout=compact&theme=tokyonight&hide_border=true)](https://github.com/Rangga11268)
+
 </div>
 
 ---
