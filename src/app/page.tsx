@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { FloatingNavbar } from "@/app/components/floating-navbar";
 import { HeroSection } from "@/app/components/hero-section";
 import { AboutSection } from "@/app/components/about-section";
@@ -26,21 +26,22 @@ export default function Home() {
   // Accessibility improvements
   useEffect(() => {
     // Add skip link for keyboard navigation
-    const skipLink = document.createElement('a');
-    skipLink.href = '#main-content';
-    skipLink.textContent = 'Skip to main content';
-    skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-background focus:text-foreground focus:px-4 focus:py-2 focus:rounded-md focus:ring-2 focus:ring-primary';
+    const skipLink = document.createElement("a");
+    skipLink.href = "#main-content";
+    skipLink.textContent = "Skip to main content";
+    skipLink.className =
+      "sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-background focus:text-foreground focus:px-6 focus:py-3 focus:rounded-md focus:ring-2 focus:ring-primary focus:shadow-xl font-bold";
     document.body.insertBefore(skipLink, document.body.firstChild);
-    
+
     // Set focus management for modals/dialogs
     const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
+      if (e.key === "Tab") {
         // Add tab trap logic if needed for modals
       }
     };
-    
-    document.addEventListener('keydown', handleTabKey);
-    return () => document.removeEventListener('keydown', handleTabKey);
+
+    document.addEventListener("keydown", handleTabKey);
+    return () => document.removeEventListener("keydown", handleTabKey);
   }, []);
 
   if (isLoading) {
@@ -59,9 +60,14 @@ export default function Home() {
       </main>
       <Footer />
       <BackToTop />
-      
+
       {/* Accessibility announcements */}
-      <div id="a11y-announcer" className="sr-only" aria-live="polite" aria-atomic="true"></div>
+      <div
+        id="a11y-announcer"
+        className="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
     </div>
   );
 }

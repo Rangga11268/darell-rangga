@@ -90,7 +90,7 @@ export function HeroSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-sm text-lg px-8 h-12 border-2 border-[#8d6e63] text-[#8d6e63] hover:bg-[#8d6e63]/10 hover:text-[#c5a059] font-serif font-bold"
+                className="rounded-sm text-lg px-8 h-12 border-2 border-[#8d6e63] text-[#5d4037] hover:bg-[#8d6e63]/10 hover:text-[#c5a059] font-serif font-bold"
                 asChild
               >
                 <a href="#contact">{t.hero.contactMe}</a>
@@ -114,7 +114,8 @@ export function HeroSection() {
                 <a
                   key={index}
                   href={social.href}
-                  className="text-[#8d6e63] hover:text-[#d4af37] transition-all transform hover:scale-110 duration-200 hover:-translate-y-1"
+                  className="text-[#8d6e63] hover:text-[#d4af37] transition-all transform hover:scale-110 duration-200 hover:-translate-y-1 block p-2"
+                  aria-label={`Visit ${social.icon.name || "Social Profile"}`}
                 >
                   <social.icon className="w-6 h-6" />
                 </a>

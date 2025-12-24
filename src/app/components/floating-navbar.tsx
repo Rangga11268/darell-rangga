@@ -106,6 +106,7 @@ export function FloatingNavbar() {
                 size="icon"
                 className="rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
                 onClick={toggleLanguage}
+                aria-label="Toggle Language"
               >
                 <span className="text-base xl:text-lg font-bold font-sans tracking-wider">
                   {language === "en" ? "EN" : "ID"}
@@ -118,6 +119,7 @@ export function FloatingNavbar() {
                 size="icon"
                 className="rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors relative"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle Theme"
               >
                 <AnimatePresence mode="wait">
                   {theme === "dark" ? (
@@ -150,6 +152,7 @@ export function FloatingNavbar() {
                 size="icon"
                 className="md:hidden rounded-full w-9 h-9 text-muted-foreground hover:text-primary hover:bg-primary/10"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle Mobile Menu"
               >
                 {isMobileMenuOpen ? (
                   <X className="h-5 w-5" />
