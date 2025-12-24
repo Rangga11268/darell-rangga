@@ -154,6 +154,7 @@ export function HeroSection() {
                     src="/img/me3.jpeg"
                     alt="Darell Rangga"
                     fill
+                    sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 400px"
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700 sepia-[0.3]"
                     priority
                   />

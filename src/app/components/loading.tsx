@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, Compass, Scroll, Gem } from "lucide-react";
+import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
 
 export function LoadingScreen() {
@@ -44,7 +45,17 @@ export function LoadingScreen() {
         className="fixed inset-0 bg-[#0c0a09] z-[100] flex items-center justify-center overflow-hidden"
       >
         {/* Ambient Background Effects */}
-        <div className="absolute inset-0 bg-[url('/img/BgExample.png')] opacity-30 mix-blend-overlay pointer-events-none"></div>
+        <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none">
+          <Image
+            src="/img/BgExample.png"
+            alt="Background Texture"
+            fill
+            className="object-cover"
+            quality={60}
+            priority
+            sizes="100vw"
+          />
+        </div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none"></div>
 
         <div className="flex flex-col items-center relative z-10 p-10">

@@ -62,7 +62,7 @@ export function BackgroundAudio() {
         ref={audioRef}
         src="/audio/ancient-wind-112528.mp3"
         loop
-        preload="auto"
+        preload="none"
       />
 
       <AnimatePresence>

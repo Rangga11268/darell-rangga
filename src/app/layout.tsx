@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Cinzel, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
-import { BackgroundAudio } from "@/app/components/background-audio";
 import { LanguageProvider } from "@/app/providers/language-provider";
-import { MagicCanvas } from "@/app/components/magic-canvas";
-import { RuneClickEffect } from "@/app/components/rune-click-effect";
+import { DynamicEffects } from "@/app/components/dynamic-effects";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -33,9 +31,7 @@ export default function RootLayout({
       <body className={`${cinzel.variable} ${cormorant.variable} antialiased`}>
         <ThemeProvider>
           <LanguageProvider>
-            <BackgroundAudio />
-            <MagicCanvas />
-            <RuneClickEffect />
+            <DynamicEffects />
             {children}
           </LanguageProvider>
         </ThemeProvider>

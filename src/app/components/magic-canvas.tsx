@@ -4,7 +4,7 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function Particles({ count = 100 }: { count?: number }) {
+function Particles({ count = 30 }: { count?: number }) {
   const mesh = useRef<THREE.InstancedMesh>(null);
   const light = useRef<THREE.PointLight>(null);
 
@@ -83,7 +83,7 @@ export function MagicCanvas() {
         <fog attach="fog" args={["#1a1614", 10, 40]} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#ffd700" />
-        <Particles count={50} />
+        <Particles count={30} />
       </Canvas>
     </div>
   );
