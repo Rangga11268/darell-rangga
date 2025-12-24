@@ -16,24 +16,6 @@ import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 import { SkillsConstellation } from "./skills-constellation";
 
-const skills = [
-  "HTML5",
-  "CSS3",
-  "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Tailwind CSS",
-  "Bootstrap",
-  "PHP",
-  "Laravel",
-  "MySQL",
-  "Git",
-  "RESTful APIs",
-  "Responsive Design",
-  "Framer Motion",
-];
-
 export function AboutSection() {
   const { t } = useLanguage();
 

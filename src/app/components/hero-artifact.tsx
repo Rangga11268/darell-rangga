@@ -61,7 +61,7 @@ export function HeroArtifact() {
 
   return (
     <div className="w-full h-full relative z-10 fade-in-scale">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} color="#ffd700" />
         <pointLight
@@ -75,7 +75,7 @@ export function HeroArtifact() {
         <Stars
           radius={100}
           depth={50}
-          count={1000}
+          count={500}
           factor={4}
           saturation={0}
           fade

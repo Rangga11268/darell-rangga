@@ -1,7 +1,6 @@
 "use client";
 
 import { useLanguage } from "@/app/providers/language-provider";
-import { motion } from "framer-motion";
 
 const SKILLS = [
   "HTML5",
@@ -44,12 +43,8 @@ const MarqueeRow = ({
         }}
       >
         {[...skills, ...skills].map((skill, i) => (
-          <motion.div
+          <div
             key={i}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            }}
             className="
                             relative
                             px-6 py-3
@@ -65,7 +60,8 @@ const MarqueeRow = ({
                             cursor-pointer
                             group/item
                             overflow-hidden
-                            transition-colors duration-300
+                            transition-all duration-300
+                            hover:scale-105 hover:shadow-lg
                             hover:bg-[#fffaeb] dark:hover:bg-[#2c241b]
                             hover:border-[#5d4037] dark:hover:border-[#8d6e63]
                         "
@@ -78,7 +74,7 @@ const MarqueeRow = ({
             <span className="relative z-10 transition-colors duration-300 group-hover:text-[#2a1b12] dark:group-hover:text-[#ffffff]">
               {skill}
             </span>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>
