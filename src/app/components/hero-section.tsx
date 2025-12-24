@@ -40,21 +40,17 @@ export function HeroSection() {
             className="space-y-8 text-center lg:text-left"
           >
             <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm border border-[#8d6e63] bg-[#f4e4bc] text-[#3e2723] text-sm font-bold font-serif tracking-wide shadow-sm"
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm border border-[#8d6e63] bg-[#f4e4bc] text-[#3e2723] text-sm font-bold font-serif tracking-wide shadow-sm animate-fade-up"
+                style={{ animationDelay: "0.2s" }}
               >
                 <Sparkles className="w-3 h-3 text-[#d4af37]" />
                 <span>{t.hero.available}</span>
-              </motion.div>
+              </div>
 
-              <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight font-sans"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+              <h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight font-sans animate-fade-up"
+                style={{ animationDelay: "0.3s" }}
               >
                 {t.hero.greeting}{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#c5a059] to-[#8d6e63] drop-shadow-sm">
@@ -62,16 +58,14 @@ export function HeroSection() {
                 </span>
                 <br />
                 <span className="text-[#a1887f]">{t.hero.role}</span>
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                className="text-lg sm:text-xl text-[#8d6e63] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-serif"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+              <p
+                className="text-lg sm:text-xl text-[#8d6e63] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-serif animate-fade-up"
+                style={{ animationDelay: "0.4s" }}
               >
                 {t.hero.description}
-              </motion.p>
+              </p>
             </div>
 
             <motion.div

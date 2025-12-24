@@ -36,15 +36,12 @@ const MarqueeRow = ({
       <div className="absolute inset-y-0 left-0 w-8 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-8 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <motion.div
-        initial={{ x: direction === "left" ? "0%" : "-50%" }}
-        animate={{ x: direction === "left" ? "-50%" : "0%" }}
-        transition={{
-          duration: speed,
-          ease: "linear",
-          repeat: Infinity,
+      <div
+        className="flex gap-3 md:gap-8 px-4 whitespace-nowrap will-change-transform group-hover:[animation-play-state:paused] animate-marquee"
+        style={{
+          animationDuration: `${speed}s`,
+          animationDirection: direction === "left" ? "normal" : "reverse",
         }}
-        className="flex gap-3 md:gap-8 px-4 whitespace-nowrap will-change-transform group-hover:[animation-play-state:paused]"
       >
         {[...skills, ...skills].map((skill, i) => (
           <motion.div
@@ -83,7 +80,7 @@ const MarqueeRow = ({
             </span>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
