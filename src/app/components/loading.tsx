@@ -53,7 +53,7 @@ export function LoadingScreen() {
             className="object-cover"
             quality={60}
             priority
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 1200px"
           />
         </div>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 via-transparent to-black/80 pointer-events-none"></div>

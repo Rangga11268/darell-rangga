@@ -14,8 +14,22 @@ import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
 import { HeroArtifact } from "./hero-artifact";
 
+// Hook to check for desktop view safely
+import { useState, useEffect } from "react";
+const useIsDesktop = () => {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isDesktop;
+};
+
 export function HeroSection() {
   const { t } = useLanguage();
+  const isDesktop = useIsDesktop();
 
   return (
     <section
@@ -122,9 +136,9 @@ export function HeroSection() {
             style={{ animationDelay: "0.2s" }}
           >
             <div className="relative w-72 h-72 sm:w-96 sm:h-96">
-              {/* 3D Artifact Background - Subtle Magic Behind Portrait */}
+              {/* 3D Artifact Background - Only on Desktop */}
               <div className="absolute inset-[-50%] z-0 opacity-60 pointer-events-none">
-                <HeroArtifact />
+                {isDesktop && <HeroArtifact />}
               </div>
 
               {/* Ancient Runes Rings */}
@@ -147,7 +161,7 @@ export function HeroSection() {
                     src="/img/me3.jpeg"
                     alt="Darell Rangga"
                     fill
-                    sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 400px"
+                    sizes="(max-width: 640px) 288px, (max-width: 1024px) 384px, 384px"
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700 sepia-[0.3]"
                     priority
                     loading="eager"

@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "@react-three/drei": "^10.7.7",
