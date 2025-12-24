@@ -157,6 +157,7 @@ export function HeroSection() {
                     sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 400px"
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700 sepia-[0.3]"
                     priority
+                    loading="eager"
                   />
                   {/* Overlay for vintage feel */}
                   <div className="absolute inset-0 bg-[#c5a059]/10 mix-blend-overlay pointer-events-none"></div>

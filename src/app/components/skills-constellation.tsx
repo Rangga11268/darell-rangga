@@ -46,7 +46,7 @@ const MarqueeRow = ({
         }}
         className="flex gap-3 md:gap-8 px-4 whitespace-nowrap will-change-transform group-hover:[animation-play-state:paused]"
       >
-        {[...skills, ...skills, ...skills, ...skills].map((skill, i) => (
+        {[...skills, ...skills].map((skill, i) => (
           <motion.div
             key={i}
             whileHover={{
