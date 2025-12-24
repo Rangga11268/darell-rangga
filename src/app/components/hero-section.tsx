@@ -117,11 +117,9 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center lg:justify-end relative"
+          <div
+            className="flex justify-center lg:justify-end relative animate-scale-up"
+            style={{ animationDelay: "0.2s" }}
           >
             <div className="relative w-72 h-72 sm:w-96 sm:h-96">
               {/* 3D Artifact Background - Subtle Magic Behind Portrait */}
@@ -153,6 +151,7 @@ export function HeroSection() {
                     className="object-cover transform group-hover:scale-110 transition-transform duration-700 sepia-[0.3]"
                     priority
                     loading="eager"
+                    fetchPriority="high"
                   />
                   {/* Overlay for vintage feel */}
                   <div className="absolute inset-0 bg-[#c5a059]/10 mix-blend-overlay pointer-events-none"></div>
@@ -196,7 +195,7 @@ export function HeroSection() {
                 </span>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         <motion.div
