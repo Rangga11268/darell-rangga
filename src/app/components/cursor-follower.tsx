@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CursorFollower() {
-  const [hidden, setHidden] = useState(false);
+  const [hidden] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
 

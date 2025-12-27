@@ -2,7 +2,6 @@
 
 import { Github, Linkedin, Twitter, Instagram } from "lucide-react";
 import { useLanguage } from "@/app/providers/language-provider";
-import { motion } from "framer-motion";
 
 export function Footer() {
   const { t } = useLanguage();

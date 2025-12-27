@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X, Globe } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 

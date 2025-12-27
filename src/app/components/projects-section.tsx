@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { Github, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";

@@ -56,8 +56,6 @@ const MarqueeRow = ({
 };
 
 export function SkillsConstellation() {
-  const { t } = useLanguage();
-
   return (
     <div className="w-full flex flex-col gap-6 overflow-hidden mask-gradient-x">
       <MarqueeRow skills={SKILLS.slice(0, 8)} direction="left" speed={40} />

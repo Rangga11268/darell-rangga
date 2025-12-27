@@ -3,7 +3,7 @@ import { Syne, Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
-import Link from "next/link";
+
 import { CursorFollower } from "@/app/components/cursor-follower";
 
 const syne = Syne({
