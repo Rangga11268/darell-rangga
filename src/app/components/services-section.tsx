@@ -1,14 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardTitle,
-  CardHeader,
-  CardDescription,
-} from "@/components/ui/card";
+
 import { Code, Palette, Rocket, Zap, Smartphone, Database } from "lucide-react";
 import { SectionTitle } from "@/app/components/section-title";
 import { useLanguage } from "@/app/providers/language-provider";

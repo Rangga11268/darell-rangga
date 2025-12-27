@@ -72,7 +72,7 @@ export function ContactSection() {
         <div className="flex whitespace-nowrap animate-marquee">
           {[...Array(5)].map((_, i) => (
             <span key={i} className="text-[15vw] font-bold font-display mx-10">
-              LET'S WORK TOGETHER
+              LET&apos;S WORK TOGETHER
             </span>
           ))}
         </div>
@@ -94,8 +94,8 @@ export function ContactSection() {
                 Get in touch
               </h3>
               <p className="text-muted-foreground text-lg">
-                I'm always open to discussing new projects, creative ideas, or
-                opportunities to be part of your visions.
+                I&apos;m always open to discussing new projects, creative ideas,
+                or opportunities to be part of your visions.
               </p>
             </div>
 

@@ -56,8 +56,18 @@
     }
   }
 
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
   --animate-blob: blob 7s infinite;
   --animate-shine: shine 2s linear infinite;
+  --animate-marquee: marquee 25s linear infinite;
 }
 
 :root {
