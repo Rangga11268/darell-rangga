@@ -1,233 +1,169 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowDown,
-  Github,
-  Linkedin,
-  Mail,
-  Scroll,
-  Sparkles,
-} from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
 import { useLanguage } from "@/app/providers/language-provider";
-import { HeroArtifact } from "./hero-artifact";
-
-// Hook to check for desktop view safely
-import { useState, useEffect } from "react";
-const useIsDesktop = () => {
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 1024);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isDesktop;
-};
+import Image from "next/image";
 
 export function HeroSection() {
   const { t } = useLanguage();
-  const isDesktop = useIsDesktop();
+  const { scrollY } = useScroll();
+
+  // Parallax effects
+  const yText = useTransform(scrollY, [0, 500], [0, 150]);
+  const yImage = useTransform(scrollY, [0, 500], [0, 50]);
+  const yBadges = useTransform(scrollY, [0, 500], [0, -100]);
+  const opacityText = useTransform(scrollY, [0, 300], [1, 0]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative min-h-[110vh] flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Background Elements - Warm Ancient Glows */}
-      <div className="absolute inset-0 w-full h-full bg-background pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#c5a059]/10 blur-[100px] animate-float" />
-        <div
-          className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-[#8d6e63]/10 blur-[100px] animate-float"
-          style={{ animationDelay: "2s" }}
-        />
-      </div>
+      {/* Dynamic Background */}
+      <div className="absolute inset-0 w-full h-full bg-noise -z-50" />
+      <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-primary/10 rounded-full blur-[150px] animate-blob mix-blend-screen -z-40" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-[#00f2ff]/5 rounded-full blur-[150px] animate-blob animation-delay-2000 mix-blend-screen -z-40" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-40 sm:pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-8 text-center lg:text-left"
+      <div className="container relative z-10 px-4 md:px-6 h-full flex flex-col items-center justify-center">
+        {/* Main Composition */}
+        <div className="relative w-full max-w-6xl flex flex-col items-center justify-center">
+          {/* Layer 1: Names (Behind Image) - Mobile: Top, Desktop: Behind */}
+          <motion.h1
+            style={{ y: yText, opacity: opacityText }}
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-[12vw] leading-[0.85] font-bold font-display tracking-tighter text-center sm:text-transparent sm:bg-clip-text sm:bg-gradient-to-b sm:from-foreground/20 sm:to-foreground/5 text-foreground/20 select-none z-0 mt-20 sm:mt-0"
           >
-            <div className="space-y-4">
-              <div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-sm border border-[#8d6e63] bg-[#f4e4bc] text-[#3e2723] text-sm font-bold font-serif tracking-wide shadow-sm animate-fade-up"
-                style={{ animationDelay: "0.2s" }}
-              >
-                <Sparkles className="w-3 h-3 text-[#d4af37]" />
-                <span>{t.hero.available}</span>
-              </div>
+            DARELL
+          </motion.h1>
 
-              <h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight font-sans animate-fade-up"
-                style={{ animationDelay: "0.3s" }}
-              >
-                {t.hero.greeting}{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#c5a059] to-[#8d6e63] drop-shadow-sm">
-                  Darell
-                </span>
-                <br />
-                <span className="text-[#a1887f]">{t.hero.role}</span>
-              </h1>
+          {/* Layer 2: Image (Center) */}
+          <motion.div
+            style={{ y: yImage }}
+            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+            className="relative z-10 -mt-[8vw] sm:-mt-[12vw] mb-[2vw]"
+          >
+            <div className="relative w-[300px] h-[400px] sm:w-[450px] sm:h-[600px] grayscale hover:grayscale-0 transition-all duration-700 ease-out">
+              {/* Glow behind image */}
+              <div className="absolute inset-4 bg-gradient-to-t from-primary/40 to-transparent blur-[50px] -z-10" />
 
-              <p
-                className="text-lg sm:text-xl text-[#8d6e63] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-serif animate-fade-up"
-                style={{ animationDelay: "0.4s" }}
+              <Image
+                src="/img/saya/saya1.png"
+                alt="Darell Rangga"
+                fill
+                className="object-contain drop-shadow-2xl"
+                priority
+              />
+
+              {/* Glass Card Floating 1 */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="absolute top-20 -left-10 sm:-left-24 bg-background/40 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl hidden sm:block"
               >
-                {t.hero.description}
-              </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                    <span className="text-xl">🚀</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      Status
+                    </p>
+                    <p className="font-bold text-foreground">Open to Work</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Glass Card Floating 2 */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1 }}
+                className="absolute bottom-32 -right-10 sm:-right-24 bg-background/40 backdrop-blur-xl border border-white/10 p-4 rounded-2xl shadow-xl hidden sm:block"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[#00f2ff]/20 flex items-center justify-center text-[#00f2ff]">
+                    <span className="text-xl">💻</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      Stack
+                    </p>
+                    <p className="font-bold text-foreground">Full Stack Dev</p>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Button
-                size="lg"
-                className="rounded-sm text-lg px-8 h-12 shadow-lg shadow-[#c5a059]/20 hover:shadow-[#c5a059]/40 transition-all bg-[#c5a059] text-[#2c241b] hover:bg-[#d4af37] font-serif font-bold border-2 border-[#8d6e63]"
-                asChild
-              >
-                <a href="#projects">{t.hero.viewWork}</a>
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-sm text-lg px-8 h-12 border-2 border-[#8d6e63] text-[#5d4037] hover:bg-[#8d6e63]/10 hover:text-[#c5a059] font-serif font-bold"
-                asChild
-              >
-                <a href="#contact">{t.hero.contactMe}</a>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center gap-6 justify-center lg:justify-start pt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              {[
-                { icon: Github, href: "https://github.com/Rangga11268/" },
-                {
-                  icon: Linkedin,
-                  href: "https://www.linkedin.com/in/darell-rangga-1320b634b/",
-                },
-                { icon: Mail, href: "mailto:darrelrangga@gmail.com" },
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  className="text-[#8d6e63] hover:text-[#d4af37] transition-all transform hover:scale-110 duration-200 hover:-translate-y-1 block p-2"
-                  aria-label={`Visit ${social.icon.name || "Social Profile"}`}
-                >
-                  <social.icon className="w-6 h-6" />
-                </a>
-              ))}
-            </motion.div>
           </motion.div>
 
-          <div
-            className="flex justify-center lg:justify-end relative animate-scale-up"
-            style={{ animationDelay: "0.2s" }}
+          {/* Layer 3: Role (Front/Overlay) */}
+          <motion.div
+            style={{ y: yBadges }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="z-20 -mt-[8vw] text-center"
           >
-            <div className="relative w-72 h-72 sm:w-96 sm:h-96">
-              {/* 3D Artifact Background - Only on Desktop */}
-              <div className="absolute inset-[-50%] z-0 opacity-60 pointer-events-none">
-                {isDesktop && <HeroArtifact />}
+            <h1 className="text-[12vw] leading-[0.85] font-bold font-display tracking-tighter text-center bg-clip-text text-transparent bg-gradient-to-b from-foreground to-foreground/50 mix-blend-overlay sm:mix-blend-normal">
+              RANGGA
+            </h1>
+
+            <div className="mt-8 flex flex-col items-center gap-6">
+              <p className="max-w-xl text-lg md:text-xl text-muted-foreground text-center leading-relaxed">
+                {t.hero.description}
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button
+                  size="lg"
+                  className="rounded-full px-8 h-12 text-base font-medium bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105"
+                  asChild
+                >
+                  <a href="#projects">
+                    {t.hero.viewWork}
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </a>
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full px-8 h-12 text-base font-medium border-primary/20 hover:bg-primary/5 text-foreground transition-all hover:scale-105"
+                >
+                  <Download className="mr-2 w-4 h-4" />
+                  CV / Resume
+                </Button>
               </div>
 
-              {/* Ancient Runes Rings */}
-              {/* Outer Ring */}
-              <div className="absolute inset-[-20px] rounded-full border border-[#8d6e63]/30 animate-[spin_20s_linear_infinite] z-10">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#c5a059] rounded-full"></div>
+              <div className="flex items-center gap-6 mt-4">
+                {[
+                  { icon: Github, href: "https://github.com/Rangga11268/" },
+                  {
+                    icon: Linkedin,
+                    href: "https://www.linkedin.com/in/darell-rangga-1320b634b/",
+                  },
+                  { icon: Mail, href: "mailto:darrelrangga@gmail.com" },
+                ].map((social, i) => (
+                  <a
+                    key={i}
+                    href={social.href}
+                    className="text-muted-foreground hover:text-primary transition-colors hover:scale-125 transform duration-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <social.icon className="w-6 h-6" />
+                  </a>
+                ))}
               </div>
-
-              {/* Middle Ring (Dashed) */}
-              <div className="absolute inset-[-10px] rounded-full border border-dashed border-[#c5a059]/40 animate-[spin_15s_linear_infinite_reverse] z-10" />
-
-              {/* Inner Decorative Ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-[#8d6e63] shadow-2xl overflow-hidden group z-20">
-                {/* Image Container */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="/img/me3.jpeg"
-                    alt="Darell Rangga"
-                    fill
-                    sizes="(max-width: 640px) 288px, (max-width: 1024px) 384px, 384px"
-                    className="object-cover transform group-hover:scale-110 transition-transform duration-700 sepia-[0.3]"
-                    priority
-                    loading="eager"
-                    fetchPriority="high"
-                  />
-                  {/* Overlay for vintage feel */}
-                  <div className="absolute inset-0 bg-[#c5a059]/10 mix-blend-overlay pointer-events-none"></div>
-                </div>
-
-                {/* Inner Border Texture */}
-                <div className="absolute inset-0 border-[8px] border-[#2c241b]/50 rounded-full pointer-events-none z-10"></div>
-              </div>
-
-              {/* Floating Parchment Badges */}
-              <motion.div
-                className="absolute -right-8 top-10 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl rotate-[5deg] z-30"
-                animate={{ y: [0, -8, 0], rotate: [5, 3, 5] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <span className="text-xl">⚡</span>
-                <span className="text-xs font-bold font-serif text-[#3e2723]">
-                  {t.hero.badgeFast}
-                </span>
-              </motion.div>
-
-              <motion.div
-                className="absolute -left-8 bottom-16 bg-[#f4e4bc] border-2 border-[#8d6e63] px-4 py-2 rounded-sm flex items-center gap-2 shadow-xl -rotate-[3deg] z-30"
-                animate={{ y: [0, 8, 0], rotate: [-3, -5, -3] }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-              >
-                <div className="text-[#3e2723]">
-                  <Scroll size={20} />
-                </div>
-                <span className="text-xs font-bold font-serif text-[#3e2723]">
-                  {t.hero.badgeFull}
-                </span>
-              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
-
-        <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 1 }}
-        >
-          <a
-            href="#about"
-            className="flex flex-col items-center gap-2 text-[#8d6e63] hover:text-[#d4af37] transition-colors group"
-          >
-            <span className="text-sm font-serif font-bold tracking-widest uppercase">
-              {t.hero.scrollText}
-            </span>
-            <ArrowDown className="w-5 h-5 animate-bounce" />
-          </a>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,140 +1,61 @@
-import { useState, useEffect } from "react";
-import { Github, Linkedin, Twitter, Instagram, Diamond } from "lucide-react";
-import { motion } from "framer-motion";
+"use client";
+
+import { Github, Linkedin, Twitter, Instagram } from "lucide-react";
 import { useLanguage } from "@/app/providers/language-provider";
+import { motion } from "framer-motion";
 
 export function Footer() {
   const { t } = useLanguage();
-  const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const socialLinks = [
-    {
-      href: "https://github.com/Rangga11268/",
-      icon: Github,
-      label: "GitHub",
-      color: "hover:text-[#d4c5a9]",
-    },
-    {
-      href: "https://www.linkedin.com/in/darell-rangga-1320b634b/",
-      icon: Linkedin,
-      label: "LinkedIn",
-      color: "hover:text-[#c5a059]",
-    },
-    {
-      href: "https://x.com/ranggsdarell",
-      icon: Twitter,
-      label: "Twitter",
-      color: "hover:text-[#d4c5a9]",
-    },
-    {
-      href: "https://www.instagram.com/darellrangga17/",
-      icon: Instagram,
-      label: "Instagram",
-      color: "hover:text-[#c5a059]",
-    },
-  ];
 
   return (
-    <footer className="py-10 border-t-4 border-[#8d6e63] bg-[#1a1614] text-[#d7ccc8] relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-          {/* Copyright and developer info */}
-          <motion.div
-            className="text-center md:text-left space-y-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="text-[#a1887f] text-sm font-sans tracking-widest uppercase">
+    <footer className="py-12 border-t border-white/10 bg-background relative overflow-hidden">
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
+
+      <div className="container px-4 md:px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-between">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-display font-bold">DARELL RANGGA</h3>
+            <p className="text-muted-foreground max-w-sm">{t.footer.quote}</p>
+            <div className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} {t.footer.copyright}
-            </p>
-            <p className="text-[#8d6e63] text-xs font-serif italic">
-              {t.footer.quote}
-            </p>
-          </motion.div>
-
-          {/* Social links */}
-          <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <div className="flex items-center gap-6">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`text-[#8d6e63] transition-colors ${social.color}`}
-                    aria-label={social.label}
-                    whileHover={{ y: -5, scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: 0.1 * index }}
-                  >
-                    <Icon className="h-6 w-6" />
-                  </motion.a>
-                );
-              })}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Tech stack and current time */}
-          <motion.div
-            className="flex flex-col items-center md:items-end space-y-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <div className="flex items-center gap-2 text-center text-[#a1887f] text-sm font-serif">
+          <div className="flex flex-col md:items-end gap-4">
+            <div className="flex gap-4">
+              {[
+                { icon: Github, href: "https://github.com/Rangga11268/" },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/in/darell-rangga-1320b634b/",
+                },
+                { icon: Twitter, href: "https://x.com/ranggsdarell" },
+                {
+                  icon: Instagram,
+                  href: "https://www.instagram.com/darellrangga17/",
+                },
+              ].map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white/5 hover:bg-primary hover:text-white transition-all hover:scale-110"
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+
+            <div className="text-sm text-muted-foreground flex items-center gap-2">
               <span>{t.footer.madeWith}</span>
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <Diamond className="h-3 w-3 text-primary fill-current" />
-              </motion.div>
-              <span>{t.footer.using}</span>
+              <span className="font-bold text-foreground">
+                Next.js & Tailwind
+              </span>
             </div>
-            <p className="text-[#5d4037] text-xs font-mono">
-              <span>{t.footer.chronicle}:</span>
-              {currentTime.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-          </motion.div>
+          </div>
         </div>
-
-        {/* Decorative element */}
-        <motion.div
-          className="mt-8 pt-6 border-t border-[#3e2723] text-center flex justify-center items-center gap-4 opacity-50"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="h-[1px] w-12 bg-[#8d6e63]"></div>
-          <div className="w-2 h-2 rotate-45 bg-[#8d6e63]"></div>
-          <div className="h-[1px] w-12 bg-[#8d6e63]"></div>
-        </motion.div>
       </div>
     </footer>
   );

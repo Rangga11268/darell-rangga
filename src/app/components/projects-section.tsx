@@ -1,13 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
-import { Map } from "lucide-react";
 
 interface Project {
   title: string;
@@ -26,142 +25,79 @@ const ProjectCard = ({
   project: Project;
   index: number;
 }) => {
-  const { t } = useLanguage();
-
-  // 3D Tilt Logic
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useTransform(y, [-100, 100], [10, -10]);
-  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
-
-  // Shiny border effect
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct * 200);
-    y.set(yPct * 200);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      style={{
-        perspective: 1000,
-      }}
-      className={cn("h-full", project.colSpan)}
+      className={cn(
+        "group relative rounded-3xl overflow-hidden bg-card/50 border border-white/5 hover:border-primary/50 transition-colors duration-500",
+        project.colSpan
+      )}
     >
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        className={cn(
-          "group relative h-full rounded-sm overflow-hidden border-4 border-[#8d6e63] bg-[#f4e4bc] dark:bg-[#2c241b] shadow-xl hover:shadow-2xl hover:shadow-[#c5a059]/30 transition-shadow duration-500 flex flex-col"
-        )}
-      >
-        {/* Shiny Edge Effect */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-30">
-          <div className="absolute inset-[-150%] bg-gradient-to-r from-transparent via-[#c5a059]/40 to-transparent rotate-[25deg] translate-x-[-100%] group-hover:animate-shine" />
-        </div>
+      {/* Background Hover Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
 
-        {/* Image Section - Pop Effect */}
-        <div
-          className="relative h-48 md:h-56 m-2 mb-0 overflow-hidden border-b-2 border-[#8d6e63] rounded-t-sm shrink-0"
-          style={{ transform: "translateZ(20px)" }}
-        >
+      <div className="flex flex-col h-full relative z-10">
+        {/* Image Container with Reveal Effect */}
+        <div className="relative flex-1 w-full overflow-hidden mask-gradient-b min-h-[200px]">
           <Image
             src={project.imageUrl}
             alt={project.title}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-110 sepia-[.3] group-hover:sepia-0"
+            className="object-cover transform group-hover:scale-105 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#f4e4bc] dark:from-[#2c241b] via-transparent to-transparent opacity-80 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
         </div>
 
-        {/* Content Section */}
-        <div
-          className="relative z-20 flex-1 flex flex-col justify-between p-6"
-          style={{ transform: "translateZ(30px)" }}
-        >
-          {/* Decorative rivets */}
-          <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-          <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-          <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-          <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-[#5d4037] shadow-inner"></div>
-
-          <div className="transform translate-y-0 transition-transform duration-500 text-center flex-1 flex flex-col">
-            {/* Tags Group */}
-            <div className="flex flex-wrap justify-center gap-2 mb-4">
-              {project.tags.map((tag: string) => (
-                <span
-                  key={tag}
-                  className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-sm bg-[#8d6e63]/20 text-[#3e2723] dark:text-[#d7ccc8] border border-[#8d6e63]/50"
-                >
-                  {tag}
-                </span>
-              ))}
+        {/* Content */}
+        <div className="p-6 pt-0 shrink-0 flex flex-col justify-end">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="text-2xl font-display font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                {project.title}
+              </h3>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <h3 className="text-2xl font-bold mb-2 font-sans text-[#3e2723] dark:text-[#d7ccc8] group-hover:text-primary transition-colors uppercase tracking-wide">
-              {project.title}
-            </h3>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full bg-white/5 hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"
+            >
+              <ArrowUpRight className="w-5 h-5" />
+            </a>
+          </div>
 
-            <p className="text-[#5d4037] dark:text-[#a1887f] mb-6 line-clamp-2 group-hover:line-clamp-none transition-all duration-500 font-serif text-sm px-4">
-              {project.description}
-            </p>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            {project.description}
+          </p>
 
-            <div className="flex justify-center gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500 delay-100 mt-auto">
-              <Button
-                size="sm"
-                className="rounded-sm bg-primary text-primary-foreground hover:bg-primary/90 font-serif font-bold tracking-wider border border-[#3e2723] shadow-md hover:shadow-lg"
-                asChild
-              >
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  {t.projects.viewProject}
-                </a>
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="rounded-sm bg-transparent border-[#8d6e63] text-[#3e2723] dark:text-[#d7ccc8] hover:bg-[#8d6e63]/20 font-serif"
-                asChild
-              >
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="w-4 h-4 mr-2" />
-                  {t.projects.sourceCode}
-                </a>
-              </Button>
-            </div>
+          {/* Actions - Only visible on hover/focus to keep clean? Keeping always visible for UX */}
+          <div className="mt-auto flex items-center gap-3 pt-4 border-t border-white/5">
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
+            >
+              <Github className="w-4 h-4" />
+              Source Code
+            </a>
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -174,7 +110,7 @@ export function ProjectsSection() {
       title: "Navara Trans",
       description:
         "A modern transportation rental website with booking system and fleet management.",
-      tags: ["React.js", "JavaScript", "Tailwind CSS"],
+      tags: ["React.js", "Tailwind"],
       imageUrl: "/img/navara.png",
       githubUrl: "https://github.com/Rangga11268/navara-trans",
       liveUrl: "https://navara-trans.vercel.app/",
@@ -183,105 +119,64 @@ export function ProjectsSection() {
     {
       title: "PHD Trans",
       description:
-        "A premium bus rental service website featuring fleet showcase, booking system, and destination packages with modern UI/UX.",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+        "Premium bus rental platform featuring cinematic fleet showcase.",
+      tags: ["Next.js", "Framer Motion"],
       imageUrl: "/img/PhdTrans.png",
       githubUrl: "https://github.com/Rangga11268/phd-trans",
       liveUrl: "https://phd-trans.vercel.app/",
       colSpan: "md:col-span-1",
     },
     {
-      title: "Tujago",
+      title: "Apapesan",
       description:
-        "Tunggal Jaya Transport - A comprehensive transportation service management system.",
-      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-      imageUrl: "/img/tujago.png",
-      githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-      liveUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-      colSpan: "md:col-span-1",
+        "Secure messaging platform focusing on privacy and real-time delivery.",
+      tags: ["Laravel", "MySQL"],
+      imageUrl: "/img/Apapesan.png",
+      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
+      liveUrl: "#",
+      colSpan: "md:col-span-2",
+    },
+    {
+      title: "Personal Portfolio",
+      description:
+        "The digital garden you are currently exploring. Built to perform.",
+      tags: ["Next.js 15", "R3F"],
+      imageUrl: "/img/portfolio.png",
+      githubUrl: "https://github.com/Rangga11268/darell-rangga",
+      liveUrl: "/",
+      colSpan: "md:col-span-1 md:row-span-2",
     },
     {
       title: "SRB MotorV2",
-      description:
-        "A motorcycle sales and service website with product catalog and buying system.",
-      tags: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
+      description: "E-commerce solution for automotive parts and services.",
+      tags: ["Laravel", "Inertia"],
       imageUrl: "/img/srb motor.png",
       githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
-      liveUrl: "https://github.com/Rangga11268/SrbMotorV2",
+      liveUrl: "#",
       colSpan: "md:col-span-1",
     },
     {
-      title: "ApaPesan Laravel Project",
+      title: "Janguleee Trans",
       description:
-        "A Laravel-based web application for managing messages and communications with a clean, intuitive interface.",
-      tags: ["Laravel", "PHP", "MySQL", "Bootstrap"],
-      imageUrl: "/img/Apapesan.png",
-      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-      liveUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-      colSpan: "md:col-span-2",
-    },
-    {
-      title: "CRUD Manajemen APP Pegawai",
-      description:
-        "A Laravel-based employee management application with full CRUD functionality for managing employee data.",
-      tags: ["Laravel", "PHP", "MySQL", "Bootstrap", "CRUD"],
-      imageUrl: "/img/manajemenPegawai.png",
-      githubUrl:
-        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
-      liveUrl:
-        "https://github.com/Rangga11268/CRUD-manajemenAPP-pegawai-simple",
+        "Transportation service platform with modern booking capabilities.",
+      tags: ["Next.js", "Tailwind"],
+      imageUrl: "/img/janguleee.png",
+      githubUrl: "https://github.com/Rangga11268/janguleee-trans",
+      liveUrl: "https://janguleee-trans.vercel.app/",
       colSpan: "md:col-span-1",
-    },
-    {
-      title: "Personal Portfolio Website",
-      description:
-        "A responsive portfolio website built with Next.js and Tailwind CSS, featuring dark mode and smooth scrolling navigation.",
-      tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-      imageUrl: "/img/portfolio.png",
-      githubUrl: "https://github.com/Rangga11268/darell-rangga",
-      liveUrl: "https://darell-rangga.vercel.app/",
-      colSpan: "md:col-span-2",
     },
   ];
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[#3e2723]/5 -z-10" />
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="projects" className="py-32 relative">
+      <div className="container px-4 md:px-6 mx-auto">
         <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[minmax(350px,auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[320px]">
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
-
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <Button
-            variant="ghost"
-            size="lg"
-            className="group text-lg font-serif text-[#3e2723] dark:text-[#d7ccc8] hover:text-primary hover:bg-[#3e2723]/10"
-            asChild
-          >
-            <a
-              href="https://github.com/Rangga11268"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Map className="mr-2 w-5 h-5" />
-              Explore More Archives
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
-        </motion.div>
       </div>
     </section>
   );

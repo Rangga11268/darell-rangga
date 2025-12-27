@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Code2,
@@ -8,9 +9,8 @@ import {
   Rocket,
   Zap,
   BookOpen,
-  Scroll,
-  Feather,
-  Map,
+  User,
+  Briefcase,
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -18,176 +18,179 @@ import { SkillsConstellation } from "./skills-constellation";
 
 export function AboutSection() {
   const { t } = useLanguage();
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const xText = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const opacityText = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.1, 0.3, 0.1]
+  );
 
   const highlights = [
     {
       icon: Code2,
       title: t.about.highlights.cleanCode.title,
-      description: t.about.highlights.cleanCode.desc,
+      desc: t.about.highlights.cleanCode.desc,
     },
     {
       icon: Palette,
       title: t.about.highlights.artistic.title,
-      description: t.about.highlights.artistic.desc,
+      desc: t.about.highlights.artistic.desc,
     },
     {
       icon: Rocket,
       title: t.about.highlights.performance.title,
-      description: t.about.highlights.performance.desc,
+      desc: t.about.highlights.performance.desc,
     },
     {
       icon: Zap,
       title: t.about.highlights.fastLearner.title,
-      description: t.about.highlights.fastLearner.desc,
+      desc: t.about.highlights.fastLearner.desc,
     },
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[#2c241b]/5 pointer-events-none" />
+    <section
+      id="about"
+      className="py-32 relative overflow-hidden"
+      ref={containerRef}
+    >
+      {/* Massive Parallax Background Text */}
+      <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 -z-10 pointer-events-none overflow-hidden">
+        <motion.div
+          style={{ x: xText, opacity: opacityText }}
+          className="text-[20vw] font-display font-bold whitespace-nowrap text-foreground/5 leading-none"
+        >
+          EXPERIENCE
+        </motion.div>
+      </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container px-4 md:px-6 mx-auto relative z-10">
         <SectionTitle title={t.about.title} subtitle={t.about.subtitle} />
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Left Column - Story */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20 items-start">
+          {/* Left: Bio & Timeline (Staggered Reveal) */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
+            className="space-y-12"
           >
-            <div className="space-y-4 parchment p-8 relative">
-              {/* Wax seal decoration */}
-              <div className="absolute -top-3 -right-3 w-12 h-12 bg-red-800 rounded-full shadow-lg flex items-center justify-center border-4 border-red-900/50">
-                <Feather className="w-6 h-6 text-red-200" />
-              </div>
-
-              <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-3 font-sans text-[#3e2723] dark:text-[#d7ccc8]">
-                <Scroll className="w-8 h-8 text-primary" />
+            <div className="prose dark:prose-invert">
+              <h3 className="text-3xl font-display font-bold mb-6 flex items-center gap-3">
+                <User className="w-8 h-8 text-primary" />
                 {t.about.journeyTitle}
               </h3>
-              <p className="text-lg leading-relaxed font-serif italic">
+              <p className="text-xl text-muted-foreground leading-relaxed">
                 {t.about.journeyText}
               </p>
-              <p className="leading-relaxed">{t.about.journeyDesc}</p>
+              <p className="text-lg text-muted-foreground mt-4 leading-relaxed">
+                {t.about.journeyDesc}
+              </p>
             </div>
 
-            {/* Experience */}
-            <div className="space-y-4 relative">
-              {/* Journey Map Path - Dashed Line */}
-              <div className="absolute left-[7px] top-10 bottom-0 w-1 bg-gradient-to-b from-[#c5a059] to-transparent opacity-30"></div>
+            {/* Timeline with animated line */}
+            <div className="space-y-8 relative">
+              <div className="absolute left-[11px] top-2 bottom-0 w-[2px] bg-gradient-to-b from-primary via-primary/50 to-transparent" />
 
-              <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2 relative z-10 bg-background/50 backdrop-blur-sm">
-                <Map className="w-5 h-5 text-primary" />
-                {t.about.experience}
-              </h4>
-              {t.about.history.jobs.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="parchment p-6 relative ml-6 border-l-4 border-l-primary/50 group"
-                  style={{ borderRadius: "0 0.5rem 0.5rem 0" }}
-                >
-                  {/* Map Point Node */}
-                  <div className="absolute -left-[31px] top-6 w-4 h-4 rounded-full border-2 border-[#c5a059] bg-[#2c241b] group-hover:bg-[#c5a059] group-hover:scale-125 transition-all duration-300 z-10 shadow-[0_0_10px_#c5a059]">
-                    <div className="absolute inset-0 rounded-full animate-ping bg-[#c5a059]/50 opacity-0 group-hover:opacity-100"></div>
-                  </div>
+              <div className="space-y-8 pl-8 relative">
+                <h4 className="text-xl font-bold flex items-center gap-2">
+                  <Briefcase className="w-5 h-5 text-primary" />
+                  {t.about.experience}
+                </h4>
 
-                  <h5 className="font-bold text-lg font-sans text-[#3e2723] dark:text-[#d7ccc8]">
-                    {exp.title}
-                  </h5>
-                  <p className="text-sm text-primary mb-2 font-serif italic">
-                    {exp.company} • {exp.period}
-                  </p>
-                  <p className="text-sm">{exp.description}</p>
-                </motion.div>
-              ))}
-            </div>
+                {t.about.history.jobs.map((job, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.2 }}
+                    className="relative"
+                  >
+                    <span className="absolute -left-[29px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-primary shadow-[0_0_10px_var(--primary)]" />
+                    <h5 className="font-bold text-lg">{job.title}</h5>
+                    <p className="text-sm text-primary mb-2 font-medium bg-primary/10 w-fit px-2 py-0.5 rounded-full">
+                      {job.company} • {job.period}
+                    </p>
+                    <p className="text-muted-foreground">{job.description}</p>
+                  </motion.div>
+                ))}
+              </div>
 
-            {/* Education */}
-            <div className="space-y-4">
-              <h4 className="text-xl font-bold flex items-center gap-2 border-b border-primary/30 pb-2">
-                <BookOpen className="w-5 h-5 text-primary" />
-                {t.about.education}
-              </h4>
-              {t.about.history.schools.map((edu, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="parchment p-6 relative ml-4 border-l-4 border-l-primary/50"
-                  style={{ borderRadius: "0 0.5rem 0.5rem 0" }}
-                >
-                  <h5 className="font-bold text-lg font-sans text-[#3e2723] dark:text-[#d7ccc8]">
-                    {edu.degree}
-                  </h5>
-                  <p className="text-sm text-primary mb-2 font-serif italic">
-                    {edu.school} • {edu.period}
-                  </p>
-                  <p className="text-sm">{edu.description}</p>
-                </motion.div>
-              ))}
+              <div className="space-y-8 pl-8 relative">
+                <h4 className="text-xl font-bold flex items-center gap-2 mt-8">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  {t.about.education}
+                </h4>
+
+                {t.about.history.schools.map((edu, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + idx * 0.2 }}
+                    className="relative"
+                  >
+                    <span className="absolute -left-[29px] top-1.5 w-4 h-4 rounded-full border-4 border-background bg-primary shadow-[0_0_10px_var(--primary)]" />
+                    <h5 className="font-bold text-lg">{edu.degree}</h5>
+                    <p className="text-sm text-primary mb-2 font-medium bg-primary/10 w-fit px-2 py-0.5 rounded-full">
+                      {edu.school} • {edu.period}
+                    </p>
+                    <p className="text-muted-foreground">{edu.description}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
 
-          {/* Right Column - Highlights */}
+          {/* Right: Grid of Cards (3D Tilt & Stagger) */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-8"
           >
-            <h3 className="text-2xl md:text-3xl font-bold text-center lg:text-left font-sans">
-              {t.about.arsenal}
-            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {highlights.map((highlight, index) => (
+              {highlights.map((item, idx) => (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  key={idx}
+                  whileHover={{ scale: 1.05, rotate: idx % 2 === 0 ? -2 : 2 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Card className="h-full bg-[#f4e4bc]/80 dark:bg-[#2c241b]/80 border-2 border-[#8d6e63] shadow-md hover:shadow-xl hover:bg-[#f4e4bc] dark:hover:bg-[#3e2723] transition-all duration-300 group">
-                    <CardContent className="p-6 space-y-3">
-                      <div className="w-12 h-12 rounded-full border-2 border-[#8d6e63] bg-primary/20 flex items-center justify-center group-hover:bg-primary/40 transition-colors">
-                        <highlight.icon className="w-6 h-6 text-[#3e2723] dark:text-[#d7ccc8]" />
+                  <Card className="bg-card/50 border-white/5 hover:border-primary/50 transition-colors h-full">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                        <item.icon className="w-6 h-6" />
                       </div>
-                      <h4 className="font-bold text-lg font-sans text-[#3e2723] dark:text-[#d7ccc8]">
-                        {highlight.title}
-                      </h4>
-                      <p className="text-sm text-[#5d4037] dark:text-[#a1887f] font-serif">
-                        {highlight.description}
-                      </p>
+                      <div>
+                        <h4 className="font-bold text-lg mb-1">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {item.desc}
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
               ))}
             </div>
 
-            <div className="mt-8 pt-8 border-t border-primary/20">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl md:text-3xl font-bold mb-2 font-sans">
-                  {t.about.incantations}
-                </h3>
-              </div>
-
-              <div className="relative w-full">
-                <div className="absolute inset-0 bg-transparent z-0" />
-                <SkillsConstellation />
-              </div>
-            </div>
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="mt-12 p-8 rounded-3xl bg-white/5 border border-white/5 relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              <h3 className="text-2xl font-bold mb-8 text-center">
+                {t.about.incantations}
+              </h3>
+              <SkillsConstellation />
+            </motion.div>
           </motion.div>
         </div>
       </div>
