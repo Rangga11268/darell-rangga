@@ -48,7 +48,7 @@ export function HeroSection() {
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
             className="relative z-10 -mt-[8vw] sm:-mt-[12vw] mb-[2vw]"
           >
-            <div className="relative w-[300px] h-[400px] sm:w-[450px] sm:h-[600px] grayscale hover:grayscale-0 transition-all duration-700 ease-out">
+            <div className="relative w-[300px] h-[400px] sm:w-[450px] sm:h-[600px] grayscale-0 md:grayscale md:hover:grayscale-0 transition-all duration-700 ease-out">
               {/* Glow behind image */}
               <div className="absolute inset-4 bg-gradient-to-t from-primary/40 to-transparent blur-[50px] -z-10" />
 
