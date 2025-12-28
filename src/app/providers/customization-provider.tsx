@@ -13,6 +13,8 @@ type CustomizationContextType = {
   config: ThemeConfig;
   setConfig: React.Dispatch<React.SetStateAction<ThemeConfig>>;
   resetConfig: () => void;
+  isPlaygroundOpen: boolean;
+  setIsPlaygroundOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const defaultConfig: ThemeConfig = {
@@ -31,6 +33,7 @@ export function CustomizationProvider({
   children: React.ReactNode;
 }) {
   const [config, setConfig] = useState<ThemeConfig>(defaultConfig);
+  const [isPlaygroundOpen, setIsPlaygroundOpen] = useState(false);
 
   // Apply CSS variables whenever config changes
   useEffect(() => {
@@ -50,7 +53,15 @@ export function CustomizationProvider({
   const resetConfig = () => setConfig(defaultConfig);
 
   return (
-    <CustomizationContext.Provider value={{ config, setConfig, resetConfig }}>
+    <CustomizationContext.Provider
+      value={{
+        config,
+        setConfig,
+        resetConfig,
+        isPlaygroundOpen,
+        setIsPlaygroundOpen,
+      }}
+    >
       {children}
     </CustomizationContext.Provider>
   );

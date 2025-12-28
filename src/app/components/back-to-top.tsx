@@ -32,7 +32,7 @@ export function BackToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-8 right-8 z-50"
+          className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40"
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -40,7 +40,7 @@ export function BackToTop() {
         >
           <Button
             size="icon"
-            className="rounded-full shadow-2xl shadow-primary/20 bg-background/50 backdrop-blur-md border border-white/10 hover:bg-primary hover:text-white transition-all w-12 h-12"
+            className="rounded-full shadow-2xl shadow-primary/20 bg-black/80 dark:bg-white/90 text-white dark:text-black backdrop-blur-md border border-black/10 dark:border-white/10 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all w-12 h-12"
             onClick={scrollToTop}
             aria-label="Back to top"
           >

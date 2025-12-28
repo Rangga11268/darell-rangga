@@ -13,8 +13,13 @@ import {
 import { useCustomization } from "@/app/providers/customization-provider";
 
 export function CodePlayground() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { config, setConfig, resetConfig } = useCustomization();
+  const {
+    config,
+    setConfig,
+    resetConfig,
+    isPlaygroundOpen,
+    setIsPlaygroundOpen,
+  } = useCustomization();
 
   // Convert OKLCH string to readable HSL-like input for sliders if needed,
   // but for simplicity we'll just toggle between presets or adjust hue.
@@ -33,24 +38,9 @@ export function CodePlayground() {
 
   return (
     <>
-      {/* Floating Toggle Button */}
-      <motion.button
-        className="fixed bottom-6 left-6 z-50 p-4 rounded-full bg-black/80 backdrop-blur-md border border-white/10 shadow-2xl text-primary hover:scale-110 transition-transform group"
-        onClick={() => setIsOpen(true)}
-        whileHover={{ rotate: 90 }}
-      >
-        <span className="absolute -top-2 -right-2 w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-        <Settings className="w-6 h-6" />
-
-        {/* Tooltip */}
-        <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 bg-black/90 text-xs font-mono rounded-md opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none border border-white/10">
-          DEV_MODE.exe
-        </span>
-      </motion.button>
-
       {/* Editor Panel */}
       <AnimatePresence>
-        {isOpen && (
+        {isPlaygroundOpen && (
           <motion.div
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -75,7 +65,7 @@ export function CodePlayground() {
                   <RefreshCw className="w-4 h-4 text-gray-400" />
                 </button>
                 <button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsPlaygroundOpen(false)}
                   className="p-2 hover:bg-red-500/20 hover:text-red-500 rounded-md transition-colors"
                 >
                   <X className="w-4 h-4" />
