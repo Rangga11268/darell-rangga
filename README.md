@@ -1,10 +1,10 @@
 <div align="center">
 
-  <img src="public/img/github/github%20(1).png" alt="Darell Rangga Portfolio Banner" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);">
+  <img src="public/img/github/github.png" alt="Darell Rangga Portfolio 2.0 Command Center" width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
 
-# 📜 Grimoire Digital Darell Rangga
+# ⚡ Darell Rangga: Digital Operations Center
 
-**"Titik Temu Mistisisme Kuno & Rekayasa Web Modern"**
+**"Bridging Advanced Engineering & Futuristic Web Design"**
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -17,50 +17,51 @@
 
 ---
 
-## 🔮 Visi: "Sihir Kuno" (Ancient Magic)
+## 🔮 Visi: "Cyber-Architecture"
 
-Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ kode, melainkan sebuah **Artefak Digital** yang ditempa dengan tujuan:
+Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ kode, melainkan sebuah **Sistem Digital** yang dirancang dengan presisi untuk tujuan:
 
-> _Membuktikan bahwa website modern tidak harus terlihat kaku. Dengan menggabungkan estetika **"Rune Kuno"**, tekstur perkamen, dan animasi surgawi, saya menciptakan pengalaman yang imersif._
+> _Membuktikan bahwa website modern tidak harus statis. Dengan menggabungkan estetika **"Cyberpunk"**, antarmuka holografik, dan interaksi yang halus, saya menciptakan pengalaman pengguna yang imersif._
 
-### 🌌 Fitur Utama (Artefak)
+### 🌌 Fitur Utama (System Modules)
 
-| Ikon | Nama Artefak           | Deskripsi Sihir                                                                                                        |
-| :--: | :--------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-|  🔭  | **Navigasi Surgawi**   | Navbar _glassmorphic_ yang melayang, dengan efek buram adaptif dan teks yang membesar secara responsif di layar lebar. |
-|  📜  | **Aliran Mana**        | Marquee _skill_ tanpa batas (infinite scroll) berbentuk kepingan rune kuno yang mengalir mulus.                        |
-|  🕊️  | **Utusan Kerajaan**    | Merpati pos animasi di halaman kontak yang bereaksi dan "terbang" saat pesan dikirim.                                  |
-|  🌗  | **Ritual Siang/Malam** | Tombol tema interaktif yang memutar matahari & bulan untuk berganti antara mode Parchment (Terang) & Obsidian (Gelap). |
-|  🗣️  | **Mantra Bahasa**      | Dukungan i18n (Inggris/Indonesia) instan tanpa _reload_, menerjemahkan nuansa magis secara akurat.                     |
+| Ikon | Nama Modul              | Deskripsi Sistem                                                                                                         |
+| :--: | :---------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+|  🎛️  | **Command Center**      | Dashboard holografik _real-time_ yang menampilkan status sistem, widget waktu zona server, dan **GitHub Activity Live**. |
+|  👨‍💻  | **Code Playground**     | Mode "Developer" interaktif. Pengunjung dapat mengedit tema website secara langsung layaknya di VS Code.                 |
+|  �   | **Adaptive Navigation** | Navbar _glassmorphic_ yang melayang, dengan efek buram adaptif dan teks yang membesar secara responsif.                  |
+|  📜  | **Infinite Skills**     | Marquee _skill_ tanpa batas (infinite scroll) dengan tampilan kartu modul modern yang mengalir mulus.                    |
+|  🌗  | **Bi-Phase Theme**      | Sistem tema interaktif yang berganti antara mode Light & Dark secara dinamis, terintegrasi dengan seluruh widget.        |
+|  🗣️  | **Language Protocol**   | Dukungan i18n (Inggris/Indonesia) instan tanpa _reload_, menerjemahkan konten secara akurat.                             |
 
 ---
 
-## 📸 Galeri Alam Semesta
+## 📸 System Gallery
 
 <div align="center">
 
-|                  **Gerbang Utama (Hero)**                  |               **Gulungan Keahlian (Skills)**               |
-| :--------------------------------------------------------: | :--------------------------------------------------------: |
-| <img src="public/img/github/github%20(1).png" width="400"> | <img src="public/img/github/github%20(3).png" width="400"> |
+|          **The Command Center (Dark Mode)**          |             **Code Playground (Theme Editor)**             |
+| :--------------------------------------------------: | :--------------------------------------------------------: |
+| <img src="public/img/github/github.png" width="400"> | <img src="public/img/github/github%20(3).png" width="400"> |
 
-|                    **Proyek Batu Rune**                    |               **Utusan Kerajaan (Contact)**                |
-| :--------------------------------------------------------: | :--------------------------------------------------------: |
-| <img src="public/img/github/github%20(4).png" width="400"> | <img src="public/img/github/github%20(5).png" width="400"> |
+|                **Responsive Mobile View**                 |           **Interactive Projects (Glass Slide)**           |
+| :-------------------------------------------------------: | :--------------------------------------------------------: |
+| <img src="public/img/github/responsive1.png" width="300"> | <img src="public/img/github/github%20(4).png" width="400"> |
 
 </div>
 
 <details>
-<summary>📱 <b>Klik untuk melihat Tampilan Mobile & Mode Gelap</b></summary>
+<summary>📱 <b>Klik untuk melihat Arsip Lama (v1.0)</b></summary>
 <br>
 <div align="center">
   <table>
     <tr>
-      <td><b>Responsivitas Mobile</b></td>
-      <td><b>Mode Gelap (Obsidian)</b></td>
+      <td><b>Versi Klasik</b></td>
+      <td><b>Kontak Merpati</b></td>
     </tr>
     <tr>
-      <td><img src="public/img/github/responsive1.png" width="300"></td>
-      <td><img src="public/img/github/github%20(2).png" width="400"></td>
+      <td><img src="public/img/github/github%20(1).png" width="400"></td>
+      <td><img src="public/img/github/github%20(5).png" width="400"></td>
     </tr>
   </table>
 </div>
@@ -68,7 +69,7 @@ Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ k
 
 ---
 
-## 🛠️ Persenjataan Sihir (Tech Stack)
+## 🛠️ Tech Stack (Arsenal)
 
 Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 
@@ -76,12 +77,12 @@ Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 - **Language**: ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 - **Styling**: ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 - **Animation**: ![Framer Motion](https://img.shields.io/badge/-Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white)
-- **State**: ![Zustand](https://img.shields.io/badge/-Zustand-orange?style=flat-square)
-- **Icons**: ![Lucide](https://img.shields.io/badge/-Lucide_Icons-pink?style=flat-square)
+- **State**: ![Zustand](https://img.shields.io/badge/-Zustand-orange?style=flat-square) & Context API
+- **Data**: ![GitHub API](https://img.shields.io/badge/-GitHub_API-181717?style=flat-square&logo=github&logoColor=white)
 
 ---
 
-## 📊 Statistik Penyihir (GitHub Stats)
+## � Developer Metrics (GitHub Stats)
 
 <div align="center">
 
@@ -93,34 +94,34 @@ Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 
 ---
 
-## 🚀 Memanggil Alam Semesta (Instalasi)
+## 🚀 System deployment (Instalasi)
 
-Ingin menjalankan grimoire ini di mesin lokal Anda? Ikuti ritual berikut:
+Ingin menjalankan sistem ini di mesin lokal Anda? Ikuti protokol berikut:
 
-1.  **Salin Grimoire**:
+1.  **Clone Repository**:
 
     ```bash
     git clone https://github.com/Rangga11268/my-portfolio.git
     ```
 
-2.  **Kumpulkan Bahan (Install Dependensi)**:
+2.  **Install Dependencies**:
 
     ```bash
     npm install
     # atau yarn install
     ```
 
-3.  **Lafalkan Mantra (Jalankan Server)**:
+3.  **Initiate Server**:
 
     ```bash
     npm run dev
     ```
 
-4.  **Masuk Portal**: Buka `http://localhost:3000`.
+4.  **Access Portal**: Buka `http://localhost:3000`.
 
 ---
 
-## 🌐 Terhubung dengan Saya
+## 🌐 Connect Protocol
 
 <div align="center">
   <a href="https://github.com/Rangga11268/">
