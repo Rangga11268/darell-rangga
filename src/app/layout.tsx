@@ -3,8 +3,10 @@ import { Syne, Manrope } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
+import { CustomizationProvider } from "@/app/providers/customization-provider";
 
 import { CursorFollower } from "@/app/components/cursor-follower";
+import { CodePlayground } from "@/app/components/code-playground/code-playground";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -35,8 +37,11 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <LanguageProvider>
-            <CursorFollower />
-            {children}
+            <CustomizationProvider>
+              <CursorFollower />
+              <CodePlayground />
+              {children}
+            </CustomizationProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

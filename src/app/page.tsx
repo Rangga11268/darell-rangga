@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { CommandCenter } from "@/app/components/command-center/command-center";
 import { FloatingNavbar } from "@/app/components/floating-navbar";
 import { HeroSection } from "@/app/components/hero-section";
 import { AboutSection } from "@/app/components/about-section";
@@ -53,6 +54,7 @@ export default function Home() {
       <FloatingNavbar />
       <main>
         <HeroSection />
+        <CommandCenter />
         <AboutSection />
         <ServicesSection />
         <ProjectsSection />
