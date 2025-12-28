@@ -135,9 +135,17 @@ export function HeroSection() {
                   variant="outline"
                   size="lg"
                   className="rounded-full px-8 h-12 text-base font-medium border-primary/20 hover:bg-primary/5 text-foreground transition-all hover:scale-105"
+                  asChild
                 >
-                  <Download className="mr-2 w-4 h-4" />
-                  CV / Resume
+                  <a
+                    href="/img/saya/CV IND.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                  >
+                    <Download className="mr-2 w-4 h-4" />
+                    CV / Resume
+                  </a>
                 </Button>
               </div>
 
