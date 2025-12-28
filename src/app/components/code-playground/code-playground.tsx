@@ -95,17 +95,17 @@ export function CodePlayground() {
               </div>
 
               <div className="pl-8 pt-1">
-                <div className="text-gray-500 text-sm mb-4">
-                  // Customize your experience
+                <div className="text-gray-500 text-sm mb-4 font-mono">
+                  {"// Customize your experience"}
                   <br />
-                  // Changes apply in real-time
+                  {"// Changes apply in real-time"}
                 </div>
 
                 <div className="space-y-8">
                   {/* Primary Color Control */}
                   <div className="group">
                     <div className="text-purple-400 mb-2 text-sm">
-                      "primary_hue":{" "}
+                      &quot;primary_hue&quot;:{" "}
                       <span className="text-yellow-300">{currentHue}</span>,
                     </div>
                     <div className="bg-white/5 p-4 rounded-lg border border-white/5 group-hover:border-primary/30 transition-colors">
@@ -129,7 +129,7 @@ export function CodePlayground() {
                   {/* Radius Control */}
                   <div className="group">
                     <div className="text-purple-400 mb-2 text-sm">
-                      "border_radius":{" "}
+                      &quot;border_radius&quot;:{" "}
                       <span className="text-yellow-300">
                         {config.radius}rem
                       </span>

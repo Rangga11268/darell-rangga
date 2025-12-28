@@ -20,7 +20,7 @@ export function VisualizerWidget() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Get Primary Color from CSS variable for syncing with theme
-      const computedStyle = getComputedStyle(document.documentElement);
+      // const computedStyle = getComputedStyle(document.documentElement);
       // const primaryColor = computedStyle.getPropertyValue("--primary").trim() || "#8b5cf6";
 
       // Since OKLCH isn't supported directly in Canvas fillStyle in all browsers yet (or properly parsed here from var),
