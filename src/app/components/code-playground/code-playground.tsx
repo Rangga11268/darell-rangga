@@ -11,8 +11,6 @@ import {
   Terminal,
 } from "lucide-react";
 import { useCustomization } from "@/app/providers/customization-provider";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 export function CodePlayground() {
   const [isOpen, setIsOpen] = useState(false);

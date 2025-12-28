@@ -2,10 +2,8 @@
 
 import { motion } from "framer-motion";
 import { TimeWidget } from "./time-widget";
-import { TechStackWidget } from "./tech-stack-widget";
 import { VisualizerWidget } from "./visualizer-widget";
 import { GithubWidget } from "./github-widget";
-import { SectionTitle } from "@/app/components/section-title";
 
 export function CommandCenter() {
   return (

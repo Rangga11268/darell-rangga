@@ -1,5 +1,4 @@
-"use client";
-
+/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
 import { Github, GitCommit, Star, Code, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
@@ -43,6 +42,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
   Java: "#b07219",
   Shell: "#89e051",
   Dart: "#00B4AB",
+  "Jupyter Notebook": "#DA5B0B",
 };
 
 export function GithubWidget() {
@@ -64,6 +64,7 @@ export function GithubWidget() {
           "https://api.github.com/users/Rangga11268/events?per_page=10"
         );
         const eventsData = await eventsRes.json();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const pushEvent = eventsData.find((e: any) => e.type === "PushEvent");
         if (pushEvent) setLastEvent(pushEvent);
 
@@ -78,6 +79,7 @@ export function GithubWidget() {
           const langCounts: Record<string, number> = {};
           let total = 0;
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           reposData.forEach((repo: any) => {
             if (repo.language) {
               langCounts[repo.language] = (langCounts[repo.language] || 0) + 1;
@@ -264,10 +266,10 @@ export function GithubWidget() {
                 </div>
                 <div className="mt-2 pl-4 border-l-2 border-white/10">
                   <div className="text-yellow-100/90 italic">
-                    "
+                    &quot;
                     {lastEvent?.payload?.commits?.[0]?.message ||
                       "No recent public commits"}
-                    "
+                    &quot;
                   </div>
                   <div className="mt-1 flex items-center gap-2 text-[9px] text-muted-foreground">
                     <span className="text-primary">
