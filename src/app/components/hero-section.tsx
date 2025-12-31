@@ -53,7 +53,7 @@ export function HeroSection() {
               <div className="absolute inset-4 bg-gradient-to-t from-primary/40 to-transparent blur-[50px] -z-10" />
 
               <Image
-                src="/img/saya/saya1.png"
+                src="/img/saya/saya2.png"
                 alt="Darell Rangga"
                 fill
                 className="object-contain drop-shadow-2xl"
