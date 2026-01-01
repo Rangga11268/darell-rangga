@@ -37,6 +37,7 @@ export function VoiceControlProvider({
   const [transcript, setTranscript] = useState("");
   const [response, setResponse] = useState<string | null>(null);
   const [notSupported, setNotSupported] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recognition, setRecognition] = useState<any>(null);
 
   const { theme, setTheme } = useTheme();
@@ -130,6 +131,7 @@ export function VoiceControlProvider({
   // Initialize Speech Recognition
   useEffect(() => {
     if (typeof window !== "undefined") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const SpeechRecognition =
         (window as any).SpeechRecognition ||
         (window as any).webkitSpeechRecognition;
@@ -144,6 +146,7 @@ export function VoiceControlProvider({
       recognitionInstance.interimResults = false;
       recognitionInstance.lang = "en-US"; // Default to English for J.A.R.V.I.S feel
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       recognitionInstance.onresult = (event: any) => {
         const lastResult = event.results[event.results.length - 1];
         if (lastResult.isFinal) {
@@ -185,10 +188,13 @@ export function VoiceControlProvider({
         recognition.start();
         speak("J.A.R.V.I.S. online. Listening.");
         // State will update via onstart
-      } catch (error: any) {
-        console.error("Failed to start recognition:", error);
+      } catch (error: unknown) {
+        console.error("Voice Error:", error);
         // If it's already started, just sync state
-        if (error?.message?.includes("already started")) {
+        if (
+          error instanceof Error &&
+          error.message?.includes("already started")
+        ) {
           setIsListening(true);
         }
       }

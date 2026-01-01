@@ -63,7 +63,7 @@ export function AITerminal() {
       };
 
       setMessages((prev) => [...prev, aiMsg]);
-    } catch (error) {
+    } catch {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: "ai",

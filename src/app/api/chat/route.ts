@@ -64,14 +64,16 @@ export async function POST(req: Request) {
     const text = response.text();
 
     return NextResponse.json({ text });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
     console.error(
       "Gemini Error Details:",
       JSON.stringify(error, Object.getOwnPropertyNames(error))
     );
     return NextResponse.json(
       {
-        text: `Connection error details: ${error?.message || "Unknown error"}`,
+        text: `Connection error details: ${errorMessage}`,
       },
       { status: 500 }
     );
