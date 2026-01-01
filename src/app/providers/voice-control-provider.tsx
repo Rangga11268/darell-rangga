@@ -40,7 +40,7 @@ export function VoiceControlProvider({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recognition, setRecognition] = useState<any>(null);
 
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const { setIsPlaygroundOpen } = useCustomization();
 
   // Initialize Speech Synthesis (TTS)
@@ -164,6 +164,7 @@ export function VoiceControlProvider({
         setIsListening(false);
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       recognitionInstance.onerror = (event: any) => {
         console.error("Speech recognition error", event.error);
         if (event.error === "not-allowed") {

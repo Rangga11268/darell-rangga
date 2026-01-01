@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, X, Send, Bot, User, Trash2 } from "lucide-react";
 import { useCustomization } from "@/app/providers/customization-provider";
-import { AI_PERSONA } from "@/app/data/ai-persona";
 
 interface Message {
   id: string;
