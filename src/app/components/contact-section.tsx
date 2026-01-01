@@ -91,11 +91,10 @@ export function ContactSection() {
           >
             <div>
               <h3 className="text-3xl font-display font-bold mb-4">
-                Get in touch
+                {t.contact.contactHeader}
               </h3>
               <p className="text-muted-foreground text-lg">
-                I&apos;m always open to discussing new projects, creative ideas,
-                or opportunities to be part of your visions.
+                {t.contact.contactText}
               </p>
             </div>
 

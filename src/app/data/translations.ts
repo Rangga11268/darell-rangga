@@ -12,7 +12,7 @@ export const translations = {
       greeting: "Hello, I'm",
       role: "Creative Developer",
       description:
-        "Building digital experiences that blend aesthetics with performance. I specialize in the modern React stack, crafting interfaces that feel as good as they look.",
+        "Blending aesthetics with high performance. I specialize in the modern React stack to build futuristic, responsive, and engaging web experiences.",
       viewWork: "See My Work",
       contactMe: "Get in Touch",
       badgeFast: "High Performance",
@@ -24,9 +24,9 @@ export const translations = {
       subtitle: "The Developer",
       journeyTitle: "My Background",
       journeyText:
-        "I bridge the gap between design and engineering. My focus is on creating scalable, accessible, and performant web applications.",
+        "I stand at the intersection of design aesthetics and the coding world. For me, web development isn't just technical logic, but the art of translating beautiful visuals into tangible interactions. I build applications that not only look cool but run fast and stay robust behind the scenes.",
       journeyDesc:
-        "Leveraging the latest in Next.js and Tailwind ecosystem to deliver products that stand out. I believe in clean code and user-centric design.",
+        "Relying on modern ecosystems like Next.js, Laravel, and Tailwind CSS, I craft digital products with strong character. I believe a great website must be balanced: clean and efficient code, with User Experience (UX) always as the top priority.",
       experience: "Work History",
       education: "Education",
       arsenal: "Tech Stack",
@@ -109,6 +109,9 @@ export const translations = {
     contact: {
       title: "Let's Connect",
       subtitle: "Start a Project",
+      contactHeader: "Get in touch",
+      contactText:
+        "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.",
       followMe: "Socials",
       formTitle: "Send a Message",
       formDesc: "Got a project in mind? Let's talk.",
@@ -150,7 +153,7 @@ export const translations = {
       greeting: "Halo, Saya",
       role: "Creative Developer",
       description:
-        "Membangun pengalaman digital yang memadukan estetika dengan performa. Spesialisasi dalam React stack modern.",
+        "Memadukan estetika visual dengan performa tinggi. Spesialis React & Next.js yang fokus menciptakan web futuristik, responsif, dan memanjakan mata.",
       viewWork: "Lihat Karya",
       contactMe: "Hubungi Saya",
       badgeFast: "Performa Tinggi",
@@ -162,9 +165,9 @@ export const translations = {
       subtitle: "Profil Profesional",
       journeyTitle: "Latar Belakang",
       journeyText:
-        "Saya menjembatani kesenjangan antara desain dan rekayasa perangkat lunak. Fokus saya adalah menciptakan web yang scalable dan performant.",
+        "Saya berada di titik temu antara estetika desain dan dunia *coding*. Bagi saya, pengembangan web bukan sekadar logika teknis, tapi seni menerjemahkan visual yang indah menjadi interaksi yang nyata. Saya membangun aplikasi yang tidak hanya terlihat keren, tapi juga ngebut dan tangguh di balik layar.",
       journeyDesc:
-        "Memanfaatkan ekosistem Next.js dan Tailwind terbaru untuk menghasilkan produk yang menonjol. Saya percaya pada kode yang bersih dan desain yang berpusat pada pengguna.",
+        "Mengandalkan ekosistem modern seperti Next.js, Laravel, dan Tailwind CSS, saya meracik produk digital yang punya karakter kuat. Saya percaya website yang bagus itu harus seimbang: kodenya bersih dan efisien, tapi pengalaman pengguna (UX)-nya tetap jadi prioritas nomor satu.",
       experience: "Riwayat Pekerjaan",
       education: "Pendidikan",
       arsenal: "Teknologi",
@@ -247,6 +250,9 @@ export const translations = {
     contact: {
       title: "Hubungi Saya",
       subtitle: "Mulai Proyek",
+      contactHeader: "Mari Berdiskusi",
+      contactText:
+        "Saya selalu terbuka untuk mendiskusikan proyek baru, ide kreatif, atau peluang kolaborasi untuk mewujudkan visi Anda.",
       followMe: "Sosial Media",
       formTitle: "Kirim Pesan",
       formDesc: "Punya ide proyek? Mari diskusikan.",
