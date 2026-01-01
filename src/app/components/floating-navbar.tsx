@@ -15,16 +15,21 @@ import {
   Languages,
   Settings,
   Terminal,
+  Mic,
+  MicOff,
+  Bot,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
+import { useVoiceControl } from "@/app/providers/voice-control-provider";
 
 export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
   const { setIsPlaygroundOpen } = useCustomization();
+  const { isListening, toggleListening } = useVoiceControl();
 
   const navItems = [
     { name: t.nav.home, href: "#home", icon: Home },
@@ -65,10 +70,24 @@ export function FloatingNavbar() {
           {/* Controls */}
           <div className="flex items-center gap-1 md:gap-2">
             <DockItem
-              onClick={() => setIsPlaygroundOpen(true)}
-              label="Dev Mode"
+              onClick={toggleListening}
+              label={isListening ? "Listening..." : "Voice Command"}
             >
-              <Terminal className="w-4 h-4 md:w-5 md:h-5 text-neutral-600 dark:text-neutral-400 group-hover:text-primary transition-colors" />
+              {isListening ? (
+                <div className="relative">
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping" />
+                  <Mic className="w-4 h-4 md:w-5 md:h-5 text-red-500 animate-pulse" />
+                </div>
+              ) : (
+                <MicOff className="w-4 h-4 md:w-5 md:h-5 text-neutral-600 dark:text-neutral-400 group-hover:text-primary transition-colors" />
+              )}
+            </DockItem>
+
+            <DockItem
+              onClick={() => setIsPlaygroundOpen(true)}
+              label="AI Terminal"
+            >
+              <Bot className="w-4 h-4 md:w-5 md:h-5 text-neutral-600 dark:text-neutral-400 group-hover:text-primary transition-colors" />
             </DockItem>
             <DockItem
               onClick={toggleLanguage}

@@ -1,0 +1,203 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Terminal, X, Send, Bot, User, Trash2 } from "lucide-react";
+import { useCustomization } from "@/app/providers/customization-provider";
+import { AI_PERSONA } from "@/app/data/ai-persona";
+
+interface Message {
+  id: string;
+  sender: "user" | "ai";
+  text: string;
+  timestamp: Date;
+}
+
+export function AITerminal() {
+  const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "init",
+      sender: "ai",
+      text: "Connection established. I am Rangga-AI v2.5.0. How can I assist you?",
+      timestamp: new Date(),
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isTyping]);
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      sender: "user",
+      text: input,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
+    setInput("");
+    setIsTyping(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+
+      const data = await response.json();
+
+      const aiMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: "ai",
+        text: data.text || "Error: No response received.",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, aiMsg]);
+    } catch (error) {
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: "ai",
+        text: "Error: Neural connection failed.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const clearChat = () => {
+    setMessages([
+      {
+        id: Date.now().toString(),
+        sender: "ai",
+        text: "Memory buffer cleared. Ready for new input.",
+        timestamp: new Date(),
+      },
+    ]);
+  };
+
+  return (
+    <AnimatePresence>
+      {isPlaygroundOpen && (
+        <motion.div
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "100%", opacity: 0 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed bottom-0 right-0 w-full md:w-[450px] md:right-8 md:bottom-24 h-[60vh] md:h-[600px] bg-black/95 backdrop-blur-xl border border-white/10 rounded-t-2xl md:rounded-2xl z-[100] shadow-2xl flex flex-col overflow-hidden font-mono"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-sm font-bold text-green-500 tracking-widest uppercase">
+                Rangga-AI Terminal
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={clearChat}
+                className="p-2 hover:bg-white/10 rounded-md transition-colors text-white/50 hover:text-white"
+                title="Clear Chat"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setIsPlaygroundOpen(false)}
+                className="p-2 hover:bg-red-500/20 hover:text-red-500 rounded-md transition-colors text-white/50"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Chat Area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex gap-3 ${
+                  msg.sender === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                {msg.sender === "ai" && (
+                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 flex-shrink-0">
+                    <Bot className="w-4 h-4 text-primary" />
+                  </div>
+                )}
+
+                <div
+                  className={`max-w-[80%] p-3 rounded-lg text-xs md:text-sm leading-relaxed ${
+                    msg.sender === "user"
+                      ? "bg-white/10 text-white border border-white/10 rounded-tr-none"
+                      : "bg-green-500/10 text-green-400 border border-green-500/20 rounded-tl-none font-mono"
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                </div>
+
+                {msg.sender === "user" && (
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/10 flex-shrink-0">
+                    <User className="w-4 h-4 text-white" />
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {isTyping && (
+              <div className="flex gap-3 justify-start">
+                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 flex-shrink-0">
+                  <Bot className="w-4 h-4 text-primary" />
+                </div>
+                <div className="bg-green-500/10 text-green-400 border border-green-500/20 p-3 rounded-lg rounded-tl-none">
+                  <span className="animate-pulse">_</span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="p-4 border-t border-white/10 bg-white/5">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
+              className="flex gap-2"
+            >
+              <div className="relative flex-1">
+                <Terminal className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Enter command (e.g., 'skills', 'contact')..."
+                  className="w-full bg-black/20 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 font-mono transition-all"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={!input.trim() || isTyping}
+                className="p-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white shadow-lg shadow-primary/20 transition-all"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
