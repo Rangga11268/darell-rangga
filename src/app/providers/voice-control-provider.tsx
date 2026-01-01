@@ -131,10 +131,11 @@ export function VoiceControlProvider({
   // Initialize Speech Recognition
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       const SpeechRecognition =
         (window as any).SpeechRecognition ||
         (window as any).webkitSpeechRecognition;
+      /* eslint-enable @typescript-eslint/no-explicit-any */
 
       if (!SpeechRecognition) {
         setNotSupported(true);
