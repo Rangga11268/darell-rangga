@@ -234,7 +234,7 @@ function GridItem({
   activeColor,
   badge,
 }: {
-  icon: any;
+  icon: React.ElementType;
   label: string;
   href?: string;
   onClick?: () => void;
