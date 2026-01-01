@@ -1,206 +1,128 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
-import { Button } from "@/components/ui/button";
-
-interface Project {
-  title: string;
-  description: string;
-  tags: string[];
-  imageUrl: string;
-  githubUrl: string;
-  liveUrl: string;
-  colSpan: string;
-}
+import { projects, Project } from "@/app/data/projects";
+import { ProjectDetailModal } from "./project-detail-modal";
 
 const ProjectCard = ({
   project,
   index,
+  onClick,
+  language,
 }: {
   project: Project;
   index: number;
+  onClick: (project: Project) => void;
+  language: "en" | "id";
 }) => {
   return (
     <motion.div
+      layoutId={`card-${project.id}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      onClick={() => onClick(project)}
       className={cn(
-        "group relative rounded-3xl overflow-hidden bg-card/50 border border-white/5 hover:border-primary/50 transition-colors duration-500 h-[400px] md:h-auto",
-        project.colSpan
+        "group relative rounded-3xl overflow-hidden bg-zinc-900 border border-white/5 cursor-pointer hover:border-primary/50 transition-all duration-500",
+        project.colSpan, // This handles the bento grid sizing
+        "h-[300px] md:h-auto min-h-[300px]"
       )}
     >
-      {/* Full Background Image */}
+      {/* Background Image with Cinematic Desaturation -> Color on Hover */}
       <div className="absolute inset-0 w-full h-full">
         <Image
           src={project.imageUrl}
           alt={project.title}
           fill
-          className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+          className="object-cover transform group-hover:scale-110 transition-transform duration-700 grayscale group-hover:grayscale-0"
         />
-        {/* Gradient Overlay - Darker on mobile for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 md:opacity-60 md:group-hover:opacity-90 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-500" />
+        {/* Spotlight Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90" />
       </div>
 
-      {/* Content Container - Always visible on mobile, slide-up on desktop */}
-      <div className="absolute inset-0 p-6 flex flex-col justify-end translate-y-0 md:translate-y-[30%] md:group-hover:translate-y-0 transition-transform duration-500 ease-out">
-        {/* Title area */}
-        <div className="mb-2">
-          <h3 className="text-3xl font-display font-bold text-white mb-2 drop-shadow-lg">
-            {project.title}
-          </h3>
-          <div className="flex flex-wrap gap-2 mb-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100">
-            {project.tags.map((tag) => (
+      {/* Content */}
+      <div className="absolute inset-0 p-6 flex flex-col justify-between">
+        {/* Header (Top Right) */}
+        <div className="flex justify-between items-start">
+          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10 text-white opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            <Maximize2 className="w-4 h-4" />
+          </div>
+          <div className="px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md">
+            <span className="text-xs font-mono text-white/70 uppercase tracking-widest">
+              {project.year}
+            </span>
+          </div>
+        </div>
+
+        {/* Footer info */}
+        <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+          <div className="mb-2 flex flex-wrap gap-2">
+            {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded-full bg-primary/20 text-white border border-white/10 backdrop-blur-md"
+                className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20 uppercase tracking-wider"
               >
                 {tag}
               </span>
             ))}
           </div>
-        </div>
-
-        {/* Description & Buttons (Always visible on mobile, reveal on desktop) */}
-        <div className="space-y-6 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 delay-100">
-          <p className="text-gray-300 text-sm leading-relaxed line-clamp-3">
-            {project.description}
+          <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-2 leading-tight">
+            {project.title}
+          </h3>
+          <p className="text-sm text-white/60 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+            {project.shortDescription[language]}
           </p>
-
-          <div className="flex items-center gap-3">
-            {project.liveUrl && project.liveUrl !== "#" && (
-              <Button
-                asChild
-                size="sm"
-                className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg shadow-primary/20"
-              >
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Visit Site
-                </a>
-              </Button>
-            )}
-
-            <Button
-              asChild
-              variant="outline"
-              size="sm"
-              className="rounded-full border-white/20 bg-white/5 hover:bg-white/20 text-white hover:text-white backdrop-blur-md transition-all"
-            >
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github className="w-4 h-4 mr-2" />
-                Source Code
-              </a>
-            </Button>
-          </div>
         </div>
       </div>
-
-      {/* Top Right Icon (Decorative or Quick Link) */}
-      <a
-        href={project.liveUrl !== "#" ? project.liveUrl : project.githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute top-4 right-4 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white hover:bg-primary hover:border-primary transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-[-10px] md:group-hover:translate-y-0"
-      >
-        <ArrowUpRight className="w-5 h-5" />
-      </a>
     </motion.div>
   );
 };
 
 export function ProjectsSection() {
-  const { t } = useLanguage();
-
-  const projects = [
-    {
-      title: "Navara Trans",
-      description:
-        "A modern transportation rental website with booking system and fleet management. Features real-time availability and dynamic pricing.",
-      tags: ["React.js", "Tailwind", "Vite"],
-      imageUrl: "/img/navara.png",
-      githubUrl: "https://github.com/Rangga11268/navara-trans",
-      liveUrl: "https://navara-trans.vercel.app/",
-      colSpan: "md:col-span-1",
-    },
-    {
-      title: "PHD Trans",
-      description:
-        "Premium bus rental platform featuring cinematic fleet showcase with immersive animations and detailed specification filtering.",
-      tags: ["Next.js", "Framer Motion", "TypeScript"],
-      imageUrl: "/img/PhdTrans.png",
-      githubUrl: "https://github.com/Rangga11268/phd-trans",
-      liveUrl: "https://phd-trans.vercel.app/",
-      colSpan: "md:col-span-1",
-    },
-    {
-      title: "Apapesan",
-      description:
-        "Secure messaging platform focusing on privacy and real-time delivery. Implements end-to-end encryption and ephemeral messages.",
-      tags: ["Laravel", "MySQL", "Pusher"],
-      imageUrl: "/img/Apapesan.png",
-      githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
-      liveUrl: "#",
-      colSpan: "md:col-span-2",
-    },
-    {
-      title: "Portfolio",
-      description:
-        "The digital garden you are currently exploring. Built to perform with highly interactive elements and modern web technologies.",
-      tags: ["Next.js 15", "R3F", "Tailwind v4"],
-      imageUrl: "/img/portfolio.png",
-      githubUrl: "https://github.com/Rangga11268/darell-rangga",
-      liveUrl: "/",
-      colSpan: "md:col-span-1 md:row-span-2",
-    },
-    {
-      title: "SRB MotorV2",
-      description:
-        "E-commerce solution for automotive parts and services. Features inventory management, service booking, and payment gateway integration.",
-      tags: ["Laravel", "Inertia", "Vue"],
-      imageUrl: "/img/srb motor.png",
-      githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
-      liveUrl: "#",
-      colSpan: "md:col-span-1",
-    },
-    {
-      title: "Janguleee Trans",
-      description:
-        "Transportation service platform with modern booking capabilities. Focused on simplified user flow and mobile responsiveness.",
-      tags: ["Next.js", "Tailwind", "Supabase"],
-      imageUrl: "/img/janguleee.png",
-      githubUrl: "https://github.com/Rangga11268/janguleee-trans",
-      liveUrl: "https://janguleee-trans.vercel.app/",
-      colSpan: "md:col-span-1",
-    },
-  ];
+  const { t, language } = useLanguage();
+  const langKey = language === "id" ? "id" : "en";
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="py-32 relative">
-      <div className="container px-4 md:px-6 mx-auto">
+    <section id="projects" className="py-20 md:py-32 relative">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
+      </div>
+
+      <div className="container px-4 md:px-6 mx-auto relative z-10">
         <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
 
-        {/* Increased row height for better visual impact */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[450px]">
+        {/* Bento Grid Container */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[300px] md:auto-rows-[350px]">
           {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              onClick={setSelectedProject}
+              language={langKey}
+            />
           ))}
         </div>
       </div>
+
+      {/* Detail Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        language={langKey}
+      />
     </section>
   );
 }
