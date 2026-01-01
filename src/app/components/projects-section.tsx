@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Maximize2 } from "lucide-react";
+import { Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";

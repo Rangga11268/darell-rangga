@@ -125,7 +125,7 @@ export function ProjectDetailModal({
                         </h3>
                       </div>
                       <p className="text-white/60 leading-relaxed text-sm italic">
-                        "{project.story[language]}"
+                        &quot;{project.story[language]}&quot;
                       </p>
                     </div>
                   )}
