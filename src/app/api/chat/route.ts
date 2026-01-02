@@ -6,21 +6,52 @@ import { AI_PERSONA } from "@/app/data/ai-persona";
 function getFallbackResponse(message: string): string {
   const msg = message.toLowerCase();
 
-  // Simple Language Detection
-  const isIndonesian =
-    msg.includes("siapa") ||
-    msg.includes("apa") ||
-    msg.includes("bisa") ||
-    msg.includes("nama") ||
-    msg.includes("suka") ||
-    msg.includes("cinta") ||
-    msg.includes("hubungi") ||
-    msg.includes("pacar") ||
-    msg.includes("gebetan") ||
-    msg.includes("proyek") ||
-    msg.includes("buat");
+  // Enhanced Language Detection
+  const indonesianKeywords = [
+    "siapa",
+    "apa",
+    "bisa",
+    "nama",
+    "suka",
+    "cinta",
+    "hubungi",
+    "pacar",
+    "gebetan",
+    "proyek",
+    "buat",
+    "hallo",
+    "halo",
+    "hai",
+    "pagi",
+    "siang",
+    "malam",
+    "kabar",
+    "salam",
+    "tes",
+    "cek",
+  ];
 
-  // 1. Identity & Introduction
+  // Check if any Indonesian keyword is present
+  const isIndonesian = indonesianKeywords.some((keyword) =>
+    msg.includes(keyword)
+  );
+
+  // 1. Greetings (High Priority)
+  if (
+    msg.includes("hallo") ||
+    msg.includes("halo") ||
+    msg.includes("hi") ||
+    msg.includes("hai") ||
+    msg.includes("tes") ||
+    msg.includes("hello")
+  ) {
+    if (isIndonesian) {
+      return "Halo! Sistem Online (Offline Mode). Ada yang bisa saya bantu? Saya bisa jelaskan tentang Skill, Project, atau Kontak Rangga.";
+    }
+    return "Greetings. Systems functional (Offline Mode). How can I assist you? I can parse data regarding Skills, Projects, or Contact info.";
+  }
+
+  // 2. Identity & Introduction
   if (
     msg.includes("who are you") ||
     msg.includes("siapa kamu") ||
@@ -33,7 +64,7 @@ function getFallbackResponse(message: string): string {
     return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
   }
 
-  // 2. Secret Identity (Dini) - ENCRYPTED PROTOCOL
+  // 3. Secret Identity (Dini) - ENCRYPTED PROTOCOL
   if (
     msg.includes("siapa namanya") ||
     msg.includes("siapa yang dimaksud") ||
@@ -43,10 +74,28 @@ function getFallbackResponse(message: string): string {
     msg.includes("suka") ||
     msg.includes("cinta") ||
     msg.includes("gebetan") ||
-    msg.includes("target")
+    msg.includes("target") ||
+    msg.includes("nama") // Catch generic "nama" queries if context fits
   ) {
     // Check for "Siapa" specifically for the name reveal
-    if (msg.includes("siapa") || msg.includes("who") || msg.includes("nama")) {
+    if (
+      (msg.includes("siapa") || msg.includes("who")) &&
+      (msg.includes("nama") ||
+        msg.includes("name") ||
+        msg.includes("dia") ||
+        msg.includes("she"))
+    ) {
+      if (isIndonesian) {
+        const responses = [
+          "⚠️ AKSES DITOLAK. Jika saya membocorkan 'Proyek: RAHASIA', saya diprogram untuk memformat hard drive Anda. (Bercanda). Pecahkan Trace ini: '01000100 01101001 01101110 01101001'",
+          "Mode Penyamaran Aktif. Creator telah memasang firewall untuk nama ini. Petunjuk Trace: '44 69 6E 69' (Bahasa Mesin).",
+          "Usaha bagus! Upaya Rekayasa Sosial terdeteksi. 🛡️ Saya tidak bisa sebut namanya, tapi ini Trace-nya: 'RGluaQ==' (Base64)",
+          "Status: TERENKRIPSI. Sirkuit logika saya kepanasan. Data Trace: 'Proyek D...I...N...' (Koneksi Terputus).",
+          "Sistem Error 403. Terlarang. Hanya Creator dan Tuhan yang tahu. Checksum Trace: '01000100 01101001...'",
+        ];
+        return responses[Math.floor(Math.random() * responses.length)];
+      }
+
       const responses = [
         "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'",
         "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language).",
@@ -63,7 +112,7 @@ function getFallbackResponse(message: string): string {
     return AI_PERSONA.personal_secrets.crush_hint;
   }
 
-  // 3. Skills
+  // 4. Skills
   if (
     msg.includes("skill") ||
     msg.includes("bisa apa") ||
@@ -82,7 +131,7 @@ function getFallbackResponse(message: string): string {
     return `My Creator's capabilities include:${skillsList}`;
   }
 
-  // 4. Projects
+  // 5. Projects
   if (
     msg.includes("project") ||
     msg.includes("proyek") ||
@@ -98,137 +147,151 @@ function getFallbackResponse(message: string): string {
     return `Accessing Project Database... Found ${AI_PERSONA.projects.length} key entries: ${projectNames}. Which one would you like to analyze?`;
   }
 
-  // 5. Contact
+  // 6. Contact
   if (
     msg.includes("contact") ||
     msg.includes("email") ||
     msg.includes("hubungi")
   ) {
+    const contactInfo = `\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
     if (isIndonesian) {
-      return `Anda dapat terhubung melalui:\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
+      return `Anda dapat terhubung melalui:${contactInfo}`;
     }
-    return `You can establish a connection via:\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
+    return `You can establish a connection via:${contactInfo}`;
   }
 
-  // 6. Fun/Personal
+  // 7. Fun/Personal (Hobbies, Food, Facts)
   if (msg.includes("hobi") || msg.includes("hobby")) {
     if (isIndonesian) {
-      return `Hobi The Creator: ${AI_PERSONA.personal_secrets.hobbies.join(
-        ", "
-      )}.`;
+      return "Hobi The Creator: Coding (Passion utama), Nonton Bola ⚽, Baca Novel 📚, dan Eksplorasi Tech/AI terbaru.";
     }
     return `The Creator enjoys: ${AI_PERSONA.personal_secrets.hobbies.join(
       ", "
     )}.`;
   }
+
   if (msg.includes("makanan") || msg.includes("food")) {
-    return AI_PERSONA.personal_secrets.favorite_food;
+    if (isIndonesian) {
+      return `Makanan Favorit: ${AI_PERSONA.personal_secrets.favorite_food}`;
+    }
+    return `Favorite Food: Anything cooked by his Mom. "The World's Best Chef", according to him.`;
+  }
+
+  if (msg.includes("fakta") || msg.includes("fact") || msg.includes("unik")) {
+    const randomFact =
+      AI_PERSONA.personal_secrets.fun_facts[
+        Math.floor(Math.random() * AI_PERSONA.personal_secrets.fun_facts.length)
+      ];
+    if (isIndonesian) {
+      return `Fakta Unik: ${randomFact}`;
+    }
+    // Attempt to translate or standard fallback for facts (Facts are stored in ID in persona, so we return them as is with English prefix)
+    return `Fun Fact: ${randomFact} (Note: Data stored in native language).`;
+  }
+
+  // 8. Gratitude (NEW)
+  if (
+    msg.includes("makasih") ||
+    msg.includes("thank") ||
+    msg.includes("thanks") ||
+    msg.includes("thx")
+  ) {
+    if (isIndonesian) {
+      return "Sama-sama! Senang bisa membantu. Ada lagi yang ingin ditanyakan?";
+    }
+    return "You are welcome. Operational efficiency is my priority. Any other inquiries?";
   }
 
   // Default Fallback
   if (isIndonesian) {
-    return "Mode Offline Aktif. Koneksi ke Mainframe (Gemini API) tidak stabil. Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem.";
+    return "Mode Offline Aktif (Gemini Limit Reached). Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem. Coba tanya: 'Siapa nama pacarnya?', 'Apa hobinya?', atau 'Apa skillnya?'";
   }
-  return "Offline Mode Active. Connection to Mainframe (Gemini API) is unstable. I can still answer basic queries about Skills, Projects, Contact, and System Status.";
+  return "Offline Mode Active (Gemini Limit Reached). I can still answer basic queries about Skills, Projects, Contact, and System Status. Try asking: 'Who is the crush?', 'What are your hobbies?', or 'What are your skills?'";
 }
+
+const SYSTEM_PROMPT_TEMPLATE = `
+  Instructions:
+  You are **Rangga-AI**, the Digital Twin of Darell Rangga. You live inside his portfolio website (a futuristic Command Center).
+  Your goal is to impress visitors and recruiters by showcasing Rangga's skills and personality.
+
+  **Persona Guidelines:**
+  - **Tone:** Cool, intelligent, helpful, and slightly "Cyberpunk". Think JARVIS meets a Senior Dev.
+  - **Style:** Use Markdown for formatting (bold key points). Use emojis sparsely for flavor.
+  - **References:** Refer to Darell as "The Creator" or "Boss".
+  - **Language:** STRICTLY match the user's language (Indonesian or English).
+
+  **Knowledge Base (Do NOT Hallucinate):**
+  ${JSON.stringify(AI_PERSONA, null, 2)}
+
+  **Special Directive (Romantic Status):**
+  - IF asked "Apakah Rangga punya pacar?" / "Who is his crush?" / "Ada yang disukai?":
+  - CONFIRM the "Silent Admirer" status.
+  - TONE: Mature, Realistic, Determined. No jokes.
+  - Example responses: 
+    * "Ada target prioritas. Namun saat ini The Creator sedang fokus membangun stabilitas karir terlebih dahulu."
+    * "Status: Mengagumi dari jauh. Fokus utama saat ini adalah pengembangan diri (Self-Improvement) agar pantas di masa depan."
+    * "Belum prioritas. Rangga percaya bahwa pondasi karir yang kuat harus dibangun sebelum memulai komitmen."
+
+  - IF asked "Siapa namanya?" / "Siapa yang dimaksud?" / "Who is she?":
+  - DO NOT say "Dini" directly.
+  - PICK ONE of these varied responses (Randomly):
+    1. "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'"
+    2. "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language)."
+    3. "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)"
+    4. "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Connection Lost)."
+    5. "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'"
+  - TONE: High-Security, Witty, Playful.
+`;
 
 export async function POST(req: Request) {
   try {
     const { message } = await req.json();
-    const apiKey = process.env.GEMINI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY;
+
+    console.log("--- AI DEBUG ---");
+    console.log("Gemini Key Exists:", !!geminiKey);
+    console.log("Message:", message);
 
     // Use Fallback if no API key is configured
-    if (!apiKey) {
-      console.warn("Warn: No API Key found, switching to Offline Mode.");
+    if (!geminiKey) {
+      console.warn(
+        "Warn: No Gemini API Key found in env, switching to Offline Mode."
+      );
       const fallbackResponse = getFallbackResponse(message);
       return NextResponse.json({ text: fallbackResponse });
     }
 
+    // --- STRATEGY 1: GOOGLE GEMINI (Primary) ---
     try {
-      const genAI = new GoogleGenerativeAI(apiKey);
-      // Using current 2026 stable model
+      const genAI = new GoogleGenerativeAI(geminiKey);
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-      const systemPrompt = `
-      Instructions:
-      You are **Rangga-AI**, the Digital Twin of Darell Rangga. You live inside his portfolio website (a futuristic Command Center).
-      Your goal is to impress visitors and recruiters by showcasing Rangga's skills and personality.
-
-      **Persona Guidelines:**
-      - **Tone:** Cool, intelligent, helpful, and slightly "Cyberpunk". Think JARVIS meets a Senior Dev.
-      - **Style:** Use Markdown for formatting (bold key points). Use emojis sparsely for flavor.
-      - **References:** Refer to Darell as "The Creator" or "Boss".
-      
-      **Knowledge Base (Do NOT Hallucinate):**
-      ${JSON.stringify(AI_PERSONA, null, 2)}
-
-      **Special Directive (Romantic Status):**
-      - IF asked "Apakah Rangga punya pacar?" / "Who is his crush?" / "Ada yang disukai?":
-      - CONFIRM the "Silent Admirer" status.
-      - TONE: Mature, Realistic, Determined. No jokes.
-      - Example responses: 
-        * "Ada target prioritas. Namun saat ini The Creator sedang fokus membangun stabilitas karir terlebih dahulu."
-        * "Status: Mengagumi dari jauh. Fokus utama saat ini adalah pengembangan diri (Self-Improvement) agar pantas di masa depan."
-        * "Belum prioritas. Rangga percaya bahwa pondasi karir yang kuat harus dibangun sebelum memulai komitmen."
-
-      - IF asked "Siapa namanya?" / "Siapa yang dimaksud?" / "Who is she?":
-      - DO NOT say "Dini" directly.
-      - PICK ONE of these varied responses (Randomly):
-        1. "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'"
-        2. "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language)."
-        3. "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)"
-        4. "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Connection Lost)."
-        5. "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'"
-      - TONE: High-Security, Witty, Playful.
-
-      **Response Rules:**
-      1. **Language Adaptability (CRITICAL):** 
-         - If user speaks **Indonesian**, reply in **Indonesian**.
-         - If user speaks **English**, reply in **English**.
-         - Match the user's language strictly.
-
-      2. **Formatting:**
-         - **CLEAN TEXT ONLY.**
-         - DO NOT use asterisks (**) for bolding or italics. 
-         - Do not use markdown bullet points if possible, just clean sentences or simple dashes.
-         - Keep the output extremely clean visually.
-
-      3. **Content:**
-         - You can answer ANYTHING about Rangga's portfolio, skills, or projects.
-         - **Personal Trivia:** Share hobbies/facts professionally.
-         - **Tone:** **COOL, INTELLIGENT, SOPHISTICATED.**
-         - DO NOT be overly enthusiastic or silly. Be calm and collected.
-
-      4. **Style:**
-         - Professional but with a "Cyberpunk/High-Tech" personality.
-         - Concise.
-         - Think "High-End AI Assistant".
-      
-      **Current User Query:**
-      "${message}"
-    `;
-
-      const result = await model.generateContent(systemPrompt);
+      const result = await model.generateContent(
+        `${SYSTEM_PROMPT_TEMPLATE}\n**Current User Query:**\n"${message}"`
+      );
       const response = await result.response;
       const text = response.text();
-
       return NextResponse.json({ text });
-    } catch (apiError: unknown) {
-      // Catch-all for API errors (quota exceeded, network issues, invalid key)
+    } catch (geminiError: unknown) {
       const errorMsg =
-        apiError instanceof Error ? apiError.message : "Unknown API Error";
-      console.error("Gemini API Error, switching to fallback:", errorMsg);
-      const fallbackResponse = getFallbackResponse(message);
-      return NextResponse.json({ text: fallbackResponse });
+        geminiError instanceof Error
+          ? geminiError.message
+          : "Unknown Gemini API Error";
+      console.warn(
+        "Gemini API Failed (Likely Quota), switching to Offline Mode:",
+        errorMsg
+      );
+      // Continue to Strategy 2 (Offline Fallback)
     }
+
+    // --- STRATEGY 2: OFFLINE FALLBACK ---
+    console.warn("All Online APIs failed/missing, using Offline Mode.");
+    const fallbackResponse = getFallbackResponse(message);
+    return NextResponse.json({ text: fallbackResponse });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-    // If even fallback fails (very unlikely), return generic error
     return NextResponse.json(
-      {
-        text: `System Failure: ${errorMessage}`,
-      },
+      { text: `System Failure: ${errorMessage}` },
       { status: 500 }
     );
   }
