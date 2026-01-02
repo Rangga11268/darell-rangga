@@ -14,14 +14,24 @@ interface Message {
 
 // --- Sub Components ---
 
-function Typewriter({ text, speed = 15 }: { text: string; speed?: number }) {
+function Typewriter({
+  text,
+  speed = 15,
+  onScroll,
+}: {
+  text: string;
+  speed?: number;
+  onScroll?: () => void;
+}) {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isRedacted, setIsRedacted] = useState(false);
 
   useEffect(() => {
-    // Reset if text changes significantly (new message) - though usually keys handle this
+    // Reset if text changes significantly (new message)
     if (currentIndex === 0 && text.length > 0) {
       setDisplayText("");
+      setIsRedacted(false);
     }
   }, [text, currentIndex]);
 
@@ -30,11 +40,40 @@ function Typewriter({ text, speed = 15 }: { text: string; speed?: number }) {
       const timeout = setTimeout(() => {
         setDisplayText((prev) => prev + text[currentIndex]);
         setCurrentIndex((prev) => prev + 1);
+        // Trigger scroll on every character added
+        if (onScroll) onScroll();
       }, speed);
 
       return () => clearTimeout(timeout);
     }
-  }, [currentIndex, text, speed]);
+  }, [currentIndex, text, speed, onScroll]);
+
+  // Self-Destruct/Redact Logic for "Trace:" (Secret Identity)
+  useEffect(() => {
+    if (currentIndex >= text.length && !isRedacted) {
+      // Check if this message contains the sensitive 'Trace:' data
+      if (text.includes("Trace:")) {
+        // Removed space to match standardized 'Trace:'
+        const timeout = setTimeout(() => {
+          setDisplayText((prev) => {
+            // Find where "Trace:" starts
+            const traceIndex = prev.indexOf("Trace:");
+            if (traceIndex === -1) return prev;
+
+            // Keep everything before "Trace:" + "Trace:" itself + maybe a bit more context if needed
+            // But for safety, cut right at Trace:
+            const safePart = prev.substring(0, traceIndex + 6);
+            return (
+              safePart + " [DATA EXPUNGED - SECURITY PROTOCOL ACTIVATED] 🔒"
+            );
+          });
+          setIsRedacted(true);
+        }, 2000); // Visible for 2 seconds then banished
+
+        return () => clearTimeout(timeout);
+      }
+    }
+  }, [currentIndex, text, isRedacted]);
 
   return (
     <p className="whitespace-pre-wrap">
@@ -58,18 +97,14 @@ export function AITerminal() {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom
-  useEffect(() => {
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]); // Scroll on new message or typing state change
+  };
 
-  // Additional scroll trigger when typing adds lines
+  // Auto-scroll to bottom on new messages
   useEffect(() => {
-    const interval = setInterval(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
-    return () => clearInterval(interval);
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -184,7 +219,7 @@ export function AITerminal() {
                   }`}
                 >
                   {msg.sender === "ai" ? (
-                    <Typewriter text={msg.text} />
+                    <Typewriter text={msg.text} onScroll={scrollToBottom} />
                   ) : (
                     <p className="whitespace-pre-wrap">{msg.text}</p>
                   )}
