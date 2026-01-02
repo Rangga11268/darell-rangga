@@ -213,11 +213,11 @@ function DockItem({
       </div>
 
       {href ? (
-        <a href={href} onClick={onClick}>
+        <a href={href} onClick={onClick} aria-label={label}>
           <Content />
         </a>
       ) : (
-        <button onClick={onClick}>
+        <button onClick={onClick} aria-label={label}>
           <Content />
         </button>
       )}
@@ -269,11 +269,20 @@ function GridItem({
   );
 
   return href ? (
-    <a href={href} className="block h-full relative" onClick={onClick}>
+    <a
+      href={href}
+      className="block h-full relative"
+      onClick={onClick}
+      aria-label={label}
+    >
       {content}
     </a>
   ) : (
-    <button onClick={onClick} className="block w-full h-full relative">
+    <button
+      onClick={onClick}
+      className="block w-full h-full relative"
+      aria-label={label}
+    >
       {content}
     </button>
   );

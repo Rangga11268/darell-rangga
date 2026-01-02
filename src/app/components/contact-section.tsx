@@ -144,6 +144,9 @@ export function ContactSection() {
                   variant="outline"
                   size="icon"
                   className="rounded-full w-12 h-12 border-white/10 hover:bg-primary hover:text-white hover:border-transparent transition-all hover:-translate-y-1"
+                  aria-label={`Visit my profile on ${
+                    Icon.displayName || "social media"
+                  }`}
                 >
                   <Icon className="w-5 h-5" />
                 </Button>

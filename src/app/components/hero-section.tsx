@@ -56,6 +56,7 @@ export function HeroSection() {
                 src="/img/saya/saya2.png"
                 alt="Darell Rangga"
                 fill
+                sizes="(max-width: 768px) 300px, 450px"
                 className="object-contain drop-shadow-2xl"
                 priority
               />
@@ -164,6 +165,9 @@ export function HeroSection() {
                     className="text-muted-foreground hover:text-primary transition-colors hover:scale-125 transform duration-300"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Visit my ${
+                      social.icon.displayName || "profile"
+                    }`}
                   >
                     <social.icon className="w-6 h-6" />
                   </a>

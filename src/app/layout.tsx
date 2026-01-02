@@ -108,6 +108,12 @@ export default function RootLayout({
       <body
         className={`${syne.variable} ${manrope.variable} antialiased bg-background text-foreground`}
       >
+        <a
+          href="#home"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] px-4 py-2 bg-primary text-secondary-foreground rounded-md font-bold transition-all"
+        >
+          Skip to main content
+        </a>
         <ThemeProvider>
           <LanguageProvider>
             <CustomizationProvider>
