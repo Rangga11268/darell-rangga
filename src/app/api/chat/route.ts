@@ -6,12 +6,30 @@ import { AI_PERSONA } from "@/app/data/ai-persona";
 function getFallbackResponse(message: string): string {
   const msg = message.toLowerCase();
 
+  // Simple Language Detection
+  const isIndonesian =
+    msg.includes("siapa") ||
+    msg.includes("apa") ||
+    msg.includes("bisa") ||
+    msg.includes("nama") ||
+    msg.includes("suka") ||
+    msg.includes("cinta") ||
+    msg.includes("hubungi") ||
+    msg.includes("pacar") ||
+    msg.includes("gebetan") ||
+    msg.includes("proyek") ||
+    msg.includes("buat");
+
   // 1. Identity & Introduction
   if (
     msg.includes("who are you") ||
     msg.includes("siapa kamu") ||
-    msg.includes("intro")
+    msg.includes("intro") ||
+    msg.includes("kenalan")
   ) {
+    if (isIndonesian) {
+      return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Konstruksi digital yang dirancang oleh ${AI_PERSONA.identity.creator} untuk membantu operasional dan menjawab pertanyaan seputar portofolio.`;
+    }
     return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
   }
 
@@ -22,7 +40,7 @@ function getFallbackResponse(message: string): string {
     msg.includes("who is she") ||
     msg.includes("pacar") ||
     msg.includes("crush") ||
-    msg.includes("suka") || // Catch "yang bos mu suka"
+    msg.includes("suka") ||
     msg.includes("cinta") ||
     msg.includes("gebetan") ||
     msg.includes("target")
@@ -39,6 +57,9 @@ function getFallbackResponse(message: string): string {
       return responses[Math.floor(Math.random() * responses.length)];
     }
     // General romantic status query
+    if (isIndonesian) {
+      return "Ada target prioritas 🎯. Namun saat ini The Creator sedang fokus 'upgrade spek' diri (Karir & Stabilitas) sebelum memulai protokol koneksi. Doakan saja!";
+    }
     return AI_PERSONA.personal_secrets.crush_hint;
   }
 
@@ -50,11 +71,15 @@ function getFallbackResponse(message: string): string {
     msg.includes("jago") ||
     msg.includes("tech")
   ) {
-    return `My Creator's capabilities include:\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
+    const skillsList = `\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
       ", "
     )}\n- **Backend:** ${AI_PERSONA.skills.backend.join(
       ", "
     )}\n- **Design:** ${AI_PERSONA.skills.design.join(", ")}`;
+    if (isIndonesian) {
+      return `Kapabilitas Creator saya mencakup:${skillsList}`;
+    }
+    return `My Creator's capabilities include:${skillsList}`;
   }
 
   // 4. Projects
@@ -64,9 +89,12 @@ function getFallbackResponse(message: string): string {
     msg.includes("portfolio") ||
     msg.includes("bikin apa") ||
     msg.includes("buat apa") ||
-    msg.includes("projec") // Typo handling
+    msg.includes("projec")
   ) {
     const projectNames = AI_PERSONA.projects.map((p) => p.name).join(", ");
+    if (isIndonesian) {
+      return `Mengakses Database Proyek... Ditemukan ${AI_PERSONA.projects.length} entri utama: ${projectNames}. Yang mana yang ingin Anda analisis?`;
+    }
     return `Accessing Project Database... Found ${AI_PERSONA.projects.length} key entries: ${projectNames}. Which one would you like to analyze?`;
   }
 
@@ -76,11 +104,19 @@ function getFallbackResponse(message: string): string {
     msg.includes("email") ||
     msg.includes("hubungi")
   ) {
+    if (isIndonesian) {
+      return `Anda dapat terhubung melalui:\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
+    }
     return `You can establish a connection via:\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
   }
 
   // 6. Fun/Personal
   if (msg.includes("hobi") || msg.includes("hobby")) {
+    if (isIndonesian) {
+      return `Hobi The Creator: ${AI_PERSONA.personal_secrets.hobbies.join(
+        ", "
+      )}.`;
+    }
     return `The Creator enjoys: ${AI_PERSONA.personal_secrets.hobbies.join(
       ", "
     )}.`;
@@ -90,6 +126,9 @@ function getFallbackResponse(message: string): string {
   }
 
   // Default Fallback
+  if (isIndonesian) {
+    return "Mode Offline Aktif. Koneksi ke Mainframe (Gemini API) tidak stabil. Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem.";
+  }
   return "Offline Mode Active. Connection to Mainframe (Gemini API) is unstable. I can still answer basic queries about Skills, Projects, Contact, and System Status.";
 }
 
