@@ -12,6 +12,38 @@ interface Message {
   timestamp: Date;
 }
 
+// --- Sub Components ---
+
+function Typewriter({ text, speed = 15 }: { text: string; speed?: number }) {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    // Reset if text changes significantly (new message) - though usually keys handle this
+    if (currentIndex === 0 && text.length > 0) {
+      setDisplayText("");
+    }
+  }, [text, currentIndex]);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
+      }, speed);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  return (
+    <p className="whitespace-pre-wrap">
+      {displayText}
+      {currentIndex < text.length && <span className="animate-pulse">_</span>}
+    </p>
+  );
+}
+
 export function AITerminal() {
   const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
   const [messages, setMessages] = useState<Message[]>([
@@ -29,7 +61,15 @@ export function AITerminal() {
   // Auto-scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages, isTyping]); // Scroll on new message or typing state change
+
+  // Additional scroll trigger when typing adds lines
+  useEffect(() => {
+    const interval = setInterval(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -143,7 +183,11 @@ export function AITerminal() {
                       : "bg-green-500/10 text-green-400 border border-green-500/20 rounded-tl-none font-mono"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                  {msg.sender === "ai" ? (
+                    <Typewriter text={msg.text} />
+                  ) : (
+                    <p className="whitespace-pre-wrap">{msg.text}</p>
+                  )}
                 </div>
 
                 {msg.sender === "user" && (
