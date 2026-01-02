@@ -81,7 +81,7 @@ export function FloatingNavbar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.3 }}
-            className="fixed bottom-24 inset-x-4 md:inset-x-auto md:w-[320px] md:bottom-24 md:right-8 z-40 p-4 bg-black/80 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-2xl flex flex-col gap-4"
+            className="fixed bottom-24 inset-x-4 md:inset-x-auto md:w-[320px] md:bottom-24 md:left-1/2 md:-translate-x-1/2 z-40 p-4 bg-black/80 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-2xl flex flex-col gap-4"
           >
             <div className="flex items-center justify-between px-2 pb-2 border-b border-white/10">
               <span className="text-xs font-bold text-white/50 uppercase tracking-widest">
