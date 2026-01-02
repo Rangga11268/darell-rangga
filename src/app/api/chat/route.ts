@@ -21,10 +21,14 @@ function getFallbackResponse(message: string): string {
     msg.includes("siapa yang dimaksud") ||
     msg.includes("who is she") ||
     msg.includes("pacar") ||
-    msg.includes("crush")
+    msg.includes("crush") ||
+    msg.includes("suka") || // Catch "yang bos mu suka"
+    msg.includes("cinta") ||
+    msg.includes("gebetan") ||
+    msg.includes("target")
   ) {
     // Check for "Siapa" specifically for the name reveal
-    if (msg.includes("siapa")) {
+    if (msg.includes("siapa") || msg.includes("who") || msg.includes("nama")) {
       const responses = [
         "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'",
         "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language).",
@@ -42,7 +46,9 @@ function getFallbackResponse(message: string): string {
   if (
     msg.includes("skill") ||
     msg.includes("bisa apa") ||
-    msg.includes("stack")
+    msg.includes("stack") ||
+    msg.includes("jago") ||
+    msg.includes("tech")
   ) {
     return `My Creator's capabilities include:\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
       ", "
@@ -55,7 +61,10 @@ function getFallbackResponse(message: string): string {
   if (
     msg.includes("project") ||
     msg.includes("proyek") ||
-    msg.includes("portfolio")
+    msg.includes("portfolio") ||
+    msg.includes("bikin apa") ||
+    msg.includes("buat apa") ||
+    msg.includes("projec") // Typo handling
   ) {
     const projectNames = AI_PERSONA.projects.map((p) => p.name).join(", ");
     return `Accessing Project Database... Found ${AI_PERSONA.projects.length} key entries: ${projectNames}. Which one would you like to analyze?`;
@@ -165,12 +174,11 @@ export async function POST(req: Request) {
       const text = response.text();
 
       return NextResponse.json({ text });
-    } catch (apiError: any) {
+    } catch (apiError: unknown) {
       // Catch-all for API errors (quota exceeded, network issues, invalid key)
-      console.error(
-        "Gemini API Error, switching to fallback:",
-        apiError.message
-      );
+      const errorMsg =
+        apiError instanceof Error ? apiError.message : "Unknown API Error";
+      console.error("Gemini API Error, switching to fallback:", errorMsg);
       const fallbackResponse = getFallbackResponse(message);
       return NextResponse.json({ text: fallbackResponse });
     }
