@@ -182,7 +182,7 @@ export function ProjectDetailModal({
                     <Button
                       asChild
                       variant="outline"
-                      className="flex-1 bg-white/5 hover:bg-white/10 hover:text-white border-white/10 rounded-xl"
+                      className="flex-1 bg-white/5 text-white hover:bg-white/10 hover:text-white border-white/10 rounded-xl"
                     >
                       <a
                         href={project.githubUrl}

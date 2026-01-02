@@ -34,7 +34,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
     liveUrl: "#",
     colSpan: "md:col-span-2 md:row-span-2", // HERO ITEM (2x2)
-    year: "2024",
+    year: "2025",
     role: "Full Stack Developer",
     features: {
       en: [
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
     liveUrl: "#",
     colSpan: "md:col-span-2", // WIDE ITEM
-    year: "2024",
+    year: "2025",
     role: "Full Stack Developer",
     features: {
       en: [
@@ -167,7 +167,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/phd-trans",
     liveUrl: "https://phd-trans.vercel.app/",
     colSpan: "md:col-span-1",
-    year: "2024",
+    year: "2025",
     role: "Full Stack Developer",
     features: {
       en: [
@@ -212,7 +212,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/navara-trans",
     liveUrl: "https://navara-trans.vercel.app/",
     colSpan: "md:col-span-1",
-    year: "2024",
+    year: "2025",
     role: "Frontend Developer",
     features: {
       en: [
@@ -255,7 +255,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/janguleee-trans",
     liveUrl: "https://janguleee-trans.vercel.app/",
     colSpan: "md:col-span-1",
-    year: "2024",
+    year: "2025",
     role: "Frontend Engineer",
     features: {
       en: [
@@ -298,7 +298,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Rangga11268/ApaPesan-Laravel-project",
     liveUrl: "#",
     colSpan: "md:col-span-1",
-    year: "2023",
+    year: "2024",
     role: "Backend Engineer",
     features: {
       en: [
