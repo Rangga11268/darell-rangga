@@ -2,26 +2,106 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 import { AI_PERSONA } from "@/app/data/ai-persona";
 
+// --- Offline Intelligence Engine (Fallback) ---
+function getFallbackResponse(message: string): string {
+  const msg = message.toLowerCase();
+
+  // 1. Identity & Introduction
+  if (
+    msg.includes("who are you") ||
+    msg.includes("siapa kamu") ||
+    msg.includes("intro")
+  ) {
+    return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
+  }
+
+  // 2. Secret Identity (Dini) - ENCRYPTED PROTOCOL
+  if (
+    msg.includes("siapa namanya") ||
+    msg.includes("siapa yang dimaksud") ||
+    msg.includes("who is she") ||
+    msg.includes("pacar") ||
+    msg.includes("crush")
+  ) {
+    // Check for "Siapa" specifically for the name reveal
+    if (msg.includes("siapa")) {
+      const responses = [
+        "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'",
+        "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language).",
+        "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)",
+        "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Connection Lost).",
+        "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'",
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+    // General romantic status query
+    return AI_PERSONA.personal_secrets.crush_hint;
+  }
+
+  // 3. Skills
+  if (
+    msg.includes("skill") ||
+    msg.includes("bisa apa") ||
+    msg.includes("stack")
+  ) {
+    return `My Creator's capabilities include:\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
+      ", "
+    )}\n- **Backend:** ${AI_PERSONA.skills.backend.join(
+      ", "
+    )}\n- **Design:** ${AI_PERSONA.skills.design.join(", ")}`;
+  }
+
+  // 4. Projects
+  if (
+    msg.includes("project") ||
+    msg.includes("proyek") ||
+    msg.includes("portfolio")
+  ) {
+    const projectNames = AI_PERSONA.projects.map((p) => p.name).join(", ");
+    return `Accessing Project Database... Found ${AI_PERSONA.projects.length} key entries: ${projectNames}. Which one would you like to analyze?`;
+  }
+
+  // 5. Contact
+  if (
+    msg.includes("contact") ||
+    msg.includes("email") ||
+    msg.includes("hubungi")
+  ) {
+    return `You can establish a connection via:\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
+  }
+
+  // 6. Fun/Personal
+  if (msg.includes("hobi") || msg.includes("hobby")) {
+    return `The Creator enjoys: ${AI_PERSONA.personal_secrets.hobbies.join(
+      ", "
+    )}.`;
+  }
+  if (msg.includes("makanan") || msg.includes("food")) {
+    return AI_PERSONA.personal_secrets.favorite_food;
+  }
+
+  // Default Fallback
+  return "Offline Mode Active. Connection to Mainframe (Gemini API) is unstable. I can still answer basic queries about Skills, Projects, Contact, and System Status.";
+}
+
 export async function POST(req: Request) {
   try {
     const { message } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
-    console.log("Debug: API Key present?", !!apiKey); // Check if key is loaded
 
+    // Use Fallback if no API key is configured
     if (!apiKey) {
-      return NextResponse.json(
-        {
-          text: "Error: My neural link (API Key) is missing. Please check .env.local configuration.",
-        },
-        { status: 500 }
-      );
+      console.warn("Warn: No API Key found, switching to Offline Mode.");
+      const fallbackResponse = getFallbackResponse(message);
+      return NextResponse.json({ text: fallbackResponse });
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Using current 2026 stable model
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    try {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      // Using current 2026 stable model
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const systemPrompt = `
+      const systemPrompt = `
       Instructions:
       You are **Rangga-AI**, the Digital Twin of Darell Rangga. You live inside his portfolio website (a futuristic Command Center).
       Your goal is to impress visitors and recruiters by showcasing Rangga's skills and personality.
@@ -80,21 +160,27 @@ export async function POST(req: Request) {
       "${message}"
     `;
 
-    const result = await model.generateContent(systemPrompt);
-    const response = await result.response;
-    const text = response.text();
+      const result = await model.generateContent(systemPrompt);
+      const response = await result.response;
+      const text = response.text();
 
-    return NextResponse.json({ text });
+      return NextResponse.json({ text });
+    } catch (apiError: any) {
+      // Catch-all for API errors (quota exceeded, network issues, invalid key)
+      console.error(
+        "Gemini API Error, switching to fallback:",
+        apiError.message
+      );
+      const fallbackResponse = getFallbackResponse(message);
+      return NextResponse.json({ text: fallbackResponse });
+    }
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-    console.error(
-      "Gemini Error Details:",
-      JSON.stringify(error, Object.getOwnPropertyNames(error))
-    );
+    // If even fallback fails (very unlikely), return generic error
     return NextResponse.json(
       {
-        text: `Connection error details: ${errorMessage}`,
+        text: `System Failure: ${errorMessage}`,
       },
       { status: 500 }
     );
