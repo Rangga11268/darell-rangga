@@ -16,10 +16,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
+    // Simulate loading time for cinematic boot sequence
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);

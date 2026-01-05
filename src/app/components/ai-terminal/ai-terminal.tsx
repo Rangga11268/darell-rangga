@@ -109,6 +109,15 @@ export function AITerminal() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
+    const userCommand = input.toLowerCase().trim();
+
+    // 1. Local Command Handling
+    if (userCommand === "clear" || userCommand === "cls") {
+      clearChat();
+      setInput("");
+      return;
+    }
+
     const userMsg: Message = {
       id: Date.now().toString(),
       sender: "user",
@@ -120,6 +129,56 @@ export function AITerminal() {
     setInput("");
     setIsTyping(true);
 
+    // 2. Intercept Known Commands locally before AI
+    let localResponse = "";
+    if (userCommand === "help") {
+      localResponse = `Available System Commands:
+- help: Show this list.
+- ls: List virtual file system nodes.
+- whoami: Display creator identity profile.
+- clear: Purge terminal memory buffer.
+- contact: Open communication channels.
+- github: Access latest commit data.`;
+    } else if (userCommand === "ls") {
+      localResponse = `DIRECTORY: /root
+> system-files/
+> projects/
+> bio/
+> certificates/
+> README.md`;
+    } else if (userCommand === "whoami") {
+      localResponse = `IDENTITY: Darell Rangga
+ROLE: Fullstack Engineer & UI/UX Specialist
+STATUS: System Active / Development Mode
+LOCATION: Indonesia / Digital Garden`;
+    } else if (userCommand === "github") {
+      localResponse = `ACCESSING GITHUB REPOSITORY...
+USER: Rangga11268
+STATUS: Active
+LATEST_ACTIVITY: [REDACTED]
+URL: https://github.com/Rangga11268`;
+    } else if (userCommand === "contact") {
+      localResponse = `Establishing communication link...
+EMAIL: darellrangga@gmail.com
+GITHUB: github.com/Rangga11268
+STATUS: System online / Awaiting inquiry.`;
+    }
+
+    if (localResponse) {
+      setTimeout(() => {
+        const aiMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: "ai",
+          text: localResponse,
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+        setIsTyping(false);
+      }, 500);
+      return;
+    }
+
+    // 3. AIService (Gemini/Groq) for non-commands
     try {
       const response = await fetch("/api/chat", {
         method: "POST",

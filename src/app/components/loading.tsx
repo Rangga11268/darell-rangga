@@ -2,67 +2,133 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/app/providers/language-provider";
+
+const BOOT_LOGS = [
+  "INITIALIZING RANGGA-OS V3.0.0...",
+  "CHECKING HARDWARE INTEGRITY... [OK]",
+  "LOADING NEURAL INTERFACE... [OK]",
+  "BYPASSING SECURITY FIREWALL... [DONE]",
+  "ESTABLISHING SECURE CONNECTION...",
+  "MOUNTING VIRTUAL FILE SYSTEM... [OK]",
+  "ACCESS GRANTED. WELCOME, USER.",
+];
 
 export function LoadingScreen() {
-  const { t } = useLanguage();
-  const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [logs, setLogs] = useState<string[]>([]);
+  const [isFinishing, setIsFinishing] = useState(false);
 
   useEffect(() => {
+    // 1. Progress Bar Logic
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => setIsLoading(false), 500); // Small delay at 100%
           return 100;
         }
-        return prev + Math.random() * 15;
+        return prev + Math.random() * 8;
       });
-    }, 100);
+    }, 150);
 
-    return () => clearInterval(interval);
+    // 2. Sys Logs Logic
+    let currentLogIndex = 0;
+    const logInterval = setInterval(() => {
+      if (currentLogIndex < BOOT_LOGS.length) {
+        setLogs((prev) => [...prev, BOOT_LOGS[currentLogIndex]]);
+        currentLogIndex++;
+      } else {
+        clearInterval(logInterval);
+        setTimeout(() => setIsFinishing(true), 800);
+      }
+    }, 400);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(logInterval);
+    };
   }, []);
-
-  if (!isLoading) return null;
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center"
-      >
-        <div className="w-64 space-y-4">
-          {/* Logo / Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex justify-between items-end"
-          >
-            <span className="font-display font-bold text-2xl tracking-tighter">
-              DARELL
-            </span>
-            <span className="font-mono text-xs text-primary">
-              {Math.min(100, Math.round(progress))}%
-            </span>
-          </motion.div>
-
-          {/* Progress Bar */}
-          <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-primary"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ ease: "linear" }}
-            />
+      {!isFinishing && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 font-mono overflow-hidden"
+        >
+          {/* Cyberpunk Grid Background */}
+          <div className="absolute inset-0 opacity-20 pointer-events-none">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
           </div>
 
-          <div className="text-xs text-muted-foreground font-mono">
-            {progress < 100 ? t.loading.gathering : t.loading.sealBroken}
+          <div className="w-full max-w-lg space-y-8 relative z-10">
+            {/* BIOS Header */}
+            <div className="space-y-1">
+              <div className="flex justify-between items-center text-primary text-[10px] md:text-xs">
+                <span>RANGGA-AI BIOS (C) 2026</span>
+                <span>SERIAL: DA-77-RP-11</span>
+              </div>
+              <div className="h-[2px] w-full bg-primary/20" />
+            </div>
+
+            {/* Terminal Logs */}
+            <div className="space-y-2 h-40 overflow-hidden">
+              {logs.map((log, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="text-xs md:text-sm text-green-500/80 flex items-center gap-2"
+                >
+                  <span className="text-primary/50">{">"}</span>
+                  {log}
+                </motion.div>
+              ))}
+              <motion.div
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+                className="w-2 h-4 bg-primary inline-block"
+              />
+            </div>
+
+            {/* Bottom Section: Progress & Logo */}
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="flex justify-between items-end">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-white/40 block">
+                    SYSTEM BOOT PROGRESS
+                  </span>
+                  <div className="font-bold text-xl md:text-2xl text-white tracking-widest uppercase">
+                    Darell <span className="text-primary">Rangga</span>
+                  </div>
+                </div>
+                <span className="text-2xl font-bold font-mono text-primary">
+                  {Math.min(100, Math.round(progress))}%
+                </span>
+              </div>
+
+              {/* Futuristic Progress Bar */}
+              <div className="h-2 w-full bg-white/5 rounded-none p-[2px] border border-white/10">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-primary/50 to-primary relative shadow-[0_0_10px_var(--primary)]"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ ease: "linear" }}
+                >
+                  <div className="absolute top-0 right-0 w-1 h-full bg-white shadow-[0_0_15px_#fff]" />
+                </motion.div>
+              </div>
+
+              <div className="text-[10px] text-center text-white/20 uppercase tracking-[0.3em]">
+                Initializing Neural Interface ...
+              </div>
+            </div>
           </div>
-        </div>
-      </motion.div>
+
+          {/* Grain Effect */}
+          <div className="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }

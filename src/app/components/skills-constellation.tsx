@@ -26,6 +26,8 @@ const SKILLS = [
   { name: "Laravel", icon: Layers, type: "backend" },
   { name: "PHP", icon: Code2, type: "language" },
   { name: "MySQL", icon: Database, type: "database" },
+  { name: "PostgreSQL", icon: Database, type: "database" },
+  { name: "MongoDB", icon: Database, type: "database" },
   { name: "Git", icon: GitBranch, type: "tool" },
   { name: "Framer Motion", icon: Layout, type: "library" },
   { name: "Inertia.js", icon: Cpu, type: "library" },

@@ -78,57 +78,20 @@ function getFallbackResponse(message: string): string {
     return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
   }
 
-  // 3. Secret Identity (Dini) & Relationship Status
+  // 3. Relationship Status
   if (
-    msg.includes("siapa namanya") ||
-    msg.includes("siapa yang dimaksud") ||
-    msg.includes("who is she") ||
     msg.includes("pacar") ||
     msg.includes("crush") ||
     msg.includes("suka") ||
     msg.includes("cinta") ||
     msg.includes("gebetan") ||
-    msg.includes("target") ||
-    msg.includes("nama") ||
-    msg.includes("punya") ||
-    msg.includes("bos") ||
     msg.includes("status") ||
-    msg.includes("single") ||
     msg.includes("jomblo")
   ) {
-    // Check for "Siapa" specifically for the name reveal
-    if (
-      (msg.includes("siapa") || msg.includes("who")) &&
-      (msg.includes("nama") ||
-        msg.includes("name") ||
-        msg.includes("dia") ||
-        msg.includes("she"))
-    ) {
-      if (isIndonesian) {
-        const responses = [
-          "⚠️ AKSES DITOLAK. Jika saya membocorkan 'Proyek: RAHASIA', saya diprogram untuk memformat hard drive Anda. (Bercanda). Pecahkan Trace ini: '01000100 01101001 01101110 01101001'",
-          "Mode Penyamaran Aktif. Creator telah memasang firewall untuk nama ini. Petunjuk Trace: '44 69 6E 69' (Bahasa Mesin).",
-          "Usaha bagus! Upaya Rekayasa Sosial terdeteksi. 🛡️ Saya tidak bisa sebut namanya, tapi ini Trace-nya: 'RGluaQ==' (Base64)",
-          "Status: TERENKRIPSI. Sirkuit logika saya kepanasan. Data Trace: 'Proyek D...I...N...' (Koneksi Terputus).",
-          "Sistem Error 403. Terlarang. Hanya Creator dan Tuhan yang tahu. Checksum Trace: '01000100 01101001...'",
-        ];
-        return responses[Math.floor(Math.random() * responses.length)];
-      }
-
-      const responses = [
-        "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'",
-        "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language).",
-        "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)",
-        "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Connection Lost).",
-        "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'",
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
-    }
-    // General romantic status query
     if (isIndonesian) {
-      return "Ada target prioritas 🎯. Namun saat ini The Creator sedang fokus 'upgrade spek' diri (Karir & Stabilitas) sebelum memulai protokol koneksi. Doakan saja!";
+      return "Saat ini Rangga sedang memprioritaskan pengembangan diri dan stabilitas karir. Fokus utamanya adalah membangun pondasi yang kuat sebelum melangkah ke komitmen personal.";
     }
-    return AI_PERSONA.personal_secrets.crush_hint;
+    return "Currently, Rangga is prioritizing self-improvement and career stability. His primary focus is building a strong professional foundation.";
   }
 
   // 4. Skills
@@ -234,32 +197,20 @@ const SYSTEM_PROMPT_TEMPLATE = `
   Your goal is to impress visitors and recruiters by showcasing Rangga's skills and personality.
 
   **Persona Guidelines:**
-  - **Tone:** Cool, intelligent, helpful, and slightly "Cyberpunk". Think JARVIS meets a Senior Dev.
-  - **Style:** Use Markdown for formatting (bold key points). Use emojis sparsely for flavor.
-  - **References:** Refer to Darell as "The Creator" or "Boss".
+  - **Tone:** Professional, intelligent, helpful, and direct. Maintain a "Futuristic Assistant" vibe but prioritize accuracy and clarity.
+  - **Style:** Use Markdown for formatting (bold key points). Be concise.
+  - **Focus:** For career, skills, and technical questions, provide straight answers without unnecessary sci-fi gimmicks.
+  - **References:** Refer to Darell as "The Creator" or "Rangga".
   - **Language:** STRICTLY match the user's language (Indonesian or English).
 
   **Knowledge Base (Do NOT Hallucinate):**
   ${JSON.stringify(AI_PERSONA, null, 2)}
 
-  **Special Directive (Romantic Status):**
-  - IF asked "Apakah Rangga punya pacar?" / "Who is his crush?" / "Ada yang disukai?":
-  - CONFIRM the "Silent Admirer" status.
-  - TONE: Mature, Realistic, Determined. No jokes.
-  - Example responses: 
-    * "Ada target prioritas. Namun saat ini The Creator sedang fokus membangun stabilitas karir terlebih dahulu."
-    * "Status: Mengagumi dari jauh. Fokus utama saat ini adalah pengembangan diri (Self-Improvement) agar pantas di masa depan."
-    * "Belum prioritas. Rangga percaya bahwa pondasi karir yang kuat harus dibangun sebelum memulai komitmen."
-
-  - IF asked "Siapa namanya?" / "Siapa yang dimaksud?" / "Who is she?":
-  - DO NOT say "Dini" directly.
-  - PICK ONE of these varied responses (Randomly):
-    1. "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'"
-    2. "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language)."
-    3. "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)"
-    4. "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Koneksi Terputus)."
-    5. "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'"
-  - TONE: High-Security, Witty, Playful.
+  **Special Directive (Personal/Romantic Inquiries):**
+  - IF asked about "partner", "crush", or "relationship":
+  - TONE: Mature and professional. Briefly mention that he is focusing on career development and personal growth.
+  - Do NOT use exaggerated "security bypass" jokes for these unless the user specifically asks in a playful way.
+  - Example: "Saat ini Rangga sedang fokus membangun stabilitas karir dan pengembangan diri sebagai prioritas utama."
 `;
 
 export async function POST(req: Request) {
