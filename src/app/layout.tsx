@@ -8,8 +8,6 @@ import { CustomizationProvider } from "@/app/providers/customization-provider";
 import { CursorFollower } from "@/app/components/cursor-follower";
 import { AITerminal } from "@/app/components/ai-terminal/ai-terminal";
 
-import { VoiceControlProvider } from "@/app/providers/voice-control-provider";
-
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
@@ -117,11 +115,9 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <CustomizationProvider>
-              <VoiceControlProvider>
-                <CursorFollower />
-                <AITerminal />
-                {children}
-              </VoiceControlProvider>
+              <CursorFollower />
+              <AITerminal />
+              {children}
             </CustomizationProvider>
           </LanguageProvider>
         </ThemeProvider>

@@ -10,8 +10,6 @@ import {
   Mail,
   Moon,
   Sun,
-  Mic,
-  MicOff,
   Bot,
   LayoutGrid,
   X,
@@ -20,7 +18,6 @@ import {
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
-import { useVoiceControl } from "@/app/providers/voice-control-provider";
 
 export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
@@ -28,7 +25,6 @@ export function FloatingNavbar() {
   const { theme, setTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
   const { setIsPlaygroundOpen } = useCustomization();
-  const { isListening, toggleListening } = useVoiceControl();
 
   useEffect(() => setMounted(true), []);
 
@@ -51,13 +47,6 @@ export function FloatingNavbar() {
   const menuItems = [
     { name: t.nav.about, href: "#about", icon: User },
     { name: t.nav.services, href: "#services", icon: Briefcase },
-    {
-      name: isListening ? "Listening..." : "Voice Control",
-      icon: isListening ? Mic : MicOff,
-      onClick: toggleListening,
-      active: isListening,
-      activeColor: "text-red-500",
-    },
     {
       name: language === "en" ? "Bahasa Indonesia" : "English",
       icon: Languages,
@@ -96,7 +85,7 @@ export function FloatingNavbar() {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              {menuItems.map((item, idx) => (
+              {menuItems.map((item: any, idx) => (
                 <GridItem
                   key={idx}
                   icon={item.icon}
