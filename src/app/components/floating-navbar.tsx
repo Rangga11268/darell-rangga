@@ -14,10 +14,12 @@ import {
   LayoutGrid,
   X,
   Languages,
+  FolderOpen,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
+import { useFileSystem } from "@/app/providers/file-system-provider";
 
 export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
@@ -25,13 +27,26 @@ export function FloatingNavbar() {
   const { theme, setTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
   const { setIsPlaygroundOpen } = useCustomization();
+  const { openFolder } = useFileSystem();
 
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
 
+  // Define shared layout for all navigation items
+  interface NavItem {
+    name: string;
+    icon: React.ElementType; // Proper type for Lucide icons
+    href?: string;
+    onClick?: () => void;
+    special?: boolean;
+    active?: boolean;
+    activeColor?: string;
+    badge?: string;
+  }
+
   // Primary Items (Always visible in Dock)
-  const primaryItems = [
+  const primaryItems: NavItem[] = [
     { name: t.nav.home, href: "#home", icon: Home },
     { name: t.nav.projects, href: "#projects", icon: Code },
     {
@@ -40,11 +55,16 @@ export function FloatingNavbar() {
       onClick: () => setIsPlaygroundOpen(true),
       special: true,
     },
+    {
+      name: "System Files",
+      icon: FolderOpen,
+      onClick: () => openFolder("system-files"),
+    },
     { name: t.nav.contact, href: "#contact", icon: Mail },
   ];
 
   // Secondary Items (Hidden in Grid Menu)
-  const menuItems = [
+  const menuItems: NavItem[] = [
     { name: t.nav.about, href: "#about", icon: User },
     { name: t.nav.services, href: "#services", icon: Briefcase },
     {
@@ -85,7 +105,7 @@ export function FloatingNavbar() {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              {menuItems.map((item: any, idx) => (
+              {menuItems.map((item, idx) => (
                 <GridItem
                   key={idx}
                   icon={item.icon}

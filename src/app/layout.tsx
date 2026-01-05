@@ -7,6 +7,8 @@ import { CustomizationProvider } from "@/app/providers/customization-provider";
 
 import { CursorFollower } from "@/app/components/cursor-follower";
 import { AITerminal } from "@/app/components/ai-terminal/ai-terminal";
+import { FileSystemProvider } from "@/app/providers/file-system-provider";
+import { FolderWindow } from "@/app/components/folder-window";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -115,9 +117,12 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <CustomizationProvider>
-              <CursorFollower />
-              <AITerminal />
-              {children}
+              <FileSystemProvider>
+                <CursorFollower />
+                <AITerminal />
+                <FolderWindow />
+                {children}
+              </FileSystemProvider>
             </CustomizationProvider>
           </LanguageProvider>
         </ThemeProvider>
