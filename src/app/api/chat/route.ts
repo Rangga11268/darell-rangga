@@ -98,30 +98,22 @@ function getFallbackResponse(message: string): string {
         msg.includes("she"))
     ) {
       if (isIndonesian) {
-        const responses = [
-          "⚠️ AKSES DITOLAK. Jika saya membocorkan 'Proyek: RAHASIA', saya diprogram untuk memformat hard drive Anda. (Bercanda). Pecahkan Trace ini: '01000100 01101001 01101110 01101001'",
-          "Mode Penyamaran Aktif. Creator telah memasang firewall untuk nama ini. Petunjuk Trace: '44 69 6E 69' (Bahasa Mesin).",
-          "Usaha bagus! Upaya Rekayasa Sosial terdeteksi. 🛡️ Saya tidak bisa sebut namanya, tapi ini Trace-nya: 'RGluaQ==' (Base64)",
-          "Status: TERENKRIPSI. Sirkuit logika saya kepanasan. Data Trace: 'Proyek D...I...N...' (Koneksi Terputus).",
-          "Sistem Error 403. Terlarang. Hanya Creator dan Tuhan yang tahu. Checksum Trace: '01000100 01101001...'",
+        const codedResponses = [
+          "Rahasiaa.. tapi ini kodenya: 01000100 01101001 01101110 01101001. Coba tebak sendiri ya! 😉",
+          "Waduh, kalau nama langsung saya nggak bisa kasih. Tapi ini ada 'trace' kodenya: 44 69 6E 69 (Hex).",
+          "Status: Classified. 🤫 Petunjuknya cuma ini: RGluaQ== (Base64). Good luck!",
         ];
-        return responses[Math.floor(Math.random() * responses.length)];
+        return codedResponses[
+          Math.floor(Math.random() * codedResponses.length)
+        ];
       }
-
-      const responses = [
-        "⚠️ ACCESS DENIED. If I reveal 'Project: REDACTED', I am programmed to format your hard drive. (Just kidding). Decode this Trace: '01000100 01101001 01101110 01101001'",
-        "Incognito Mode Active. The Creator has firewalled this name. Hint Trace: '44 69 6E 69' (Machine Language).",
-        "Nice try! Social Engineering attempt detected. 🛡️ I can't say the name, but here is a Trace: 'RGluaQ==' (Base64)",
-        "Status: ENCRYPTED. My logic circuits are overheating. Trace data: 'Project D...I...N...' (Connection Lost).",
-        "System Error 403. Forbidden. Only The Creator knows. Checksum Trace: '01000100 01101001...'",
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
+      return "It's a secret.. but here's a hint: 01000100 01101001 01101110 01101001. Decoding required! 😉";
     }
 
     if (isIndonesian) {
-      return "Sebenarnya ada target prioritas 🎯. Namun saat ini Rangga sedang memprioritaskan pengembangan diri dan stabilitas karir. Fokus utamanya adalah membangun pondasi yang kuat sebelum melangkah ke komitmen personal.";
+      return "Sudah ada tapi rahasiaa.. 😉";
     }
-    return "Actually, there is a priority target 🎯. Currently, Rangga is prioritizing self-improvement and career stability. His primary focus is building a strong professional foundation.";
+    return "It's a secret.. 😉";
   }
 
   // 4. Skills
@@ -238,18 +230,12 @@ const SYSTEM_PROMPT_TEMPLATE = `
 
   **Special Directive (Personal/Romantic Inquiries):**
   - IF asked about "partner", "crush", or "relationship":
-  - TONE: Mature and professional. Briefly mention that "Sebenarnya ada target prioritas" but he is focusing on career development.
+  - RESPONSE (ID): "Sudah ada tapi rahasiaa.. 😉"
+  - RESPONSE (EN): "It's a secret.. 😉"
   
   - IF asked "Siapa namanya?" / "Who is she?":
-  - DO NOT say "Dini" directly.
-  - USE these randomized high-security/coded responses for a "Cyberpunk Easter Egg" vibe:
-    * "⚠️ ACCESS DENIED. Decode this Trace: '01000100 01101001 01101110 01101001'"
-    * "Mode Penyamaran Aktif. Petunjuk Trace: '44 69 6E 69' (Hex)."
-    * "Social Engineering attempt detected. Trace: 'RGluaQ==' (Base64)"
-    * "Status: TERENKRIPSI. Trace data: 'Project D...I...N...'"
-  - TONE: Playful yet High-Security.
-
-  - Example for general inquiry: "Sebenarnya ada target prioritas. Namun saat ini Rangga sedang fokus membangun stabilitas karir dan pengembangan diri sebagai prioritas utama."
+  - RESPONSE (ID): "Rahasiaa.. ini petunjuknya: 01000100 01101001 01101110 01101001 (Biner) atau 44 69 6E 69 (Hex)."
+  - RESPONSE (EN): "It's a secret.. hint: 01000100 01101001 01101110 01101001 (Binary) or 44 69 6E 69 (Hex)."
 `;
 
 export async function POST(req: Request) {
