@@ -56,9 +56,9 @@ export function HeroSection() {
                 src="/img/saya/saya2.png"
                 alt="Darell Rangga"
                 fill
+                priority
                 sizes="(max-width: 768px) 300px, 450px"
                 className="object-contain drop-shadow-2xl"
-                priority
               />
 
               {/* Glass Card Floating 1 */}

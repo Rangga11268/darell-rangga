@@ -54,51 +54,13 @@ export function GithubWidget() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 1. Fetch User Data
-        const userRes = await fetch("https://api.github.com/users/Rangga11268");
-        const userData = await userRes.json();
-        setUser(userData);
+        // Fetch from cached server-side API route
+        const res = await fetch("/api/github");
+        const data = await res.json();
 
-        // 2. Fetch Recent Activity
-        const eventsRes = await fetch(
-          "https://api.github.com/users/Rangga11268/events?per_page=10"
-        );
-        const eventsData = await eventsRes.json();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const pushEvent = eventsData.find((e: any) => e.type === "PushEvent");
-        if (pushEvent) setLastEvent(pushEvent);
-
-        // 3. Fetch Repos for Top Languages
-        // Fetch up to 100 recent repos to calculate stats
-        const reposRes = await fetch(
-          "https://api.github.com/users/Rangga11268/repos?per_page=100&sort=updated"
-        );
-        const reposData = await reposRes.json();
-
-        if (Array.isArray(reposData)) {
-          const langCounts: Record<string, number> = {};
-          let total = 0;
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          reposData.forEach((repo: any) => {
-            if (repo.language) {
-              langCounts[repo.language] = (langCounts[repo.language] || 0) + 1;
-              total++;
-            }
-          });
-
-          const sortedLangs = Object.entries(langCounts)
-            .sort(([, a], [, b]) => b - a)
-            .slice(0, 5)
-            .map(([name, count]) => ({
-              name,
-              count,
-              percentage: ((count / total) * 100).toFixed(1),
-              color: LANGUAGE_COLORS[name] || "#ccc",
-            }));
-
-          setTopLanguages(sortedLangs);
-        }
+        if (data.user) setUser(data.user);
+        if (data.lastEvent) setLastEvent(data.lastEvent);
+        if (data.topLanguages) setTopLanguages(data.topLanguages);
       } catch (error) {
         console.error("GitHub Fetch Error:", error);
       } finally {
