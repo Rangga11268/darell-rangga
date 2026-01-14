@@ -69,33 +69,89 @@ export const AI_PERSONA = {
   projects: [
     {
       name: "Tunggal Jaya (TUJAGO)",
-      tech: ["Laravel 12", "Vue 3", "Inertia.js"],
-      desc: "A Modern Monolith bus ticketing platform. Digital transformation for fleet operations with a cinematic booking experience.",
+      tech: ["Laravel 12", "Vue 3", "Inertia.js", "Tailwind v4", "MySQL"],
+      desc: "A 'Modern Monolith' bus ticketing platform. Digital transformation for fleet operations with a cinematic booking experience.",
+      highlights: [
+        "Real-time seat selection with database locking to prevent double-booking.",
+        "Automated PDF ticket generation with QR codes using queued background jobs.",
+        "Full admin dashboard for route, schedule, and passenger management.",
+      ],
+      challenges_solved:
+        "Handled concurrent seat bookings, complex PDF generation, and legacy data migration from Excel.",
     },
     {
       name: "PHD Trans",
-      tech: ["Next.js 16", "React 19", "Framer Motion"],
-      desc: "Luxury bus reservation PWA with 'Electric Royal' aesthetic and 60FPS animations.",
+      tech: ["Next.js 16", "React 19", "Tailwind v4", "Framer Motion"],
+      desc: "Luxury bus reservation PWA (Progressive Web App) with 'Electric Royal' aesthetic.",
+      highlights: [
+        "'Electric Royal' visual identity reflecting luxury in motion.",
+        "Floating Media Portal with 3D parallax effects.",
+        "Smart Reservation System integrated with WhatsApp.",
+        "Performance-First Map Facade for instant loading.",
+      ],
+      challenges_solved:
+        "Balanced a cinematic first impression with fast load times using dynamic imports and GPU-accelerated animations.",
     },
     {
       name: "SRB Motor V2",
-      tech: ["Laravel", "Inertia", "React 19", "Tailwind 4"],
-      desc: "Futuristic 'Command Center' for automotive dealership. Features dual-mode transactions and live search admin.",
+      tech: ["Laravel", "Inertia.js", "React 19", "Tailwind 4", "Recharts"],
+      desc: "Futuristic 'Command Center' for automotive dealership management.",
+      highlights: [
+        "'Neo-Automotive' Hyper-Modern UI design.",
+        "Dual-Mode Transaction (Cash & Credit) with document management.",
+        "Admin Command Center with Live Search across large datasets.",
+        "Digital Vault for secure document storage.",
+      ],
+      challenges_solved:
+        "Achieved mobile-app-like speed while keeping robust data management of Laravel. Custom live search grid for instant filtering of thousands of records.",
     },
     {
       name: "Navara Trans",
-      tech: ["React 19", "Vite", "WhatsApp Engine"],
-      desc: "Clean Luxury transport platform with a smart WhatsApp booking engine.",
+      tech: ["React 19", "Vite", "Tailwind CSS", "Framer Motion"],
+      desc: "Clean Luxury transport platform with smart WhatsApp booking engine.",
+      highlights: [
+        "Smart Form that generates pre-filled WhatsApp messages.",
+        "Mobile-first, SEO-optimized design.",
+        "'Clean Luxury' aesthetic reflecting the client's premium fleet.",
+      ],
+      challenges_solved:
+        "Replaced a slow manual booking process with an instant digital solution while maintaining the personal touch of direct WhatsApp communication.",
     },
     {
       name: "Janguleee Trans",
-      tech: ["Next.js 15", "Ultra-Modern Bento"],
-      desc: "Interactive booking platform with magnetic buttons and immersive micro-interactions.",
+      tech: ["Next.js 15", "React 19", "Framer Motion"],
+      desc: "Interactive booking platform with ultra-modern Bento design.",
+      highlights: [
+        "Immersive micro-interactions and magnetic button effects.",
+        "Visually 'heavy' and premium design that remains lightweight on mobile.",
+      ],
+      challenges_solved:
+        "Created a 'expensive-feeling' website using Code Splitting and optimized animations to ensure it stays fast on mobile.",
     },
     {
       name: "Portfolio (Digital Garden)",
-      tech: ["Next.js 15", "Gemini AI", "Web Speech API"],
+      tech: ["Next.js 15", "Gemini AI", "Web Speech API", "Framer Motion"],
       desc: "The very site you are on. A voice-controlled, AI-integrated personal universe.",
+      highlights: [
+        "Rangga-AI: A digital twin powered by Google Gemini.",
+        "Voice Control Navigation for hands-free browsing.",
+        "Holographic UI Components for a futuristic feel.",
+        "99+ Lighthouse score through aggressive performance optimization.",
+      ],
+      challenges_solved:
+        "Integrated a Large Language Model as a 'digital soul' and achieved near-perfect performance scores.",
+    },
+    {
+      name: "Apapesan",
+      tech: ["Laravel 10", "MySQL", "Pusher", "Bootstrap"],
+      desc: "Privacy-first messaging application with real-time chat.",
+      highlights: [
+        "End-to-end encryption for secure messaging.",
+        "Real-time chat using Pusher WebSockets.",
+        "Ephemeral/disappearing messages feature.",
+      ],
+      challenges_solved:
+        "Mastered WebSockets for truly real-time messaging and integrated it with Laravel's event broadcasting system.",
     },
   ],
 
