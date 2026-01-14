@@ -139,6 +139,23 @@ export const translations = {
       enter: "ENTER SITE",
       gathering: "Loading assets...",
     },
+    commandCenter: {
+      title: "Command Center",
+      status: {
+        title: "Live Status",
+        coding: "VS Code",
+        listening: "Spotify",
+        gaming: "Steam",
+      },
+      github: {
+        viewProfile: "View Profile",
+        repos: "Repos",
+        followers: "Followers",
+        activityMap: "Activity Map",
+        lastYear: "Last Year",
+        topLanguages: "Top Languages",
+      },
+    },
   },
   id: {
     nav: {
@@ -279,6 +296,23 @@ export const translations = {
       sealBroken: "Sistem Siap",
       enter: "MASUK",
       gathering: "Memuat aset...",
+    },
+    commandCenter: {
+      title: "Pusat Komando",
+      status: {
+        title: "Status Langsung",
+        coding: "VS Code",
+        listening: "Spotify",
+        gaming: "Steam",
+      },
+      github: {
+        viewProfile: "Lihat Profil",
+        repos: "Repo",
+        followers: "Pengikut",
+        activityMap: "Peta Aktivitas",
+        lastYear: "Setahun Terakhir",
+        topLanguages: "Bahasa Utama",
+      },
     },
   },
 };

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { TimeWidget } from "./time-widget";
 import { VisualizerWidget } from "./visualizer-widget";
 import { GithubWidget } from "./github-widget";
+import { LiveStatusWidget } from "./live-status-widget";
 
 export function CommandCenter() {
   return (
@@ -50,6 +51,11 @@ export function CommandCenter() {
             {/* 2. Visualizer (Visual candy) */}
             <div className="flex-1 min-h-[150px]">
               <VisualizerWidget />
+            </div>
+
+            {/* 3. Live Status (NEW) */}
+            <div className="h-[120px]">
+              <LiveStatusWidget />
             </div>
           </motion.div>
         </div>

@@ -14,6 +14,8 @@ export interface Project {
   features: { en: string[]; id: string[] };
   techStack: { name: string; icon?: string }[];
   story?: { en: string; id: string };
+  challenges?: { en: string[]; id: string[] };
+  solutions?: { en: string[]; id: string[] };
 }
 
 export const projects: Project[] = [
@@ -60,6 +62,30 @@ export const projects: Project[] = [
     story: {
       en: "Using the 'Modern Monolith' approach with Inertia.js allowed me to deliver a SPA experience without separate API complexity. This ensured rapid development and robust performance for the ticketing system.",
       id: "Menggunakan pendekatan 'Modern Monolith' dengan Inertia.js memungkinkan saya menghadirkan pengalaman SPA tanpa kerumitan API terpisah. Ini menjamin pengembangan cepat dan performa tangguh untuk sistem tiket.",
+    },
+    challenges: {
+      en: [
+        "Handling concurrent seat bookings during peak times to prevent double-booking.",
+        "Generating complex PDF tickets with QR codes on the fly without blocking the main thread.",
+        "Migrating legacy data from manual Excel sheets to a relational MySQL database.",
+      ],
+      id: [
+        "Menangani pemesanan kursi bersamaan saat jam sibuk untuk mencegah double-booking.",
+        "Menghasilkan tiket PDF kompleks dengan kode QR secara on-the-fly tanpa memblokir thread utama.",
+        "Migrasi data lama dari lembar Excel manual ke database relasional MySQL.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Implemented database locking and transaction safeguards in Laravel to ensure atomic booking operations.",
+        "Offloaded PDF generation to a queued background job using Redis/Horizon.",
+        "Built a custom data seeder script with validation logic to sanitize and import legacy data accurately.",
+      ],
+      id: [
+        "Menerapkan safeguarding transaksi dan database locking di Laravel untuk memastikan operasi booking atomik.",
+        "Memindahkan pembuatan PDF ke background job antrian menggunakan Redis/Horizon.",
+        "Membuat skrip data seeder kustom dengan logika validasi untuk membersihkan dan mengimpor data lama secara akurat.",
+      ],
     },
   },
   {

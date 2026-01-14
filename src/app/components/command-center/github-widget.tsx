@@ -45,7 +45,10 @@ const LANGUAGE_COLORS: Record<string, string> = {
   "Jupyter Notebook": "#DA5B0B",
 };
 
+import { useLanguage } from "@/app/providers/language-provider";
+
 export function GithubWidget() {
+  const { t } = useLanguage();
   const [user, setUser] = useState<GithubData | null>(null);
   const [lastEvent, setLastEvent] = useState<GithubEvent | null>(null);
   const [topLanguages, setTopLanguages] = useState<TopLanguage[]>([]);
@@ -75,7 +78,7 @@ export function GithubWidget() {
     return (
       <div className="h-full bg-card/10 backdrop-blur-md border border-white/5 rounded-2xl p-6 flex items-center justify-center">
         <span className="text-xs font-mono text-muted-foreground animate-pulse">
-          SYNCING GITHUB DATA...
+          {t.loading.gathering && t.loading.gathering.toUpperCase()}
         </span>
       </div>
     );
@@ -122,7 +125,9 @@ export function GithubWidget() {
                 className="flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20"
               >
                 <Github className="w-3.5 h-3.5" />
-                <span>View Profile</span>
+                <span>
+                  {t.commandCenter?.github?.viewProfile || "View Profile"}
+                </span>
                 <ExternalLink className="w-3 h-3" />
               </a>
             </div>
@@ -132,8 +137,16 @@ export function GithubWidget() {
         {/* Quick Stats Cards */}
         <div className="flex gap-3">
           {[
-            { label: "Repos", value: user?.public_repos, icon: GitCommit },
-            { label: "Followers", value: user?.followers, icon: Star },
+            {
+              label: t.commandCenter?.github?.repos || "Repos",
+              value: user?.public_repos,
+              icon: GitCommit,
+            },
+            {
+              label: t.commandCenter?.github?.followers || "Followers",
+              value: user?.followers,
+              icon: Star,
+            },
           ].map((stat, i) => (
             <div
               key={i}
@@ -157,9 +170,11 @@ export function GithubWidget() {
           <div className="flex items-center justify-between text-xs font-bold text-muted-foreground uppercase tracking-wider">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-              Activity Map
+              {t.commandCenter?.github?.activityMap || "Activity Map"}
             </div>
-            <span className="text-[10px] opacity-50">LAST YEAR</span>
+            <span className="text-[10px] opacity-50">
+              {t.commandCenter?.github?.lastYear?.toUpperCase() || "LAST YEAR"}
+            </span>
           </div>
           <div className="bg-black/40 rounded-xl p-4 border border-white/10 overflow-hidden h-36 flex items-center justify-center relative group/graph">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80 z-10 pointer-events-none opacity-0 group-hover/graph:opacity-100 transition-opacity" />
@@ -178,7 +193,8 @@ export function GithubWidget() {
           {/* Languages */}
           <div>
             <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
-              <Code className="w-4 h-4 text-primary" /> Top Languages
+              <Code className="w-4 h-4 text-primary" />{" "}
+              {t.commandCenter?.github?.topLanguages || "Top Languages"}
             </div>
             <div className="space-y-2.5">
               {topLanguages.map((lang, idx) => (

@@ -130,6 +130,50 @@ export function ProjectDetailModal({
                     </div>
                   )}
 
+                  {/* DEEP DIVE: Challenges & Solutions */}
+                  {(project.challenges || project.solutions) && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
+                      {project.challenges && (
+                        <div className="space-y-3">
+                          <h4 className="text-sm font-bold text-red-400 uppercase tracking-wider">
+                            {language === "en" ? "Challenges" : "Tantangan"}
+                          </h4>
+                          <ul className="space-y-2">
+                            {project.challenges[language]?.map((item, i) => (
+                              <li
+                                key={i}
+                                className="text-sm text-white/60 flex gap-2"
+                              >
+                                <span className="text-red-500/50 mt-1">⨯</span>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {project.solutions && (
+                        <div className="space-y-3">
+                          <h4 className="text-sm font-bold text-green-400 uppercase tracking-wider">
+                            {language === "en" ? "Solutions" : "Solusi"}
+                          </h4>
+                          <ul className="space-y-2">
+                            {project.solutions[language]?.map((item, i) => (
+                              <li
+                                key={i}
+                                className="text-sm text-white/60 flex gap-2"
+                              >
+                                <span className="text-green-500/50 mt-1">
+                                  ✓
+                                </span>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* Key Features */}
                   <div className="space-y-4">
                     <h3 className="text-xl font-bold text-white">
