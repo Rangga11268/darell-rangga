@@ -53,7 +53,7 @@ export function HeroSection() {
               <div className="absolute inset-4 bg-gradient-to-t from-primary/40 to-transparent blur-[50px] -z-10" />
 
               <Image
-                src="/img/saya/saya2.png"
+                src="/img/saya/saya2.webp"
                 alt="Darell Rangga"
                 fill
                 priority
