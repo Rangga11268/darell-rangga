@@ -105,6 +105,53 @@ export const translations = {
           desc: "Automated testing and deployment pipelines.",
         },
       },
+
+      packages: {
+        title: "Development Packages",
+        subtitle: "Choose Your Launchpad",
+        tiers: [
+          {
+            name: "Starter",
+            price: "Starts at $300",
+            desc: "Perfect for personal portfolios or simple landing pages.",
+            features: [
+              "Single Page / Landing Page",
+              "Next.js + Tailwind CSS",
+              "Fully Responsive",
+              "Basic SEO Setup",
+              "1 Week Delivery",
+            ],
+            tech: "React, Framer Motion",
+          },
+          {
+            name: "Business Growth",
+            price: "Starts at $800",
+            desc: "Robust full-stack solution for data-driven businesses.",
+            features: [
+              "Dynamic CMS (Laravel Filament)",
+              "Database Design (MySQL)",
+              "User Authentication & Roles",
+              "Interactive Dashboard",
+              "2-4 Weeks Delivery",
+            ],
+            tech: "Laravel + React (Inertia) / Next.js",
+            popular: true,
+          },
+          {
+            name: "Enterprise",
+            price: "Custom Quote",
+            desc: "Complex web applications with specific business logic.",
+            features: [
+              "Full-scale Web Application",
+              "Custom Backend & API",
+              "Auth & User Management",
+              "Payment Gateway Integration",
+              "Prioritized Support",
+            ],
+            tech: "Full Stack MERN/T3",
+          },
+        ],
+      },
     },
     contact: {
       title: "Let's Connect",
@@ -262,6 +309,52 @@ export const translations = {
           title: "DevOps & CI/CD",
           desc: "Pengujian otomatis dan jalur penerapan.",
         },
+      },
+      packages: {
+        title: "Paket Pengembangan",
+        subtitle: "Pilih Solusi Anda",
+        tiers: [
+          {
+            name: "Starter",
+            price: "Mulai Rp 1.5jt",
+            desc: "Cocok untuk portofolio atau landing page sederhana.",
+            features: [
+              "Single Page / Landing Page",
+              "Next.js + Tailwind CSS",
+              "Responsif di Semua Layar",
+              "Setup SEO Dasar",
+              "Estimasi 1 Minggu",
+            ],
+            tech: "React, Framer Motion",
+          },
+          {
+            name: "Business / UMKM",
+            price: "Mulai Rp 4jt",
+            desc: "Solusi website dinamis & powerful. Favorit bisnis di Indonesia.",
+            features: [
+              "Admin Panel (Laravel Filament)",
+              "Database MySQL Terintegrasi",
+              "Sistem Login & Manajemen Data",
+              "Laporan & Dashboard Real-time",
+              "Estimasi 2-4 Minggu",
+            ],
+            tech: "Laravel + React (Inertia) / Next.js",
+            popular: true,
+          },
+          {
+            name: "Enterprise",
+            price: "Hubungi Saya",
+            desc: "Aplikasi web kompleks dengan logika bisnis khusus.",
+            features: [
+              "Aplikasi Web Skala Penuh",
+              "Backend & API Kustom",
+              "Sistem Login & User",
+              "Integrasi Payment Gateway",
+              "Prioritas Support",
+            ],
+            tech: "Full Stack Custom",
+          },
+        ],
       },
     },
     contact: {
