@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
 import {
   Code2,
@@ -21,9 +22,21 @@ const ICONS = {
   deploy: Rocket,
 };
 
+interface Tier {
+  name: string;
+  price: string;
+  desc: string;
+  features: string[];
+  details?: string[];
+  tech: string;
+  popular?: boolean;
+}
+
 export function ServicesSection() {
   const { t, language } = useLanguage();
   const services = t.services.items;
+
+  const [selectedTier, setSelectedTier] = useState<Tier | null>(null);
 
   // Animation variants
   const containerVariants = {
@@ -85,7 +98,7 @@ export function ServicesSection() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {Object.entries(services).map(([key, service], index) => {
+          {Object.entries(services).map(([key, service]) => {
             const Icon = ICONS[key as keyof typeof ICONS] || Code2;
 
             return (
@@ -185,23 +198,38 @@ export function ServicesSection() {
                   ))}
                 </ul>
 
-                {/* CTA Button */}
-                <a
-                  href="#contact"
-                  className={`w-full py-3 rounded-xl font-bold text-center transition-all duration-300 ${
-                    tier.popular
-                      ? "bg-primary text-black hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)]"
-                      : "bg-white/5 text-white hover:bg-white/10"
-                  }`}
-                >
-                  {language === "en" ? "Select Plan" : "Pilih Paket"}
-                </a>
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  <a
+                    href={`https://wa.me/628978638973?text=${encodeURIComponent(
+                      language === "en"
+                        ? `Hello Rangga, I'm interested in the ${tier.name} package.`
+                        : `Halo Rangga, saya tertarik dengan paket ${tier.name}.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block w-full py-3 rounded-xl font-bold text-center transition-all duration-300 ${
+                      tier.popular
+                        ? "bg-primary text-black hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)]"
+                        : "bg-white/5 text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {language === "en" ? "Select Plan" : "Pilih Paket"}
+                  </a>
+
+                  <button
+                    onClick={() => setSelectedTier(tier)}
+                    className="w-full py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {t.services.packages.viewDetails}
+                  </button>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Call to Action (Previously existed, now below packages) */}
+        {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -220,7 +248,13 @@ export function ServicesSection() {
                 : "Harga disesuaikan dengan kebutuhan spesifik Anda. Mari diskusikan cakupan proyek Anda dan temukan solusi terbaik."}
             </p>
             <a
-              href="#contact"
+              href={`https://wa.me/628978638973?text=${encodeURIComponent(
+                language === "en"
+                  ? "Hello, I'd like to get a quote for a project."
+                  : "Halo, saya ingin minta penawaran untuk proyek."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-primary hover:text-black transition-all duration-300 hover:scale-105"
             >
               {language === "en" ? "Get a Quote" : "Dapatkan Penawaran"}
@@ -229,6 +263,100 @@ export function ServicesSection() {
           </div>
         </motion.div>
       </div>
+
+      {/* Package Details Modal */}
+      <AnimatePresence>
+        {selectedTier && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedTier(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl overflow-hidden"
+            >
+              {/* Modal Background Effect */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -z-10" />
+
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-white">
+                    {selectedTier.name}
+                  </h3>
+                  <div className="text-primary font-display text-xl font-bold mt-1">
+                    {selectedTier.price}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedTier(null)}
+                  className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold text-white/50 uppercase tracking-wider mb-3">
+                    {language === "en" ? "What's Included" : "Rincian Lengkap"}
+                  </h4>
+                  <ul className="space-y-3">
+                    {(selectedTier.details || selectedTier.features).map(
+                      (detail: string, i: number) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-3 text-gray-300 text-sm"
+                        >
+                          <div className="mt-1 min-w-[16px]">
+                            <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            </div>
+                          </div>
+                          {detail}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+
+                <div className="pt-6 border-t border-white/10">
+                  <a
+                    href={`https://wa.me/628978638973?text=${encodeURIComponent(
+                      language === "en"
+                        ? `Hello Rangga, I'm interested in the ${selectedTier.name} package.`
+                        : `Halo Rangga, saya tertarik dengan paket ${selectedTier.name}.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full py-4 rounded-xl font-bold text-center bg-primary text-black hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)] transition-all"
+                  >
+                    {language === "en" ? "Choose This Plan" : "Pilih Paket Ini"}
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

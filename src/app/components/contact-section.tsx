@@ -110,7 +110,7 @@ export function ContactSection() {
                   icon: Phone,
                   label: "Phone",
                   value: "+62 897 863 8973",
-                  href: "tel:+628978638973",
+                  href: "https://wa.me/628978638973",
                 },
                 {
                   icon: MapPin,
