@@ -35,6 +35,13 @@ const initialFileSystem: FileNode[] = [
         content: "/img/saya/CV IND.pdf",
       },
       {
+        id: "cv-searchrater-id",
+        name: "CV SearchRater.pdf",
+        type: "file",
+        path: "/pdf/Darell_Rangga_CV_SearchRater.pdf",
+        content: "/pdf/Darell_Rangga_CV_SearchRater.pdf",
+      },
+      {
         id: "certificates-folder",
         name: "Certificates",
         type: "folder",
