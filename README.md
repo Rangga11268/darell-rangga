@@ -25,19 +25,22 @@ Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ k
 
 ### 🌌 Fitur Utama (System Modules)
 
-| Ikon | Nama Modul              | Deskripsi Sistem                                                                                                         |
-| :--: | :---------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-|  🎛️  | **Command Center**      | Dashboard holografik _real-time_ yang menampilkan status sistem, widget waktu zona server, dan **GitHub Activity Live**. |
-|  👨‍💻  | **Code Playground**     | Mode "Developer" interaktif. Pengunjung dapat mengedit tema website secara langsung layaknya di VS Code.                 |
-|  �   | **Adaptive Navigation** | Navbar _glassmorphic_ yang melayang, dengan efek buram adaptif dan teks yang membesar secara responsif.                  |
-|  📜  | **Infinite Skills**     | Marquee _skill_ tanpa batas (infinite scroll) dengan tampilan kartu modul modern yang mengalir mulus.                    |
-|  🌗  | **Bi-Phase Theme**      | Sistem tema interaktif yang berganti antara mode Light & Dark secara dinamis, terintegrasi dengan seluruh widget.        |
-|  🗣️  | **Language Protocol**   | Dukungan i18n (Inggris/Indonesia) instan tanpa _reload_, menerjemahkan konten secara akurat.                             |
+| Ikon | Nama Modul               | Deskripsi Sistem                                                                                                         |
+| :--: | :----------------------- | :----------------------------------------------------------------------------------------------------------------------- |
+|  ☁️  | **Holographic Services** | Section layanan modern dengan kartu harga (Pricing Packages) transparan, detail modal, dan integrasi WhatsApp.           |
+|  🤖  | **Rangga-AI Terminal**   | Digital Twin AI yang dapat menjawab pertanyaan tentang CV, pengalaman, dan skill secara interaktif (Powered by Gemini).  |
+|  🎛️  | **Command Center**       | Dashboard holografik _real-time_ yang menampilkan status sistem, widget waktu zona server, dan **GitHub Activity Live**. |
+|  👨‍💻  | **Code Playground**      | Mode "Developer" interaktif. Pengunjung dapat mengedit tema website secara langsung layaknya di VS Code.                 |
+|      | **Adaptive Navigation**  | Navbar _glassmorphic_ yang melayang, dengan efek buram adaptif dan teks yang membesar secara responsif.                  |
+|  📜  | **Infinite Skills**      | Marquee _skill_ tanpa batas (infinite scroll) dengan tampilan kartu modul modern yang mengalir mulus.                    |
+|  🌗  | **Bi-Phase Theme**       | Sistem tema interaktif yang berganti antara mode Light & Dark secara dinamis, terintegrasi dengan seluruh widget.        |
+|  🗣️  | **Language Protocol**    | Dukungan i18n (Inggris/Indonesia) instan tanpa _reload_, menerjemahkan konten secara akurat.                             |
 
 ---
 
-## 📸 System Gallery
+## 📸 System Gallery (Under Maintenance)
 
+<!-- Images currently being updated
 <div align="center">
 
 |          **The Command Center (Dark Mode)**          |             **Code Playground (Theme Editor)**             |
@@ -49,11 +52,13 @@ Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ k
 | <img src="public/img/github/responsive1.png" width="300"> | <img src="public/img/github/github%20(4).png" width="400"> |
 
 </div>
+-->
 
 <details>
 <summary>📱 <b>Klik untuk melihat Arsip Lama (v1.0)</b></summary>
 <br>
 <div align="center">
+  <!-- Legacy images commented out due to missing files
   <table>
     <tr>
       <td><b>Versi Klasik</b></td>
@@ -64,6 +69,8 @@ Selamat datang di portofolio pribadi saya. Proyek ini bukan sekadar _showcase_ k
       <td><img src="public/img/github/github%20(5).png" width="400"></td>
     </tr>
   </table>
+  -->
+  <p><i>Legacy screenshots archived.</i></p>
 </div>
 </details>
 
@@ -78,11 +85,24 @@ Dibangun menggunakan teknologi mutakhir untuk performa maksimal:
 - **Styling**: ![Tailwind CSS](https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 - **Animation**: ![Framer Motion](https://img.shields.io/badge/-Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white)
 - **State**: ![Zustand](https://img.shields.io/badge/-Zustand-orange?style=flat-square) & Context API
+- **AI Integration**: ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat-square&logo=google&logoColor=white)
 - **Data**: ![GitHub API](https://img.shields.io/badge/-GitHub_API-181717?style=flat-square&logo=github&logoColor=white)
 
 ---
 
-## � Developer Metrics (GitHub Stats)
+## 📦 Services Offered
+
+| Package             | Tech Stack                    | Ideal For                               |
+| :------------------ | :---------------------------- | :-------------------------------------- |
+| **Starter**         | React, Next.js, Framer Motion | Personal Portfolio, Landing Page        |
+| **Business Growth** | **Laravel (Inertia)** + MySQL | UMKM, Company Profile, Data-driven Apps |
+| **Enterprise**      | Full Stack Custom (MERN/T3)   | Large Scale Web Apps, SaaS              |
+
+> **Note**: Whatsapp integration included for direct consultation.
+
+---
+
+## 📊 Developer Metrics (GitHub Stats)
 
 <div align="center">
 
