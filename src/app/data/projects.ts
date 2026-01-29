@@ -324,7 +324,7 @@ export const projects: Project[] = [
     githubUrl: "#",
     liveUrl: "#",
     colSpan: "md:col-span-2",
-    year: "2024",
+    year: "2026",
     role: "Full Stack Developer",
     features: {
       en: [
