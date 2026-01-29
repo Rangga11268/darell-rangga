@@ -142,6 +142,26 @@ export const AI_PERSONA = {
         "Integrated a Large Language Model as a 'digital soul' and achieved near-perfect performance scores.",
     },
     {
+      name: "Satya Hub",
+      tech: [
+        "React 19",
+        "TypeScript",
+        "Tailwind 4.0",
+        "Node.js",
+        "MongoDB",
+        "Midtrans",
+      ],
+      desc: "Premium Unified School & Learning Ecosystem. A centralized 'command suite' for students and teachers.",
+      highlights: [
+        "Unified Student Hub consolidating schedules, attendance, and tasks.",
+        "Interactive Feedback Loop for real-time teacher-student interaction.",
+        "Academic Precision Suite with minute-level deadline tracking.",
+        "Elite Aesthetics utilizing advanced Glassmorphism and Bento-Grid layouts.",
+      ],
+      challenges_solved:
+        "Consolidated complex distributed data logic into a high-performance SPA while maintaining a premium 'Elite School' visual identity.",
+    },
+    {
       name: "Apapesan",
       tech: ["Laravel 10", "MySQL", "Pusher", "Bootstrap"],
       desc: "Privacy-first messaging application with real-time chat.",

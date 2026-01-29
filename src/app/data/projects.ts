@@ -105,7 +105,7 @@ export const projects: Project[] = [
     liveUrl: "/",
     colSpan: "md:col-span-1 md:row-span-2", // TALL SIDEBAR (1x2)
     year: "2025",
-    role: "Creator",
+    role: "Full Stack Developer",
     features: {
       en: [
         "Rangga-AI (Gemini Integration)",
@@ -239,7 +239,7 @@ export const projects: Project[] = [
     liveUrl: "https://navara-trans.vercel.app/",
     colSpan: "md:col-span-1",
     year: "2025",
-    role: "Frontend Developer",
+    role: "Full Stack Developer",
     features: {
       en: [
         "WhatsApp Booking Engine",
@@ -282,7 +282,7 @@ export const projects: Project[] = [
     liveUrl: "https://janguleee-trans.vercel.app/",
     colSpan: "md:col-span-1",
     year: "2025",
-    role: "Frontend Engineer",
+    role: "Full Stack Developer",
     features: {
       en: [
         "Ultra-Modern Bento Design",
@@ -309,6 +309,51 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "satya-hub",
+    title: "Satya Hub",
+    shortDescription: {
+      en: "Premium Unified School & Learning Ecosystem.",
+      id: "Ekosistem Pendidikan Digital Terpadu & Terintegrasi.",
+    },
+    fullDescription: {
+      en: "A unified digital education ecosystem platform that revolutionizes student-teacher interaction. It eliminates information fragmentation through the 'Unified Student Hub'—a central command suite combining schedules, real-time attendance, and task management.",
+      id: "Platform ekosistem pendidikan digital terpadu yang merombak cara siswa dan guru berinteraksi. Fokus utama aplikasi ini adalah menghapuskan fragmentasi informasi melalui 'Unified Student Hub'—sebuah central command suite bagi siswa.",
+    },
+    tags: ["React 19", "Node.js", "MongoDB"],
+    imageUrl: "/img/siakad.webp",
+    githubUrl: "#",
+    liveUrl: "#",
+    colSpan: "md:col-span-2",
+    year: "2024",
+    role: "Full Stack Developer",
+    features: {
+      en: [
+        "Unified Student Learning Hub",
+        "Teacher-Student Feedback Loop",
+        "Academic Precision Suite",
+        "Elite Glassmorphism Aesthetic",
+      ],
+      id: [
+        "Unified Student Learning Hub",
+        "Interactive Feedback Loop",
+        "Academic Precision Suite",
+        "Elite Aesthetics with Glassmorphism",
+      ],
+    },
+    techStack: [
+      { name: "React 19" },
+      { name: "TypeScript" },
+      { name: "Tailwind 4.0" },
+      { name: "Node.js" },
+      { name: "MongoDB" },
+      { name: "Midtrans" },
+    ],
+    story: {
+      en: "Built with a 'Zero Friction' philosophy, consolidating complex data logic into a single lightweight SPA with an 'Elite School' aesthetic.",
+      id: "Dibangun dengan filosofi 'Zero Friction'. Tantangan terbesarnya adalah mengonsolidasi logika data yang kompleks ke dalam satu SPA yang tetap ringan dan memiliki estetika 'Elite School'.",
+    },
+  },
+  {
     id: "apapesan",
     title: "Apapesan",
     shortDescription: {
@@ -325,7 +370,7 @@ export const projects: Project[] = [
     liveUrl: "#",
     colSpan: "md:col-span-1",
     year: "2024",
-    role: "Backend Engineer",
+    role: "Full Stack Developer",
     features: {
       en: [
         "End-to-End Encryption",
