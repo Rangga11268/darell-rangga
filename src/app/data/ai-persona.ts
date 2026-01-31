@@ -13,7 +13,7 @@ export const AI_PERSONA = {
     title: "Fullstack Engineer & UI/UX Specialist",
     location: "Indonesia",
     email: "darellrangga@gmail.com", // Placeholder, user can update
-    github: "github.com/Rangga11268",
+    github: "github.com/Rangga11268 (Ultimate Profile Configured)",
     status: "Open to Work (Freelance & Full-time)",
     tagline:
       "Building digital experiences that merge aesthetics with performance.",
@@ -140,6 +140,19 @@ export const AI_PERSONA = {
       ],
       challenges_solved:
         "Integrated a Large Language Model as a 'digital soul' and achieved near-perfect performance scores.",
+    },
+    {
+      name: "Ultimate GitHub Profile",
+      tech: ["Markdown", "GitHub Actions", "Profile Readme Stats", "Workflows"],
+      desc: "A professionally crafted GitHub profile serving as a developer's landing page.",
+      highlights: [
+        "Special Repository (Rangga11268) for custom profile readme.",
+        "Live Stats & Streak widgets integrated for real-time activity tracking.",
+        "Contribution Snake Animation powered by GitHub Actions.",
+        "'Crown Jewels' project showcase featuring top works like Satya Hub.",
+      ],
+      challenges_solved:
+        "Transformed a standard profile into a dynamic portfolio extension that automatically updates with coding activity.",
     },
     {
       name: "Satya Hub",
