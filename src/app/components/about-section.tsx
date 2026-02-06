@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
-import { SkillsConstellation } from "./skills-constellation";
+import { ModernSkills } from "@/app/components/modern-skills";
 
 export function AboutSection() {
   const { t } = useLanguage();
@@ -28,7 +28,7 @@ export function AboutSection() {
   const opacityText = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    [0.1, 0.3, 0.1]
+    [0.1, 0.3, 0.1],
   );
 
   const highlights = [
@@ -189,7 +189,7 @@ export function AboutSection() {
               <h3 className="text-2xl font-bold mb-8 text-center">
                 {t.about.incantations}
               </h3>
-              <SkillsConstellation />
+              <ModernSkills />
             </motion.div>
           </motion.div>
         </div>

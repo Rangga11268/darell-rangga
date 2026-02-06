@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Manrope } from "next/font/google";
+import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
@@ -10,14 +10,14 @@ import { AITerminal } from "@/app/components/ai-terminal/ai-terminal";
 import { FileSystemProvider } from "@/app/providers/file-system-provider";
 import { FolderWindow } from "@/app/components/folder-window";
 
-const syne = Syne({
-  variable: "--font-syne",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
@@ -106,7 +106,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${syne.variable} ${manrope.variable} antialiased bg-background text-foreground`}
+        className={`${spaceGrotesk.variable} ${plusJakarta.variable} antialiased bg-background text-foreground`}
       >
         <a
           href="#home"

@@ -5,8 +5,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-manrope);
-  --font-display: var(--font-syne);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
 
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -73,53 +73,53 @@
 :root {
   --radius: 0.75rem;
 
-  /* Modern Light Mode (Clean Tech) */
-  --background: oklch(0.98 0 0); /* Pure White */
-  --foreground: oklch(0.15 0 0); /* Soft Black */
+  /* Modern Light Mode (Porcelain & Slate) */
+  --background: oklch(0.98 0.01 260); /* Porcelain White */
+  --foreground: oklch(0.12 0.02 260); /* Deep Slate */
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
+  --card-foreground: oklch(0.12 0.02 260);
 
-  --primary: oklch(0.45 0.24 280); /* Electric Violet */
-  --primary-foreground: oklch(1 0 0);
+  --primary: oklch(0.5 0.22 265); /* Vibrant Indigo */
+  --primary-foreground: oklch(0.98 0 0);
 
-  --secondary: oklch(0.95 0 0);
-  --secondary-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.96 0.01 260);
+  --secondary-foreground: oklch(0.2 0.02 260);
 
-  --muted: oklch(0.95 0 0);
-  --muted-foreground: oklch(0.45 0 0);
+  --muted: oklch(0.96 0.01 260);
+  --muted-foreground: oklch(0.45 0.02 260);
 
-  --accent: oklch(0.93 0 0);
-  --accent-foreground: oklch(0.15 0 0);
+  --accent: oklch(0.94 0.01 260);
+  --accent-foreground: oklch(0.12 0.02 260);
 
-  --border: oklch(0.9 0 0);
-  --input: oklch(0.9 0 0);
-  --ring: oklch(0.45 0.24 280);
+  --border: oklch(0.92 0.01 260);
+  --input: oklch(0.92 0.01 260);
+  --ring: oklch(0.5 0.22 265);
 }
 
 .dark {
-  /* Hyper-Lumina Dark Mode (Deep Void) */
-  --background: oklch(0.05 0.01 280); /* Deepest Violet/Black */
-  --foreground: oklch(0.98 0 0);
+  /* Modern Dark Mode (Obsidian Slate) */
+  --background: oklch(0.1 0.02 260); /* Deep Obsidian */
+  --foreground: oklch(0.98 0.01 260); /* Off-white */
 
-  --card: oklch(0.1 0.02 280); /* Dark glass */
-  --card-foreground: oklch(0.98 0 0);
+  --card: oklch(0.14 0.03 260); /* Lighter Slate */
+  --card-foreground: oklch(0.98 0.01 260);
 
-  --primary: oklch(0.65 0.25 280); /* Neon Violet */
-  --primary-foreground: oklch(0.05 0.01 280);
+  --primary: oklch(0.6 0.22 265); /* Electric Indigo */
+  --primary-foreground: oklch(0.1 0.02 260);
 
-  --secondary: oklch(0.15 0.05 280);
-  --secondary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.18 0.03 260);
+  --secondary-foreground: oklch(0.98 0.01 260);
 
-  --muted: oklch(0.15 0.05 280);
-  --muted-foreground: oklch(0.65 0 0);
+  --muted: oklch(0.18 0.03 260);
+  --muted-foreground: oklch(0.65 0.01 260);
 
-  --accent: oklch(0.2 0.1 280);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.2 0.04 260);
+  --accent-foreground: oklch(0.98 0.01 260);
 
-  --border: oklch(0.2 0.05 280);
-  --input: oklch(0.2 0.05 280);
-  --ring: oklch(0.65 0.25 280);
+  --border: oklch(0.2 0.03 260);
+  --input: oklch(0.2 0.03 260);
+  --ring: oklch(0.6 0.22 265);
 }
 
 @layer base {
@@ -150,18 +150,29 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-[#00f2ff] to-[#bd00ff];
   }
 
-  /* Glassmorphism */
+  /* Glassmorphism 2.0 (Clean) */
   .glass {
-    @apply bg-background/60 backdrop-blur-md border border-white/10 dark:border-white/5;
+    @apply bg-background/60 backdrop-blur-xl border border-white/5;
   }
 
   .glass-card {
-    @apply bg-card/40 backdrop-blur-xl border border-white/10 dark:bg-card/20 shadow-xl;
+    @apply bg-card/30 backdrop-blur-2xl border border-white/5 shadow-2xl;
   }
 
-  /* Noise Texture */
+  /* Grainy Mesh Gradient */
+  .bg-mesh {
+    background-image:
+      radial-gradient(
+        at 0% 0%,
+        rgba(var(--primary-rgb), 0.1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%);
+  }
+
+  /* Subtle Grain Texture */
   .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
     background-blend-mode: overlay;
   }
   /* Mask Gradients */
