@@ -2,13 +2,11 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { QrCode, Wifi } from "lucide-react";
 
 export function HeroIdCard() {
   const ref = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
   // Motion values for 3D tilt
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -45,7 +43,6 @@ export function HeroIdCard() {
   );
 
   const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
     // Reset to center but keep a slight idle float
     x.set(0);
     y.set(0);
@@ -59,7 +56,6 @@ export function HeroIdCard() {
       <motion.div
         ref={ref}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
         style={{
           rotateX,
@@ -142,7 +138,7 @@ export function HeroIdCard() {
           style={{
             background: useTransform(
               [glareX, glareY],
-              ([x, y]) =>
+              () =>
                 `linear-gradient(${115}deg, transparent 40%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.1) 50%, transparent 54%)`,
             ),
           }}

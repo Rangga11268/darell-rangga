@@ -160,7 +160,7 @@ function DockLink({
   label,
 }: {
   href: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
 }) {
   return (
@@ -187,7 +187,7 @@ function DockButton({
   highlight,
 }: {
   onClick: () => void;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
   highlight?: boolean;
 }) {
@@ -217,7 +217,7 @@ function MenuItem({
   href,
   badge,
 }: {
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
   onClick?: () => void;
   href?: string;

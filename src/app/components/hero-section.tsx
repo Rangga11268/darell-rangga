@@ -2,9 +2,9 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin } from "lucide-react";
 import { useLanguage } from "@/app/providers/language-provider";
-import Image from "next/image";
+
 import { HeroIdCard } from "./hero-id-card";
 
 export function HeroSection() {
