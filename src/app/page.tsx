@@ -4,13 +4,16 @@ import { useState, useEffect } from "react";
 import { CommandCenter } from "@/app/components/command-center/command-center";
 import { FloatingNavbar } from "@/app/components/floating-navbar";
 import { HeroSection } from "@/app/components/hero-section";
-import { AboutSection } from "@/app/components/about-section";
+import { BioSection } from "@/app/components/about/bio-section";
+import { ExperienceSection } from "@/app/components/about/experience-section";
+import { SkillsSection } from "@/app/components/about/skills-section";
 import { ServicesSection } from "@/app/components/services-section";
 import { ProjectsSection } from "@/app/components/projects-section";
 import { ContactSection } from "@/app/components/contact-section";
 import { Footer } from "@/app/components/footer";
 import { BackToTop } from "@/app/components/back-to-top";
 import { LoadingScreen } from "@/app/components/loading";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,11 +57,34 @@ export default function Home() {
       <FloatingNavbar />
       <main>
         <HeroSection />
-        <CommandCenter />
-        <AboutSection />
-        <ServicesSection />
-        <ProjectsSection />
-        <ContactSection />
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <BioSection />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <ExperienceSection />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <SkillsSection />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <ServicesSection />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <ProjectsSection />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <CommandCenter />
+        </ScrollReveal>
+
+        <ScrollReveal width="100%" delay={0.1}>
+          <ContactSection />
+        </ScrollReveal>
       </main>
       <Footer />
       <BackToTop />
