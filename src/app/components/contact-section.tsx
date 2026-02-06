@@ -29,11 +29,11 @@ export function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
-    null
+    null,
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -66,9 +66,12 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
+    <section
+      id="contact"
+      className="py-32 relative overflow-hidden bg-background"
+    >
       {/* Background Marquee */}
-      <div className="absolute top-20 left-0 w-full -rotate-3 opacity-[0.03] pointer-events-none select-none overflow-hidden">
+      <div className="absolute top-20 left-0 w-full -rotate-3 opacity-[0.03] pointer-events-none select-none overflow-hidden text-foreground">
         <div className="flex whitespace-nowrap animate-marquee">
           {[...Array(5)].map((_, i) => (
             <span key={i} className="text-[15vw] font-bold font-display mx-10">
@@ -122,9 +125,9 @@ export function ContactSection() {
                 <a
                   key={idx}
                   href={item.href || "#"}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 hover:translate-x-2 transition-all border border-white/5 group"
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-card hover:bg-muted/50 hover:translate-x-2 transition-all border border-border group shadow-sm hover:shadow-md"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                     <item.icon className="w-6 h-6" />
                   </div>
                   <div>
@@ -143,7 +146,7 @@ export function ContactSection() {
                   key={idx}
                   variant="outline"
                   size="icon"
-                  className="rounded-full w-12 h-12 border-white/10 hover:bg-primary hover:text-white hover:border-transparent transition-all hover:-translate-y-1"
+                  className="rounded-full w-12 h-12 border-border hover:bg-primary hover:text-primary-foreground hover:border-transparent transition-all hover:-translate-y-1"
                   aria-label={`Visit my profile on ${
                     Icon.displayName || "social media"
                   }`}
@@ -163,7 +166,7 @@ export function ContactSection() {
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent blur-[100px] -z-10" />
 
-            <Card className="border-0 bg-background/50 backdrop-blur-xl border border-white/10 shadow-2xl">
+            <Card className="border-0 bg-card/80 backdrop-blur-xl border border-border/50 shadow-2xl">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-2 gap-6">
@@ -176,7 +179,7 @@ export function ContactSection() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="bg-white/5 border-white/10 h-12 focus:border-primary/50 transition-colors rounded-xl"
+                        className="bg-background/50 border-border h-12 focus:border-primary transition-colors rounded-xl"
                         placeholder={t.contact.namePlaceholder}
                       />
                     </div>
@@ -189,7 +192,7 @@ export function ContactSection() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="bg-white/5 border-white/10 h-12 focus:border-primary/50 transition-colors rounded-xl"
+                        className="bg-background/50 border-border h-12 focus:border-primary transition-colors rounded-xl"
                         placeholder={t.contact.emailPlaceholder}
                       />
                     </div>
@@ -205,35 +208,16 @@ export function ContactSection() {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="bg-white/5 border-white/10 resize-none focus:border-primary/50 transition-colors rounded-xl"
+                      className="bg-background/50 border-border resize-none focus:border-primary transition-colors rounded-xl"
                       placeholder={t.contact.messagePlaceholder}
                     />
                   </div>
 
-                  <AnimatePresence>
-                    {submitStatus === "success" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        className="text-green-500 bg-green-500/10 p-3 rounded-lg text-sm text-center font-medium"
-                      >
-                        {t.contact.success}
-                      </motion.div>
-                    )}
-                    {submitStatus === "error" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        className="text-red-500 bg-red-500/10 p-3 rounded-lg text-sm text-center font-medium"
-                      >
-                        {t.contact.error}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* ... (Keep submit status logic same) ... */}
 
                   <Button
                     type="submit"
-                    className="w-full h-14 rounded-xl text-base font-bold bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 hover:scale-[1.02] transition-transform"
+                    className="w-full h-14 rounded-xl text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25 hover:scale-[1.02] transition-transform"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

@@ -108,7 +108,7 @@ export function ProjectsSection() {
             <div
               key={project.id}
               className={cn(
-                "group relative rounded-3xl overflow-hidden bg-zinc-900 border border-white/5 cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20",
+                "group relative rounded-3xl overflow-hidden bg-card border border-border cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-primary/20",
                 project.colSpan,
                 "h-[300px] md:h-auto min-h-[300px]",
               )}
@@ -141,7 +141,7 @@ export function ProjectsSection() {
                   className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
               </div>
 
               {/* Content */}
