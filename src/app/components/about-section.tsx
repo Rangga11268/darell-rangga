@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   CodeBlock,
@@ -19,7 +19,7 @@ import { ModernSkills } from "@/app/components/modern-skills";
 export function AboutSection() {
   const { t } = useLanguage();
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
+  useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });

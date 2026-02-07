@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Terminal,
   X,
   PaperPlaneTilt,
   Robot,

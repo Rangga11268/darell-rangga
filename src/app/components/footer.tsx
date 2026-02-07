@@ -9,7 +9,6 @@ import {
   Heart,
   Code,
   ArrowUp,
-  Sparkle,
 } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 

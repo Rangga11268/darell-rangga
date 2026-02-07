@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef } from "react";
-import { QrCode, WifiHigh } from "@phosphor-icons/react";
+import { QrCode } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 
 export function HeroIdCard() {
@@ -86,6 +86,7 @@ export function HeroIdCard() {
                     src="/img/saya/logo-white.webp"
                     alt="Logo"
                     fill
+                    sizes="20px"
                     className="object-contain hidden dark:block"
                   />
                   {/* Light Mode Logo (Original/Black) */}
@@ -93,6 +94,7 @@ export function HeroIdCard() {
                     src="/img/saya/logo-new.webp"
                     alt="Logo"
                     fill
+                    sizes="20px"
                     className="object-contain block dark:hidden"
                   />
                 </div>
@@ -115,6 +117,7 @@ export function HeroIdCard() {
               src="/img/saya/saya2.webp"
               alt="Darell Rangga"
               fill
+              sizes="(max-width: 768px) 128px, 192px"
               className="object-cover scale-110"
               priority
               unoptimized

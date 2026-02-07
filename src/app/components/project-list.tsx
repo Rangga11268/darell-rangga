@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { Project } from "@/app/data/projects";
-import { cn } from "@/lib/utils";
 
 interface ProjectListProps {
   projects: Project[];
@@ -38,6 +37,7 @@ export function ProjectList({
                 src={projects[hoveredIndex].imageUrl}
                 alt="Preview"
                 fill
+                sizes="100vw"
                 className="object-cover blur-sm opacity-50 dark:opacity-100" // Reduced opacity in light mode to not be overwhelming
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
@@ -107,6 +107,7 @@ export function ProjectList({
                 src={project.imageUrl}
                 alt=""
                 fill
+                sizes="(max-width: 768px) 100vw, 1px"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-background/90" />

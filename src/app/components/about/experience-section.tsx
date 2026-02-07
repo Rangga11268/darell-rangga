@@ -70,9 +70,9 @@ export function ExperienceSection() {
                 >
                   {/* Timeline Node (Logo or Dot) */}
                   <div className="absolute -left-[51px] top-0 h-12 w-12 rounded-full border-4 border-background bg-secondary shadow-lg flex items-center justify-center overflow-hidden">
-                    {(edu as any).logo ? (
+                    {edu.logo ? (
                       <img
-                        src={(edu as any).logo}
+                        src={edu.logo}
                         alt={edu.school}
                         className="w-full h-full object-cover"
                       />
