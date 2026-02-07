@@ -76,11 +76,16 @@ export function HeroIdCard() {
           <div className="w-full px-4 md:px-6 flex justify-between items-center mb-4 md:mb-6 relative z-10">
             <div className="flex items-center gap-2">
               {/* Logo/Icon */}
-              <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-                <WifiHigh
-                  className="w-3 md:w-4 h-3 md:h-4 text-primary-foreground"
-                  weight="duotone"
-                />
+              {/* Logo/Icon */}
+              <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 relative overflow-hidden">
+                <div className="relative w-4 md:w-5 h-4 md:h-5">
+                  <Image
+                    src="/img/saya/logo-new.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain brightness-0 invert"
+                  />
+                </div>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">

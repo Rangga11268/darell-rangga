@@ -68,8 +68,15 @@ export function Footer() {
               className="space-y-4"
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-primary/50 flex items-center justify-center shadow-lg shadow-primary/30">
-                  <Sparkle className="w-6 h-6 text-white" weight="duotone" />
+                {/* Logo */}
+                <div className="relative w-12 h-12 flex items-center justify-center">
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
+                  <img
+                    src="/img/saya/logo-new.png"
+                    alt="Logo"
+                    className="w-full h-full object-contain brightness-0 invert"
+                  />
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold text-foreground">
