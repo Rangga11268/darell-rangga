@@ -317,7 +317,16 @@ Status: Open for opportunities ✓`;
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ type: "spring", damping: 30, stiffness: 300 }}
-          className="fixed bottom-0 right-0 w-full md:w-[480px] md:right-6 md:bottom-24 h-[70vh] md:h-[650px] z-[100] flex flex-col overflow-hidden"
+          drag
+          dragMomentum={false}
+          dragConstraints={{
+            top: -200,
+            left: -400,
+            right: 400,
+            bottom: 200,
+          }}
+          dragElastic={0.1}
+          className="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-[480px] md:right-8 md:bottom-28 h-[60vh] md:h-[550px] z-[100] flex flex-col overflow-hidden cursor-grab active:cursor-grabbing"
         >
           {/* Glassmorphism Container */}
           <div className="relative h-full flex flex-col rounded-t-3xl md:rounded-3xl overflow-hidden">

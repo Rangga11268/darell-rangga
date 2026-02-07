@@ -27,8 +27,8 @@ export function FloatingNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
-  const { setIsPlaygroundOpen } = useCustomization();
-  const { openFolder } = useFileSystem();
+  const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
+  const { openFolders, openFolder, closeFolder } = useFileSystem();
 
   useEffect(() => setMounted(true), []);
 
@@ -45,13 +45,20 @@ export function FloatingNavbar() {
     {
       name: "Terminal",
       icon: Terminal,
-      onClick: () => setIsPlaygroundOpen(true),
-      highlight: true,
+      onClick: () => setIsPlaygroundOpen(!isPlaygroundOpen),
+      highlight: isPlaygroundOpen,
     },
     {
       name: "Files",
       icon: FolderOpen,
-      onClick: () => openFolder("system-files"),
+      onClick: () => {
+        if (openFolders.includes("system-files")) {
+          closeFolder("system-files");
+        } else {
+          openFolder("system-files");
+        }
+      },
+      highlight: openFolders.includes("system-files"),
     },
   ];
 

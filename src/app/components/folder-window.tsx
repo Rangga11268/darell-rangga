@@ -90,7 +90,16 @@ function Window({
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
       transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      className={`fixed z-[60] flex flex-col overflow-hidden ${
+      drag={!isMaximized}
+      dragMomentum={false}
+      dragConstraints={{
+        top: -200,
+        left: -400,
+        right: 400,
+        bottom: 200,
+      }}
+      dragElastic={0.1}
+      className={`fixed z-[60] flex flex-col overflow-hidden ${!isMaximized && "cursor-grab active:cursor-grabbing"} ${
         isMaximized
           ? "inset-4"
           : "inset-x-4 top-24 bottom-36 md:inset-auto md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:-translate-y-1/2 md:w-[700px] md:h-[500px]"
