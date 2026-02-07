@@ -25,11 +25,11 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL("https://darell-rangga.vercel.app"),
   title: {
-    default: "Rangga | Digital Operations Center",
+    default: "Rangga | Interactive Portfolio",
     template: "%s | Rangga Portfolio",
   },
   description:
-    "Portfolio of Darell Rangga, a Frontend Developer specializing in React, Next.js, and modern UI/UX design. Explore the Digital Operations Center.",
+    "Portfolio of Darell Rangga, a Frontend Developer specializing in React, Next.js, and modern UI/UX design. Explore the Interactive Portfolio.",
   keywords: [
     "Darell Rangga",
     "Rangga",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   creator: "Darell Rangga",
   publisher: "Darell Rangga",
   openGraph: {
-    title: "Rangga | Digital Operations Center",
+    title: "Rangga | Interactive Portfolio",
     description:
       "Explore the futuristic portfolio of Darell Rangga. Featuring interactive 3D elements, modern tech stack, and creative projects.",
     url: "https://darell-rangga.vercel.app",
@@ -58,13 +58,13 @@ export const metadata: Metadata = {
         url: "/og-image.png", // We should ideally ensure this image exists, or use a placeholder if not
         width: 1200,
         height: 630,
-        alt: "Rangga Portfolio Digital Operations Center",
+        alt: "Rangga Interactive Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rangga | Digital Operations Center",
+    title: "Rangga | Interactive Portfolio",
     description:
       "Frontend Developer specializing in React & Next.js. Check out my interactive portfolio.",
     creator: "@Rangga11268", // Assuming this handle or similar
