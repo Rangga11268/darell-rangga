@@ -129,7 +129,7 @@ function CommandChip({
       whileHover={{ scale: 1.05, y: -2 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/70 hover:text-white hover:bg-white/10 hover:border-primary/30 transition-all"
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/50 border border-foreground/10 text-xs text-muted-foreground hover:text-foreground hover:bg-foreground/5 hover:border-primary/30 transition-all"
     >
       <Icon className="w-3.5 h-3.5" weight="duotone" />
       <span>{label}</span>
@@ -326,25 +326,25 @@ Status: Open for opportunities ✓`;
             bottom: 200,
           }}
           dragElastic={0.1}
-          className="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-[480px] md:right-8 md:bottom-28 h-[60vh] md:h-[550px] z-[100] flex flex-col overflow-hidden cursor-grab active:cursor-grabbing"
+          className="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-[480px] md:right-8 md:bottom-28 h-[60vh] md:h-[550px] z-[100] flex flex-col overflow-hidden cursor-grab active:cursor-grabbing shadow-2xl"
         >
           {/* Glassmorphism Container */}
           <div className="relative h-full flex flex-col rounded-t-3xl md:rounded-3xl overflow-hidden">
             {/* Animated Gradient Border */}
             <div className="absolute inset-0 rounded-t-3xl md:rounded-3xl p-[1px] bg-gradient-to-br from-primary/50 via-transparent to-primary/30">
-              <div className="h-full w-full rounded-t-3xl md:rounded-3xl bg-black/90 backdrop-blur-2xl" />
+              <div className="h-full w-full rounded-t-3xl md:rounded-3xl bg-white/95 dark:bg-black/90 backdrop-blur-2xl" />
             </div>
 
             {/* Background Mesh Effect */}
-            <div className="absolute inset-0 rounded-t-3xl md:rounded-3xl overflow-hidden">
-              <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-              <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+            <div className="absolute inset-0 rounded-t-3xl md:rounded-3xl overflow-hidden pointer-events-none">
+              <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse opacity-50" />
+              <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000 opacity-50" />
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 flex flex-col h-full">
+            <div className="relative z-10 flex flex-col h-full text-foreground">
               {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-foreground/5 dark:border-white/10">
                 <div className="flex items-center gap-3">
                   {/* AI Avatar */}
                   <div className="relative">
@@ -353,14 +353,14 @@ Status: Open for opportunities ✓`;
                       <Robot className="w-5 h-5 text-white" weight="duotone" />
                     </div>
                     {/* Status Dot */}
-                    <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-500 border-2 border-black animate-pulse" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-green-500 border-2 border-background animate-pulse" />
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-sm font-bold text-white tracking-wide">
+                    <span className="text-sm font-bold text-foreground tracking-wide">
                       Rangga AI
                     </span>
-                    <span className="text-[10px] text-white/50 uppercase tracking-widest">
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
                       {connectionStatus === "connected" && "Neural Link Active"}
                       {connectionStatus === "thinking" && "Processing..."}
                       {connectionStatus === "error" && "Connection Lost"}
@@ -371,7 +371,7 @@ Status: Open for opportunities ✓`;
                 <div className="flex items-center gap-1">
                   <button
                     onClick={clearChat}
-                    className="p-2.5 hover:bg-white/10 rounded-xl transition-all text-white/50 hover:text-white group"
+                    className="p-2.5 hover:bg-foreground/5 rounded-xl transition-all text-muted-foreground hover:text-foreground group"
                     title="Clear Chat"
                   >
                     <Trash
@@ -381,7 +381,7 @@ Status: Open for opportunities ✓`;
                   </button>
                   <button
                     onClick={() => setIsPlaygroundOpen(false)}
-                    className="p-2.5 hover:bg-red-500/20 rounded-xl transition-all text-white/50 hover:text-red-400 group"
+                    className="p-2.5 hover:bg-red-500/20 rounded-xl transition-all text-muted-foreground hover:text-red-400 group"
                   >
                     <X className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   </button>
@@ -389,7 +389,7 @@ Status: Open for opportunities ✓`;
               </div>
 
               {/* Quick Commands */}
-              <div className="px-5 py-3 border-b border-white/5 flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <div className="px-5 py-3 border-b border-foreground/5 dark:border-white/5 flex items-center gap-2 overflow-x-auto scrollbar-hide">
                 <Sparkle
                   className="w-4 h-4 text-primary/50 flex-shrink-0"
                   weight="duotone"
@@ -429,8 +429,8 @@ Status: Open for opportunities ✓`;
                     <div
                       className={`max-w-[80%] p-4 text-sm leading-relaxed ${
                         msg.sender === "user"
-                          ? "bg-primary/20 text-white border border-primary/20 rounded-2xl rounded-br-md"
-                          : "bg-white/5 text-white/90 border border-white/10 rounded-2xl rounded-bl-md backdrop-blur-sm"
+                          ? "bg-primary text-primary-foreground border border-primary/20 rounded-2xl rounded-br-md shadow-sm"
+                          : "bg-muted/50 text-foreground/90 border border-foreground/5 rounded-2xl rounded-bl-md backdrop-blur-sm"
                       }`}
                     >
                       {msg.sender === "ai" ? (
@@ -441,8 +441,8 @@ Status: Open for opportunities ✓`;
                     </div>
 
                     {msg.sender === "user" && (
-                      <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center border border-white/10 flex-shrink-0">
-                        <User className="w-4 h-4 text-white/70" />
+                      <div className="w-8 h-8 rounded-xl bg-muted flex items-center justify-center border border-border flex-shrink-0">
+                        <User className="w-4 h-4 text-muted-foreground" />
                       </div>
                     )}
                   </motion.div>
@@ -460,7 +460,7 @@ Status: Open for opportunities ✓`;
                         weight="bold"
                       />
                     </div>
-                    <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-bl-md backdrop-blur-sm">
+                    <div className="bg-muted/50 border border-foreground/5 p-4 rounded-2xl rounded-bl-md backdrop-blur-sm">
                       <WaveTypingIndicator />
                     </div>
                   </motion.div>
@@ -469,7 +469,7 @@ Status: Open for opportunities ✓`;
               </div>
 
               {/* Input Area */}
-              <div className="p-4 border-t border-white/10 bg-white/5 backdrop-blur-sm">
+              <div className="p-4 border-t border-foreground/5 dark:border-white/10 bg-background/50 backdrop-blur-sm">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -479,7 +479,7 @@ Status: Open for opportunities ✓`;
                 >
                   <div className="relative flex-1">
                     <Command
-                      className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30"
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground"
                       weight="duotone"
                     />
                     <input
@@ -487,7 +487,7 @@ Status: Open for opportunities ✓`;
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder="Ask anything or type a command..."
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
+                      className="w-full bg-muted/40 border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
                   <motion.button
@@ -495,7 +495,7 @@ Status: Open for opportunities ✓`;
                     disabled={!input.trim() || isTyping}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-white shadow-lg shadow-primary/30 transition-all"
+                    className="p-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-primary-foreground shadow-lg shadow-primary/30 transition-all"
                   >
                     <PaperPlaneTilt className="w-5 h-5" weight="duotone" />
                   </motion.button>
