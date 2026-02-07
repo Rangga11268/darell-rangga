@@ -1,6 +1,11 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Instagram } from "lucide-react";
+import {
+  GithubLogo,
+  LinkedinLogo,
+  TwitterLogo,
+  InstagramLogo,
+} from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 
 export function Footer() {
@@ -26,14 +31,14 @@ export function Footer() {
           <div className="flex flex-col md:items-end gap-4">
             <div className="flex gap-4">
               {[
-                { icon: Github, href: "https://github.com/Rangga11268/" },
+                { icon: GithubLogo, href: "https://github.com/Rangga11268/" },
                 {
-                  icon: Linkedin,
+                  icon: LinkedinLogo,
                   href: "https://www.linkedin.com/in/darell-rangga-1320b634b/",
                 },
-                { icon: Twitter, href: "https://x.com/ranggsdarell" },
+                { icon: TwitterLogo, href: "https://x.com/ranggsdarell" },
                 {
-                  icon: Instagram,
+                  icon: InstagramLogo,
                   href: "https://www.instagram.com/darellrangga17/",
                 },
               ].map((social, i) => (
@@ -44,7 +49,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="p-3 rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-all hover:scale-110"
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5" weight="duotone" />
                 </a>
               ))}
             </div>

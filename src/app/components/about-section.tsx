@@ -4,14 +4,14 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  Code2,
+  CodeBlock,
   Palette,
   Rocket,
-  Zap,
+  Lightning,
   BookOpen,
   User,
   Briefcase,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 import { ModernSkills } from "@/app/components/modern-skills";
@@ -48,7 +48,7 @@ export function AboutSection() {
       desc: t.about.highlights.performance.desc,
     },
     {
-      icon: Zap,
+      icon: Lightning,
       title: t.about.highlights.fastLearner.title,
       desc: t.about.highlights.fastLearner.desc,
     },

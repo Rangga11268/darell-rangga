@@ -2,7 +2,12 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Download, Github, Linkedin } from "lucide-react";
+import {
+  ArrowRight,
+  DownloadSimple,
+  GithubLogo,
+  LinkedinLogo,
+} from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 
 import { HeroIdCard } from "./hero-id-card";
@@ -124,7 +129,7 @@ export function HeroSection() {
                   rel="noopener noreferrer"
                   download
                 >
-                  <Download className="mr-2 w-4 h-4" />
+                  <DownloadSimple className="mr-2 w-4 h-4" weight="duotone" />
                   CV
                 </a>
               </Button>
@@ -139,7 +144,7 @@ export function HeroSection() {
                   target="_blank"
                   aria-label="Github"
                 >
-                  <Github className="w-5 h-5" />
+                  <GithubLogo className="w-5 h-5" weight="duotone" />
                 </a>
               </Button>
               <Button
@@ -153,7 +158,7 @@ export function HeroSection() {
                   target="_blank"
                   aria-label="LinkedIn"
                 >
-                  <Linkedin className="w-5 h-5" />
+                  <LinkedinLogo className="w-5 h-5" weight="duotone" />
                 </a>
               </Button>
             </div>

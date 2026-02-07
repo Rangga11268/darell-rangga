@@ -1,30 +1,30 @@
 "use client";
 
 import {
-  Code2,
+  CodeBlock,
   Palette,
   Database,
-  Server,
+  HardDrives,
   Layout,
   GitBranch,
   Terminal,
-  Box,
-  Layers,
+  Cube,
+  Stack,
   Cpu,
   Globe,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 
 const SKILLS = [
-  { name: "HTML5", icon: Code2, type: "frontend" },
+  { name: "HTML5", icon: CodeBlock, type: "frontend" },
   { name: "CSS3", icon: Palette, type: "frontend" },
   { name: "JavaScript", icon: Terminal, type: "language" },
-  { name: "TypeScript", icon: Code2, type: "language" },
-  { name: "React", icon: Box, type: "framework" },
+  { name: "TypeScript", icon: CodeBlock, type: "language" },
+  { name: "React", icon: Cube, type: "framework" },
   { name: "Next.js", icon: Globe, type: "framework" },
   { name: "Tailwind", icon: Palette, type: "styling" },
-  { name: "Node.js", icon: Server, type: "backend" },
-  { name: "Laravel", icon: Layers, type: "backend" },
-  { name: "PHP", icon: Code2, type: "language" },
+  { name: "Node.js", icon: HardDrives, type: "backend" },
+  { name: "Laravel", icon: Stack, type: "backend" },
+  { name: "PHP", icon: CodeBlock, type: "language" },
   { name: "MySQL", icon: Database, type: "database" },
   { name: "PostgreSQL", icon: Database, type: "database" },
   { name: "MongoDB", icon: Database, type: "database" },

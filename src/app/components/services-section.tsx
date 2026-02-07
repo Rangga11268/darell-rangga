@@ -4,21 +4,21 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
 import {
-  Code2,
+  CodeBlock,
   Database,
   Layout,
-  Smartphone,
-  Zap,
+  DeviceMobile,
+  Lightning,
   Rocket,
   ArrowRight,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 
 const ICONS = {
-  web: Code2,
+  web: CodeBlock,
   db: Database,
   visual: Layout,
-  mobile: Smartphone,
-  speed: Zap,
+  mobile: DeviceMobile,
+  speed: Lightning,
   deploy: Rocket,
 };
 
@@ -99,7 +99,7 @@ export function ServicesSection() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {Object.entries(services).map(([key, service]) => {
-            const Icon = ICONS[key as keyof typeof ICONS] || Code2;
+            const Icon = ICONS[key as keyof typeof ICONS] || CodeBlock;
 
             return (
               <motion.div
@@ -179,7 +179,7 @@ export function ServicesSection() {
 
                 {/* Tech Stack Mini-Badge */}
                 <div className="mb-6 bg-muted rounded-lg p-2 text-xs font-mono text-primary border border-border flex items-center gap-2">
-                  <Zap className="w-3 h-3" />
+                  <Lightning className="w-3 h-3" weight="duotone" />
                   {tier.tech}
                 </div>
 

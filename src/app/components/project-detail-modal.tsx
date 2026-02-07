@@ -1,7 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Github, ExternalLink, Calendar, Code2, Cpu } from "lucide-react";
+import {
+  X,
+  GithubLogo,
+  ArrowSquareOut,
+  Calendar,
+  CodeBlock,
+  Cpu,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import { Project } from "@/app/data/projects";
 import { Button } from "@/components/ui/button";
@@ -99,7 +106,7 @@ export function ProjectDetailModal({
                     </div>
                     <div className="space-y-1">
                       <span className="flex items-center gap-2 text-xs text-primary uppercase tracking-widest font-bold">
-                        <Code2 className="w-3 h-3" /> Role
+                        <CodeBlock className="w-3 h-3" weight="duotone" /> Role
                       </span>
                       <p className="text-white/80 font-mono">{project.role}</p>
                     </div>
@@ -219,7 +226,11 @@ export function ProjectDetailModal({
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <ExternalLink className="w-4 h-4 mr-2" /> Live Demo
+                          <ArrowSquareOut
+                            className="w-4 h-4 mr-2"
+                            weight="duotone"
+                          />{" "}
+                          Live Demo
                         </a>
                       </Button>
                     )}
@@ -233,7 +244,8 @@ export function ProjectDetailModal({
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Github className="w-4 h-4 mr-2" /> Source Code
+                        <GithubLogo className="w-4 h-4 mr-2" weight="duotone" />{" "}
+                        Source Code
                       </a>
                     </Button>
                   </div>

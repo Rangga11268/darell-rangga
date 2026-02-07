@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef } from "react";
-import { QrCode, Wifi } from "lucide-react";
+import { QrCode, WifiHigh } from "@phosphor-icons/react";
 
 export function HeroIdCard() {
   const ref = useRef<HTMLDivElement>(null);
@@ -77,7 +77,10 @@ export function HeroIdCard() {
             <div className="flex items-center gap-2">
               {/* Logo/Icon */}
               <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-                <Wifi className="w-3 md:w-4 h-3 md:h-4 text-primary-foreground" />
+                <WifiHigh
+                  className="w-3 md:w-4 h-3 md:h-4 text-primary-foreground"
+                  weight="duotone"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">

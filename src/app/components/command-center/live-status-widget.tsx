@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Music, Gamepad2, Zap } from "lucide-react";
+import {
+  CodeBlock,
+  MusicNotes,
+  GameController,
+  Lightning,
+} from "@phosphor-icons/react";
 
 import { useLanguage } from "@/app/providers/language-provider";
 
@@ -21,21 +26,21 @@ export function LiveStatusWidget() {
   }[] = [
     {
       id: "coding",
-      icon: Code2,
+      icon: CodeBlock,
       label: t.commandCenter.status.coding,
       detail: "B-Side Project",
       color: "text-blue-400",
     },
     {
       id: "listening",
-      icon: Music,
+      icon: MusicNotes,
       label: t.commandCenter.status.listening,
       detail: "Metalcore Mix",
       color: "text-green-400",
     },
     {
       id: "gaming",
-      icon: Gamepad2,
+      icon: GameController,
       label: t.commandCenter.status.gaming,
       detail: "FC 25",
       color: "text-purple-400",
@@ -63,7 +68,7 @@ export function LiveStatusWidget() {
           </span>
           {t.commandCenter.status.title}
         </span>
-        <Zap className="w-3 h-3 text-yellow-500/50" />
+        <Lightning className="w-3 h-3 text-yellow-500/50" weight="duotone" />
       </div>
 
       {/* Content Transition */}

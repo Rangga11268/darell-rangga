@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { User } from "lucide-react";
+import { User } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useRef } from "react";
 

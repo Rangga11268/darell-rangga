@@ -1,6 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from "react";
-import { Github, GitCommit, Star, Code, ExternalLink } from "lucide-react";
+import {
+  GithubLogo,
+  GitCommit,
+  Star,
+  Code,
+  ArrowSquareOut,
+} from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 
 interface GithubData {
@@ -124,11 +130,11 @@ export function GithubWidget() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20"
               >
-                <Github className="w-3.5 h-3.5" />
+                <GithubLogo className="w-3.5 h-3.5" weight="duotone" />
                 <span>
                   {t.commandCenter?.github?.viewProfile || "View Profile"}
                 </span>
-                <ExternalLink className="w-3 h-3" />
+                <ArrowSquareOut className="w-3 h-3" weight="duotone" />
               </a>
             </div>
           </div>

@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, Cpu, Database, Globe, Layers } from "lucide-react";
+import {
+  CheckCircle,
+  Cpu,
+  Database,
+  Globe,
+  Stack,
+} from "@phosphor-icons/react";
 
 const modules = [
   {
@@ -19,13 +25,13 @@ const modules = [
   {
     name: "Tailwind CSS v4",
     status: "STABLE",
-    icon: Layers,
+    icon: Stack,
     color: "text-purple-400",
   },
   {
     name: "Framer Motion 11",
     status: "ANIMATING",
-    icon: CheckCircle2,
+    icon: CheckCircle,
     color: "text-green-400",
   },
   {

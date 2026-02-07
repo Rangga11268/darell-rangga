@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Maximize2 } from "lucide-react";
+import { ArrowsOut } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SectionTitle } from "./section-title";
@@ -53,7 +53,7 @@ const ProjectCard = ({
         {/* Header (Top Right) */}
         <div className="flex justify-between items-start">
           <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10 text-white opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-            <Maximize2 className="w-4 h-4" />
+            <ArrowsOut className="w-4 h-4" weight="duotone" />
           </div>
           <div className="px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md">
             <span className="text-xs font-mono text-white/70 uppercase tracking-widest">
@@ -149,7 +149,7 @@ export function ProjectsSection() {
                 {/* Header */}
                 <div className="flex justify-between items-start">
                   <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10 text-white opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    <Maximize2 className="w-4 h-4" />
+                    <ArrowsOut className="w-4 h-4" weight="duotone" />
                   </div>
                   <div className="px-3 py-1 rounded-full bg-black/50 border border-white/10 backdrop-blur-md">
                     <span className="text-xs font-mono text-white/70 uppercase tracking-widest">

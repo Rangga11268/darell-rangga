@@ -7,16 +7,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Mail,
+  Envelope,
   MapPin,
-  Github,
-  Linkedin,
-  Loader2,
+  GithubLogo,
+  LinkedinLogo,
+  CircleNotch,
   Phone,
-  Instagram,
-  Send,
-  Twitter,
-} from "lucide-react";
+  InstagramLogo,
+  PaperPlaneTilt,
+  TwitterLogo,
+} from "@phosphor-icons/react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 
@@ -104,7 +104,7 @@ export function ContactSection() {
             <div className="space-y-4">
               {[
                 {
-                  icon: Mail,
+                  icon: Envelope,
                   label: "Email",
                   value: "darrelrangga@gmail.com",
                   href: "mailto:darrelrangga@gmail.com",
@@ -141,19 +141,21 @@ export function ContactSection() {
             </div>
 
             <div className="flex gap-4">
-              {[Github, Linkedin, Twitter, Instagram].map((Icon, idx) => (
-                <Button
-                  key={idx}
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full w-12 h-12 border-border hover:bg-primary hover:text-primary-foreground hover:border-transparent transition-all hover:-translate-y-1"
-                  aria-label={`Visit my profile on ${
-                    Icon.displayName || "social media"
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                </Button>
-              ))}
+              {[GithubLogo, LinkedinLogo, TwitterLogo, InstagramLogo].map(
+                (Icon, idx) => (
+                  <Button
+                    key={idx}
+                    variant="outline"
+                    size="icon"
+                    className="rounded-full w-12 h-12 border-border hover:bg-primary hover:text-primary-foreground hover:border-transparent transition-all hover:-translate-y-1"
+                    aria-label={`Visit my profile on ${
+                      Icon.displayName || "social media"
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </Button>
+                ),
+              )}
             </div>
           </motion.div>
 
@@ -221,9 +223,15 @@ export function ContactSection() {
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <Loader2 className="animate-spin mr-2" />
+                      <CircleNotch
+                        className="animate-spin mr-2"
+                        weight="duotone"
+                      />
                     ) : (
-                      <Send className="mr-2 w-4 h-4" />
+                      <PaperPlaneTilt
+                        className="mr-2 w-4 h-4"
+                        weight="duotone"
+                      />
                     )}
                     {t.contact.submitButton}
                   </Button>

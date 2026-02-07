@@ -2,7 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Terminal, X, Send, Bot, User, Trash2 } from "lucide-react";
+import {
+  Terminal,
+  X,
+  PaperPlaneTilt,
+  Robot,
+  User,
+  Trash,
+} from "@phosphor-icons/react";
 import { useCustomization } from "@/app/providers/customization-provider";
 
 interface Message {
@@ -244,7 +251,7 @@ STATUS: System online / Awaiting inquiry.`;
                 className="p-2 hover:bg-white/10 rounded-md transition-colors text-white/50 hover:text-white"
                 title="Clear Chat"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash className="w-4 h-4" weight="duotone" />
               </button>
               <button
                 onClick={() => setIsPlaygroundOpen(false)}
@@ -266,7 +273,7 @@ STATUS: System online / Awaiting inquiry.`;
               >
                 {msg.sender === "ai" && (
                   <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 flex-shrink-0">
-                    <Bot className="w-4 h-4 text-primary" />
+                    <Robot className="w-4 h-4 text-primary" weight="duotone" />
                   </div>
                 )}
 
@@ -295,7 +302,7 @@ STATUS: System online / Awaiting inquiry.`;
             {isTyping && (
               <div className="flex gap-3 justify-start">
                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 flex-shrink-0">
-                  <Bot className="w-4 h-4 text-primary" />
+                  <Robot className="w-4 h-4 text-primary" weight="duotone" />
                 </div>
                 <div className="bg-green-500/10 text-green-400 border border-green-500/20 p-3 rounded-lg rounded-tl-none">
                   <span className="animate-pulse">_</span>
@@ -329,7 +336,7 @@ STATUS: System online / Awaiting inquiry.`;
                 disabled={!input.trim() || isTyping}
                 className="p-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-white shadow-lg shadow-primary/20 transition-all"
               >
-                <Send className="w-4 h-4" />
+                <PaperPlaneTilt className="w-4 h-4" weight="duotone" />
               </button>
             </form>
           </div>

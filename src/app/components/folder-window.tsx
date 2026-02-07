@@ -6,10 +6,10 @@ import {
   X,
   Folder,
   FileText,
-  ChevronRight,
-  Maximize2,
-  Minimize2,
-} from "lucide-react";
+  CaretRight,
+  ArrowsOut,
+  ArrowsIn,
+} from "@phosphor-icons/react";
 import { useFileSystem, FileNode } from "@/app/providers/file-system-provider";
 
 export function FolderWindow() {
@@ -60,10 +60,10 @@ function Window({
         </div>
         <div className="flex items-center gap-2">
           <button className="p-1 hover:bg-white/10 rounded transition-colors text-white/40">
-            <Minimize2 className="w-3 h-3" />
+            <ArrowsIn className="w-3 h-3" weight="duotone" />
           </button>
           <button className="p-1 hover:bg-white/10 rounded transition-colors text-white/40">
-            <Maximize2 className="w-3 h-3" />
+            <ArrowsOut className="w-3 h-3" weight="duotone" />
           </button>
           <button
             onClick={onClose}
@@ -77,7 +77,7 @@ function Window({
       {/* Breadcrumbs */}
       <div className="px-4 py-2 bg-black/20 border-b border-white/5 flex items-center gap-2 text-[10px] text-white/40">
         <span>root</span>
-        <ChevronRight className="w-3 h-3" />
+        <CaretRight className="w-3 h-3" weight="duotone" />
         <span className="text-primary/80">
           {folder.name.toLowerCase().replace(/\s+/g, "-")}
         </span>

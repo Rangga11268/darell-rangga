@@ -3,19 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Home,
+  House,
   User,
   Briefcase,
   Code,
-  Mail,
+  Envelope,
   Moon,
   Sun,
-  LayoutGrid,
+  SquaresFour,
   X,
-  Languages,
+  Translate,
   FolderOpen,
   Terminal,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
@@ -35,10 +35,10 @@ export function FloatingNavbar() {
   if (!mounted) return null;
 
   const primaryItems = [
-    { name: t.nav.home, href: "#home", icon: Home },
+    { name: t.nav.home, href: "#home", icon: House },
     { name: t.nav.about, href: "#about", icon: User },
     { name: t.nav.projects, href: "#projects", icon: Code },
-    { name: t.nav.contact, href: "#contact", icon: Mail },
+    { name: t.nav.contact, href: "#contact", icon: Envelope },
   ];
 
   const toolsItems = [
@@ -83,7 +83,7 @@ export function FloatingNavbar() {
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               />
               <MenuItem
-                icon={Languages}
+                icon={Translate}
                 label={language === "en" ? "Bahasa" : "English"}
                 onClick={toggleLanguage}
                 badge={language.toUpperCase()}
@@ -142,7 +142,7 @@ export function FloatingNavbar() {
           {/* Menu Toggle */}
           <DockButton
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            icon={LayoutGrid}
+            icon={SquaresFour}
             label="More"
             highlight={isMenuOpen}
           />

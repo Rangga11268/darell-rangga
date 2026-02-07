@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, BookOpen } from "lucide-react";
+import { Briefcase, BookOpen } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 
 export function ExperienceSection() {

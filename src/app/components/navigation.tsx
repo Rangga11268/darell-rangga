@@ -1,58 +1,64 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { Moon, Sun, Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Moon, Sun, List, X } from "@phosphor-icons/react";
 
 export function Navigation() {
-  const { theme, setTheme } = useTheme()
-  const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-    
+    setMounted(true);
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Add scroll offset for fixed header
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      const link = target.closest('a')
-      
-      if (link && link.getAttribute('href')?.startsWith('#')) {
-        e.preventDefault()
-        const href = link.getAttribute('href')
-        if (href && href !== '#') { // Skip empty hash links
-          const targetElement = document.querySelector(href)
+      const target = e.target as HTMLElement;
+      const link = target.closest("a");
+
+      if (link && link.getAttribute("href")?.startsWith("#")) {
+        e.preventDefault();
+        const href = link.getAttribute("href");
+        if (href && href !== "#") {
+          // Skip empty hash links
+          const targetElement = document.querySelector(href);
           if (targetElement) {
-            const headerHeight = document.querySelector('header')?.clientHeight || 0
-            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight - 20
+            const headerHeight =
+              document.querySelector("header")?.clientHeight || 0;
+            const targetPosition =
+              targetElement.getBoundingClientRect().top +
+              window.scrollY -
+              headerHeight -
+              20;
             window.scrollTo({
               top: targetPosition,
-              behavior: 'smooth'
-            })
+              behavior: "smooth",
+            });
           }
-        } else if (href === '#') {
+        } else if (href === "#") {
           // For home link, scroll to top
           window.scrollTo({
             top: 0,
-            behavior: 'smooth'
-          })
+            behavior: "smooth",
+          });
         }
       }
-    }
+    };
 
-    document.addEventListener('click', handleAnchorClick)
-    return () => document.removeEventListener('click', handleAnchorClick)
-  }, [])
+    document.addEventListener("click", handleAnchorClick);
+    return () => document.removeEventListener("click", handleAnchorClick);
+  }, []);
 
   const navItems = [
     { name: "Home", href: "#" },
@@ -60,7 +66,7 @@ export function Navigation() {
     { name: "Services", href: "#services" },
     { name: "Projects", href: "#projects" },
     { name: "Contact", href: "#contact" },
-  ]
+  ];
 
   // Don't render on server to prevent hydration mismatch
   if (!mounted) {
@@ -71,7 +77,7 @@ export function Navigation() {
             <div className="flex-shrink-0 font-bold text-xl opacity-0">
               Darell Rangga
             </div>
-            
+
             {/* Desktop Navigation */}
             <nav className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
@@ -86,51 +92,37 @@ export function Navigation() {
                 ))}
               </div>
             </nav>
-            
+
             <div className="hidden md:flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="opacity-0"
-              >
+              <Button variant="ghost" size="icon" className="opacity-0">
                 <Moon className="h-5 w-5" />
               </Button>
-              <Button className="opacity-0">
-                Contact Me
-              </Button>
+              <Button className="opacity-0">Contact Me</Button>
             </div>
-            
+
             {/* Mobile menu button */}
             <div className="md:hidden flex items-center">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="mr-2 opacity-0"
-              >
+              <Button variant="ghost" size="icon" className="mr-2 opacity-0">
                 <Moon className="h-5 w-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="opacity-0"
-              >
-                <Menu className="h-6 w-6" />
+              <Button variant="ghost" size="icon" className="opacity-0">
+                <List className="h-6 w-6" weight="duotone" />
               </Button>
             </div>
           </div>
         </div>
       </header>
-    )
+    );
   }
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-sm border-b border-border" : "bg-transparent"}`}>
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-sm border-b border-border" : "bg-transparent"}`}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0 font-bold text-xl">
-            Darell Rangga
-          </div>
-          
+          <div className="flex-shrink-0 font-bold text-xl">Darell Rangga</div>
+
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
@@ -145,7 +137,7 @@ export function Navigation() {
               ))}
             </div>
           </nav>
-          
+
           <div className="hidden md:flex items-center gap-2">
             <Button
               variant="ghost"
@@ -160,12 +152,10 @@ export function Navigation() {
               )}
             </Button>
             <Button asChild>
-              <a href="#contact">
-                Contact Me
-              </a>
+              <a href="#contact">Contact Me</a>
             </Button>
           </div>
-          
+
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <Button
@@ -190,13 +180,13 @@ export function Navigation() {
               {isOpen ? (
                 <X className="h-6 w-6" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <List className="h-6 w-6" weight="duotone" />
               )}
             </Button>
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Navigation */}
       {isOpen && mounted && (
         <div className="md:hidden bg-background/95 backdrop-blur-sm border-t border-border">
@@ -213,14 +203,12 @@ export function Navigation() {
             ))}
             <div className="pt-4 border-t border-border/50">
               <Button className="w-full py-6 text-base" asChild>
-                <a href="#contact">
-                  Contact Me
-                </a>
+                <a href="#contact">Contact Me</a>
               </Button>
             </div>
           </div>
         </div>
       )}
     </header>
-  )
+  );
 }
