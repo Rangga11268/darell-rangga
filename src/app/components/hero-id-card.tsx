@@ -50,7 +50,7 @@ export function HeroIdCard() {
 
   return (
     <div
-      className="relative flex items-center justify-center py-20 perspective-1000"
+      className="relative flex items-center justify-center py-8 md:py-20"
       style={{ perspective: "1200px" }}
     >
       <motion.div
@@ -62,22 +62,22 @@ export function HeroIdCard() {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="relative w-[320px] h-[480px] rounded-[30px] cursor-grab active:cursor-grabbing hover:scale-105 transition-transform duration-500 ease-out"
+        className="relative w-[260px] h-[380px] md:w-[320px] md:h-[480px] rounded-[24px] md:rounded-[30px] cursor-grab active:cursor-grabbing hover:scale-105 transition-transform duration-500 ease-out"
       >
         {/* === CARD CONTENT === */}
-        <div className="absolute inset-0 bg-[#e0e0e0] dark:bg-neutral-900 rounded-[30px] border border-white/20 shadow-2xl overflow-hidden flex flex-col items-center">
+        <div className="absolute inset-0 bg-[#e0e0e0] dark:bg-neutral-900 rounded-[24px] md:rounded-[30px] border border-white/20 shadow-2xl overflow-hidden flex flex-col items-center">
           {/* Texture/Noise Overlay */}
           <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none mix-blend-overlay" />
 
           {/* Top Holder Hole */}
-          <div className="mt-6 w-16 h-3 bg-neutral-800/20 rounded-full shadow-inner mx-auto mb-2" />
+          <div className="mt-4 md:mt-6 w-12 md:w-16 h-2 md:h-3 bg-neutral-800/20 rounded-full shadow-inner mx-auto mb-1 md:mb-2" />
 
           {/* Header Section */}
-          <div className="w-full px-6 flex justify-between items-center mb-6 relative z-10">
+          <div className="w-full px-4 md:px-6 flex justify-between items-center mb-4 md:mb-6 relative z-10">
             <div className="flex items-center gap-2">
               {/* Logo/Icon */}
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
-                <Wifi className="w-4 h-4 text-primary-foreground" />
+              <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                <Wifi className="w-3 md:w-4 h-3 md:h-4 text-primary-foreground" />
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
@@ -88,11 +88,11 @@ export function HeroIdCard() {
                 </span>
               </div>
             </div>
-            <QrCode className="w-8 h-8 text-foreground/20" />
+            <QrCode className="w-6 md:w-8 h-6 md:h-8 text-foreground/20" />
           </div>
 
           {/* Photo Section */}
-          <div className="relative w-48 h-48 rounded-full border-4 border-white/10 shadow-2xl overflow-hidden mb-6 group-hover:shadow-primary/20 transition-all duration-500">
+          <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full border-2 md:border-4 border-white/10 shadow-2xl overflow-hidden mb-4 md:mb-6 group-hover:shadow-primary/20 transition-all duration-500">
             <Image
               src="/img/saya/saya2.webp"
               alt="Darell Rangga"
@@ -105,7 +105,7 @@ export function HeroIdCard() {
 
           {/* Name & Role */}
           <div className="text-center space-y-1 relative z-10">
-            <h2 className="text-3xl font-display font-bold text-foreground tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground tracking-tight">
               Darell Rangga
             </h2>
             <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block">
@@ -116,7 +116,7 @@ export function HeroIdCard() {
           </div>
 
           {/* Bottom Bar code / ID */}
-          <div className="mt-auto mb-8 w-full px-8 space-y-4">
+          <div className="mt-auto mb-4 md:mb-8 w-full px-6 md:px-8 space-y-2 md:space-y-4">
             <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
             <div className="flex justify-between items-end opacity-50">
               <div className="flex flex-col gap-1">
@@ -134,7 +134,7 @@ export function HeroIdCard() {
 
         {/* === HOLOGRAPHIC OVERLAY === */}
         <motion.div
-          className="absolute inset-0 rounded-[30px] pointer-events-none opacity-40 mix-blend-overlay z-20"
+          className="absolute inset-0 rounded-[24px] md:rounded-[30px] pointer-events-none opacity-40 mix-blend-overlay z-20"
           style={{
             background: useTransform(
               [glareX, glareY],
@@ -144,10 +144,10 @@ export function HeroIdCard() {
           }}
         />
 
-        <div className="absolute inset-0 rounded-[30px] ring-1 ring-white/20 z-30" />
+        <div className="absolute inset-0 rounded-[24px] md:rounded-[30px] ring-1 ring-white/20 z-30" />
 
         {/* === UPGRADED LANYARD === */}
-        <div className="absolute -top-[300px] left-1/2 -translate-x-1/2 w-[300px] h-[320px] z-0 pointer-events-none flex flex-col items-center justify-end">
+        <div className="hidden md:flex absolute -top-[300px] left-1/2 -translate-x-1/2 w-[300px] h-[320px] z-0 pointer-events-none flex-col items-center justify-end">
           {/* V-Shape Strap (SVG) */}
           <svg
             className="w-full h-full drop-shadow-2xl"
