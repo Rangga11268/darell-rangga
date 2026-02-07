@@ -24,13 +24,6 @@ export function AboutSection() {
     offset: ["start end", "end start"],
   });
 
-  const xText = useTransform(scrollYProgress, [0, 1], [-100, 100]);
-  const opacityText = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.1, 0.3, 0.1],
-  );
-
   const highlights = [
     {
       icon: CodeBlock,
@@ -60,13 +53,60 @@ export function AboutSection() {
       className="py-32 relative overflow-hidden"
       ref={containerRef}
     >
-      {/* Massive Parallax Background Text */}
-      <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 -z-10 pointer-events-none overflow-hidden">
+      {/* Modern Skills Marquee - Horizontal Scrolling */}
+      <div className="w-full overflow-hidden py-8 border-y border-foreground/10 mb-16">
         <motion.div
-          style={{ x: xText, opacity: opacityText }}
-          className="text-[20vw] font-display font-bold whitespace-nowrap text-foreground/5 leading-none"
+          className="flex gap-8 whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 20,
+              ease: "linear",
+            },
+          }}
         >
-          EXPERIENCE
+          {/* First set of skills */}
+          {[
+            "NEXT.JS",
+            "REACT",
+            "LARAVEL",
+            "NODE.JS",
+            "TYPESCRIPT",
+            "TAILWIND CSS",
+            "MYSQL",
+            "POSTGRESQL",
+            "FIGMA",
+            "GIT",
+          ].map((skill, i) => (
+            <span
+              key={i}
+              className="text-4xl md:text-5xl font-display font-bold text-foreground/20 flex items-center gap-8"
+            >
+              {skill} <span className="text-primary">✦</span>
+            </span>
+          ))}
+          {/* Duplicate for seamless loop */}
+          {[
+            "NEXT.JS",
+            "REACT",
+            "LARAVEL",
+            "NODE.JS",
+            "TYPESCRIPT",
+            "TAILWIND CSS",
+            "MYSQL",
+            "POSTGRESQL",
+            "FIGMA",
+            "GIT",
+          ].map((skill, i) => (
+            <span
+              key={`dup-${i}`}
+              className="text-4xl md:text-5xl font-display font-bold text-foreground/20 flex items-center gap-8"
+            >
+              {skill} <span className="text-primary">✦</span>
+            </span>
+          ))}
         </motion.div>
       </div>
 

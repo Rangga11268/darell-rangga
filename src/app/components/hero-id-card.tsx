@@ -4,8 +4,10 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef } from "react";
 import { QrCode, WifiHigh } from "@phosphor-icons/react";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function HeroIdCard() {
+  const { t } = useLanguage();
   const ref = useRef<HTMLDivElement>(null);
   // Motion values for 3D tilt
   const x = useMotionValue(0);
@@ -125,8 +127,8 @@ export function HeroIdCard() {
               Darell Rangga
             </h2>
             <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block">
-              <p className="text-xs font-mono font-bold text-primary tracking-wider">
-                FULLSTACK ENGINEER
+              <p className="text-xs font-mono font-bold text-primary tracking-wider uppercase">
+                {t.hero.role}
               </p>
             </div>
           </div>

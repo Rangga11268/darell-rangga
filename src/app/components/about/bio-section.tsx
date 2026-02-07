@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { User } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useRef } from "react";
@@ -8,17 +8,6 @@ import { useRef } from "react";
 export function BioSection() {
   const { t } = useLanguage();
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const xText = useTransform(scrollYProgress, [0, 1], [-100, 100]);
-  const opacityText = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.1, 0.3, 0.1],
-  );
 
   return (
     <section
@@ -26,13 +15,74 @@ export function BioSection() {
       className="py-24 relative overflow-hidden"
       ref={containerRef}
     >
-      {/* Background Text */}
-      <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 -z-10 pointer-events-none overflow-hidden">
+      {/* Modern Skills Marquee - Horizontal Scrolling */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden py-4 border-b border-foreground/10">
         <motion.div
-          style={{ x: xText, opacity: opacityText }}
-          className="text-[20vw] font-display font-bold whitespace-nowrap text-foreground/5 leading-none"
+          className="flex gap-8 whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 20,
+              ease: "linear",
+            },
+          }}
         >
-          STORY
+          {[
+            "REACT",
+            "NEXT.JS",
+            "TYPESCRIPT",
+            "TAILWIND CSS",
+            "LARAVEL",
+            "NODE.JS",
+            "MONGODB",
+            "VUE.JS",
+            "INERTIA.JS",
+            "FRAMER MOTION",
+            "ZUSTAND",
+            "SOCKET.IO",
+            "FIGMA",
+            "VERCEL",
+            "VITE",
+            "GIT",
+            "GLASSMORPHISM",
+            "NEO BRUTALISM",
+          ].map((skill, i) => (
+            <span
+              key={i}
+              className="text-2xl md:text-3xl font-display font-bold text-muted-foreground/40 dark:text-foreground/15 flex items-center gap-6"
+            >
+              {skill} <span className="text-primary text-lg">✦</span>
+            </span>
+          ))}
+          {[
+            "REACT",
+            "NEXT.JS",
+            "TYPESCRIPT",
+            "TAILWIND CSS",
+            "LARAVEL",
+            "NODE.JS",
+            "MONGODB",
+            "VUE.JS",
+            "INERTIA.JS",
+            "FRAMER MOTION",
+            "ZUSTAND",
+            "SOCKET.IO",
+            "FIGMA",
+            "VERCEL",
+            "VITE",
+            "GIT",
+            "GLASSMORPHISM",
+            "NEO BRUTALISM",
+          ].map((skill, i) => (
+            <span
+              key={`dup-${i}`}
+              className="text-2xl md:text-3xl font-display font-bold text-muted-foreground/40 dark:text-foreground/15 flex items-center gap-6"
+            >
+              {skill} <span className="text-primary text-lg">✦</span>
+            </span>
+          ))}
         </motion.div>
       </div>
 

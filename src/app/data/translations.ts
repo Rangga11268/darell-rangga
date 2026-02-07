@@ -10,9 +10,9 @@ export const translations = {
     hero: {
       available: "Open to Work",
       greeting: "Hello, I'm",
-      role: "Creative Developer",
+      role: "Fullstack Developer",
       description:
-        "Blending aesthetics with high performance. I specialize in the modern React stack to build futuristic, responsive, and engaging web experiences.",
+        "Web development is art and engineering. Next.js for frontend, Laravel or Node.js for backend. End result: stable, secure, and user-friendly applications.",
       viewWork: "See My Work",
       contactMe: "Get in Touch",
       badgeFast: "High Performance",
@@ -21,12 +21,13 @@ export const translations = {
     },
     about: {
       title: "About Me",
-      subtitle: "The Developer",
+      subtitle: "Darell Rangga — Fullstack Developer",
+      bgText: "EXPERIENCE",
       journeyTitle: "My Background",
       journeyText:
-        "I stand at the intersection of design aesthetics and the coding world. For me, web development isn't just technical logic, but the art of translating beautiful visuals into tangible interactions. I build applications that not only look cool but run fast and stay robust behind the scenes.",
+        "I view web development as a balance between art and engineering. On the interface side, I use Next.js to create smooth and responsive visual experiences.",
       journeyDesc:
-        "Relying on modern ecosystems like Next.js, Laravel, and Tailwind CSS, I craft digital products with strong character. I believe a great website must be balanced: clean and efficient code, with User Experience (UX) always as the top priority.",
+        "But aesthetics is only half the story. Behind the scenes, I build adaptive system architectures—choosing Laravel's robustness or Node.js's flexibility based on project needs. My focus is simple: creating stable, secure, and user-friendly applications.",
       experience: "Work History",
       education: "Education",
       arsenal: "Tech Stack",
@@ -242,9 +243,9 @@ export const translations = {
     hero: {
       available: "Siap Bekerja",
       greeting: "Halo, Saya",
-      role: "Creative Developer",
+      role: "Fullstack Developer",
       description:
-        "Memadukan estetika visual dengan performa tinggi. Spesialis React & Next.js yang fokus menciptakan web futuristik, responsif, dan memanjakan mata.",
+        "Web development adalah seni dan teknik. Next.js untuk frontend, Laravel atau Node.js untuk backend. Hasil akhir: aplikasi yang stabil, aman, dan nyaman.",
       viewWork: "Lihat Karya",
       contactMe: "Hubungi Saya",
       badgeFast: "Performa Tinggi",
@@ -253,12 +254,13 @@ export const translations = {
     },
     about: {
       title: "Tentang Saya",
-      subtitle: "Profil Profesional",
+      subtitle: "Darell Rangga — Fullstack Developer",
+      bgText: "PENGALAMAN",
       journeyTitle: "Latar Belakang",
       journeyText:
-        "Saya berada di titik temu antara estetika desain dan dunia *coding*. Bagi saya, pengembangan web bukan sekadar logika teknis, tapi seni menerjemahkan visual yang indah menjadi interaksi yang nyata. Saya membangun aplikasi yang tidak hanya terlihat keren, tapi juga ngebut dan tangguh di balik layar.",
+        "Saya memandang pengembangan web sebagai keseimbangan antara seni dan teknik. Di sisi antarmuka, saya menggunakan Next.js untuk menciptakan pengalaman visual yang halus dan responsif.",
       journeyDesc:
-        "Mengandalkan ekosistem modern seperti Next.js, Laravel, dan Tailwind CSS, saya meracik produk digital yang punya karakter kuat. Saya percaya website yang bagus itu harus seimbang: kodenya bersih dan efisien, tapi pengalaman pengguna (UX)-nya tetap jadi prioritas nomor satu.",
+        "Namun, estetika hanyalah separuh cerita. Di balik layar, saya membangun arsitektur sistem yang adaptif memilih ketangguhan Laravel atau fleksibilitas Node.js sesuai kebutuhan proyek. Fokus saya sederhana: menciptakan aplikasi yang stabil, aman, dan nyaman digunakan.",
       experience: "Riwayat Pekerjaan",
       education: "Pendidikan",
       arsenal: "Teknologi",
