@@ -44,7 +44,7 @@ function getFallbackResponse(message: string): string {
 
   // Check if any Indonesian keyword is present
   const isIndonesian = indonesianKeywords.some((keyword) =>
-    msg.includes(keyword)
+    msg.includes(keyword),
   );
 
   // 1. Greetings (High Priority)
@@ -76,6 +76,22 @@ function getFallbackResponse(message: string): string {
       return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Konstruksi digital yang dirancang oleh ${AI_PERSONA.identity.creator} untuk membantu operasional dan menjawab pertanyaan seputar portofolio.`;
     }
     return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
+  }
+
+  // 2b. Creator Identity (Darell/Rangga/Tuan/Master)
+  if (
+    msg.includes("darell") ||
+    msg.includes("rangga") ||
+    msg.includes("tuan") ||
+    msg.includes("master") ||
+    msg.includes("creator") ||
+    msg.includes("pembuat") ||
+    msg.includes("pemilik")
+  ) {
+    if (isIndonesian) {
+      return `${AI_PERSONA.identity.creator} adalah Creator saya. Seorang **Fullstack Engineer** & **UI/UX Specialist** yang berbasis di Indonesia 🇮🇩. Beliau memiliki keahlian di React, Next.js, TypeScript, Laravel, dan banyak lagi. Misi beliau: Membangun pengalaman digital yang luar biasa!`;
+    }
+    return `${AI_PERSONA.identity.creator} is my Creator. A **Fullstack Engineer** & **UI/UX Specialist** based in Indonesia 🇮🇩. He specializes in React, Next.js, TypeScript, Laravel, and more. His mission: Building extraordinary digital experiences!`;
   }
 
   // 3. Relationship Status & Secret Identity
@@ -125,9 +141,9 @@ function getFallbackResponse(message: string): string {
     msg.includes("tech")
   ) {
     const skillsList = `\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
-      ", "
+      ", ",
     )}\n- **Backend:** ${AI_PERSONA.skills.backend.join(
-      ", "
+      ", ",
     )}\n- **Design:** ${AI_PERSONA.skills.design.join(", ")}`;
     if (isIndonesian) {
       return `Kapabilitas Creator saya mencakup:${skillsList}`;
@@ -170,7 +186,7 @@ function getFallbackResponse(message: string): string {
       return "Hobi The Creator: Coding (Passion utama), Nonton Bola ⚽, Baca Novel 📚, dan Eksplorasi Tech/AI terbaru.";
     }
     return `The Creator enjoys: ${AI_PERSONA.personal_secrets.hobbies.join(
-      ", "
+      ", ",
     )}.`;
   }
 
@@ -255,7 +271,7 @@ export async function POST(req: Request) {
         const genAI = new GoogleGenerativeAI(geminiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         const result = await model.generateContent(
-          `${SYSTEM_PROMPT_TEMPLATE}\n**Current User Query:**\n"${message}"`
+          `${SYSTEM_PROMPT_TEMPLATE}\n**Current User Query:**\n"${message}"`,
         );
         const response = await result.response;
         const text = response.text();
@@ -267,7 +283,7 @@ export async function POST(req: Request) {
             : "Unknown Gemini API Error";
         console.warn(
           "Gemini API Failed (Likely Quota), switching to Groq...",
-          errorMsg
+          errorMsg,
         );
         // Continue to Strategy 2 (Groq)
       }
@@ -306,7 +322,7 @@ export async function POST(req: Request) {
       error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
       { text: `System Failure: ${errorMessage}` },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
