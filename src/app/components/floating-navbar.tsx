@@ -115,10 +115,10 @@ export function FloatingNavbar() {
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
-          className="pointer-events-auto h-16 px-4 bg-background/80 backdrop-blur-2xl border border-white/5 shadow-2xl rounded-full flex items-center gap-2 md:gap-4"
+          className="pointer-events-auto h-14 md:h-16 px-2 md:px-4 bg-background/80 backdrop-blur-2xl border border-white/5 shadow-2xl rounded-full flex items-center gap-1 md:gap-4"
         >
           {/* Navigation Links */}
-          <div className="flex items-center gap-1 md:gap-2">
+          <div className="flex items-center gap-0.5 md:gap-2">
             {primaryItems.map((item) => (
               <DockLink
                 key={item.name}
@@ -132,7 +132,7 @@ export function FloatingNavbar() {
           <div className="w-px h-6 bg-border mx-1" />
 
           {/* Tools */}
-          <div className="flex items-center gap-1 md:gap-2">
+          <div className="flex items-center gap-0.5 md:gap-2">
             {toolsItems.map((item) => (
               <DockButton
                 key={item.name}
@@ -174,12 +174,12 @@ function DockLink({
     <a
       href={href}
       className={cn(
-        "relative p-3 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 group",
+        "relative p-2 md:p-3 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 group",
         "hover:scale-110",
       )}
       aria-label={label}
     >
-      <Icon className="w-5 h-5" />
+      <Icon className="w-4 h-4 md:w-5 md:h-5" />
       <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
         {label}
       </span>
@@ -202,14 +202,14 @@ function DockButton({
     <button
       onClick={onClick}
       className={cn(
-        "relative p-3 rounded-full transition-all duration-300 group hover:scale-110",
+        "relative p-2 md:p-3 rounded-full transition-all duration-300 group hover:scale-110",
         highlight
           ? "bg-primary/10 text-primary hover:bg-primary/20"
           : "text-muted-foreground hover:text-foreground hover:bg-muted",
       )}
       aria-label={label}
     >
-      <Icon className="w-5 h-5" />
+      <Icon className="w-4 h-4 md:w-5 md:h-5" />
       <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
         {label}
       </span>
