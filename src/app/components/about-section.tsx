@@ -33,7 +33,7 @@ export function AboutSection() {
 
   const highlights = [
     {
-      icon: Code2,
+      icon: CodeBlock,
       title: t.about.highlights.cleanCode.title,
       desc: t.about.highlights.cleanCode.desc,
     },
