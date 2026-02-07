@@ -18,6 +18,7 @@ import {
   FilePdf,
   FileCode,
   Image as ImageIcon,
+  ArrowLeft,
 } from "@phosphor-icons/react";
 import { useFileSystem, FileNode } from "@/app/providers/file-system-provider";
 
@@ -149,6 +150,19 @@ function Window({
                 weight="bold"
               />
             </button>
+
+            {/* Spacer */}
+            <div className="w-4" />
+
+            {/* Back Button */}
+            <button
+              onClick={onClose}
+              className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-white/10 text-white/50 hover:text-white transition-all text-xs"
+              title="Go Back"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" weight="bold" />
+              <span className="hidden md:inline">Back</span>
+            </button>
           </div>
 
           {/* Title */}
@@ -182,6 +196,15 @@ function Window({
               <List className="w-3.5 h-3.5" weight="duotone" />
             </button>
           </div>
+
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="p-1.5 hover:bg-red-500/20 rounded-lg transition-all text-white/40 hover:text-red-400"
+            title="Close"
+          >
+            <X className="w-4 h-4" weight="bold" />
+          </button>
         </div>
 
         {/* Toolbar */}

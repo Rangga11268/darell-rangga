@@ -42,6 +42,13 @@ const initialFileSystem: FileNode[] = [
         content: "/pdf/Darell_Rangga_CV_SearchRater.pdf",
       },
       {
+        id: "cv-programmer-fe-id",
+        name: "CV Programmer FE.pdf",
+        type: "file",
+        path: "/pdf/Darell_Rangga_CV_Programmer_FE.pdf",
+        content: "/pdf/Darell_Rangga_CV_Programmer_FE.pdf",
+      },
+      {
         id: "certificates-folder",
         name: "Certificates",
         type: "folder",
