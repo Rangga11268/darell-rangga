@@ -79,11 +79,19 @@ export function HeroIdCard() {
               {/* Logo/Icon */}
               <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 relative overflow-hidden">
                 <div className="relative w-4 md:w-5 h-4 md:h-5">
+                  {/* Dark Mode Logo (White) */}
+                  <Image
+                    src="/img/saya/logo-white.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain hidden dark:block"
+                  />
+                  {/* Light Mode Logo (Original/Black) */}
                   <Image
                     src="/img/saya/logo-new.png"
                     alt="Logo"
                     fill
-                    className="object-contain brightness-0 invert"
+                    className="object-contain block dark:hidden"
                   />
                 </div>
               </div>

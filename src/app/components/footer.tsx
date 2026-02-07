@@ -72,10 +72,17 @@ export function Footer() {
                 <div className="relative w-12 h-12 flex items-center justify-center">
                   {/* Glow Effect */}
                   <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
+                  {/* Dark Mode Logo (White) */}
+                  <img
+                    src="/img/saya/logo-white.png"
+                    alt="Logo"
+                    className="w-full h-full object-contain hidden dark:block"
+                  />
+                  {/* Light Mode Logo (Original/Black) */}
                   <img
                     src="/img/saya/logo-new.png"
                     alt="Logo"
-                    className="w-full h-full object-contain brightness-0 invert"
+                    className="w-full h-full object-contain block dark:hidden"
                   />
                 </div>
                 <div>
