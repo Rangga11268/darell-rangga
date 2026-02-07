@@ -12,8 +12,9 @@ export function HeroSection() {
   const { scrollY } = useScroll();
 
   // Parallax optimized for "Smooth/Ethereal" feel
-  const yText = useTransform(scrollY, [0, 500], [0, 100]);
-  const opacityHero = useTransform(scrollY, [0, 400], [1, 0]);
+  // Extended fade-out range for better mobile visibility
+  const yText = useTransform(scrollY, [0, 600], [0, 80]);
+  const opacityHero = useTransform(scrollY, [0, 700], [1, 0]);
 
   return (
     <section
