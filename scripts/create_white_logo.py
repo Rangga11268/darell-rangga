@@ -25,18 +25,31 @@ def make_white_logo(input_path, output_path):
                 new_data.append(item)
 
         img.putdata(new_data)
-        img.save(output_path, "PNG")
+        img.save(output_path, "WEBP")
         print(f"Successfully created white logo at {output_path}")
     except Exception as e:
         print(f"Error processing image: {e}")
         sys.exit(1)
 
+def convert_to_webp(input_path, output_path):
+    try:
+        img = Image.open(input_path).convert("RGBA")
+        img.save(output_path, "WEBP")
+        print(f"Successfully converted to webp at {output_path}")
+    except Exception as e:
+        print(f"Error converting image: {e}")
+
 if __name__ == "__main__":
     base_dir = r"d:\Ngoding\WEB Poject\my-portfolio\public\img\saya"
     input_file = os.path.join(base_dir, "logo-new.png")
-    output_file = os.path.join(base_dir, "logo-white.png")
     
+    # Generate White Logo (WebP)
+    output_white_file = os.path.join(base_dir, "logo-white.webp")
     if os.path.exists(input_file):
-        make_white_logo(input_file, output_file)
+        make_white_logo(input_file, output_white_file)
+        
+        # Convert Original to WebP
+        output_original_file = os.path.join(base_dir, "logo-new.webp")
+        convert_to_webp(input_file, output_original_file)
     else:
         print(f"Input file not found: {input_file}")

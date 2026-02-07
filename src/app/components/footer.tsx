@@ -74,13 +74,13 @@ export function Footer() {
                   <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
                   {/* Dark Mode Logo (White) */}
                   <img
-                    src="/img/saya/logo-white.png"
+                    src="/img/saya/logo-white.webp"
                     alt="Logo"
                     className="w-full h-full object-contain hidden dark:block"
                   />
                   {/* Light Mode Logo (Original/Black) */}
                   <img
-                    src="/img/saya/logo-new.png"
+                    src="/img/saya/logo-new.webp"
                     alt="Logo"
                     className="w-full h-full object-contain block dark:hidden"
                   />

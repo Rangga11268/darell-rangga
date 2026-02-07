@@ -81,14 +81,14 @@ export function HeroIdCard() {
                 <div className="relative w-4 md:w-5 h-4 md:h-5">
                   {/* Dark Mode Logo (White) */}
                   <Image
-                    src="/img/saya/logo-white.png"
+                    src="/img/saya/logo-white.webp"
                     alt="Logo"
                     fill
                     className="object-contain hidden dark:block"
                   />
                   {/* Light Mode Logo (Original/Black) */}
                   <Image
-                    src="/img/saya/logo-new.png"
+                    src="/img/saya/logo-new.webp"
                     alt="Logo"
                     fill
                     className="object-contain block dark:hidden"
