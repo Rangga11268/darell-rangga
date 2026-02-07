@@ -49,6 +49,7 @@ export const translations = {
             period: "2024 - Present",
             description:
               "Focusing on Software Engineering, System Architecture, and Human-Computer Interaction.",
+            logo: "/img/ubsi.webp",
           },
         ],
       },
@@ -282,6 +283,7 @@ export const translations = {
             period: "2024 - Sekarang",
             description:
               "Fokus pada Rekayasa Perangkat Lunak, Arsitektur Sistem, dan Interaksi Manusia-Komputer.",
+            logo: "/img/ubsi.webp",
           },
         ],
       },

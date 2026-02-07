@@ -68,7 +68,18 @@ export function ExperienceSection() {
                   transition={{ delay: 0.2 + idx * 0.2 }}
                   className="relative"
                 >
-                  <span className="absolute -left-[37px] top-1 h-5 w-5 rounded-full border-4 border-background bg-secondary shadow-lg" />
+                  {/* Timeline Node (Logo or Dot) */}
+                  <div className="absolute -left-[51px] top-0 h-12 w-12 rounded-full border-4 border-background bg-secondary shadow-lg flex items-center justify-center overflow-hidden">
+                    {(edu as any).logo ? (
+                      <img
+                        src={(edu as any).logo}
+                        alt={edu.school}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-3 w-3 rounded-full bg-background" />
+                    )}
+                  </div>
 
                   <h4 className="text-xl font-bold">{edu.degree}</h4>
                   <div className="text-sm font-semibold text-secondary-foreground mb-2 mt-1">
