@@ -37,7 +37,7 @@ export const translations = {
           {
             title: "Freelance Developer",
             company: "Self-employed",
-            period: "2023 - Present",
+            period: "2024 - Present",
             description:
               "Delivering custom web solutions for diverse clients using React, Next.js, and modern CSS frameworks.",
           },
@@ -270,7 +270,7 @@ export const translations = {
           {
             title: "Freelance Developer",
             company: "Wiraswasta",
-            period: "2023 - Sekarang",
+            period: "2024 - Sekarang",
             description:
               "Menyediakan solusi web kustom untuk berbagai klien menggunakan React, Next.js, dan framework modern.",
           },
