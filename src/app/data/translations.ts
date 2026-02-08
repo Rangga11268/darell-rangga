@@ -282,7 +282,7 @@ export const translations = {
             school: "Universitas Bina Sarana Informatika",
             period: "2024 - Sekarang",
             description:
-              "Fokus pada Rekayasa Perangkat Lunak, Arsitektur Sistem, dan Interaksi Manusia-Komputer.",
+              "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi.",
             logo: "/img/ubsi.webp",
           },
         ],

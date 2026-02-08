@@ -1,30 +1,78 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { User } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useRef } from "react";
 
+const TextReveal = ({ text }: { text: string }) => {
+  const words = text.split(" ");
+  return (
+    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+      {words.map((word, i) => (
+        <span
+          key={i}
+          className="inline-block overflow-hidden mr-[0.2em] -mb-[0.2em] align-bottom"
+        >
+          <motion.span
+            initial={{ y: "100%" }}
+            whileInView={{ y: 0 }}
+            transition={{
+              duration: 0.5,
+              delay: i * 0.02,
+              ease: [0.33, 1, 0.68, 1],
+            }}
+            viewport={{ once: true, margin: "-10%" }}
+            className="inline-block"
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </p>
+  );
+};
+
 export function BioSection() {
   const { t } = useLanguage();
   const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [-100, 100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
     <section
       id="about"
-      className="py-24 relative overflow-hidden"
+      className="py-32 relative overflow-hidden min-h-screen flex items-center"
       ref={containerRef}
     >
+      {/* Background Typography (Parallax) */}
+      <motion.div
+        style={{ y, opacity }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+      >
+        <span className="text-[15vw] md:text-[20vw] font-black text-foreground/5 whitespace-nowrap select-none">
+          THE STORY
+        </span>
+      </motion.div>
+
+      {/* Decorative Gradient */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -z-10" />
+
       {/* Modern Skills Marquee - Horizontal Scrolling */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden py-4 border-b border-foreground/10">
+      <div className="absolute top-0 left-0 w-full overflow-hidden py-6 border-y border-foreground/5 bg-background/50 backdrop-blur-sm z-10">
         <motion.div
-          className="flex gap-8 whitespace-nowrap"
+          className="flex gap-12 whitespace-nowrap"
           animate={{ x: ["0%", "-50%"] }}
           transition={{
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 20,
+              duration: 40,
               ease: "linear",
             },
           }}
@@ -33,80 +81,97 @@ export function BioSection() {
             "REACT",
             "NEXT.JS",
             "TYPESCRIPT",
-            "TAILWIND CSS",
-            "LARAVEL",
-            "NODE.JS",
-            "MONGODB",
-            "VUE.JS",
-            "INERTIA.JS",
+            "TAILWIND",
+            "GSAP",
             "FRAMER MOTION",
-            "ZUSTAND",
-            "SOCKET.IO",
+            "NODE.JS",
+            "LARAVEL",
             "FIGMA",
-            "VERCEL",
-            "VITE",
-            "GIT",
-            "GLASSMORPHISM",
-            "NEO BRUTALISM",
+            "UI/UX",
+            "THREE.JS",
+            "WEBGL",
           ].map((skill, i) => (
             <span
               key={i}
-              className="text-2xl md:text-3xl font-display font-bold text-muted-foreground/40 dark:text-foreground/15 flex items-center gap-6"
+              className="text-lg md:text-xl font-display font-medium text-muted-foreground/60 flex items-center gap-12"
             >
-              {skill} <span className="text-primary text-lg">✦</span>
+              {skill} <span className="w-2 h-2 rounded-full bg-primary/40" />
             </span>
           ))}
+          {/* Duplicate for loop */}
           {[
             "REACT",
             "NEXT.JS",
             "TYPESCRIPT",
-            "TAILWIND CSS",
-            "LARAVEL",
-            "NODE.JS",
-            "MONGODB",
-            "VUE.JS",
-            "INERTIA.JS",
+            "TAILWIND",
+            "GSAP",
             "FRAMER MOTION",
-            "ZUSTAND",
-            "SOCKET.IO",
+            "NODE.JS",
+            "LARAVEL",
             "FIGMA",
-            "VERCEL",
-            "VITE",
-            "GIT",
-            "GLASSMORPHISM",
-            "NEO BRUTALISM",
+            "UI/UX",
+            "THREE.JS",
+            "WEBGL",
           ].map((skill, i) => (
             <span
               key={`dup-${i}`}
-              className="text-2xl md:text-3xl font-display font-bold text-muted-foreground/40 dark:text-foreground/15 flex items-center gap-6"
+              className="text-lg md:text-xl font-display font-medium text-muted-foreground/60 flex items-center gap-12"
             >
-              {skill} <span className="text-primary text-lg">✦</span>
+              {skill} <span className="w-2 h-2 rounded-full bg-primary/40" />
             </span>
           ))}
         </motion.div>
       </div>
 
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex flex-col md:flex-row items-start gap-12">
+      <div className="container px-4 md:px-6 mx-auto relative z-10 mt-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
           {/* Title Area */}
-          <div className="md:w-1/3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
-              <User className="w-4 h-4" />
-              <span>{t.about.title}</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold font-display leading-tight">
+          <div className="md:col-span-4 sticky top-32">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold mb-6"
+            >
+              <User className="w-4 h-4" weight="fill" />
+              <span className="uppercase tracking-wide">{t.about.title}</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-6xl font-bold font-display leading-[1.1] mb-6"
+            >
               {t.about.journeyTitle}
-            </h2>
+            </motion.h2>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              transition={{ duration: 0.8, ease: "circOut" }}
+              viewport={{ once: true }}
+              className="w-24 h-1.5 bg-primary origin-left rounded-full"
+            />
           </div>
 
           {/* Text Content */}
-          <div className="md:w-2/3 prose dark:prose-invert">
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              {t.about.journeyText}
-            </p>
-            <p className="text-lg text-muted-foreground mt-4 leading-relaxed">
-              {t.about.journeyDesc}
-            </p>
+          <div className="md:col-span-8 space-y-8 pl-0 md:pl-12">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <TextReveal text={t.about.journeyText} />
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                viewport={{ once: true }}
+                className="mt-8 p-6 md:p-8 rounded-2xl bg-secondary/30 border-l-4 border-primary backdrop-blur-sm"
+              >
+                <p className="text-lg md:text-xl italic text-muted-foreground m-0">
+                  "{t.about.journeyDesc}"
+                </p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
