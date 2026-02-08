@@ -45,27 +45,22 @@ export function ModernSkills() {
   const skillGroups = [
     {
       title: "The Bread & Butter (Core Stack)",
-      icons: "react,nextjs,typescript,tailwind,laravel,nodejs,mongodb",
+      icons:
+        "react,nextjs,typescript,tailwind,laravel,nodejs,mysql,mongodb,postgres",
     },
     {
       title: "Specialized Frameworks & Libraries",
-      icons: "vue,threejs", // icons that definitely work
-      extras: [
-        "Inertia.js",
-        "Framer Motion",
-        "Zustand",
-        "Socket.io",
-        "TanStack Query",
-      ],
+      icons: "vue,threejs,express",
+      extras: ["Inertia.js", "Framer Motion", "Zustand", "Socket.io"],
     },
     {
       title: "Tools & DevOps",
-      icons: "figma,git,vercel,vite,vscode,postman",
-      extras: ["Antigravity AI"],
+      icons: "figma,git,vscode,postman,ubuntu",
+      extras: ["Scikit-Learn", "Google Colab", "Antigravity AI"],
     },
     {
-      title: "Design & Concepts",
-      badges: ["Glassmorphism", "Neo Brutalism", "Minimalism"],
+      title: "Programming Languages",
+      icons: "html,css,js,ts,php,py",
     },
   ];
 
@@ -86,25 +81,24 @@ export function ModernSkills() {
             </h4>
 
             <div className="flex flex-wrap gap-4 items-center justify-center">
-              {group.icons && (
-                <a
-                  href="https://skillicons.dev"
-                  className="block relative z-10"
-                >
-                  {/* Light Mode Icons */}
-                  <img
-                    src={`https://skillicons.dev/icons?i=${group.icons}&theme=light&perline=7`}
-                    alt={group.title}
-                    className="h-12 w-auto hover:scale-105 transition-transform duration-300 block dark:hidden"
-                  />
-                  {/* Dark Mode Icons */}
-                  <img
-                    src={`https://skillicons.dev/icons?i=${group.icons}&theme=dark&perline=7`}
-                    alt={group.title}
-                    className="h-12 w-auto hover:scale-105 transition-transform duration-300 hidden dark:block"
-                  />
-                </a>
-              )}
+              {group.icons &&
+                group.icons.split(",").map((icon) => (
+                  <div
+                    key={icon}
+                    className="relative z-10 transition-transform hover:scale-110 duration-200"
+                  >
+                    <img
+                      src={`https://skillicons.dev/icons?i=${icon}&theme=light`}
+                      alt={icon}
+                      className="w-12 h-12 block dark:hidden"
+                    />
+                    <img
+                      src={`https://skillicons.dev/icons?i=${icon}&theme=dark`}
+                      alt={icon}
+                      className="w-12 h-12 hidden dark:block"
+                    />
+                  </div>
+                ))}
 
               {group.extras &&
                 group.extras.map((extra) => (
@@ -113,16 +107,6 @@ export function ModernSkills() {
                     className="px-3 py-1.5 rounded-lg bg-secondary/50 border border-white/5 text-xs font-mono font-medium text-muted-foreground hover:text-foreground hover:border-primary/30 transition-colors relative z-10"
                   >
                     {extra}
-                  </span>
-                ))}
-
-              {group.badges &&
-                group.badges.map((badge) => (
-                  <span
-                    key={badge}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-primary/10 to-transparent border border-primary/20 text-sm font-bold text-primary tracking-wide relative z-10"
-                  >
-                    {badge}
                   </span>
                 ))}
             </div>
