@@ -20,7 +20,7 @@ export function ProjectsSection() {
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
       </div>
 
-      <div className="container px-4 md:px-6 mx-auto relative z-10">
+      <div className="container px-4 md:px-6 mx-auto max-w-7xl relative z-10">
         <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
 
         {/* New Holographic List Layout */}
