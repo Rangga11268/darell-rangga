@@ -8,6 +8,7 @@ import {
   Calendar,
   CodeBlock,
   Cpu,
+  Users,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { Project } from "@/app/data/projects";
@@ -111,6 +112,35 @@ export function ProjectDetailModal({
                       <p className="text-white/80 font-mono">{project.role}</p>
                     </div>
                   </div>
+
+                  {/* Team Members */}
+                  {project.team && project.team.length > 0 && (
+                    <div className="py-6 border-b border-white/5">
+                      <h3 className="text-xs text-primary uppercase tracking-widest font-bold mb-3 flex items-center gap-2">
+                        <Users className="w-3 h-3" /> Team Members
+                      </h3>
+                      <div className="flex flex-wrap gap-3">
+                        {project.team.map((member, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-lg border border-white/5"
+                          >
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-[10px] font-bold text-white">
+                              {member.name.charAt(0)}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-xs font-bold text-white/90">
+                                {member.name}
+                              </span>
+                              <span className="text-[10px] text-white/50">
+                                {member.role}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Description */}
                   <div className="space-y-4">

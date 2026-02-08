@@ -84,9 +84,23 @@ export function ModernSkills() {
             <div className="flex flex-wrap gap-4 items-center justify-center">
               {group.icons &&
                 group.icons.split(",").map((icon) => (
-                  <div
+                  <motion.div
                     key={icon}
-                    className="relative z-10 transition-transform hover:scale-110 duration-200"
+                    className="relative z-10"
+                    animate={{
+                      y: [0, -8, 0],
+                    }}
+                    transition={{
+                      duration: 3 + Math.random() * 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: Math.random() * 2,
+                    }}
+                    whileHover={{
+                      scale: 1.2,
+                      y: -5,
+                      transition: { duration: 0.2 },
+                    }}
                   >
                     <img
                       src={`https://skillicons.dev/icons?i=${icon}&theme=light`}
@@ -98,7 +112,7 @@ export function ModernSkills() {
                       alt={icon}
                       className="w-12 h-12 hidden dark:block"
                     />
-                  </div>
+                  </motion.div>
                 ))}
 
               {group.extras &&

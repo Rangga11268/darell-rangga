@@ -16,10 +16,86 @@ export interface Project {
   story?: { en: string; id: string };
   challenges?: { en: string[]; id: string[] };
   solutions?: { en: string[]; id: string[] };
+  team?: { name: string; role: string }[];
 }
 
 export const projects: Project[] = [
   // ROW 1 & 2 (Top Section)
+  {
+    id: "aussie-rain-ai",
+    title: "AussieRain AI",
+    shortDescription: {
+      en: "Enterprise-Grade Rain Prediction with Explainable AI (XAI).",
+      id: "Prediksi Hujan Skala Enterprise dengan Explainable AI (XAI).",
+    },
+    fullDescription: {
+      en: "An enterprise-grade AI Weather Forecasting dashboard designed to predict rainfall probability in Australia with precision. This application bridges the gap between complex Machine Learning models and user experience, transforming 145,000+ historical meteorological records into real-time, actionable insights through a futuristic 'Mission Control' interface.",
+      id: "Dashboard Prakiraan Cuaca AI kelas enterprise yang dirancang untuk memprediksi probabilitas curah hujan di Australia dengan presisi. Aplikasi ini menjembatani kesenjangan antara model Machine Learning yang kompleks dan pengalaman pengguna, mengubah 145.000+ catatan meteorologi historis menjadi wawasan real-time melalui antarmuka 'Mission Control' yang futuristik.",
+    },
+    tags: ["Python Flask", "Scikit-Learn", "Alpine.js"],
+    imageUrl: "/img/MLProject1.webp",
+    githubUrl: "https://github.com/Rangga11268/ProjectFDA",
+    liveUrl: "#",
+    colSpan: "md:col-span-1 md:row-span-2", // SIDEBAR ITEM
+    year: "2024",
+    role: "Lead Developer & Data Analyst",
+    team: [
+      { name: "Darell Rangga", role: "Developer & Data Analyst" },
+      { name: "Rifa Dini", role: "Data Analyst" },
+      { name: "Syifa Aulia", role: "Data Analyst" },
+      { name: "Megi Refkiansyah", role: "Data Analyst" },
+      { name: "Wahyu Rizky", role: "Data Analyst" },
+    ],
+    features: {
+      en: [
+        "Explainable AI (XAI) Factors",
+        "Historical Backtesting Engine",
+        "Interactive Radar Analysis",
+        "Enterprise 'Dark Glass' UI",
+      ],
+      id: [
+        "Faktor Explainable AI (XAI)",
+        "Mesin Backtesting Historis",
+        "Analisis Radar Interaktif",
+        "UI 'Dark Glass' Enterprise",
+      ],
+    },
+    techStack: [
+      { name: "Python (Flask)" },
+      { name: "Scikit-Learn" },
+      { name: "Pandas & NumPy" },
+      { name: "Tailwind CSS" },
+      { name: "ApexCharts.js" },
+    ],
+    story: {
+      en: "I architected this system to solve the 'Black Box' problem in AI. Instead of just generating a prediction, I implemented a custom 'Reasoning Engine' that explains why the model predicts rain. To prove reliability, I built a Backtesting Module to audit AI performance against 10 years of historical data.",
+      id: "Saya merancang sistem ini untuk memecahkan masalah 'Black Box' dalam AI. Alih-alih hanya menghasilkan prediksi, saya menerapkan 'Reasoning Engine' kustom yang menjelaskan mengapa model memprediksi hujan. Untuk membuktikan keandalan, saya membuat Modul Backtesting untuk mengaudit performa AI terhadap data historis 10 tahun.",
+    },
+    challenges: {
+      en: [
+        "Processing 145,000+ historical records in real-time for the backtesting engine.",
+        "Visualizing multi-dimensional weather data (Wind, Humidity, Pressure) without performance lag.",
+        "Translating complex Random Forest probability outputs into human-readable explanations.",
+      ],
+      id: [
+        "Memproses 145.000+ catatan historis secara real-time untuk mesin backtesting.",
+        "Memvisualisasikan data cuaca multi-dimensi (Angin, Kelembaban, Tekanan) tanpa lag.",
+        "Menerjemahkan output probabilitas Random Forest yang kompleks menjadi penjelasan yang mudah dipahami manusia.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Optimized Pandas dataframes with vectorization for sub-second data processing.",
+        "Used ApexCharts.js with decimated data points for smooth interactive visualization.",
+        "Developed a feature importance mapping layer to convert model weights into natural language reasons.",
+      ],
+      id: [
+        "Mengoptimalkan dataframe Pandas dengan vektorisasi untuk pemrosesan data sub-detik.",
+        "Menggunakan ApexCharts.js dengan pengurangan titik data untuk visualisasi interaktif yang halus.",
+        "Mengembangkan layer pemetaan feature importance untuk mengubah bobot model menjadi alasan bahasa alami.",
+      ],
+    },
+  },
   {
     id: "tujago",
     title: "Tunggal Jaya (TUJAGO)",

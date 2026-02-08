@@ -2,7 +2,7 @@
 
 import { Lightning } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
-import { ModernSkills } from "@/app/components/modern-skills";
+import { SkillGalaxy } from "@/app/components/skill-galaxy";
 
 export function SkillsSection() {
   const { t } = useLanguage();
@@ -20,7 +20,7 @@ export function SkillsSection() {
           </h2>
         </div>
 
-        <ModernSkills />
+        <SkillGalaxy />
       </div>
     </section>
   );
