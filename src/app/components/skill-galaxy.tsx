@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { skills, getSkillUsage } from "@/app/data/skills";
+import { skills } from "@/app/data/skills";
 import { projects } from "@/app/data/projects";
 import { useLanguage } from "@/app/providers/language-provider";
 import { ArrowUpRight } from "@phosphor-icons/react";

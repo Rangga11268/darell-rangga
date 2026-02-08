@@ -168,7 +168,7 @@ export function BioSection() {
                 className="mt-8 p-6 md:p-8 rounded-2xl bg-secondary/30 border-l-4 border-primary backdrop-blur-sm"
               >
                 <p className="text-lg md:text-xl italic text-muted-foreground m-0">
-                  "{t.about.journeyDesc}"
+                  &quot;{t.about.journeyDesc}&quot;
                 </p>
               </motion.div>
             </div>

@@ -1,13 +1,22 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Briefcase, BookOpen, Calendar, MapPin } from "@phosphor-icons/react";
+import { Briefcase, BookOpen, Calendar } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 
+interface HistoryItem {
+  title?: string;
+  company?: string;
+  period: string;
+  description: string;
+  degree?: string;
+  school?: string;
+  logo?: string;
+}
+
 interface TimelineItemProps {
-  data: any;
+  data: HistoryItem;
   index: number;
   type: "job" | "education";
 }
@@ -106,11 +115,11 @@ export function ExperienceSection() {
   });
 
   const allItems = [
-    ...t.about.history.jobs.map((item: any) => ({
+    ...t.about.history.jobs.map((item: HistoryItem) => ({
       ...item,
       type: "job" as const,
     })),
-    ...t.about.history.schools.map((item: any) => ({
+    ...t.about.history.schools.map((item: HistoryItem) => ({
       ...item,
       type: "education" as const,
     })),
