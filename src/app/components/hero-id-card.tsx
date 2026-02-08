@@ -1,6 +1,12 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  Variants,
+} from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef } from "react";
 import { QrCode } from "@phosphor-icons/react";
@@ -50,13 +56,32 @@ export function HeroIdCard() {
     y.set(0);
   }, [x, y]);
 
+  // Variants for the drop animation
+  const cardVariants: Variants = {
+    hidden: { y: -1000, rotateX: 70 },
+    visible: {
+      y: 0,
+      rotateX: 0,
+      transition: {
+        type: "spring",
+        stiffness: 70,
+        damping: 12,
+        mass: 1.2,
+        delay: 0.5,
+      },
+    },
+  };
+
   return (
     <div
-      className="relative flex items-center justify-center py-8 md:py-20"
+      className="relative flex items-center justify-center py-24 md:py-20 overflow-visible"
       style={{ perspective: "1200px" }}
     >
       <motion.div
         ref={ref}
+        variants={cardVariants}
+        initial="hidden"
+        animate="visible"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -64,23 +89,22 @@ export function HeroIdCard() {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="relative w-[260px] h-[380px] md:w-[320px] md:h-[480px] rounded-[24px] md:rounded-[30px] cursor-grab active:cursor-grabbing hover:scale-105 transition-transform duration-500 ease-out"
+        className="relative w-[220px] h-[350px] md:w-[320px] md:h-[480px] rounded-[24px] md:rounded-[30px] z-10"
       >
         {/* === CARD CONTENT === */}
-        <div className="absolute inset-0 bg-[#e0e0e0] dark:bg-neutral-900 rounded-[24px] md:rounded-[30px] border border-white/20 shadow-2xl overflow-hidden flex flex-col items-center">
-          {/* Texture/Noise Overlay */}
-          <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[#d4d4d8] dark:bg-neutral-900 rounded-[24px] md:rounded-[30px] border border-neutral-400/50 dark:border-white/20 shadow-2xl overflow-hidden flex flex-col items-center">
+          {/* Texture/Noise Overlay - Hidden in light mode for clarity */}
+          <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none mix-blend-overlay hidden dark:block" />
 
           {/* Top Holder Hole */}
-          <div className="mt-4 md:mt-6 w-12 md:w-16 h-2 md:h-3 bg-neutral-800/20 rounded-full shadow-inner mx-auto mb-1 md:mb-2" />
+          <div className="mt-5 md:mt-6 w-14 md:w-16 h-2.5 md:h-3 bg-neutral-800/20 rounded-full shadow-inner mx-auto mb-2 md:mb-2" />
 
           {/* Header Section */}
-          <div className="w-full px-4 md:px-6 flex justify-between items-center mb-4 md:mb-6 relative z-10">
-            <div className="flex items-center gap-2">
+          <div className="w-full px-5 md:px-6 flex justify-between items-center mb-5 md:mb-6 relative z-10">
+            <div className="flex items-center gap-3">
               {/* Logo/Icon */}
-              {/* Logo/Icon */}
-              <div className="w-6 md:w-8 h-6 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 relative overflow-hidden">
-                <div className="relative w-4 md:w-5 h-4 md:h-5">
+              <div className="w-8 md:w-8 h-8 md:h-8 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 relative overflow-hidden">
+                <div className="relative w-5 md:w-5 h-5 md:h-5">
                   {/* Dark Mode Logo (White) */}
                   <Image
                     src="/img/saya/logo-white.webp"
@@ -100,24 +124,24 @@ export function HeroIdCard() {
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
+                <span className="text-[10px] md:text-[10px] font-bold tracking-widest text-muted-foreground uppercase">
                   Access Level
                 </span>
-                <span className="text-xs font-bold text-foreground">
+                <span className="text-sm md:text-xs font-bold text-foreground">
                   ADMINISTRATOR
                 </span>
               </div>
             </div>
-            <QrCode className="w-6 md:w-8 h-6 md:h-8 text-foreground/20" />
+            <QrCode className="w-7 md:w-8 h-7 md:h-8 text-foreground/20" />
           </div>
 
           {/* Photo Section */}
-          <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full border-2 md:border-4 border-white/10 shadow-2xl overflow-hidden mb-4 md:mb-6 group-hover:shadow-primary/20 transition-all duration-500">
+          <div className="relative w-28 h-28 md:w-48 md:h-48 shrink-0 rounded-full border-4 border-white/10 shadow-2xl overflow-hidden mb-4 md:mb-6 group-hover:shadow-primary/20 transition-all duration-500">
             <Image
               src="/img/saya/saya2.webp"
               alt="Darell Rangga"
               fill
-              sizes="(max-width: 768px) 128px, 192px"
+              sizes="(max-width: 768px) 160px, 192px"
               className="object-cover scale-110"
               priority
               unoptimized
@@ -125,26 +149,28 @@ export function HeroIdCard() {
           </div>
 
           {/* Name & Role */}
-          <div className="text-center space-y-1 relative z-10">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground tracking-tight">
+          <div className="text-center space-y-1.5 relative z-10">
+            <h2 className="text-3xl md:text-3xl font-display font-bold text-foreground tracking-tight">
               Darell Rangga
             </h2>
-            <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block">
-              <p className="text-xs font-mono font-bold text-primary tracking-wider uppercase">
+            <div className="px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 inline-block">
+              <p className="text-xs md:text-xs font-mono font-bold text-primary tracking-wider uppercase">
                 {t.hero.role}
               </p>
             </div>
           </div>
 
           {/* Bottom Bar code / ID */}
-          <div className="mt-auto mb-4 md:mb-8 w-full px-6 md:px-8 space-y-2 md:space-y-4">
+          <div className="mt-auto mb-6 md:mb-8 w-full px-6 md:px-8 space-y-3 md:space-y-4">
             <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
             <div className="flex justify-between items-end opacity-50">
-              <div className="flex flex-col gap-1">
-                <div className="w-24 h-4 bg-foreground/20 rounded" />
-                <div className="w-32 h-2 bg-foreground/10 rounded" />
+              <div className="flex flex-col gap-1.5">
+                <div className="w-28 h-4 bg-foreground/20 rounded" />
+                <div className="w-36 h-2 bg-foreground/10 rounded" />
               </div>
-              <span className="font-mono text-[10px]">ID: 8829-DEV</span>
+              <span className="font-mono text-xs md:text-[10px]">
+                ID: 8829-DEV
+              </span>
             </div>
           </div>
 
@@ -155,7 +181,7 @@ export function HeroIdCard() {
 
         {/* === HOLOGRAPHIC OVERLAY === */}
         <motion.div
-          className="absolute inset-0 rounded-[24px] md:rounded-[30px] pointer-events-none opacity-40 mix-blend-overlay z-20"
+          className="absolute inset-0 rounded-[24px] md:rounded-[30px] pointer-events-none opacity-5 dark:opacity-40 mix-blend-overlay z-20"
           style={{
             background: useTransform(
               [glareX, glareY],
@@ -168,7 +194,8 @@ export function HeroIdCard() {
         <div className="absolute inset-0 rounded-[24px] md:rounded-[30px] ring-1 ring-white/20 z-30" />
 
         {/* === UPGRADED LANYARD === */}
-        <div className="hidden md:flex absolute -top-[300px] left-1/2 -translate-x-1/2 w-[300px] h-[320px] z-0 pointer-events-none flex-col items-center justify-end">
+        {/* Placed vertically to align Clip with Hole. z-20 to sit ON TOP of card background */}
+        <div className="flex absolute -top-[215px] md:-top-[300px] left-1/2 -translate-x-1/2 w-[220px] md:w-[300px] h-[240px] md:h-[320px] z-20 pointer-events-none flex-col items-center justify-end">
           {/* V-Shape Strap (SVG) */}
           <svg
             className="w-full h-full drop-shadow-2xl"

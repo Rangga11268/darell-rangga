@@ -19,12 +19,12 @@ export function HeroSection() {
   // Parallax optimized for "Smooth/Ethereal" feel
   // Extended fade-out range for better mobile visibility
   const yText = useTransform(scrollY, [0, 600], [0, 80]);
-  const opacityHero = useTransform(scrollY, [0, 700], [1, 0]);
+  const opacityHero = useTransform(scrollY, [600, 1200], [1, 0]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-20"
     >
       {/* 1. Background: Grainy Mesh Gradient (Clean & Modern) */}
       <div className="absolute inset-0 w-full h-full bg-background">
@@ -34,7 +34,7 @@ export function HeroSection() {
 
       <motion.div
         style={{ opacity: opacityHero }}
-        className="container relative z-10 px-4 md:px-6 h-full flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24"
+        className="container relative z-10 px-4 md:px-6 h-full flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-24 pb-32 md:pb-0"
       >
         {/* 2. Text Content (Left/Top) */}
         <motion.div
@@ -120,7 +120,7 @@ export function HeroSection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-full px-6 h-14 text-base font-medium border-border hover:bg-secondary transition-all hover:scale-105 bg-background/50 backdrop-blur-sm"
+                className="rounded-full px-6 h-14 text-base font-medium border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
                 asChild
               >
                 <a
@@ -136,7 +136,7 @@ export function HeroSection() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background/50 backdrop-blur-sm"
+                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
                 asChild
               >
                 <a
@@ -150,7 +150,7 @@ export function HeroSection() {
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background/50 backdrop-blur-sm"
+                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
                 asChild
               >
                 <a
