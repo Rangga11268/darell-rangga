@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  Code,
-  Palette,
-  Terminal,
-  Database,
-  Globe,
-  Lightning,
-} from "@phosphor-icons/react";
+import { Code, Lightning } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { ModernSkills } from "@/app/components/modern-skills";
 

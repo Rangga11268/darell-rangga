@@ -235,6 +235,17 @@ export function ContactSection() {
                     )}
                     {t.contact.submitButton}
                   </Button>
+
+                  {submitStatus === "success" && (
+                    <p className="text-green-500 text-sm mt-2 text-center font-medium">
+                      Message sent successfully! I'll get back to you soon.
+                    </p>
+                  )}
+                  {submitStatus === "error" && (
+                    <p className="text-red-500 text-sm mt-2 text-center font-medium">
+                      Something went wrong. Please try again later.
+                    </p>
+                  )}
                 </form>
               </CardContent>
             </Card>

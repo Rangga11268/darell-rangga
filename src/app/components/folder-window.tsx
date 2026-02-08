@@ -21,8 +21,6 @@ import {
   ArrowLeft,
 } from "@phosphor-icons/react";
 import { useFileSystem, FileNode } from "@/app/providers/file-system-provider";
-import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
 
 export function FolderWindow() {
   const { openFolders, closeFolder, rootFolders, openFolder } = useFileSystem();

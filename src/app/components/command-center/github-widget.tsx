@@ -203,14 +203,14 @@ export function GithubWidget() {
                 <div className="flex gap-2">
                   <span className="text-green-500">➜</span>
                   <span className="text-blue-500">~</span>
-                  <span>git log -1 --pretty=format:"%s"</span>
+                  <span>git log -1 --pretty=format:&quot;%s&quot;</span>
                 </div>
                 <div className="pl-4 border-l-2 border-zinc-800 py-1">
                   <p className="text-zinc-200 italic mb-1">
-                    "
+                    &quot;
                     {lastEvent?.payload?.commits?.[0]?.message ||
                       "Refining the digital architecture..."}
-                    "
+                    &quot;
                   </p>
                   <div className="flex items-center gap-2 text-[10px] text-zinc-500">
                     <GitCommit />
