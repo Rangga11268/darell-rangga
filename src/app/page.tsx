@@ -14,7 +14,6 @@ import { Footer } from "@/app/components/footer";
 import { BackToTop } from "@/app/components/back-to-top";
 import { LoadingScreen } from "@/app/components/loading";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { MusicUniverse } from "@/app/components/music/music-universe";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,12 +76,6 @@ export default function Home() {
 
         <ScrollReveal width="100%" delay={0.1}>
           <ProjectsSection />
-        </ScrollReveal>
-
-        <ScrollReveal width="100%" delay={0.1}>
-          <div className="w-full">
-            <MusicUniverse />
-          </div>
         </ScrollReveal>
 
         <ScrollReveal width="100%" delay={0.1}>

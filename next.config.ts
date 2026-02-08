@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion"],
-  },
+  optimizePackageImports: ["@phosphor-icons/react", "framer-motion"],
   images: {
     remotePatterns: [
       {
