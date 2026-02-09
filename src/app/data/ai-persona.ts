@@ -53,7 +53,7 @@ export const AI_PERSONA = {
       degree: "Bachelor of Information Systems",
       school: "Bina Sarana Informatika University",
       period: "2024 - Present",
-      desc: "Focusing on Software Engineering, System Architecture, and Human-Computer Interaction.",
+      desc: "Study Focus: Web Application Development, Relational & NoSQL Databases, and Information System Analysis & Design. Current GPA: 4.00/4.00 (Sem 3).",
     },
   ],
 

@@ -48,7 +48,7 @@ export const translations = {
             school: "Bina Sarana Informatika University",
             period: "2024 - Present",
             description:
-              "Focusing on Software Engineering, System Architecture, and Human-Computer Interaction. Current GPA: 4.00/4.00 (Sem 3).",
+              "Study Focus: Web Application Development, Relational & NoSQL Databases, and Information System Analysis & Design. Current GPA: 4.00/4.00 (Sem 3).",
             logo: "/img/ubsi.webp",
           },
         ],
