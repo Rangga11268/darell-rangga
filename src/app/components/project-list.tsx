@@ -5,6 +5,9 @@ import { Project } from "@/app/data/projects";
 import { ProjectCard } from "./project-card";
 import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
 
+import { motion } from "framer-motion";
+import { fadeInUp, viewportConfig } from "@/lib/animations";
+
 interface ProjectListProps {
   projects: Project[];
   onSelect: (project: Project) => void;
@@ -23,20 +26,30 @@ export function ProjectList({
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col items-center">
-      <div className="w-full space-y-12 lg:space-y-32 mb-16">
+      <motion.div className="w-full space-y-12 lg:space-y-32 mb-16">
         {displayedProjects.map((project, index) => (
-          <ProjectCard
+          <motion.div
             key={project.id}
-            project={project}
-            index={index}
-            onSelect={onSelect}
-            language={language}
-          />
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            variants={fadeInUp}
+          >
+            <ProjectCard
+              project={project}
+              index={index}
+              onSelect={onSelect}
+              language={language}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {hasMore && (
-        <button
+        <motion.button
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={viewportConfig}
           onClick={() => setShowAll(!showAll)}
           className="group flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
@@ -56,7 +69,7 @@ export function ProjectList({
                 ? "Lihat Lainnya"
                 : "See More"}
           </span>
-        </button>
+        </motion.button>
       )}
     </div>
   );

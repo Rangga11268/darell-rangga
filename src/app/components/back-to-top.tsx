@@ -1,16 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { ArrowUp } from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
 
 export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { scrollYProgress } = useScroll();
+
+  // Smooth out the progress value
+  const scrollProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -32,20 +40,53 @@ export function BackToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-40"
+          className="fixed bottom-8 right-8 z-[100] cursor-pointer group"
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           whileHover={{ y: -5 }}
+          onClick={scrollToTop}
         >
-          <Button
-            size="icon"
-            className="rounded-full shadow-2xl shadow-primary/20 bg-black/80 dark:bg-white/90 text-white dark:text-black backdrop-blur-md border border-black/10 dark:border-white/10 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white transition-all w-12 h-12"
-            onClick={scrollToTop}
-            aria-label="Back to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
+          {/* Progress Ring Container */}
+          <div className="relative w-14 h-14 flex items-center justify-center">
+            {/* Background Circle */}
+            <svg
+              className="absolute inset-0 w-full h-full -rotate-90 text-background"
+              viewBox="0 0 36 36"
+            >
+              <path
+                className="text-muted/30"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+              />
+              {/* Progress Circle */}
+              <motion.path
+                className="text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.8)]"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="100, 100"
+                style={{ pathLength: scrollProgress }}
+              />
+            </svg>
+
+            {/* Inner Button */}
+            <div
+              className={cn(
+                "absolute inset-[6px] rounded-full flex items-center justify-center transition-all duration-300 shadow-inner",
+                "bg-background/80 backdrop-blur-sm border border-border",
+                "group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary",
+              )}
+            >
+              <ArrowUp
+                className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform"
+                weight="bold"
+              />
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -82,7 +82,7 @@ export function CursorFollower() {
     <>
       {/* Inner Dot - exact mouse position */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-primary z-[9999] pointer-events-none"
+        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white z-[9999] pointer-events-none mix-blend-difference"
         style={{
           x: mouseX,
           y: mouseY,
@@ -93,7 +93,7 @@ export function CursorFollower() {
 
       {/* Outer Ring - smooth follow */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-primary z-[9998] pointer-events-none bg-primary/5"
+        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-white z-[9998] pointer-events-none mix-blend-difference"
         style={{
           x: ringX,
           y: ringY,
@@ -101,10 +101,10 @@ export function CursorFollower() {
           translateY: "-50%",
         }}
         animate={{
-          scale: clicked ? 0.8 : linkHovered ? 2 : 1,
-          borderColor: linkHovered ? "transparent" : "var(--primary)",
-          backgroundColor: linkHovered ? "var(--primary)" : "transparent",
-          opacity: 0.8,
+          scale: clicked ? 0.8 : linkHovered ? 1.5 : 1,
+          opacity: linkHovered ? 1 : 0.5,
+          backgroundColor: linkHovered ? "white" : "transparent",
+          color: linkHovered ? "black" : "transparent", // For potential text
         }}
         transition={{ duration: 0.2 }}
       />

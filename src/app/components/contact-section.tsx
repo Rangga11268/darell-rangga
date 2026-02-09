@@ -19,6 +19,13 @@ import {
 } from "@phosphor-icons/react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
+import {
+  fadeInLeft,
+  fadeInRight,
+  fadeInUp,
+  viewportConfig,
+} from "@/lib/animations";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
 
 export function ContactSection() {
   const { t } = useLanguage();
@@ -71,27 +78,45 @@ export function ContactSection() {
       className="py-32 relative overflow-hidden bg-background"
     >
       {/* Background Marquee */}
-      <div className="absolute top-20 left-0 w-full -rotate-3 opacity-[0.03] pointer-events-none select-none overflow-hidden text-foreground">
-        <div className="flex whitespace-nowrap animate-marquee">
-          {[...Array(5)].map((_, i) => (
-            <span key={i} className="text-[15vw] font-bold font-display mx-10">
-              LET&apos;S WORK TOGETHER
-            </span>
-          ))}
+      {/* Background Marquee */}
+      <ParallaxBackground
+        className="absolute top-20 left-0 w-full z-0"
+        speed={-0.2}
+      >
+        <div className="-rotate-3 opacity-[0.03] pointer-events-none select-none overflow-hidden text-foreground">
+          <div className="flex whitespace-nowrap animate-marquee">
+            {[...Array(5)].map((_, i) => (
+              <span
+                key={i}
+                className="text-[15vw] font-bold font-display mx-10"
+              >
+                LET&apos;S WORK TOGETHER
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      </ParallaxBackground>
 
       <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <SectionTitle title={t.contact.title} subtitle={t.contact.subtitle} />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          variants={fadeInUp}
+        >
+          <SectionTitle title={t.contact.title} subtitle={t.contact.subtitle} />
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-center mt-12">
           {/* Left: Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            variants={fadeInLeft}
             className="space-y-8"
           >
+            {/* ... content ... */}
             <div>
               <h3 className="text-3xl font-display font-bold mb-4">
                 {t.contact.contactHeader}
@@ -161,18 +186,27 @@ export function ContactSection() {
 
           {/* Right: Modern Glass Form */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportConfig}
+            variants={fadeInRight}
             className="relative"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent blur-[100px] -z-10" />
+            {/* Animated Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-purple-500/10 to-transparent blur-[100px] -z-10 animate-pulse-slow" />
+
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute -top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-[80px] -z-10"
+            />
 
             <Card className="border-0 bg-card/80 backdrop-blur-xl border border-border/50 shadow-2xl">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2">
+                      {/* ... inputs ... */}
                       <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground pl-1">
                         {t.contact.nameLabel}
                       </label>
@@ -215,8 +249,7 @@ export function ContactSection() {
                     />
                   </div>
 
-                  {/* ... (Keep submit status logic same) ... */}
-
+                  {/* ... Button ... */}
                   <Button
                     type="submit"
                     className="w-full h-14 rounded-xl text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25 hover:scale-[1.02] transition-transform"

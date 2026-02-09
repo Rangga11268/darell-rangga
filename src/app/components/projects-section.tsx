@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeInUp, viewportConfig } from "@/lib/animations";
+
 import { useState } from "react";
 import { SectionTitle } from "./section-title";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -21,7 +24,19 @@ export function ProjectsSection() {
       </div>
 
       <div className="container px-4 md:px-6 mx-auto max-w-7xl relative z-10">
-        <SectionTitle title={t.projects.title} subtitle={t.projects.subtitle} />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+          variants={fadeInUp}
+          className="sticky top-24 z-20 py-6 bg-background/60 backdrop-blur-[12px] rounded-3xl border border-white/5 shadow-sm mb-12"
+        >
+          <SectionTitle
+            title={t.projects.title}
+            subtitle={t.projects.subtitle}
+            className="mb-0"
+          />
+        </motion.div>
 
         {/* New Holographic List Layout */}
         <div className="mt-12 md:mt-24">

@@ -82,13 +82,16 @@ export function ProjectCard({
           onClick={() => onSelect(project)}
           className="relative group w-full aspect-video rounded-3xl cursor-pointer bg-card/10 border border-white/10 overflow-hidden shadow-2xl"
         >
-          {/* Base Image */}
-          <div className="absolute inset-0 transform-style-3d group-hover:scale-105 transition-transform duration-500">
+          {/* Animated Border Glow */}
+          <div className="absolute -inset-[1px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/50 via-purple-500/50 to-blue-500/50 blur-sm -z-10" />
+
+          {/* Base Image with Ken Burns Effect */}
+          <div className="absolute inset-0 transform-style-3d overflow-hidden rounded-3xl">
             <Image
               src={project.imageUrl}
               alt={project.title}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-110"
               sizes="(max-width: 768px) 100vw, 60vw"
               priority={index < 2}
             />

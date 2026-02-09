@@ -94,6 +94,9 @@ export const viewport = {
   initialScale: 1,
 };
 
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { BackgroundController } from "@/components/ui/background-controller";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -104,6 +107,9 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${plusJakarta.variable} antialiased bg-background text-foreground`}
       >
+        <div className="fixed inset-0 z-[50] pointer-events-none bg-noise opacity-[0.03] mix-blend-overlay" />
+        <BackgroundController />
+        <ScrollProgress />
         <a
           href="#home"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] px-4 py-2 bg-primary text-secondary-foreground rounded-md font-bold transition-all"

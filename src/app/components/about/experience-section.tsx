@@ -133,7 +133,7 @@ export function ExperienceSection() {
       ref={containerRef}
     >
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="text-center mb-24">
+        <div className="sticky top-24 z-20 py-6 bg-background/60 backdrop-blur-[12px] rounded-3xl border border-white/5 shadow-sm mb-24 text-center">
           <h2 className="text-4xl md:text-5xl font-bold font-display text-foreground">
             {t.about.experience} & {t.about.education}
           </h2>
