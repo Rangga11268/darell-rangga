@@ -65,6 +65,7 @@ export function TextScramble({
         className,
       )}
       onHoverStart={trigger === "hover" ? scramble : undefined}
+      onClick={scramble}
     >
       {displayText}
     </motion.span>

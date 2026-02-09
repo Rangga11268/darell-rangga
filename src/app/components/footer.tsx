@@ -47,7 +47,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden pt-20 pb-8">
+    <footer className="relative overflow-hidden pt-20 pb-8 bg-foreground/5 md:bg-transparent">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-primary/10 pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
