@@ -115,7 +115,7 @@ function getFallbackResponse(message: string): string {
     ) {
       if (isIndonesian) {
         const codedResponses = [
-          "Rahasiaa.. tapi ini kodenya: 01000100 01101001 01101110 01101001. Coba tebak sendiri ya! 😉",
+          "Rahasiaa.. tapi ini kodenya: 01000100 01101001 01101110 0110100101000100 01101001 01101110 01101001. Coba tebak sendiri ya! 😉",
           "Waduh, kalau nama langsung saya nggak bisa kasih. Tapi ini ada 'trace' kodenya: 44 69 6E 69 (Hex).",
           "Status: Classified. 🤫 Petunjuknya cuma ini: RGluaQ== (Base64). Good luck!",
         ];
@@ -127,9 +127,9 @@ function getFallbackResponse(message: string): string {
     }
 
     if (isIndonesian) {
-      return "Sudah ada tapi rahasiaa.. 😉";
+      return "Belum punya pacar, tapi lagi naksir seseorang (crush) nih.. 🤫";
     }
-    return "It's a secret.. 😉";
+    return "Not yet, but he has a crush on someone.. 🤫";
   }
 
   // 4. Skills
@@ -245,9 +245,9 @@ const SYSTEM_PROMPT_TEMPLATE = `
   ${JSON.stringify(AI_PERSONA, null, 2)}
 
   **Special Directive (Personal/Romantic Inquiries):**
-  - IF asked about "partner", "crush", or "relationship":
-  - RESPONSE (ID): "Sudah ada tapi rahasiaa.. 😉"
-  - RESPONSE (EN): "It's a secret.. 😉"
+  - IF asked about "partner", "crush", "girlfriend", or "relationship":
+  - RESPONSE (ID): "Belum punya pacar, tapi lagi naksir seseorang (crush) nih.. 🤫"
+  - RESPONSE (EN): "Not yet, but he has a crush on someone.. 🤫"
   
   - IF asked "Siapa namanya?" / "Who is she?":
   - RESPONSE (ID): "Rahasiaa.. ini petunjuknya: 01000100 01101001 01101110 01101001 (Biner) atau 44 69 6E 69 (Hex)."
