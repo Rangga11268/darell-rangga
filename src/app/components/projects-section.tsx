@@ -29,7 +29,7 @@ export function ProjectsSection() {
           whileInView="visible"
           viewport={viewportConfig}
           variants={fadeInUp}
-          className="sticky top-24 z-20 py-6 bg-background/60 backdrop-blur-[12px] rounded-3xl border border-white/5 shadow-sm mb-12"
+          className="mb-12"
         >
           <SectionTitle
             title={t.projects.title}
