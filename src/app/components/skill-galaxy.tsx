@@ -51,7 +51,7 @@ export function SkillGalaxy() {
           {[600, 450, 300].map((size, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full border border-primary/5"
+              className="absolute rounded-full border border-primary/5 hidden md:block"
               style={{ width: size, height: size }}
               animate={{ rotate: 360 }}
               transition={{
@@ -63,7 +63,7 @@ export function SkillGalaxy() {
           ))}
 
           {/* Constellation Lines (Connecting Skills) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 hidden md:block">
             <motion.path
               d="M100,300 Q400,100 700,300 T1000,300"
               fill="none"
@@ -93,7 +93,7 @@ export function SkillGalaxy() {
               <motion.div
                 key={skill.id}
                 layoutId={`skill-${skill.id}`}
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer will-change-transform"
                 onClick={() => setSelectedSkillId(skill.id)}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{

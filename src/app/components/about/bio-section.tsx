@@ -8,28 +8,36 @@ import { useRef } from "react";
 const TextReveal = ({ text }: { text: string }) => {
   const words = text.split(" ");
   return (
-    <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+    <motion.p
+      className="text-xl md:text-2xl text-muted-foreground leading-relaxed"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-10%" }}
+      variants={{
+        visible: { transition: { staggerChildren: 0.015 } },
+        hidden: {},
+      }}
+    >
       {words.map((word, i) => (
         <span
           key={i}
           className="inline-block overflow-hidden mr-[0.2em] -mb-[0.2em] align-bottom"
         >
           <motion.span
-            initial={{ y: "100%" }}
-            whileInView={{ y: 0 }}
-            transition={{
-              duration: 0.5,
-              delay: i * 0.02,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            viewport={{ once: true, margin: "-10%" }}
             className="inline-block"
+            variants={{
+              hidden: { y: "100%" },
+              visible: {
+                y: 0,
+                transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
+              },
+            }}
           >
             {word}
           </motion.span>
         </span>
       ))}
-    </p>
+    </motion.p>
   );
 };
 
@@ -53,7 +61,7 @@ export function BioSection() {
       {/* Background Typography (Parallax) */}
       <motion.div
         style={{ y, opacity }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 will-change-transform"
       >
         <span className="text-[15vw] md:text-[20vw] font-black text-foreground/5 whitespace-nowrap select-none">
           THE STORY
