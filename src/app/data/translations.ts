@@ -48,7 +48,7 @@ export const translations = {
             school: "Bina Sarana Informatika University",
             period: "2024 - Present",
             description:
-              "Focusing on Software Engineering, System Architecture, and Human-Computer Interaction.",
+              "Focusing on Software Engineering, System Architecture, and Human-Computer Interaction. Current GPA: 4.00/4.00 (Sem 3).",
             logo: "/img/ubsi.webp",
           },
         ],
@@ -282,7 +282,7 @@ export const translations = {
             school: "Universitas Bina Sarana Informatika",
             period: "2024 - Sekarang",
             description:
-              "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi.",
+              "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi. IPK Saat Ini: 4.00/4.00 (Sem 3).",
             logo: "/img/ubsi.webp",
           },
         ],
