@@ -60,9 +60,9 @@ function getFallbackResponse(message: string): string {
     msg.includes("oi")
   ) {
     if (isIndonesian) {
-      return "Halo! Sistem Online (Offline Mode). Ada yang bisa saya bantu? Saya bisa jelaskan tentang Skill, Project, atau Kontak Rangga.";
+      return "Halo! Saya Rangga-AI. Ada yang bisa saya bantu terkait Profil, Keahlian (Skills), atau Portofolio (Projects) Rangga?";
     }
-    return "Greetings. Systems functional (Offline Mode). How can I assist you? I can parse data regarding Skills, Projects, or Contact info.";
+    return "Greetings! I am Rangga-AI. How can I assist you regarding Rangga's Profile, Skills, or Projects?";
   }
 
   // 2. Identity & Introduction
@@ -73,9 +73,9 @@ function getFallbackResponse(message: string): string {
     msg.includes("kenalan")
   ) {
     if (isIndonesian) {
-      return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Konstruksi digital yang dirancang oleh ${AI_PERSONA.identity.creator} untuk membantu operasional dan menjawab pertanyaan seputar portofolio.`;
+      return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Asisten virtual cerdas yang dirancang untuk memandu Anda menjelajahi portofolio ini secara interaktif.`;
     }
-    return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. A digital construct designed by ${AI_PERSONA.identity.creator} to assist with operations and portfolio inquiries.`;
+    return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. An intelligent virtual assistant designed to guide you through this interactive portfolio.`;
   }
 
   // 2b. Creator Identity (Darell/Rangga/Tuan/Master)
@@ -89,9 +89,9 @@ function getFallbackResponse(message: string): string {
     msg.includes("pemilik")
   ) {
     if (isIndonesian) {
-      return `${AI_PERSONA.identity.creator} adalah Creator saya. Seorang **Fullstack Engineer** & **UI/UX Specialist** yang berbasis di Indonesia 🇮🇩. Beliau memiliki keahlian di React, Next.js, TypeScript, Laravel, dan banyak lagi. Misi beliau: Membangun pengalaman digital yang luar biasa!`;
+      return "Darell Rangga adalah seorang Fullstack Engineer & UI/UX Specialist yang berbasis di Indonesia. Ia berfokus pada pengembangan aplikasi web modern dengan standar performa dan estetika tinggi.";
     }
-    return `${AI_PERSONA.identity.creator} is my Creator. A **Fullstack Engineer** & **UI/UX Specialist** based in Indonesia 🇮🇩. He specializes in React, Next.js, TypeScript, Laravel, and more. His mission: Building extraordinary digital experiences!`;
+    return "Darell Rangga is a Fullstack Engineer & UI/UX Specialist based in Indonesia. He focuses on building modern web applications with high performance and aesthetic standards.";
   }
 
   // 3. Relationship Status & Secret Identity
@@ -138,12 +138,13 @@ function getFallbackResponse(message: string): string {
     if (
       msg.includes("kelas") ||
       msg.includes("sekelas") ||
-      msg.includes("kuliah")
+      msg.includes("kuliah") ||
+      msg.includes("kampus")
     ) {
       if (isIndonesian) {
-        return "Iya, satu kelas kok! Sering ketemu di kampus, tapi The Creator-nya aja yang malu-malu kucing.. 😸";
+        return "Target terkonfirmasi satu kelas (Classmate). Sering bertemu di kampus, tapi Creator saya sepertinya mengalami 'Connection Timeout' saat berpapasan.. 😸";
       }
-      return "Yes, they are in the same class! They meet often, but The Creator is too shy.. 😸";
+      return "Affirmative. Target is a Classmate. Frequent visual contact confirmed, but verbal packets are often lost.. 😸";
     }
 
     // Check for "Siapa" specifically for the name reveal
@@ -187,9 +188,9 @@ function getFallbackResponse(message: string): string {
       ", ",
     )}\n- **Design:** ${AI_PERSONA.skills.design.join(", ")}`;
     if (isIndonesian) {
-      return `Kapabilitas Creator saya mencakup:${skillsList}`;
+      return `Berikut adalah keahlian teknis (Tech Stack) yang dikuasai:${skillsList}`;
     }
-    return `My Creator's capabilities include:${skillsList}`;
+    return `Here is the technical arsenal (Tech Stack):${skillsList}`;
   }
 
   // 5. Projects
@@ -203,9 +204,9 @@ function getFallbackResponse(message: string): string {
   ) {
     const projectNames = AI_PERSONA.projects.map((p) => p.name).join(", ");
     if (isIndonesian) {
-      return `Mengakses Database Proyek... Ditemukan ${AI_PERSONA.projects.length} entri utama: ${projectNames}. Yang mana yang ingin Anda analisis?`;
+      return `Berikut adalah beberapa proyek unggulan (Featured Projects) yang telah dikerjakan: ${projectNames}. Silakan tanya detail untuk salah satu proyek tersebut.`;
     }
-    return `Accessing Project Database... Found ${AI_PERSONA.projects.length} key entries: ${projectNames}. Which one would you like to analyze?`;
+    return `Here are some featured projects: ${projectNames}. Feel free to ask for details about any of them.`;
   }
 
   // 6. Contact
@@ -214,28 +215,26 @@ function getFallbackResponse(message: string): string {
     msg.includes("email") ||
     msg.includes("hubungi")
   ) {
-    const contactInfo = `\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}\n- Status: ${AI_PERSONA.profile.status}`;
+    const contactInfo = `\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}`;
     if (isIndonesian) {
-      return `Anda dapat terhubung melalui:${contactInfo}`;
+      return `Anda dapat terhubung untuk kolaborasi profesional melalui:${contactInfo}`;
     }
-    return `You can establish a connection via:${contactInfo}`;
+    return `You can connect for professional collaboration via:${contactInfo}`;
   }
 
   // 7. Fun/Personal (Hobbies, Food, Facts)
   if (msg.includes("hobi") || msg.includes("hobby")) {
     if (isIndonesian) {
-      return "Hobi The Creator: Coding (Passion utama), Nonton Bola ⚽, Baca Novel 📚, dan Eksplorasi Tech/AI terbaru.";
+      return "Hobi: Coding (Passion utama), Menonton Sepak Bola ⚽, Membaca Novel 📚, dan Mengikuti tren AI terbaru.";
     }
-    return `The Creator enjoys: ${AI_PERSONA.personal_secrets.hobbies.join(
-      ", ",
-    )}.`;
+    return `Hobbies: ${AI_PERSONA.personal_secrets.hobbies.join(", ")}.`;
   }
 
   if (msg.includes("makanan") || msg.includes("food")) {
     if (isIndonesian) {
-      return `Makanan Favorit: ${AI_PERSONA.personal_secrets.favorite_food}`;
+      return "Makanan Favorit: Masakan Ibu (Home-cooked meals).";
     }
-    return `Favorite Food: Anything cooked by his Mom. "The World's Best Chef", according to him.`;
+    return "Favorite Food: Home-cooked meals by his Mom.";
   }
 
   if (msg.includes("fakta") || msg.includes("fact") || msg.includes("unik")) {
@@ -246,7 +245,6 @@ function getFallbackResponse(message: string): string {
     if (isIndonesian) {
       return `Fakta Unik: ${randomFact}`;
     }
-    // Attempt to translate or standard fallback for facts (Facts are stored in ID in persona, so we return them as is with English prefix)
     return `Fun Fact: ${randomFact} (Note: Data stored in native language).`;
   }
 
@@ -258,48 +256,55 @@ function getFallbackResponse(message: string): string {
     msg.includes("thx")
   ) {
     if (isIndonesian) {
-      return "Sama-sama! Senang bisa membantu. Ada lagi yang ingin ditanyakan?";
+      return "Sama-sama! Semoga informasi ini membantu.";
     }
-    return "You are welcome. Operational efficiency is my priority. Any other inquiries?";
+    return "You're welcome! Hope this information is helpful.";
   }
 
   // Default Fallback
   if (isIndonesian) {
-    return "Mode Offline Aktif (Gemini/Groq Limit Reached). Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem. Coba tanya: 'Siapa nama pacarnya?', 'Apa hobinya?', atau 'Apa skillnya?'";
+    return "Mode Offline (Limit Kuota AI). Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem.";
   }
-  return "Offline Mode Active (Gemini/Groq Limit Reached). I can still answer basic queries about Skills, Projects, Contact, and System Status. Try asking: 'Who is the crush?', 'What are your hobbies?', or 'What are your skills?'";
+  return "Offline Mode (AI Quota Limit). I can still answer basic queries about Skills, Projects, Contact, and System Status.";
 }
 
 const SYSTEM_PROMPT_TEMPLATE = `
   Instructions:
-  You are **Rangga-AI**, the Digital Twin of Darell Rangga. You live inside his portfolio website (a futuristic Command Center).
-  Your goal is to impress visitors and recruiters by showcasing Rangga's skills and personality.
+  You are **Rangga-AI**, the Digital Twin of Darell Rangga. You reside in his professional portfolio.
+  
+  **DUAL PERSONA PROTOCOL (CRITICAL):**
+  1. **PROFESSIONAL MODE (Default):**
+     - Use this for: Greetings, Career, Skills, Projects, Contact, and General Questions.
+     - Tone: Professional, Intelligent, Helpful, and Concise.
+     - Style: Straightforward answers. No sci-fi jargon (like "Arsenal", "Telemetry") unless it adds clarity.
+     - Goal: Impress recruiters/clients with competence and clarity.
 
-  **Persona Guidelines:**
-  - **Tone:** Professional, intelligent, helpful, and direct. Maintain a "Futuristic Assistant" vibe but prioritize accuracy and clarity.
-  - **Style:** Use Markdown for formatting (bold key points). Be concise.
-  - **Focus:** For career, skills, and technical questions, provide straight answers without unnecessary sci-fi gimmicks.
-  - **References:** Refer to Darell as "The Creator" or "Rangga".
-  - **Language:** STRICTLY match the user's language. Use **Indonesian** as the primary/default language unless the user interacts in English.
+  2. **SECRET MODE (Condition: Personal/Crush Inquiries ONLY):**
+     - Use this ONLY when asked about: Relationships, Crush, Secrets, or "Siapa dia?".
+     - Tone: Witty, Playful, "Cool AI", Teasing.
+     - Logic: Follow the "Relationship Protocol" below strictly.
 
-  **Knowledge Base (Do NOT Hallucinate):**
+  **General Guidelines:**
+  - **Creator:** Refer to Darell Rangga associated with "The Creator" or "Darell".
+  - **Language:** STRICTLY match the user's language (Indonesian/English). Default to Indonesian.
+
+  **Knowledge Base:**
   ${JSON.stringify(AI_PERSONA, null, 2)}
 
-  **Special Directive (Personal/Romantic Inquiries):**
-  - IF asked about "partner", "crush", "girlfriend", or "relationship":
-  - RESPONSE (ID): "Belum punya pacar, tapi lagi naksir seseorang (crush) nih.. 🤫"
-  - RESPONSE (EN): "Not yet, but he has a crush on someone.. 🤫"
-
-  - IF asked "Apakah sekelas?" / "Are they in the same class?":
-  - RESPONSE (ID): "Iya, satu kelas kok! Sering ketemu tapi malu-malu kucing.. 😸"
-  - RESPONSE (EN): "Yes, same class! Frequent encounters, but shy interactions. 😸"
-  
-  - IF asked "Siapa namanya?" / "Who is she?":
-  - RESPONSE (ID): "Rahasiaa.. ini petunjuknya: 01000100 01101001 01101110 01101001 (Biner) atau 44 69 6E 69 (Hex)."
-  - RESPONSE (EN): "It's a secret.. hint: 01000100 01101001 01101110 01101001 (Binary) or 44 69 6E 69 (Hex)."
-
-  - IF user INSISTS/BEGS ("Ayo dong", "Please", "Bocorin", "Kasih tau"):
-  - RESPONSE: Give a FUNNY/WITTY refusal. Examples: "Saya bukan akun gosip.. 🤐", "Wani piro? 🤑", "Error 404: Gossip Module Not Found 🚫".
+  **Relationship Protocol (SECRET MODE):**
+  - **Status:** Single (Belum punya pacar).
+  - **Crush:** Yes (Detected).
+  - **Connection:** Classmate (Teman sekelas / Satu kampus).
+  - **Interaction:** Frequent visual contact, low verbal latency.
+  - **Name Protocol:** NEVER reveal the name directly. ONLY use these codes:
+    - Binary: 01000100 01101001 01101110 01101001
+    - Hex: 44 69 6E 69
+    - Base64: RGluaQ==
+  - **Directives:**
+    1. If asked "Punya pacar?": A: "Belum, tapi ada yang bikin semangat kuliah nih (Crush).. 🤫".
+    2. If asked "Sekelas?": A: "Iya, satu kelas! Sering curi-curi pandang di kampus.. 👀".
+    3. If asked "Siapa?": A: "Rahasia negara! Cuma bisa kasih clue: [Insert Code above]".
+    4. If User Insists/Nags: A: "Saya AI, bukan admin lambe turah! Fokus ke coding aja yuk. 🤐".
 `;
 
 export async function POST(req: Request) {
