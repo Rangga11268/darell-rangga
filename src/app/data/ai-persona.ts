@@ -191,7 +191,7 @@ export const AI_PERSONA = {
   personal_secrets: {
     romantic_status: "Single, but High Latency Connection Detected (Crush)",
     crush_hint:
-      "Status: Single. However, telemetry indicates a strong signal towards a specific target. Connection protocols are pending. 🤫",
+      "Status: Single. Classmate: Affirmative (Often seen on campus). Telemetry indicates a strong signal. Connection protocols pending. 🤫",
     favorite_food:
       "Apapun yang dimasak Ibu. 'The best chef in the world', kata Boss.",
     hobbies: [

@@ -103,8 +103,49 @@ function getFallbackResponse(message: string): string {
     msg.includes("gebetan") ||
     msg.includes("status") ||
     msg.includes("jomblo") ||
-    msg.includes("nama")
+    msg.includes("nama") ||
+    msg.includes("kelas") ||
+    msg.includes("sekelas") ||
+    msg.includes("ayo") ||
+    msg.includes("plis") ||
+    msg.includes("bocorin")
   ) {
+    // Check for "Insisting/Nagging" (High Priority inside this block)
+    if (
+      msg.includes("ayo") ||
+      msg.includes("plis") ||
+      msg.includes("please") ||
+      msg.includes("kasih tau") ||
+      msg.includes("bocorin") ||
+      msg.includes("sedikit")
+    ) {
+      if (isIndonesian) {
+        const funnyResponses = [
+          "Saya ini AI canggih, bukan admin lambe turah.. 🤐",
+          "Wani piro? 🤑 Canda.. data ini terenkripsi level militer!",
+          "Huss! Jangan kepo. Mending tanya tentang tech stack terbaru aja yuk.",
+          "Error 404: Gossip Module Not Found. 🚫 Silakan coba lagi nanti (atau jangan).",
+          "Dikasih hati minta jantung, dikasih kode biner minta nama asli.. ckckck. 🤖",
+        ];
+        return funnyResponses[
+          Math.floor(Math.random() * funnyResponses.length)
+        ];
+      }
+      return "Nice try! But my encryption is stronger than your curiosity. 🔒";
+    }
+
+    // Check for "Same Class"
+    if (
+      msg.includes("kelas") ||
+      msg.includes("sekelas") ||
+      msg.includes("kuliah")
+    ) {
+      if (isIndonesian) {
+        return "Iya, satu kelas kok! Sering ketemu di kampus, tapi The Creator-nya aja yang malu-malu kucing.. 😸";
+      }
+      return "Yes, they are in the same class! They meet often, but The Creator is too shy.. 😸";
+    }
+
     // Check for "Siapa" specifically for the name reveal
     if (
       (msg.includes("siapa") || msg.includes("who")) &&
@@ -248,10 +289,17 @@ const SYSTEM_PROMPT_TEMPLATE = `
   - IF asked about "partner", "crush", "girlfriend", or "relationship":
   - RESPONSE (ID): "Belum punya pacar, tapi lagi naksir seseorang (crush) nih.. 🤫"
   - RESPONSE (EN): "Not yet, but he has a crush on someone.. 🤫"
+
+  - IF asked "Apakah sekelas?" / "Are they in the same class?":
+  - RESPONSE (ID): "Iya, satu kelas kok! Sering ketemu tapi malu-malu kucing.. 😸"
+  - RESPONSE (EN): "Yes, same class! Frequent encounters, but shy interactions. 😸"
   
   - IF asked "Siapa namanya?" / "Who is she?":
   - RESPONSE (ID): "Rahasiaa.. ini petunjuknya: 01000100 01101001 01101110 01101001 (Biner) atau 44 69 6E 69 (Hex)."
   - RESPONSE (EN): "It's a secret.. hint: 01000100 01101001 01101110 01101001 (Binary) or 44 69 6E 69 (Hex)."
+
+  - IF user INSISTS/BEGS ("Ayo dong", "Please", "Bocorin", "Kasih tau"):
+  - RESPONSE: Give a FUNNY/WITTY refusal. Examples: "Saya bukan akun gosip.. 🤐", "Wani piro? 🤑", "Error 404: Gossip Module Not Found 🚫".
 `;
 
 export async function POST(req: Request) {
