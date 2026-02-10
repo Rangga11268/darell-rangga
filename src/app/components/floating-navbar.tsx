@@ -72,14 +72,14 @@ export function FloatingNavbar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
-            className="fixed bottom-24 inset-x-4 md:w-[320px] md:left-1/2 md:-translate-x-1/2 z-40 glass-card rounded-3xl p-4 flex flex-col gap-4"
+            className="fixed bottom-28 inset-x-4 md:w-[340px] md:left-1/2 md:-translate-x-1/2 z-40 glass-card rounded-3xl p-5 flex flex-col gap-4"
           >
             <div className="flex justify-between items-center px-2">
               <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
                 Quick Actions
               </span>
               <button onClick={() => setIsMenuOpen(false)}>
-                <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                <X className="w-5 h-5 text-muted-foreground hover:text-foreground" />
               </button>
             </div>
 
@@ -115,10 +115,10 @@ export function FloatingNavbar() {
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
-          className="pointer-events-auto h-14 md:h-16 px-2 md:px-4 bg-background/80 backdrop-blur-2xl border border-white/5 shadow-2xl rounded-full flex items-center gap-1 md:gap-4"
+          className="pointer-events-auto h-16 md:h-20 px-3 md:px-6 bg-background/80 backdrop-blur-2xl border border-white/5 shadow-2xl rounded-full flex items-center gap-1 sm:gap-2 md:gap-4"
         >
           {/* Navigation Links */}
-          <div className="flex items-center gap-0.5 md:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {primaryItems.map((item) => (
               <DockLink
                 key={item.name}
@@ -129,10 +129,10 @@ export function FloatingNavbar() {
             ))}
           </div>
 
-          <div className="w-px h-6 bg-border mx-1" />
+          <div className="w-px h-6 bg-border mx-1 md:mx-2" />
 
           {/* Tools */}
-          <div className="flex items-center gap-0.5 md:gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {toolsItems.map((item) => (
               <DockButton
                 key={item.name}
@@ -144,7 +144,7 @@ export function FloatingNavbar() {
             ))}
           </div>
 
-          <div className="w-px h-6 bg-border mx-1" />
+          <div className="w-px h-6 bg-border mx-1 md:mx-2" />
 
           {/* Menu Toggle */}
           <DockButton
@@ -174,13 +174,13 @@ function DockLink({
     <a
       href={href}
       className={cn(
-        "relative p-2 md:p-3 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 group",
+        "relative p-2.5 sm:p-3 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 group",
         "hover:scale-110",
       )}
       aria-label={label}
     >
-      <Icon className="w-4 h-4 md:w-5 md:h-5" />
-      <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+      <Icon className="w-5 h-5 md:w-6 md:h-6" />
+      <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-2.5 py-1.5 bg-foreground text-background text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
         {label}
       </span>
     </a>
@@ -202,15 +202,15 @@ function DockButton({
     <button
       onClick={onClick}
       className={cn(
-        "relative p-2 md:p-3 rounded-full transition-all duration-300 group hover:scale-110",
+        "relative p-2.5 sm:p-3 rounded-full transition-all duration-300 group hover:scale-110",
         highlight
           ? "bg-primary/10 text-primary hover:bg-primary/20"
           : "text-muted-foreground hover:text-foreground hover:bg-muted",
       )}
       aria-label={label}
     >
-      <Icon className="w-4 h-4 md:w-5 md:h-5" />
-      <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-[10px] font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+      <Icon className="w-5 h-5 md:w-6 md:h-6" />
+      <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-2.5 py-1.5 bg-foreground text-background text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
         {label}
       </span>
     </button>
