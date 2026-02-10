@@ -48,7 +48,7 @@ export function ProjectDetailModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-            className="fixed inset-4 md:inset-10 z-[70] flex justify-center items-center pointer-events-none"
+            className="fixed inset-x-4 top-4 bottom-24 md:inset-10 z-[70] flex justify-center items-center pointer-events-none"
           >
             <div className="bg-black/90 border border-white/10 w-full max-w-5xl h-full md:h-[85vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row pointer-events-auto relative">
               {/* Close Button */}
@@ -85,7 +85,7 @@ export function ProjectDetailModal({
               </div>
 
               {/* Right: Details */}
-              <div className="w-full md:w-1/2 h-full overflow-y-auto p-6 md:p-10 bg-zinc-950/80 backdrop-blur-xl">
+              <div className="w-full md:w-1/2 h-full overflow-y-auto p-6 pb-8 md:p-10 bg-zinc-950/80 backdrop-blur-xl">
                 <div className="space-y-8">
                   {/* Header */}
                   <div>
