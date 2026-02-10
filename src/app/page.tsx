@@ -46,7 +46,7 @@ export default function Home() {
           </div>
 
           {/* Fixed Footer Reveal */}
-          <div className="relative z-0 md:fixed md:bottom-0 md:w-full md:h-[500px] flex items-end">
+          <div className="relative z-0 md:fixed md:bottom-0 md:w-full md:h-[500px] flex items-end bg-background -z-10">
             <div className="w-full">
               <Footer />
             </div>
