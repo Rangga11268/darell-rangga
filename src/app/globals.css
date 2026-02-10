@@ -153,11 +153,11 @@
 
   /* Glassmorphism 2.0 (Clean) */
   .glass {
-    @apply bg-background/60 backdrop-blur-xl border border-white/5;
+    @apply bg-background/60 backdrop-blur-xl border border-foreground/5;
   }
 
   .glass-card {
-    @apply bg-card/30 backdrop-blur-2xl border border-white/5 shadow-2xl;
+    @apply bg-card/30 backdrop-blur-2xl border border-foreground/5 shadow-2xl;
   }
 
   /* Grainy Mesh Gradient */

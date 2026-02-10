@@ -115,7 +115,7 @@ export function FloatingNavbar() {
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
-          className="pointer-events-auto h-16 md:h-20 px-3 md:px-6 bg-background/80 backdrop-blur-2xl border border-white/5 shadow-2xl rounded-full flex items-center gap-1 sm:gap-2 md:gap-4"
+          className="pointer-events-auto h-16 md:h-20 px-3 md:px-6 bg-background/80 backdrop-blur-2xl border border-foreground/5 shadow-2xl rounded-full flex items-center gap-1 sm:gap-2 md:gap-4"
         >
           {/* Navigation Links */}
           <div className="flex items-center gap-1 sm:gap-2">
