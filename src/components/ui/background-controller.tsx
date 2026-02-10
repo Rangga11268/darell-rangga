@@ -1,26 +1,45 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function BackgroundController() {
   const { scrollYProgress } = useScroll();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Interpolate background color based on scroll position
-  // 0-20% (Hero): Default Background (usually dark/black)
-  // 30-50% (About/Exp): Deep Purple Tint
-  // 60-80% (Projects): Dark Blue Tint
-  // 90-100% (Contact): Back to Default or Darker
+  const darkColors = [
+    "rgba(10, 10, 10, 0)", // Top: Transparent (let base bg show)
+    "rgba(20, 10, 30, 0.8)", // About: Deep Purple hint
+    "rgba(10, 20, 40, 0.8)", // Projects: Deep Blue hint
+    "rgba(20, 10, 20, 0.6)", // Skills: Mixed
+    "rgba(5, 5, 5, 0.9)", // Bottom: Very Dark
+  ];
+
+  const lightColors = [
+    "rgba(255, 255, 255, 0)", // Top: Transparent
+    "rgba(240, 240, 255, 0.5)", // About: Very Light Purple tint
+    "rgba(230, 245, 255, 0.5)", // Projects: Very Light Blue tint
+    "rgba(245, 240, 245, 0.4)", // Skills: Mixed
+    "rgba(255, 255, 255, 0.8)", // Bottom: White
+  ];
+
+  const colors =
+    mounted && resolvedTheme === "light" ? lightColors : darkColors;
+
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.25, 0.5, 0.75, 1],
-    [
-      "rgba(10, 10, 10, 0)", // Top: Transparent (let base bg show)
-      "rgba(20, 10, 30, 0.8)", // About: Deep Purple hint
-      "rgba(10, 20, 40, 0.8)", // Projects: Deep Blue hint
-      "rgba(20, 10, 20, 0.6)", // Skills: Mixed
-      "rgba(5, 5, 5, 0.9)", // Bottom: Very Dark
-    ],
+    colors,
   );
+
+  if (!mounted) return null;
 
   return (
     <motion.div
