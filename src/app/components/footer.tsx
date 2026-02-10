@@ -50,11 +50,11 @@ export function Footer() {
     <footer className="relative overflow-hidden pt-20 pb-8 bg-foreground/5 md:bg-transparent">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-primary/10 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none mix-blend-multiply dark:mix-blend-normal" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none mix-blend-multiply dark:mix-blend-normal" />
 
       {/* Top Border Gradient */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
 
       <div className="container px-4 md:px-6 relative z-10">
         {/* Main Footer Content */}
@@ -109,7 +109,7 @@ export function Footer() {
                     rel="noopener noreferrer"
                     whileHover={{ y: -4, scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    className="group relative p-3 rounded-xl bg-white/5 border border-white/10 hover:border-primary/50 hover:bg-primary/10 transition-all"
+                    className="group relative p-3 rounded-xl bg-foreground/5 border border-foreground/10 hover:border-primary/50 hover:bg-primary/10 transition-all"
                     aria-label={social.label}
                   >
                     <social.icon
@@ -174,7 +174,7 @@ export function Footer() {
                 ].map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1.5 text-xs rounded-full bg-white/5 border border-white/10 text-muted-foreground"
+                    className="px-3 py-1.5 text-xs rounded-full bg-foreground/5 border border-foreground/10 text-muted-foreground"
                   >
                     {tech}
                   </span>
@@ -199,11 +199,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10">
+        <div className="pt-8 border-t border-foreground/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>© {new Date().getFullYear()}</span>
-              <span className="text-white/20">•</span>
+              <span className="text-muted-foreground/30">•</span>
               <span>{t.footer.copyright}</span>
             </div>
 
