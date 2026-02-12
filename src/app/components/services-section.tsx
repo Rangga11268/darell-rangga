@@ -98,48 +98,16 @@ export function ServicesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {Object.entries(services).map(([key, service]) => {
-            const Icon = ICONS[key as keyof typeof ICONS] || CodeBlock;
-
-            return (
-              <motion.div
-                key={key}
-                variants={itemVariants}
-                className="group relative pt-10" // Added top padding for the tab space
-              >
-                {/* Folder Tab */}
-                <div className="absolute top-0 left-0 w-28 h-10 bg-card/40 border-t border-l border-r border-border rounded-t-2xl z-20 backdrop-blur-sm group-hover:bg-primary/10 transition-colors duration-500 flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" />
-                </div>
-
-                {/* Main Folder Body */}
-                <div className="relative p-8 pt-10 rounded-b-3xl rounded-tr-3xl bg-card/40 border-l border-r border-b border-border hover:border-primary/50 transition-all duration-500 backdrop-blur-sm overflow-hidden min-h-[200px]">
-                  {/* Top Right Header Border - Connects to Tab */}
-                  <div className="absolute top-0 right-0 w-[calc(100%-7rem)] h-[1px] bg-border group-hover:bg-primary/50 transition-colors duration-500" />
-
-                  {/* Hover Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-                  {/* Content */}
-                  <div className="relative z-10 space-y-3">
-                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm">
-                      {service.desc}
-                    </p>
-                  </div>
-
-                  {/* Decorative Corner Arrow */}
-                  <div className="absolute bottom-4 right-4 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0">
-                    <ArrowRight className="w-5 h-5 text-primary -rotate-45" />
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          {Object.entries(services).map(([key, service]) => (
+            <ServiceCard
+              key={key}
+              serviceId={key}
+              service={service as any}
+              itemVariants={itemVariants}
+            />
+          ))}
         </motion.div>
 
         {/* Pricing Packages */}
@@ -264,7 +232,6 @@ export function ServicesSection() {
         </div>
 
         {/* Call to Action */}
-        {/* Call to Action - Premium Redesign */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -416,5 +383,102 @@ export function ServicesSection() {
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+// Reusable ServiceCard Component with Toggle Logic
+function ServiceCard({
+  serviceId,
+  service,
+  itemVariants,
+}: {
+  serviceId: string;
+  service: { title: string; desc: string };
+  itemVariants: any;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const Icon = ICONS[serviceId as keyof typeof ICONS] || CodeBlock;
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="group relative h-[300px]"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      {/* Folder Tab (Static at back) */}
+      <div className="absolute top-0 left-0 w-32 h-10 bg-zinc-200 dark:bg-zinc-800/50 rounded-t-2xl z-0 transition-colors duration-300 border-t border-l border-r border-black/5 dark:border-white/5" />
+
+      {/* Main Folder Back (Static) */}
+      <div className="absolute inset-0 top-6 bg-zinc-100 dark:bg-card/40 border border-black/5 dark:border-white/5 rounded-3xl rounded-tl-none shadow-inner z-0 overflow-hidden">
+        {/* Card Content (Always Present, Revealed when Cover Moves) */}
+        <div className="absolute inset-0 p-8 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <Icon className="w-5 h-5 text-primary" weight="fill" />
+              </div>
+              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
+                {serviceId}
+              </span>
+            </div>
+            <h4 className="text-xl font-bold text-foreground mb-3">
+              {service.title}
+            </h4>
+            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">
+              {service.desc}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest cursor-pointer hover:underline">
+            Details Unlocked{" "}
+            <ArrowRight className="w-3.5 h-3.5" weight="bold" />
+          </div>
+        </div>
+      </div>
+
+      {/* Folder Front Cover (Animates Down based on isOpen state) */}
+      <motion.div
+        animate={{
+          y: isOpen ? "110%" : "0%",
+          opacity: isOpen ? 0 : 1,
+          pointerEvents: isOpen ? "none" : "auto",
+        }}
+        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+        className="absolute inset-0 top-6 bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl rounded-tl-none shadow-2xl z-10 overflow-hidden flex flex-col items-center justify-center p-6 text-center"
+      >
+        {/* Subtle Grain Texture */}
+        <div className="absolute inset-0 opacity-[0.03] bg-noise pointer-events-none" />
+
+        {/* Gradient Sheen */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent dark:from-white/5 pointer-events-none" />
+
+        {/* Centered Icon & Title */}
+        <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-white to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 shadow-xl mb-6 flex items-center justify-center border border-white/50 dark:border-white/5">
+          <Icon
+            className="w-8 h-8 text-zinc-600 dark:text-zinc-300"
+            weight="duotone"
+          />
+        </div>
+        <h3 className="text-2xl font-display font-medium text-zinc-800 dark:text-zinc-200 mb-6">
+          {service.title}
+        </h3>
+
+        {/* Action Button (The Trigger) */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(!isOpen);
+          }}
+          className="relative px-6 py-2.5 rounded-full bg-primary text-black font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group/btn"
+        >
+          <span>View Details</span>
+          <CaretRight
+            weight="bold"
+            className="w-3.5 h-3.5 group-hover/btn:rotate-90 transition-transform"
+          />
+        </button>
+      </motion.div>
+    </motion.div>
   );
 }

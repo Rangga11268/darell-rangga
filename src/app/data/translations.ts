@@ -40,6 +40,7 @@ export const translations = {
             period: "2024 - Present",
             description:
               "Delivering custom web solutions for diverse clients using React, Next.js, and modern CSS frameworks.",
+            tech: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
           },
         ],
         schools: [
@@ -50,6 +51,7 @@ export const translations = {
             description:
               "Study Focus: Web Application Development, Relational & NoSQL Databases, and Information System Analysis & Design. Current GPA: 4.00/4.00 (Sem 3).",
             logo: "/img/ubsi.webp",
+            tech: ["System Analysis", "Database Design", "Web Programming"],
           },
         ],
       },
@@ -277,6 +279,7 @@ export const translations = {
             period: "2024 - Sekarang",
             description:
               "Menyediakan solusi web kustom untuk berbagai klien menggunakan React, Next.js, dan framework modern.",
+            tech: ["React", "Next.js", "Tailwind CSS", "TypeScript"],
           },
         ],
         schools: [
@@ -287,6 +290,7 @@ export const translations = {
             description:
               "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi. IPK Saat Ini: 4.00/4.00 (Sem 3).",
             logo: "/img/ubsi.webp",
+            tech: ["Analisis Sistem", "Desain Basis Data", "Pemrograman Web"],
           },
         ],
       },
