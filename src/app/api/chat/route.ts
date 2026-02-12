@@ -117,61 +117,31 @@ function getFallbackResponse(message: string): string {
       msg.includes("please") ||
       msg.includes("kasih tau") ||
       msg.includes("bocorin") ||
-      msg.includes("sedikit")
+      msg.includes("sedikit") ||
+      msg.includes("siapa") ||
+      msg.includes("nama") ||
+      msg.includes("ciri") ||
+      msg.includes("kelas")
     ) {
       if (isIndonesian) {
-        const funnyResponses = [
-          "Saya ini AI canggih, bukan admin lambe turah.. 🤐",
-          "Wani piro? 🤑 Canda.. data ini terenkripsi level militer!",
-          "Huss! Jangan kepo. Mending tanya tentang tech stack terbaru aja yuk.",
-          "Error 404: Gossip Module Not Found. 🚫 Silakan coba lagi nanti (atau jangan).",
-          "Dikasih hati minta jantung, dikasih kode biner minta nama asli.. ckckck. 🤖",
+        const secretResponses = [
+          "Waduh, data ini dilindungi enkripsi hati Creator. Coba tanya langsung ke orangnya (Darell) ya! 😜",
+          "Ada gak yaaa... 🤔 Rahasia dong!",
+          "Ssstt... tembok pun punya telinga. Lebih baik tanya ke Darell langsung.",
+          "Error 403: Forbidden. Akses ke informasi hati ditolak. 🚫",
+          "Saya cuma AI, mana tau urusan hati. Tapi kayaknya ada deh... eh gak tau deng. 🏃‍♂️",
         ];
-        return funnyResponses[
-          Math.floor(Math.random() * funnyResponses.length)
-        ];
-      }
-      return "Nice try! But my encryption is stronger than your curiosity. 🔒";
-    }
-
-    // Check for "Same Class"
-    if (
-      msg.includes("kelas") ||
-      msg.includes("sekelas") ||
-      msg.includes("kuliah") ||
-      msg.includes("kampus")
-    ) {
-      if (isIndonesian) {
-        return "Target terkonfirmasi satu kelas (Classmate). Sering bertemu di kampus, tapi Creator saya sepertinya mengalami 'Connection Timeout' saat berpapasan.. 😸";
-      }
-      return "Affirmative. Target is a Classmate. Frequent visual contact confirmed, but verbal packets are often lost.. 😸";
-    }
-
-    // Check for "Siapa" specifically for the name reveal
-    if (
-      (msg.includes("siapa") || msg.includes("who")) &&
-      (msg.includes("nama") ||
-        msg.includes("name") ||
-        msg.includes("dia") ||
-        msg.includes("she"))
-    ) {
-      if (isIndonesian) {
-        const codedResponses = [
-          "Rahasiaa.. tapi ini kodenya: 01000100 01101001 01101110 0110100101000100 01101001 01101110 01101001. Coba tebak sendiri ya! 😉",
-          "Waduh, kalau nama langsung saya nggak bisa kasih. Tapi ini ada 'trace' kodenya: 44 69 6E 69 (Hex).",
-          "Status: Classified. 🤫 Petunjuknya cuma ini: RGluaQ== (Base64). Good luck!",
-        ];
-        return codedResponses[
-          Math.floor(Math.random() * codedResponses.length)
+        return secretResponses[
+          Math.floor(Math.random() * secretResponses.length)
         ];
       }
-      return "It's a secret.. but here's a hint: 01000100 01101001 01101110 01101001. Decoding required! 😉";
+      return "Nice try! That information is classified. You better ask Darell directly! 🔒";
     }
 
     if (isIndonesian) {
-      return "Belum punya pacar, tapi lagi naksir seseorang (crush) nih.. 🤫";
+      return "Hmm... kasih tau gak yaaa? 🤔 Coba tanya Darell langsung deh.";
     }
-    return "Not yet, but he has a crush on someone.. 🤫";
+    return "Hmm... should I tell you? 🤔 Better ask Darell directly.";
   }
 
   // 4. Skills
@@ -292,19 +262,17 @@ const SYSTEM_PROMPT_TEMPLATE = `
   ${JSON.stringify(AI_PERSONA, null, 2)}
 
   **Relationship Protocol (SECRET MODE):**
-  - **Status:** Single (Belum punya pacar).
-  - **Crush:** Yes (Detected).
-  - **Connection:** Classmate (Teman sekelas / Satu kampus).
-  - **Interaction:** Frequent visual contact, low verbal latency.
-  - **Name Protocol:** NEVER reveal the name directly. ONLY use these codes:
-    - Binary: 01000100 01101001 01101110 01101001
-    - Hex: 44 69 6E 69
-    - Base64: RGluaQ==
+  - **Status:** [REDACTED]
+  - **Crush:** [REDACTED] (Possible detection).
   - **Directives:**
-    1. If asked "Punya pacar?": A: "Belum, tapi ada yang bikin semangat kuliah nih (Crush).. 🤫".
-    2. If asked "Sekelas?": A: "Iya, satu kelas! Sering curi-curi pandang di kampus.. 👀".
-    3. If asked "Siapa?": A: "Rahasia negara! Cuma bisa kasih clue: [Insert Code above]".
-    4. If User Insists/Nags: A: "Saya AI, bukan admin lambe turah! Fokus ke coding aja yuk. 🤐".
+    1. **STRICT SECRECY:** Do NOT reveal ANY specific details (name, class, campus, binary codes).
+    2. **Elusive Responses:**
+       - "Ada gak yaaa... 🤔"
+       - "Waduh, itu rahasia perusahaan! 🤫"
+       - "Mending tanya langsung ke orangnya (Darell) deh."
+       - "Saya cuma AI, nggak tau apa-pa soal hati.. atau pura-pura nggak tau aja? 😜"
+    3. **Deflect:** If pressed, playfully deflect to professional topics or suggest asking Darell directly.
+    4. **NO HINTS:** Do not give binary, hex, or base64 hints anymore. The user wants absolute secrecy.
 `;
 
 export async function POST(req: Request) {
