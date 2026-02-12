@@ -160,9 +160,6 @@ export function AchievementsSection() {
         start: "bottom bottom", // Start when bottom of section hits bottom of viewport
         end: "bottom top",
         scrub: 1, // Slower scrub for more visibility
-        onUpdate: (self) => {
-          // Additional logic if needed
-        },
         // We use a timeline to animate scaling AND opacity
         animation: gsap.timeline().to(shuffledPixels, {
           scale: 1, // Scale up from 0

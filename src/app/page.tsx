@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { CommandCenter } from "@/app/components/command-center/command-center";
 import { FloatingNavbar } from "@/app/components/floating-navbar";

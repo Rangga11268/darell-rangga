@@ -6,7 +6,7 @@ import { ProjectCard } from "./project-card";
 import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
 
 import { motion, Variants } from "framer-motion";
-import { fadeInUp, viewportConfig } from "@/lib/animations";
+import { viewportConfig } from "@/lib/animations";
 
 interface ProjectListProps {
   projects: Project[];

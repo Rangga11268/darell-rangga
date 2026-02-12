@@ -7,19 +7,11 @@ import {
   Star,
   Code,
   ArrowSquareOut,
-  GitPullRequest,
   TrendUp,
   CornersOut,
 } from "@phosphor-icons/react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValue,
-} from "framer-motion";
+import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
-import { cn } from "@/lib/utils";
 
 // --- Types ---
 interface GithubData {
@@ -274,15 +266,13 @@ export function GithubWidget() {
   );
 }
 
-function StatBadge({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: any;
+interface StatBadgeProps {
+  icon: React.ElementType;
   label: string;
   value?: number;
-}) {
+}
+
+function StatBadge({ icon: Icon, label, value }: StatBadgeProps) {
   return (
     <div className="flex flex-col items-center justify-center bg-foreground/5 border border-foreground/5 rounded-2xl w-24 h-20">
       <Icon className="w-5 h-5 text-muted-foreground mb-1" />

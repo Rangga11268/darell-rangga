@@ -11,7 +11,6 @@ import {
   Users,
   CheckCircle,
   WarningCircle,
-  CaretRight,
 } from "@phosphor-icons/react";
 import Image from "next/image";
 import { Project } from "@/app/data/projects";

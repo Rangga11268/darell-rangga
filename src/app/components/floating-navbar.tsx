@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   House,
   User,
-  Briefcase,
   Code,
   Envelope,
   Moon,

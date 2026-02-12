@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { GithubWidget } from "./github-widget";
-import { SectionTitle } from "../section-title";
 import { useLanguage } from "@/app/providers/language-provider";
 import { GithubLogo } from "@phosphor-icons/react";
 

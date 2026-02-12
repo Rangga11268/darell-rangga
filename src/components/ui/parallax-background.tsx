@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ParallaxBackgroundProps {
   children: React.ReactNode;
@@ -11,7 +11,6 @@ interface ParallaxBackgroundProps {
 
 export function ParallaxBackground({
   children,
-  speed = 0.5,
   className = "",
 }: ParallaxBackgroundProps) {
   const ref = useRef(null);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +22,7 @@ export function TextScramble({
   const [displayText, setDisplayText] = useState(text);
   const [isScrambling, setIsScrambling] = useState(false);
 
-  const scramble = () => {
+  const scramble = useCallback(() => {
     if (isScrambling) return;
     setIsScrambling(true);
 
@@ -49,14 +49,14 @@ export function TextScramble({
 
       iteration += 1 / 3; // Controls how fast it resolves
     }, speed);
-  };
+  }, [text, characters, speed, isScrambling]);
 
   // Auto trigger on mount if 'always'
   useEffect(() => {
     if (trigger === "always") {
       scramble();
     }
-  }, []);
+  }, [trigger, scramble]);
 
   return (
     <motion.span
