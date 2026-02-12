@@ -14,6 +14,7 @@ import {
   Translate,
   FolderOpen,
   Terminal,
+  Sparkle,
   IconWeight,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
@@ -83,6 +84,12 @@ export function FloatingNavbar() {
                 label="Terminal"
                 onClick={() => setIsPlaygroundOpen(!isPlaygroundOpen)}
                 active={isPlaygroundOpen}
+                badge={
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-[10px] font-bold text-white shadow-lg shadow-purple-500/40 animate-pulse">
+                    <Sparkle weight="fill" className="w-3 h-3" />
+                    AI
+                  </span>
+                }
               />
               <MenuItem
                 icon={FolderOpen}
@@ -133,6 +140,14 @@ export function FloatingNavbar() {
             label="More"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             isActive={isMenuOpen}
+            badge={
+              !isMenuOpen && (
+                <div className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500 border border-white dark:border-zinc-900"></span>
+                </div>
+              )
+            }
           />
         </motion.nav>
       </div>
@@ -172,21 +187,24 @@ function DockButton({
   label,
   onClick,
   isActive,
+  badge,
 }: {
   icon: React.ComponentType<{ className?: string; weight?: IconWeight }>;
   label: string;
   onClick: () => void;
   isActive?: boolean;
+  badge?: React.ReactNode;
 }) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "liquid-glass-icon group",
+        "liquid-glass-icon group relative",
         isActive && "liquid-glass-icon-active",
       )}
       aria-label={label}
     >
+      {badge}
       <Icon
         className="w-5 h-5 md:w-6 md:h-6"
         weight={isActive ? "fill" : "duotone"}
@@ -200,14 +218,21 @@ function MenuItem({
   label,
   onClick,
   active,
+  badge,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   onClick: () => void;
   active?: boolean;
+  badge?: React.ReactNode;
 }) {
   return (
-    <button onClick={onClick} className="w-full text-left">
+    <button onClick={onClick} className="w-full text-left relative group/item">
+      {badge && (
+        <div className="absolute top-2 right-2 z-10 pointer-events-none">
+          {badge}
+        </div>
+      )}
       <div
         className={cn(
           "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer group backdrop-blur-sm h-24",
