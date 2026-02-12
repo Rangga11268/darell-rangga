@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
 import {
   CodeBlock,
@@ -32,6 +32,11 @@ interface Tier {
   details?: string[];
   tech: string;
   popular?: boolean;
+}
+
+interface ServiceItem {
+  title: string;
+  desc: string;
 }
 
 export function ServicesSection() {
@@ -104,7 +109,7 @@ export function ServicesSection() {
             <ServiceCard
               key={key}
               serviceId={key}
-              service={service as any}
+              service={service as ServiceItem}
               itemVariants={itemVariants}
             />
           ))}
@@ -393,8 +398,8 @@ function ServiceCard({
   itemVariants,
 }: {
   serviceId: string;
-  service: { title: string; desc: string };
-  itemVariants: any;
+  service: ServiceItem;
+  itemVariants: Variants;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const Icon = ICONS[serviceId as keyof typeof ICONS] || CodeBlock;

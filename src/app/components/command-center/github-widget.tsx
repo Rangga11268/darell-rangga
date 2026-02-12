@@ -122,6 +122,7 @@ export function GithubWidget() {
               <div className="flex flex-col md:flex-row items-center gap-4">
                 <div className="relative group shrink-0">
                   <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={user?.avatar_url}
                     alt="Profile"
@@ -226,6 +227,7 @@ export function GithubWidget() {
                   </div>
 
                   <div className="w-full h-full flex items-end justify-start md:justify-center pb-2 overflow-x-auto no-scrollbar mask-gradient-x">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={`https://ghchart.rshah.org/10b981/${user?.login}`}
                       alt="Chart"
