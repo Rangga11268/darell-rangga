@@ -410,6 +410,12 @@ function ServiceCard({
       className="group relative h-[300px]"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
+      animate={{
+        zIndex: isOpen ? 50 : 1,
+      }}
+      transition={{
+        zIndex: { delay: isOpen ? 0 : 0.5 }, // Delay Z-index reset to allow exit animation
+      }}
     >
       {/* Folder Tab (Static at back) */}
       <div className="absolute top-0 left-0 w-32 h-10 bg-zinc-200 dark:bg-zinc-800/50 rounded-t-2xl z-0 transition-colors duration-300 border-t border-l border-r border-black/5 dark:border-white/5" />
@@ -446,7 +452,7 @@ function ServiceCard({
       <motion.div
         animate={{
           y: isOpen ? "110%" : "0%",
-          opacity: isOpen ? 0 : 1,
+          opacity: 1, // Keep opacity constant to prevent flickering
           pointerEvents: isOpen ? "none" : "auto",
         }}
         transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
