@@ -5,7 +5,7 @@ import { Project } from "@/app/data/projects";
 import { ProjectCard } from "./project-card";
 import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { fadeInUp, viewportConfig } from "@/lib/animations";
 
 interface ProjectListProps {
@@ -13,6 +13,22 @@ interface ProjectListProps {
   onSelect: (project: Project) => void;
   language: "en" | "id";
 }
+
+const cardVariants: Variants = {
+  hidden: (index: number) => ({
+    opacity: 0,
+    x: index % 2 === 0 ? -100 : 100,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      duration: 0.8,
+      bounce: 0.3, // Added bounce for liveliness
+    },
+  },
+};
 
 export function ProjectList({
   projects,
@@ -26,14 +42,15 @@ export function ProjectList({
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col items-center">
-      <motion.div className="w-full space-y-12 lg:space-y-32 mb-16">
+      <motion.div className="w-full space-y-12 lg:space-y-32 mb-16 overflow-hidden px-4 md:px-0 py-10">
         {displayedProjects.map((project, index) => (
           <motion.div
             key={project.id}
+            custom={index}
             initial="hidden"
             whileInView="visible"
-            viewport={viewportConfig}
-            variants={fadeInUp}
+            viewport={{ once: true, margin: "-100px" }}
+            variants={cardVariants}
           >
             <ProjectCard
               project={project}

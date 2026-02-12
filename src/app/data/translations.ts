@@ -115,7 +115,7 @@ export const translations = {
         tiers: [
           {
             name: "Starter",
-            price: "Starts at $300",
+            price: "Starts at $15",
             desc: "Perfect for personal portfolios or simple landing pages.",
             features: [
               "Single Page / Landing Page",
@@ -136,7 +136,7 @@ export const translations = {
           },
           {
             name: "Business Growth",
-            price: "Starts at $800",
+            price: "Starts at $35",
             desc: "Robust full-stack solution for data-driven businesses.",
             features: [
               "Dynamic CMS (Laravel Filament)",
@@ -224,12 +224,15 @@ export const translations = {
         gaming: "Steam",
       },
       github: {
-        viewProfile: "View Profile",
+        title: "GitHub Activity",
+        description: "Fueling code, coffee, and commits.",
+        visit: "Visit",
         repos: "Repos",
         followers: "Followers",
-        activityMap: "Activity Map",
+        contributions: "Contributions",
+        latestCommit: "Latest Commit",
         lastYear: "Last Year",
-        topLanguages: "Top Languages",
+        topTech: "Top Tech",
       },
     },
   },
@@ -348,7 +351,7 @@ export const translations = {
         tiers: [
           {
             name: "Starter",
-            price: "Mulai Rp 1.5jt",
+            price: "Mulai Rp 150rb",
             desc: "Cocok untuk portofolio atau landing page sederhana.",
             features: [
               "Single Page / Landing Page",
@@ -369,7 +372,7 @@ export const translations = {
           },
           {
             name: "Business / UMKM",
-            price: "Mulai Rp 4jt",
+            price: "Mulai Rp 400rb",
             desc: "Solusi website dinamis & powerful. Favorit bisnis di Indonesia.",
             features: [
               "Admin Panel (Laravel Filament)",
@@ -457,12 +460,15 @@ export const translations = {
         gaming: "Steam",
       },
       github: {
-        viewProfile: "Lihat Profil",
+        title: "Aktivitas GitHub",
+        description: "Bahan bakar: kode, kopi, dan commit.",
+        visit: "Kunjungi",
         repos: "Repo",
         followers: "Pengikut",
-        activityMap: "Peta Aktivitas",
-        lastYear: "Setahun Terakhir",
-        topLanguages: "Bahasa Utama",
+        contributions: "Kontribusi",
+        latestCommit: "Commit Terakhir",
+        lastYear: "Tahun Lalu",
+        topTech: "Teknologi Utama",
       },
     },
   },

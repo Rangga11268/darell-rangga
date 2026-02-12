@@ -13,6 +13,7 @@ import { ProjectsSection } from "@/app/components/projects-section";
 import { ContactSection } from "@/app/components/contact-section";
 import { Footer } from "@/app/components/footer";
 import { BackToTop } from "@/app/components/back-to-top";
+import { AchievementsSection } from "@/app/components/achievements-section";
 import { CinematicIntro } from "@/components/ui/cinematic-intro";
 
 export default function Home() {
@@ -40,6 +41,7 @@ export default function Home() {
               <SkillsSection />
               <ServicesSection />
               <ProjectsSection />
+              <AchievementsSection />
               <CommandCenter />
               <ContactSection />
             </main>

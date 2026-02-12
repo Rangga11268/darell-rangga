@@ -15,6 +15,7 @@ import {
   Translate,
   FolderOpen,
   Terminal,
+  IconWeight,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -41,30 +42,24 @@ export function FloatingNavbar() {
     { name: t.nav.contact, href: "#contact", icon: Envelope },
   ];
 
-  const toolsItems = [
+  const tools = [
     {
-      name: "Terminal",
-      icon: Terminal,
-      onClick: () => setIsPlaygroundOpen(!isPlaygroundOpen),
-      highlight: isPlaygroundOpen,
+      name: "Theme",
+      icon: theme === "dark" ? Moon : Sun,
+      onClick: () => setTheme(theme === "dark" ? "light" : "dark"),
+      active: false,
     },
     {
-      name: "Files",
-      icon: FolderOpen,
-      onClick: () => {
-        if (openFolders.includes("system-files")) {
-          closeFolder("system-files");
-        } else {
-          openFolder("system-files");
-        }
-      },
-      highlight: openFolders.includes("system-files"),
+      name: "Language",
+      icon: Translate,
+      onClick: toggleLanguage,
+      active: language === "id",
     },
   ];
 
   return (
     <>
-      {/* 2. Expanded Menu (Grid) - Clean Glass */}
+      {/* Expanded Quick Actions Menu — Liquid Glass Panel */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -72,94 +67,88 @@ export function FloatingNavbar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
-            className="fixed bottom-28 inset-x-4 md:w-[340px] md:left-1/2 md:-translate-x-1/2 z-40 glass-card rounded-3xl p-5 flex flex-col gap-4"
+            className="fixed bottom-28 inset-x-4 md:w-[340px] md:left-1/2 md:-translate-x-1/2 z-40 rounded-3xl p-5 flex flex-col gap-4 liquid-glass-panel"
           >
             <div className="flex justify-between items-center px-2">
-              <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+              <span className="text-xs font-bold text-foreground/60 uppercase tracking-widest">
                 Quick Actions
               </span>
               <button onClick={() => setIsMenuOpen(false)}>
-                <X className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+                <X className="w-5 h-5 text-foreground/50 hover:text-foreground transition-colors" />
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <MenuItem
-                icon={theme === "dark" ? Moon : Sun}
-                label={theme === "dark" ? "Dark Mode" : "Light Mode"}
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                icon={Terminal}
+                label="Terminal"
+                onClick={() => setIsPlaygroundOpen(!isPlaygroundOpen)}
+                active={isPlaygroundOpen}
               />
               <MenuItem
-                icon={Translate}
-                label={language === "en" ? "Bahasa" : "English"}
-                onClick={toggleLanguage}
-                badge={language.toUpperCase()}
-              />
-            </div>
-            <div className="h-px bg-border/50 my-1" />
-            <div className="grid grid-cols-2 gap-3">
-              <MenuItem
-                icon={Briefcase}
-                label={t.nav.services}
-                href="#services"
-                onClick={() => setIsMenuOpen(false)}
+                icon={FolderOpen}
+                label="System Files"
+                onClick={() =>
+                  openFolders.includes("system-files")
+                    ? closeFolder("system-files")
+                    : openFolder("system-files")
+                }
+                active={openFolders.includes("system-files")}
               />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* 1. Main Floating Dock (Island) */}
+      {/* Main Floating Dock — Liquid Glass */}
       <div className="fixed bottom-6 inset-x-0 z-50 flex justify-center pointer-events-none">
         <motion.nav
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
-          className="pointer-events-auto h-16 md:h-20 px-3 md:px-6 bg-background/80 backdrop-blur-2xl border border-foreground/5 shadow-2xl rounded-full flex items-center gap-1 sm:gap-2 md:gap-4"
+          className="pointer-events-auto liquid-glass-dock"
         >
-          {/* Navigation Links */}
-          <div className="flex items-center gap-1 sm:gap-2">
-            {primaryItems.map((item) => (
-              <DockLink
-                key={item.name}
-                href={item.href}
-                icon={item.icon}
-                label={item.name}
-              />
-            ))}
-          </div>
+          {primaryItems.map((item) => (
+            <DockLink
+              key={item.name}
+              href={item.href}
+              icon={item.icon}
+              label={item.name}
+            />
+          ))}
 
-          <div className="w-px h-6 bg-border mx-1 md:mx-2" />
+          <div className="liquid-glass-divider" />
 
-          {/* Tools */}
-          <div className="flex items-center gap-1 sm:gap-2">
-            {toolsItems.map((item) => (
-              <DockButton
-                key={item.name}
-                onClick={item.onClick}
-                icon={item.icon}
-                label={item.name}
-                highlight={item.highlight}
-              />
-            ))}
-          </div>
+          {tools.map((item) => (
+            <DockButton
+              key={item.name}
+              icon={item.icon}
+              label={item.name}
+              onClick={item.onClick}
+              isActive={item.active}
+            />
+          ))}
 
-          <div className="w-px h-6 bg-border mx-1 md:mx-2" />
-
-          {/* Menu Toggle */}
           <DockButton
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
             icon={SquaresFour}
             label="More"
-            highlight={isMenuOpen}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            isActive={isMenuOpen}
           />
         </motion.nav>
       </div>
+
+      {/* SVG filter for glass refraction — rendered once, used by CSS */}
+      <svg className="absolute w-0 h-0" aria-hidden="true">
+        <defs>
+          <filter id="liquid-glass-blur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
+          </filter>
+        </defs>
+      </svg>
     </>
   );
 }
-
-// --- Components ---
 
 function DockLink({
   href,
@@ -167,52 +156,42 @@ function DockLink({
   label,
 }: {
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ElementType;
   label: string;
 }) {
   return (
-    <a
-      href={href}
-      className={cn(
-        "relative p-2.5 sm:p-3 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-300 group",
-        "hover:scale-110",
-      )}
-      aria-label={label}
-    >
-      <Icon className="w-5 h-5 md:w-6 md:h-6" />
-      <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-2.5 py-1.5 bg-foreground text-background text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-        {label}
-      </span>
+    <a href={href} className="liquid-glass-icon group" aria-label={label}>
+      <Icon className="w-5 h-5 md:w-6 md:h-6" weight="duotone" />
+      <span className="sr-only">{label}</span>
+      {/* Tooltip could go here */}
     </a>
   );
 }
 
 function DockButton({
-  onClick,
   icon: Icon,
   label,
-  highlight,
+  onClick,
+  isActive,
 }: {
-  onClick: () => void;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; weight?: IconWeight }>;
   label: string;
-  highlight?: boolean;
+  onClick: () => void;
+  isActive?: boolean;
 }) {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "relative p-2.5 sm:p-3 rounded-full transition-all duration-300 group hover:scale-110",
-        highlight
-          ? "bg-primary/10 text-primary hover:bg-primary/20"
-          : "text-muted-foreground hover:text-foreground hover:bg-muted",
+        "liquid-glass-icon group",
+        isActive && "liquid-glass-icon-active",
       )}
       aria-label={label}
     >
-      <Icon className="w-5 h-5 md:w-6 md:h-6" />
-      <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-2.5 py-1.5 bg-foreground text-background text-xs font-bold rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-        {label}
-      </span>
+      <Icon
+        className="w-5 h-5 md:w-6 md:h-6"
+        weight={isActive ? "fill" : "duotone"}
+      />
     </button>
   );
 }
@@ -221,38 +200,42 @@ function MenuItem({
   icon: Icon,
   label,
   onClick,
-  href,
-  badge,
+  active,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
-  onClick?: () => void;
-  href?: string;
-  badge?: string;
+  onClick: () => void;
+  active?: boolean;
 }) {
-  const content = (
-    <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 hover:bg-muted border border-transparent hover:border-border transition-all cursor-pointer group">
-      <div className="p-2 rounded-full bg-background border border-border group-hover:border-primary/50 transition-colors">
-        <Icon className="w-4 h-4 text-foreground" />
-      </div>
-      <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground flex-1">
-        {label}
-      </span>
-      {badge && (
-        <span className="text-[10px] font-bold px-1.5 py-0.5 bg-primary/10 text-primary rounded-full">
-          {badge}
-        </span>
-      )}
-    </div>
-  );
-
-  return href ? (
-    <a href={href} onClick={onClick}>
-      {content}
-    </a>
-  ) : (
+  return (
     <button onClick={onClick} className="w-full text-left">
-      {content}
+      <div
+        className={cn(
+          "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer group backdrop-blur-sm h-24",
+          active
+            ? "bg-primary/10 border-primary/20"
+            : "bg-foreground/[0.04] hover:bg-foreground/[0.08] border-foreground/[0.06] hover:border-foreground/[0.12]",
+        )}
+      >
+        <div
+          className={cn(
+            "p-2 rounded-xl border transition-all",
+            active
+              ? "bg-primary/20 border-primary/30 text-primary"
+              : "bg-foreground/[0.06] border-foreground/[0.08] group-hover:border-primary/40 text-muted-foreground",
+          )}
+        >
+          <Icon className="w-5 h-5" />
+        </div>
+        <span
+          className={cn(
+            "text-xs font-bold",
+            active ? "text-primary" : "text-foreground/60",
+          )}
+        >
+          {label}
+        </span>
+      </div>
     </button>
   );
 }
