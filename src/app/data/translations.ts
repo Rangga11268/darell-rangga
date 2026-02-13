@@ -117,7 +117,8 @@ export const translations = {
         tiers: [
           {
             name: "Starter",
-            price: "Starts at $25",
+            price: "Starts at $80",
+            oldPrice: "$150",
             desc: "Perfect for personal portfolios or simple landing pages.",
             features: [
               "Single Page / Landing Page",
@@ -138,7 +139,8 @@ export const translations = {
           },
           {
             name: "Business Growth",
-            price: "Starts at $65",
+            price: "Starts at $200",
+            oldPrice: "$350",
             desc: "Robust full-stack solution for data-driven businesses.",
             features: [
               "Dynamic CMS (Laravel Filament)",
@@ -355,7 +357,8 @@ export const translations = {
         tiers: [
           {
             name: "Starter",
-            price: "Mulai Rp 350rb",
+            price: "Mulai Rp 1.2jt",
+            oldPrice: "Rp 2.5jt",
             desc: "Cocok untuk portofolio atau landing page sederhana.",
             features: [
               "Single Page / Landing Page",
@@ -376,7 +379,8 @@ export const translations = {
           },
           {
             name: "Business / UMKM",
-            price: "Mulai Rp 950rb",
+            price: "Mulai Rp 3jt",
+            oldPrice: "Rp 6.5jt",
             desc: "Solusi website dinamis & powerful. Favorit bisnis di Indonesia.",
             features: [
               "Admin Panel (Laravel Filament)",

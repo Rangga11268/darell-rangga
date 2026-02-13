@@ -27,6 +27,7 @@ const ICONS = {
 interface Tier {
   name: string;
   price: string;
+  oldPrice?: string;
   desc: string;
   features: string[];
   details?: string[];
@@ -160,15 +161,27 @@ export function ServicesSection() {
                   >
                     {tier.name}
                   </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl md:text-5xl font-display font-bold text-foreground">
-                      {tier.price
-                        .replace("Starts at ", "")
-                        .replace("Mulai ", "")}
-                    </span>
-                    <span className="text-sm text-muted-foreground font-medium">
-                      {language === "en" ? "/ project" : "/ proyek"}
-                    </span>
+                  <div className="space-y-1">
+                    {tier.oldPrice && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-muted-foreground/60 line-through decoration-primary/30">
+                          {tier.oldPrice}
+                        </span>
+                        <span className="px-1.5 py-0.5 rounded-md bg-primary/10 text-[10px] font-bold text-primary uppercase tracking-tighter">
+                          Save {language === "en" ? "50%+" : "50%+"}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl md:text-5xl font-display font-bold text-foreground">
+                        {tier.price
+                          .replace("Starts at ", "")
+                          .replace("Mulai ", "")}
+                      </span>
+                      <span className="text-sm text-muted-foreground font-medium">
+                        {language === "en" ? "/ project" : "/ proyek"}
+                      </span>
+                    </div>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {tier.desc}

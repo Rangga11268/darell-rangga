@@ -289,20 +289,25 @@ export function ProjectDetailModal({
                       </a>
                     </Button>
                   )}
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="flex-1 h-12 bg-white/5 text-white hover:bg-white/10 border-white/10 rounded-xl font-bold text-base backdrop-blur-md"
-                  >
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <GithubLogo className="w-5 h-5 mr-2" weight="bold" />{" "}
-                      Source Code
-                    </a>
-                  </Button>
+                  {/* Only show GitHub if there is no Live Demo link */}
+                  {(!project.liveUrl || project.liveUrl === "#") &&
+                    project.githubUrl &&
+                    project.githubUrl !== "#" && (
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="flex-1 h-12 bg-white/5 text-white hover:bg-white/10 border-white/10 rounded-xl font-bold text-base backdrop-blur-md"
+                      >
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <GithubLogo className="w-5 h-5 mr-2" weight="bold" />{" "}
+                          Source Code
+                        </a>
+                      </Button>
+                    )}
                 </div>
               </div>
             </div>

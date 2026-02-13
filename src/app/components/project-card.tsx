@@ -177,16 +177,19 @@ export function ProjectCard({
             />
           </button>
 
-          {project.githubUrl && project.githubUrl !== "#" && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 rounded-full border border-border hover:border-primary hover:text-primary transition-all text-muted-foreground"
-            >
-              <GithubLogo weight="fill" className="w-6 h-6" />
-            </a>
-          )}
+          {/* Only show GitHub if there is no Live Demo link */}
+          {(!project.liveUrl || project.liveUrl === "#") &&
+            project.githubUrl &&
+            project.githubUrl !== "#" && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 rounded-full border border-border hover:border-primary hover:text-primary transition-all text-muted-foreground"
+              >
+                <GithubLogo weight="fill" className="w-6 h-6" />
+              </a>
+            )}
         </div>
       </div>
     </motion.div>
