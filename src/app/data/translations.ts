@@ -185,6 +185,12 @@ export const translations = {
           },
         ],
       },
+      cta: {
+        title: "Ready to Build Something Extraordinary?",
+        desc: "Each high-performance project begins with a simple conversation. Let's discuss your vision and turn it into a powerful digital reality.",
+        primary: "Let's Get Started",
+        secondary: "View Full Pricing",
+      },
     },
     contact: {
       title: "Let's Connect",
@@ -424,6 +430,12 @@ export const translations = {
             tech: "Full Stack Custom",
           },
         ],
+      },
+      cta: {
+        title: "Siap Membangun Sesuatu yang Luar Biasa?",
+        desc: "Setiap proyek performa tinggi dimulai dari sebuah diskusi sederhana. Mari bincangkan visi Anda dan ubah menjadi realitas digital yang tangguh.",
+        primary: "Mulai Sekarang",
+        secondary: "Lihat Detail Harga",
       },
     },
     contact: {

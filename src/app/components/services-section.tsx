@@ -98,23 +98,32 @@ export function ServicesSection() {
           </motion.h2>
         </div>
 
-        {/* Services Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {Object.entries(services).map(([key, service]) => (
-            <ServiceCard
-              key={key}
-              serviceId={key}
-              service={service as ServiceItem}
-              itemVariants={itemVariants}
-            />
-          ))}
-        </motion.div>
+        {/* Services Grid / Mobile Carousel */}
+        <div className="relative -mx-4 px-4 md:mx-0 md:px-0">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-x-auto md:overflow-x-visible pb-8 md:pb-0 snap-x snap-mandatory no-scrollbar"
+          >
+            {Object.entries(services).map(([key, service]) => (
+              <ServiceCard
+                key={key}
+                serviceId={key}
+                service={service as ServiceItem}
+                itemVariants={itemVariants}
+              />
+            ))}
+          </motion.div>
+
+          {/* Mobile Scroll Indicator (Subtle) */}
+          <div className="flex md:hidden justify-center gap-1.5 mt-4">
+            {Object.keys(services).map((_, i) => (
+              <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/10" />
+            ))}
+          </div>
+        </div>
 
         {/* Pricing Packages */}
         <div className="mt-32 mb-16">
@@ -248,63 +257,6 @@ export function ServicesSection() {
             ))}
           </div>
         </div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-32 p-1 relative rounded-[2.5rem] overflow-hidden group"
-        >
-          {/* Animated Gradient Border */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-purple-500 to-cyan-500 opacity-20 group-hover:opacity-100 blur-xl transition-opacity duration-1000" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-purple-500 to-cyan-500 animate-pulse opacity-0 group-hover:opacity-30 blur-2xl transition-opacity duration-700" />
-
-          <div className="relative rounded-[2.3rem] bg-card/90 backdrop-blur-xl border border-white/10 p-12 md:p-20 text-center overflow-hidden">
-            {/* Background Ambience */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-primary/5 blur-[120px] -z-10 rounded-full pointer-events-none" />
-            <div className="absolute inset-0 bg-[url('/img/grid.svg')] opacity-[0.03] pointer-events-none" />
-
-            <div className="relative z-10 flex flex-col items-center gap-8">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.5, type: "spring" }}
-                className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-primary to-purple-500 flex items-center justify-center text-black mb-2 shadow-lg shadow-primary/20"
-              >
-                <Rocket className="w-10 h-10" weight="fill" />
-              </motion.div>
-
-              <div className="space-y-6 max-w-3xl">
-                <h3 className="text-4xl md:text-6xl font-display font-bold text-foreground leading-tight">
-                  {language === "en" ? "Ready to Launch?" : "Siap Meluncur?"}
-                </h3>
-                <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-                  {language === "en"
-                    ? "Prices are tailored to your specific needs. Let's discuss your project scope and find the best solution."
-                    : "Harga disesuaikan dengan kebutuhan spesifik Anda. Mari diskusikan cakupan proyek Anda dan temukan solusi terbaik."}
-                </p>
-              </div>
-
-              <motion.a
-                href={`https://wa.me/628978638973?text=${encodeURIComponent(
-                  language === "en"
-                    ? "Hello, I'd like to get a quote for a project."
-                    : "Halo, saya ingin minta penawaran untuk proyek.",
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-4 px-10 py-5 bg-gradient-to-r from-primary to-primary/80 text-black font-bold text-lg rounded-full shadow-lg shadow-primary/25 flex items-center gap-3 hover:gap-4 transition-all"
-              >
-                {language === "en" ? "Get a Quote" : "Dapatkan Penawaran"}
-                <ArrowRight className="w-5 h-5" weight="bold" />
-              </motion.a>
-            </div>
-          </div>
-        </motion.div>
       </div>
 
       {/* Package Details Modal */}
@@ -404,7 +356,7 @@ export function ServicesSection() {
   );
 }
 
-// Reusable ServiceCard Component with Toggle Logic
+// Reusable ServiceCard Component - New Glass Bento Design
 function ServiceCard({
   serviceId,
   service,
@@ -414,95 +366,46 @@ function ServiceCard({
   service: ServiceItem;
   itemVariants: Variants;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
   const Icon = ICONS[serviceId as keyof typeof ICONS] || CodeBlock;
 
   return (
     <motion.div
       variants={itemVariants}
-      className="group relative h-[300px]"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-      animate={{
-        zIndex: isOpen ? 50 : 1,
-      }}
-      transition={{
-        zIndex: { delay: isOpen ? 0 : 0.5 }, // Delay Z-index reset to allow exit animation
-      }}
+      className="group relative h-[320px] md:h-auto md:aspect-square lg:aspect-[4/3] p-8 rounded-[2rem] bg-card/30 border border-white/10 hover:border-primary/50 transition-all duration-500 overflow-hidden snap-center shrink-0 w-[85vw] md:w-auto"
     >
-      {/* Folder Tab (Static at back) */}
-      <div className="absolute top-0 left-0 w-32 h-10 bg-zinc-200 dark:bg-zinc-800/50 rounded-t-2xl z-0 transition-colors duration-300 border-t border-l border-r border-black/5 dark:border-white/5" />
+      {/* Interactive Background Glow */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-      {/* Main Folder Back (Static) */}
-      <div className="absolute inset-0 top-6 bg-zinc-100 dark:bg-card/40 border border-black/5 dark:border-white/5 rounded-3xl rounded-tl-none shadow-inner z-0 overflow-hidden">
-        {/* Card Content (Always Present, Revealed when Cover Moves) */}
-        <div className="absolute inset-0 p-8 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <Icon className="w-5 h-5 text-primary" weight="fill" />
-              </div>
-              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest">
-                {serviceId}
-              </span>
-            </div>
-            <h4 className="text-xl font-bold text-foreground mb-3">
+      {/* Decorative Grid Pattern (Subtle) */}
+      <div className="absolute inset-0 bg-[url('/img/grid.svg')] opacity-[0.02] pointer-events-none" />
+
+      <div className="relative z-10 h-full flex flex-col justify-between">
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <motion.div
+              whileHover={{ rotate: 10, scale: 1.1 }}
+              className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors duration-500"
+            >
+              <Icon className="w-7 h-7 text-primary" weight="fill" />
+            </motion.div>
+            <span className="text-[10px] font-mono text-primary/40 uppercase tracking-[0.2em]">
+              {serviceId}
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
               {service.title}
             </h4>
             <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">
               {service.desc}
             </p>
           </div>
-
-          <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest cursor-pointer hover:underline">
-            Details Unlocked{" "}
-            <ArrowRight className="w-3.5 h-3.5" weight="bold" />
-          </div>
         </div>
       </div>
 
-      {/* Folder Front Cover (Animates Down based on isOpen state) */}
-      <motion.div
-        animate={{
-          y: isOpen ? "110%" : "0%",
-          opacity: 1, // Keep opacity constant to prevent flickering
-          pointerEvents: isOpen ? "none" : "auto",
-        }}
-        transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-        className="absolute inset-0 top-6 bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-3xl rounded-tl-none shadow-2xl z-10 overflow-hidden flex flex-col items-center justify-center p-6 text-center"
-      >
-        {/* Subtle Grain Texture */}
-        <div className="absolute inset-0 opacity-[0.03] bg-noise pointer-events-none" />
-
-        {/* Gradient Sheen */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent dark:from-white/5 pointer-events-none" />
-
-        {/* Centered Icon & Title */}
-        <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-white to-zinc-100 dark:from-zinc-800 dark:to-zinc-900 shadow-xl mb-6 flex items-center justify-center border border-white/50 dark:border-white/5">
-          <Icon
-            className="w-8 h-8 text-zinc-600 dark:text-zinc-300"
-            weight="duotone"
-          />
-        </div>
-        <h3 className="text-2xl font-display font-medium text-zinc-800 dark:text-zinc-200 mb-6">
-          {service.title}
-        </h3>
-
-        {/* Action Button (The Trigger) */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsOpen(!isOpen);
-          }}
-          className="relative px-6 py-2.5 rounded-full bg-primary text-black font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group/btn"
-        >
-          <span>View Details</span>
-          <CaretRight
-            weight="bold"
-            className="w-3.5 h-3.5 group-hover/btn:rotate-90 transition-transform"
-          />
-        </button>
-      </motion.div>
+      {/* Subtle Grain Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] bg-noise pointer-events-none" />
     </motion.div>
   );
 }
