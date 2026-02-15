@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import type { Metadata } from "next"; // Typography: Outfit + Readex Pro
+import { Outfit, Readex_Pro } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
@@ -10,13 +10,13 @@ import { AITerminal } from "@/app/components/ai-terminal/ai-terminal";
 import { FileSystemProvider } from "@/app/providers/file-system-provider";
 import { FolderWindow } from "@/app/components/folder-window";
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const readexPro = Readex_Pro({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
@@ -105,7 +105,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${plusJakarta.variable} antialiased bg-background text-foreground`}
+        className={`${outfit.variable} ${readexPro.variable} antialiased bg-background text-foreground`}
       >
         <div className="fixed inset-0 z-[50] pointer-events-none bg-noise opacity-[0.03] mix-blend-overlay" />
         <BackgroundController />
