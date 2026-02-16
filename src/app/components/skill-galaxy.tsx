@@ -252,9 +252,6 @@ export function SkillGalaxy() {
                         <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
                           {selectedSkill.level}
                         </span>
-                        <span className="text-xs text-muted-foreground">
-                          {selectedSkill.years} Years Exp.
-                        </span>
                       </div>
                     </div>
                   </div>

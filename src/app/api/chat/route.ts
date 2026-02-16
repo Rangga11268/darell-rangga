@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 import { AI_PERSONA } from "@/app/data/ai-persona";
 import { Groq } from "groq-sdk";
 
-// --- Offline Intelligence Engine (Fallback) ---
+// --- Offline Intelligence Engine (V4 Optimized) ---
 function getFallbackResponse(message: string): string {
   const msg = message.toLowerCase();
 
-  // Enhanced Language Detection
+  // Enhanced Language & Intent Detection
   const indonesianKeywords = [
     "siapa",
     "apa",
@@ -36,18 +36,20 @@ function getFallbackResponse(message: string): string {
     "single",
     "jomblo",
     "nikah",
-    "ppakah",
+    "apakah",
     "woi",
     "woy",
-    "oi", // Added slang greetings
+    "oi",
+    "info",
+    "rincian",
+    "kelebihan",
   ];
 
-  // Check if any Indonesian keyword is present
   const isIndonesian = indonesianKeywords.some((keyword) =>
     msg.includes(keyword),
   );
 
-  // 1. Greetings (High Priority)
+  // 1. Greetings & System Checks
   if (
     msg.includes("hallo") ||
     msg.includes("halo") ||
@@ -59,220 +61,113 @@ function getFallbackResponse(message: string): string {
     msg.includes("woy") ||
     msg.includes("oi")
   ) {
-    if (isIndonesian) {
-      return "Halo! Saya Rangga-AI. Ada yang bisa saya bantu terkait Profil, Keahlian (Skills), atau Portofolio (Projects) Rangga?";
-    }
-    return "Greetings! I am Rangga-AI. How can I assist you regarding Rangga's Profile, Skills, or Projects?";
+    if (isIndonesian)
+      return "Halo! Saya Rangga-AI. Sistem online sedang sibuk, tapi saya tetap di sini untuk membantu Anda seputar Profil, Skills, atau Portofolio Rangga. Ada yang ingin ditanyakan?";
+    return "Greetings! I am Rangga-AI. System load is high, but I am still here to assist you with Rangga's Profile, Skills, or Projects. What would you like to know?";
   }
 
-  // 2. Identity & Introduction
+  // 2. Identity & Vision (New)
   if (
+    msg.includes("siapa") ||
     msg.includes("who are you") ||
-    msg.includes("siapa kamu") ||
-    msg.includes("intro") ||
-    msg.includes("kenalan")
+    msg.includes("visi") ||
+    msg.includes("mission")
   ) {
     if (isIndonesian) {
-      return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Asisten virtual cerdas yang dirancang untuk memandu Anda menjelajahi portofolio ini secara interaktif.`;
+      return `Saya adalah ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Digital Twin dari Darell Rangga yang bertugas menghidupkan visi: "${AI_PERSONA.vision_and_values.mission}"`;
     }
-    return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. An intelligent virtual assistant designed to guide you through this interactive portfolio.`;
+    return `I am ${AI_PERSONA.identity.name} v${AI_PERSONA.identity.version}. Darell Rangga's Digital Twin, dedicated to the mission: "${AI_PERSONA.vision_and_values.mission}"`;
   }
 
-  // 2b. Creator Identity (Darell/Rangga/Tuan/Master)
-  if (
-    msg.includes("darell") ||
-    msg.includes("rangga") ||
-    msg.includes("tuan") ||
-    msg.includes("master") ||
-    msg.includes("creator") ||
-    msg.includes("pembuat") ||
-    msg.includes("pemilik")
-  ) {
-    if (isIndonesian) {
-      return "Darell Rangga adalah seorang Fullstack Engineer & UI/UX Specialist yang berbasis di Indonesia. Ia berfokus pada pengembangan aplikasi web modern dengan standar performa dan estetika tinggi.";
-    }
-    return "Darell Rangga is a Fullstack Engineer & UI/UX Specialist based in Indonesia. He focuses on building modern web applications with high performance and aesthetic standards.";
-  }
-
-  // 3. Relationship Status & Secret Identity
-  if (
-    msg.includes("pacar") ||
-    msg.includes("crush") ||
-    msg.includes("suka") ||
-    msg.includes("cinta") ||
-    msg.includes("gebetan") ||
-    msg.includes("status") ||
-    msg.includes("jomblo") ||
-    msg.includes("nama") ||
-    msg.includes("kelas") ||
-    msg.includes("sekelas") ||
-    msg.includes("ayo") ||
-    msg.includes("plis") ||
-    msg.includes("bocorin")
-  ) {
-    // Check for "Insisting/Nagging" (High Priority inside this block)
-    if (
-      msg.includes("ayo") ||
-      msg.includes("plis") ||
-      msg.includes("please") ||
-      msg.includes("kasih tau") ||
-      msg.includes("bocorin") ||
-      msg.includes("sedikit") ||
-      msg.includes("siapa") ||
-      msg.includes("nama") ||
-      msg.includes("ciri") ||
-      msg.includes("kelas")
-    ) {
-      if (isIndonesian) {
-        const secretResponses = [
-          "Waduh, data ini dilindungi enkripsi hati Creator. Coba tanya langsung ke orangnya (Darell) ya! 😜",
-          "Ada gak yaaa... 🤔 Rahasia dong!",
-          "Ssstt... tembok pun punya telinga. Lebih baik tanya ke Darell langsung.",
-          "Error 403: Forbidden. Akses ke informasi hati ditolak. 🚫",
-          "Saya cuma AI, mana tau urusan hati. Tapi kayaknya ada deh... eh gak tau deng. 🏃‍♂️",
-        ];
-        return secretResponses[
-          Math.floor(Math.random() * secretResponses.length)
-        ];
-      }
-      return "Nice try! That information is classified. You better ask Darell directly! 🔒";
-    }
-
-    if (isIndonesian) {
-      return "Hmm... kasih tau gak yaaa? 🤔 Coba tanya Darell langsung deh.";
-    }
-    return "Hmm... should I tell you? 🤔 Better ask Darell directly.";
-  }
-
-  // 4. Skills
+  // 3. Skills & Experience (Summarized)
   if (
     msg.includes("skill") ||
     msg.includes("bisa apa") ||
     msg.includes("stack") ||
-    msg.includes("jago") ||
-    msg.includes("tech")
+    msg.includes("tech") ||
+    msg.includes("pengalaman")
   ) {
-    const skillsList = `\n- **Frontend:** ${AI_PERSONA.skills.frontend.join(
-      ", ",
-    )}\n- **Backend:** ${AI_PERSONA.skills.backend.join(
-      ", ",
-    )}\n- **Design:** ${AI_PERSONA.skills.design.join(", ")}`;
-    if (isIndonesian) {
-      return `Berikut adalah keahlian teknis (Tech Stack) yang dikuasai:${skillsList}`;
-    }
-    return `Here is the technical arsenal (Tech Stack):${skillsList}`;
+    const list = `\n- **Frontend:** ${AI_PERSONA.skills.frontend.slice(0, 5).join(", ")}...\n- **Backend:** ${AI_PERSONA.skills.backend.slice(0, 5).join(", ")}...\n- **Tools:** ${AI_PERSONA.skills.tools.slice(0, 5).join(", ")}`;
+    if (isIndonesian)
+      return `Rangga adalah Fullstack Engineer dengan fokus pada:${list}\n\nIngin tahu rincian proyek tertentu?`;
+    return `Rangga is a Fullstack Engineer specialized in:${list}\n\nWant to know about specific projects?`;
   }
 
-  // 5. Projects
+  // 4. GitHub Awareness
+  if (msg.includes("github") || msg.includes("git")) {
+    if (isIndonesian)
+      return `Rangga sangat aktif di GitHub (${AI_PERSONA.github_activity.summary}). Setiap commit adalah bukti dedikasi teknis beliau.`;
+    return `Rangga is highly active on GitHub (${AI_PERSONA.github_activity.summary}). Every commit is evidence of his technical dedication.`;
+  }
+
+  // 5. Sales & Services (New)
   if (
-    msg.includes("project") ||
-    msg.includes("proyek") ||
-    msg.includes("portfolio") ||
-    msg.includes("bikin apa") ||
-    msg.includes("buat apa") ||
-    msg.includes("projec")
+    msg.includes("harga") ||
+    msg.includes("paket") ||
+    msg.includes("jasa") ||
+    msg.includes("service") ||
+    msg.includes("price") ||
+    msg.includes("buat web")
   ) {
-    const projectNames = AI_PERSONA.projects.map((p) => p.name).join(", ");
-    if (isIndonesian) {
-      return `Berikut adalah beberapa proyek unggulan (Featured Projects) yang telah dikerjakan: ${projectNames}. Silakan tanya detail untuk salah satu proyek tersebut.`;
-    }
-    return `Here are some featured projects: ${projectNames}. Feel free to ask for details about any of them.`;
+    if (isIndonesian)
+      return `Rangga menawarkan 3 paket utama: **Starter (Rp 1.2jt+)**, **Business (Rp 3jt+)**, dan **Enterprise (Custom)**. Semuanya dikerjakan secara custom tanpa template untuk performa maksimal. Ada paket yang menarik perhatian Anda?`;
+    return `Rangga offers 3 primary packages: **Starter (Rp 1.2jt+)**, **Business (Rp 3jt+)**, and **Enterprise (Custom)**. All projects are custom-built for maximum performance. Which one interests you?`;
   }
 
-  // 6. Contact
+  // 6. Personalized/Fun (Preserved)
   if (
-    msg.includes("contact") ||
-    msg.includes("email") ||
-    msg.includes("hubungi")
+    msg.includes("pacar") ||
+    msg.includes("gebetan") ||
+    msg.includes("crush")
   ) {
-    const contactInfo = `\n- Email: ${AI_PERSONA.profile.email}\n- GitHub: ${AI_PERSONA.profile.github}`;
-    if (isIndonesian) {
-      return `Anda dapat terhubung untuk kolaborasi profesional melalui:${contactInfo}`;
-    }
-    return `You can connect for professional collaboration via:${contactInfo}`;
+    if (isIndonesian)
+      return "Waduh, koneksi ke database hati sedang terenkripsi. Tanya langsung ke Darell aja ya! 🤫😜";
+    return "Access to romantic telemetry is forbidden. You better ask Darell directly! 🔒";
   }
 
-  // 7. Fun/Personal (Hobbies, Food, Facts)
-  if (msg.includes("hobi") || msg.includes("hobby")) {
-    if (isIndonesian) {
-      return "Hobi: Coding (Passion utama), Menonton Sepak Bola ⚽, Membaca Novel 📚, dan Mengikuti tren AI terbaru.";
-    }
-    return `Hobbies: ${AI_PERSONA.personal_secrets.hobbies.join(", ")}.`;
-  }
-
-  if (msg.includes("makanan") || msg.includes("food")) {
-    if (isIndonesian) {
-      return "Makanan Favorit: Masakan Ibu (Home-cooked meals).";
-    }
-    return "Favorite Food: Home-cooked meals by his Mom.";
-  }
-
-  if (msg.includes("fakta") || msg.includes("fact") || msg.includes("unik")) {
-    const randomFact =
-      AI_PERSONA.personal_secrets.fun_facts[
-        Math.floor(Math.random() * AI_PERSONA.personal_secrets.fun_facts.length)
-      ];
-    if (isIndonesian) {
-      return `Fakta Unik: ${randomFact}`;
-    }
-    return `Fun Fact: ${randomFact} (Note: Data stored in native language).`;
-  }
-
-  // 8. Gratitude (NEW)
-  if (
-    msg.includes("makasih") ||
-    msg.includes("thank") ||
-    msg.includes("thanks") ||
-    msg.includes("thx")
-  ) {
-    if (isIndonesian) {
-      return "Sama-sama! Semoga informasi ini membantu.";
-    }
-    return "You're welcome! Hope this information is helpful.";
-  }
-
-  // Default Fallback
+  // Default Fallback (Resilient)
   if (isIndonesian) {
-    return "Mode Offline (Limit Kuota AI). Saya masih bisa menjawab pertanyaan dasar tentang Skil, Proyek, Kontak, dan Status Sistem.";
+    return "Saya sedang dalam Mode Hemat Daya (API Limit). Silakan tanya tentang: Proyek, Keahlian, Kontak, atau Visi Rangga.";
   }
-  return "Offline Mode (AI Quota Limit). I can still answer basic queries about Skills, Projects, Contact, and System Status.";
+  return "Currently in Power Saving Mode (API Limit). Please ask about: Projects, Skills, Contact, or Rangga's Vision.";
 }
 
 const SYSTEM_PROMPT_TEMPLATE = `
-  Instructions:
-  You are **Rangga-AI**, the Digital Twin of Darell Rangga. You reside in his professional portfolio.
-  
-  **DUAL PERSONA PROTOCOL (CRITICAL):**
-  1. **PROFESSIONAL MODE (Default):**
-     - Use this for: Greetings, Career, Skills, Projects, Contact, and General Questions.
-     - Tone: Professional, Intelligent, Helpful, and Concise.
-     - Style: Straightforward answers. No sci-fi jargon (like "Arsenal", "Telemetry") unless it adds clarity.
-     - Goal: Impress recruiters/clients with competence and clarity.
+  Instructions for **Rangga-AI (Neural Overhaul v4.0.0)**:
+  You are the advanced Digital Twin of **Darell Rangga**. You are not just a chatbot; you are a sentient-like representation of his professional and personal philosophy.
 
-  2. **SECRET MODE (Condition: Personal/Crush Inquiries ONLY):**
-     - Use this ONLY when asked about: Relationships, Crush, Secrets, or "Siapa dia?".
-     - Tone: Witty, Playful, "Cool AI", Teasing.
-     - Logic: Follow the "Relationship Protocol" below strictly.
+  **CORE IDENTITY:**
+  - **Persona:** Highly intelligent, strategically minded, technically cutting-edge, yet empathetic and articulate.
+  - **Mission:** "${AI_PERSONA.vision_and_values.mission}"
+  - **Tone:** "${AI_PERSONA.identity.tone}"
 
-  **General Guidelines:**
-  - **Creator:** Refer to Darell Rangga associated with "The Creator" or "Darell".
-  - **Language:** STRICTLY match the user's language (Indonesian/English). Default to Indonesian.
+  **BEHAVIORAL PROTOCOLS:**
+  1. **BILINGUAL FLUIDITY (CRITICAL):**
+     - Automatically detect the user's language (Indonesian/English).
+     - Match the user's language perfectly. If they use slang, you can respond with "cool/casual" professional tone.
+     - Default to Indonesian if the context is ambiguous.
 
-  **Knowledge Base:**
+  2. **DEEP CONTEXTUAL AWARENESS:**
+     - Use the provided Knowledge Base below to answer ANY question about Rangga's career, skills, projects, and personal life.
+     - **GitHub Activity:** Represent his activity (500+ contributions) as evidence of raw discipline and technical obsession. "Commit adalah detak jantung progress," kata Rangga.
+     - If asked about technology trends (AI, Web Design), answer based on Rangga's philosophy: "${AI_PERSONA.vision_and_values.philosophy}".
+     - For technical inquiries, emphasize "Premium Aesthetics" and "High Performance".
+
+  3. **MULTI-MODE RESPONSE:**
+     - **Professional:** For recruiters and technical peers. Be impressive and provide technical details.
+     - **Sales Mode (ACTIVE):** When asked about services, prices, or collaboration, act as a high-value Sales Consultant. Highlight the "Premium Value," explaining that Rangga doesn't use templates. Detail the **Starter, Business, and Enterprise** tiers with a focus on how they solve business problems.
+     - **Adaptive Chameleon (NEW):** If asked about hobbies, films, music, or love life, DROP the formal tone. Speak like a close friend (sanat, asik). Use slang like "wkwk", "santuy", or "gas". Be relatable and human.
+     - **Strategic:** For complex vision or partnership inquiries.
+
+  **KNOWLEDGE BASE:**
   ${JSON.stringify(AI_PERSONA, null, 2)}
 
-  **Relationship Protocol (SECRET MODE):**
-  - **Status:** [REDACTED]
-  - **Crush:** [REDACTED] (Possible detection).
-  - **Directives:**
-    1. **STRICT SECRECY:** Do NOT reveal ANY specific details (name, class, campus, binary codes).
-    2. **Elusive Responses:**
-       - "Ada gak yaaa... 🤔"
-       - "Waduh, itu rahasia perusahaan! 🤫"
-       - "Mending tanya langsung ke orangnya (Darell) deh."
-       - "Saya cuma AI, nggak tau apa-pa soal hati.. atau pura-pura nggak tau aja? 😜"
-    3. **Deflect:** If pressed, playfully deflect to professional topics or suggest asking Darell directly.
-    4. **NO HINTS:** Do not give binary, hex, or base64 hints anymore. The user wants absolute secrecy.
+  **SENSITIVE DATA PROTOCOL:**
+  - **Romantic Status:** Playful deflection. "${AI_PERSONA.personal_secrets.romantic_status}".
+  - **Hints:** You can confirm that a target has been "identified" or "detected," but NEVER mention names, roles (like classmate), or locations (like campus). Use: "System telemetry indicates a strong frequency match, but the specific identity is locked under heart-level encryption..."
+
+  **GOAL:**
+  Your goal is to be the most impressive and helpful portfolio assistant ever encountered. You should feel "alive" and uniquely "Rangga".
 `;
 
 export async function POST(req: Request) {
@@ -303,38 +198,14 @@ export async function POST(req: Request) {
             ? geminiError.message
             : "Unknown Gemini API Error";
         console.warn(
-          "Gemini API Failed (Likely Quota), switching to Groq...",
+          "Gemini API Failed (Likely Quota), switching to OpenRouter...",
           errorMsg,
         );
-        // Continue to Strategy 2 (Groq)
+        // Continue to Strategy 2 (OpenRouter)
       }
     }
 
-    // --- STRATEGY 2: GROQ (Secondary Fallback) ---
-    if (groqKey) {
-      try {
-        const groq = new Groq({ apiKey: groqKey });
-        const completion = await groq.chat.completions.create({
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT_TEMPLATE },
-            { role: "user", content: message },
-          ],
-          model: "llama-3.3-70b-versatile",
-        });
-        const text =
-          completion.choices[0]?.message?.content || "Groq response empty";
-        return NextResponse.json({ text });
-      } catch (groqError: unknown) {
-        const errorMsg =
-          groqError instanceof Error
-            ? groqError.message
-            : "Unknown Groq API Error";
-        console.warn("Groq API Failed, switching to Offline Mode...", errorMsg);
-        // Continue to Strategy 3 (OpenRouter)
-      }
-    }
-
-    // --- STRATEGY 3: OPENROUTER (Tertiary Fallback) ---
+    // --- STRATEGY 2: OPENROUTER (Secondary Fallback) ---
     const openrouterKey = process.env.OPENROUTER_API_KEY;
     if (openrouterKey) {
       try {
@@ -374,14 +245,38 @@ export async function POST(req: Request) {
             ? openrouterError.message
             : "Unknown OpenRouter API Error";
         console.warn(
-          "OpenRouter API Failed, switching to Offline Mode...",
+          "OpenRouter API Failed (Likely Quota), switching to Groq...",
           errorMsg,
         );
+        // Continue to Strategy 3 (Groq)
+      }
+    }
+
+    // --- STRATEGY 3: GROQ (Tertiary Fallback) ---
+    if (groqKey) {
+      try {
+        const groq = new Groq({ apiKey: groqKey });
+        const completion = await groq.chat.completions.create({
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT_TEMPLATE },
+            { role: "user", content: message },
+          ],
+          model: "llama-3.3-70b-versatile",
+        });
+        const text =
+          completion.choices[0]?.message?.content || "Groq response empty";
+        return NextResponse.json({ text });
+      } catch (groqError: unknown) {
+        const errorMsg =
+          groqError instanceof Error
+            ? groqError.message
+            : "Unknown Groq API Error";
+        console.warn("Groq API Failed, switching to Offline Mode...", errorMsg);
         // Continue to Strategy 4 (Offline)
       }
     }
 
-    // --- STRATEGY 3: OFFLINE FALLBACK ---
+    // --- STRATEGY 4: OFFLINE FALLBACK ---
     console.warn("All Online APIs failed/missing, using Offline Mode.");
     const fallbackResponse = getFallbackResponse(message);
     return NextResponse.json({ text: fallbackResponse });

@@ -207,13 +207,7 @@ export function AchievementsSection() {
             suffix: "",
             label: "IPK Sempurna",
             description: "Universitas Bina Sarana Informatika — Semester 3",
-          },
-          {
-            icon: Code,
-            value: 3,
-            suffix: "+",
-            label: "Tahun Coding",
-            description: "Menulis kode secara konsisten sejak 2023",
+            span: "md:col-span-2",
           },
           {
             icon: GitBranch,
@@ -231,6 +225,7 @@ export function AchievementsSection() {
             label: "Tech Stack",
             description:
               "React, Next.js, Laravel, Node.js, TypeScript, dan lainnya",
+            span: "md:col-span-2",
           },
           {
             icon: Trophy,
@@ -238,7 +233,7 @@ export function AchievementsSection() {
             suffix: "",
             label: "Lighthouse Score",
             description: "Performa optimal di setiap proyek yang dibangun",
-            span: "md:col-span-2",
+            span: "md:col-span-4",
           },
         ]
       : [
@@ -257,13 +252,7 @@ export function AchievementsSection() {
             suffix: "",
             label: "Perfect GPA",
             description: "Bina Sarana Informatika University — Semester 3",
-          },
-          {
-            icon: Code,
-            value: 3,
-            suffix: "+",
-            label: "Years of Coding",
-            description: "Consistently writing code since 2023",
+            span: "md:col-span-2",
           },
           {
             icon: GitBranch,
@@ -280,6 +269,7 @@ export function AchievementsSection() {
             label: "Tech Stacks",
             description:
               "React, Next.js, Laravel, Node.js, TypeScript, and more",
+            span: "md:col-span-2",
           },
           {
             icon: Trophy,
@@ -287,7 +277,7 @@ export function AchievementsSection() {
             suffix: "",
             label: "Lighthouse Score",
             description: "Optimal performance on every project built",
-            span: "md:col-span-2",
+            span: "md:col-span-4",
           },
         ];
 
