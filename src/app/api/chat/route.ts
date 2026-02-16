@@ -330,7 +330,54 @@ export async function POST(req: Request) {
             ? groqError.message
             : "Unknown Groq API Error";
         console.warn("Groq API Failed, switching to Offline Mode...", errorMsg);
-        // Continue to Strategy 3 (Offline)
+        // Continue to Strategy 3 (OpenRouter)
+      }
+    }
+
+    // --- STRATEGY 3: OPENROUTER (Tertiary Fallback) ---
+    const openrouterKey = process.env.OPENROUTER_API_KEY;
+    if (openrouterKey) {
+      try {
+        const response = await fetch(
+          "https://openrouter.ai/api/v1/chat/completions",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${openrouterKey}`,
+              "Content-Type": "application/json",
+              "HTTP-Referer": "http://localhost:3000", // Optional, for OpenRouter analytics
+              "X-Title": "Rangga Portfolio", // Optional
+            },
+            body: JSON.stringify({
+              model: "meta-llama/llama-3.3-70b-instruct:free",
+              messages: [
+                { role: "system", content: SYSTEM_PROMPT_TEMPLATE },
+                { role: "user", content: message },
+              ],
+            }),
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            `OpenRouter API responded with status: ${response.status}`,
+          );
+        }
+
+        const data = await response.json();
+        const text =
+          data.choices?.[0]?.message?.content || "OpenRouter response empty";
+        return NextResponse.json({ text });
+      } catch (openrouterError: unknown) {
+        const errorMsg =
+          openrouterError instanceof Error
+            ? openrouterError.message
+            : "Unknown OpenRouter API Error";
+        console.warn(
+          "OpenRouter API Failed, switching to Offline Mode...",
+          errorMsg,
+        );
+        // Continue to Strategy 4 (Offline)
       }
     }
 
