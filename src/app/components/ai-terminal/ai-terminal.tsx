@@ -31,14 +31,24 @@ function Typewriter({
   text,
   speed = 12,
   onScroll,
+  onComplete,
+  isStopped = false,
 }: {
   text: string;
   speed?: number;
   onScroll?: () => void;
+  onComplete?: () => void;
+  isStopped?: boolean;
 }) {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRedacted, setIsRedacted] = useState(false);
+
+  const isStoppedRef = useRef(isStopped);
+
+  useEffect(() => {
+    isStoppedRef.current = isStopped;
+  }, [isStopped]);
 
   useEffect(() => {
     if (currentIndex === 0 && text.length > 0) {
@@ -48,19 +58,29 @@ function Typewriter({
   }, [text, currentIndex]);
 
   useEffect(() => {
+    // Immediate stop if halted
+    if (isStoppedRef.current) {
+      return;
+    }
+
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-        if (onScroll) onScroll();
+        // Double check inside timeout to prevent race conditions
+        if (!isStoppedRef.current) {
+          setDisplayText((prev) => prev + text[currentIndex]);
+          setCurrentIndex((prev) => prev + 1);
+          if (onScroll) onScroll();
+        }
       }, speed);
 
       return () => clearTimeout(timeout);
+    } else {
+      if (onComplete) onComplete();
     }
-  }, [currentIndex, text, speed, onScroll]);
+  }, [currentIndex, text, speed, onScroll, onComplete]); // Removed isStopped from dep array, handled by ref
 
   useEffect(() => {
-    if (currentIndex >= text.length && !isRedacted) {
+    if (currentIndex >= text.length && !isRedacted && !isStopped) {
       if (text.includes("Trace:")) {
         const timeout = setTimeout(() => {
           setDisplayText((prev) => {
@@ -77,12 +97,12 @@ function Typewriter({
         return () => clearTimeout(timeout);
       }
     }
-  }, [currentIndex, text, isRedacted]);
+  }, [currentIndex, text, isRedacted, isStopped]);
 
   return (
     <p className="whitespace-pre-wrap leading-relaxed">
       {displayText}
-      {currentIndex < text.length && (
+      {currentIndex < text.length && !isStopped && (
         <span className="inline-block w-2 h-4 bg-primary/80 ml-0.5 animate-pulse" />
       )}
     </p>
@@ -148,6 +168,9 @@ export function AITerminal() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isStopped, setIsStopped] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const [connectionStatus] = useState<"connected" | "thinking" | "error">(
     "connected",
   );
@@ -159,7 +182,30 @@ export function AITerminal() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages, isTyping, isGenerating]);
+
+  const handleStop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsStopped(true);
+    setIsTyping(false);
+    setIsGenerating(false);
+
+    // Add terminated message if stopping during fetch
+    if (isTyping) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now().toString(),
+          sender: "ai",
+          text: "... [TERMINATED BY USER]",
+          timestamp: new Date(),
+        },
+      ]);
+    }
+  };
 
   const quickCommands = [
     { icon: Question, label: "help", command: "help" },
@@ -176,6 +222,13 @@ export function AITerminal() {
   const handleSend = async (overrideInput?: string) => {
     const messageText = overrideInput || input;
     if (!messageText.trim()) return;
+
+    // Reset states
+    setIsStopped(false);
+
+    // Create new abort controller
+    if (abortControllerRef.current) abortControllerRef.current.abort();
+    abortControllerRef.current = new AbortController();
 
     const userCommand = messageText.toLowerCase().trim();
 
@@ -263,6 +316,7 @@ Status: Open for opportunities ✓`;
         };
         setMessages((prev) => [...prev, aiMsg]);
         setIsTyping(false);
+        setIsGenerating(true);
       }, 600);
       return;
     }
@@ -272,6 +326,7 @@ Status: Open for opportunities ✓`;
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: messageText }),
+        signal: abortControllerRef.current?.signal, // Correct optional chaining
       });
 
       const data = await response.json();
@@ -284,16 +339,30 @@ Status: Open for opportunities ✓`;
       };
 
       setMessages((prev) => [...prev, aiMsg]);
-    } catch {
-      const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: "ai",
-        text: "⚠️ Neural connection interrupted. Please try again.",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMsg]);
+      setIsGenerating(true);
+    } catch (error: unknown) {
+      // Check for AbortError (user stopped the request)
+      if (error instanceof Error && error.name === "AbortError") {
+        const abortedMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: "ai",
+          text: "... [TERMINATED BY USER]",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, abortedMsg]);
+      } else {
+        const errorMsg: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: "ai",
+          text: "⚠️ Neural connection interrupted. Please try again.",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, errorMsg]);
+      }
     } finally {
       setIsTyping(false);
+      // Don't set isGenerating = false here yet, Typewriter will do it
+      abortControllerRef.current = null;
     }
   };
 
@@ -308,13 +377,18 @@ Status: Open for opportunities ✓`;
     ]);
   };
 
+  const handleTypewriterComplete = () => {
+    setIsGenerating(false);
+  };
+
   return (
-    <AnimatePresence>
-      {isPlaygroundOpen && (
+    <AnimatePresence mode="wait">
+      {isPlaygroundOpen ? (
         <motion.div
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "100%", opacity: 0 }}
+          key="terminal-window"
+          initial={{ y: "100%", opacity: 0, scale: 0.9 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: "100%", opacity: 0, scale: 0.9 }}
           transition={{ type: "spring", damping: 30, stiffness: 300 }}
           drag
           dragMomentum={false}
@@ -433,7 +507,12 @@ Status: Open for opportunities ✓`;
                       }`}
                     >
                       {msg.sender === "ai" ? (
-                        <Typewriter text={msg.text} onScroll={scrollToBottom} />
+                        <Typewriter
+                          text={msg.text}
+                          onScroll={scrollToBottom}
+                          onComplete={handleTypewriterComplete}
+                          isStopped={isStopped}
+                        />
                       ) : (
                         <p className="whitespace-pre-wrap">{msg.text}</p>
                       )}
@@ -489,20 +568,69 @@ Status: Open for opportunities ✓`;
                       className="w-full bg-muted/40 border border-border rounded-2xl py-3.5 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
-                  <motion.button
-                    type="submit"
-                    disabled={!input.trim() || isTyping}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-primary-foreground shadow-lg shadow-primary/30 transition-all"
-                  >
-                    <PaperPlaneTilt className="w-5 h-5" weight="duotone" />
-                  </motion.button>
+                  {isTyping || isGenerating ? (
+                    <motion.button
+                      type="button"
+                      onClick={handleStop}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-3.5 bg-red-500/80 hover:bg-red-500 rounded-2xl text-white shadow-lg shadow-red-500/20 transition-all flex items-center justify-center"
+                      title="Terminate Response"
+                    >
+                      <div className="w-4 h-4 bg-white rounded-sm" />
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      type="submit"
+                      disabled={!input.trim()}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-3.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary hover:to-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl text-primary-foreground shadow-lg shadow-primary/30 transition-all"
+                    >
+                      <PaperPlaneTilt className="w-5 h-5" weight="duotone" />
+                    </motion.button>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </motion.div>
+      ) : (
+        <motion.button
+          key="terminal-trigger"
+          onClick={() => setIsPlaygroundOpen(true)}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 group origin-center"
+        >
+          {/* Holographic Pulse Effect */}
+          <div className="absolute inset-0 bg-primary/30 rounded-full blur-xl animate-pulse" />
+          <div className="absolute -inset-1 bg-gradient-to-br from-primary via-blue-500 to-purple-500 rounded-full opacity-70 blur-md group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Main Button Body */}
+          <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-background/80 backdrop-blur-xl border border-primary/30 flex items-center justify-center shadow-2xl overflow-hidden">
+            {/* Spinning Border */}
+            <div className="absolute inset-0 rounded-full border border-primary/20 animate-[spin_4s_linear_infinite]" />
+            <div className="absolute inset-1 rounded-full border border-primary/10 animate-[spin_3s_linear_infinite_reverse]" />
+
+            {/* Icon */}
+            <Robot
+              className="w-6 h-6 md:w-8 md:h-8 text-primary group-hover:text-primary-foreground transition-colors duration-300 relative z-10"
+              weight="duotone"
+            />
+
+            {/* Hover Fill Effect */}
+            <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </div>
+
+          {/* Tooltip Label */}
+          <div className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-background/80 backdrop-blur-md border border-primary/20 rounded-lg text-xs font-medium text-foreground whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none">
+            Ask Rangga AI
+          </div>
+        </motion.button>
       )}
     </AnimatePresence>
   );

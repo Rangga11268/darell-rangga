@@ -40,7 +40,7 @@ export function BackToTop() {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-[100] cursor-pointer group"
+          className="fixed bottom-28 right-4 md:right-8 z-[90] cursor-pointer group"
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
