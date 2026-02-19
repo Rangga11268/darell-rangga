@@ -222,8 +222,8 @@ export async function POST(req: Request) {
             headers: {
               Authorization: `Bearer ${openrouterKey}`,
               "Content-Type": "application/json",
-              "HTTP-Referer": "http://localhost:3000", // Optional, for OpenRouter analytics
-              "X-Title": "Rangga Portfolio", // Optional
+              "HTTP-Referer": "https://www.darellrangga.me",
+              "X-Title": "Darell Rangga Portfolio",
             },
             body: JSON.stringify({
               model: "meta-llama/llama-3.3-70b-instruct:free",

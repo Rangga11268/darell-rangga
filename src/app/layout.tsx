@@ -23,65 +23,88 @@ const readexPro = Readex_Pro({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://darell-rangga.vercel.app"),
+  metadataBase: new URL("https://www.darellrangga.me"),
   title: {
-    default: "Rangga | Interactive Portfolio",
-    template: "%s | Rangga Portfolio",
+    default: "Darell Rangga | Fullstack Developer & UI/UX Designer Indonesia",
+    template: "%s | Darell Rangga Portfolio",
   },
   description:
-    "Portfolio of Darell Rangga, a Frontend Developer specializing in React, Next.js, and modern UI/UX design. Explore the Interactive Portfolio.",
+    "Darell Rangga adalah Fullstack Developer Indonesia yang ahli dalam React, Next.js, Laravel, dan UI/UX Design. Lihat portfolio interaktif dengan project-project inovatif.",
   keywords: [
     "Darell Rangga",
     "Rangga",
-    "Frontend Developer",
+    "Darell Rangga Portfolio",
+    "Frontend Developer Indonesia",
+    "Fullstack Developer Indonesia",
     "React Developer",
     "Next.js Developer",
+    "Laravel Developer",
     "Web Developer Indonesia",
-    "Portfolio",
+    "Web Developer Bekasi",
+    "Jasa Pembuatan Website",
+    "Jasa Web Developer",
+    "Portfolio Developer",
     "Creative Developer",
-    "Cyberpunk UI",
-    "Software Engineer",
+    "UI/UX Designer Indonesia",
+    "Software Engineer Indonesia",
+    "Programmer Indonesia",
+    "Web Designer",
+    "React Portfolio",
+    "Interactive Portfolio",
   ],
-  authors: [{ name: "Darell Rangga", url: "https://darell-rangga.vercel.app" }],
+  authors: [{ name: "Darell Rangga", url: "https://www.darellrangga.me" }],
   creator: "Darell Rangga",
   publisher: "Darell Rangga",
+  alternates: {
+    canonical: "https://www.darellrangga.me",
+    languages: {
+      "en-US": "https://www.darellrangga.me",
+      "id-ID": "https://www.darellrangga.me",
+    },
+  },
   openGraph: {
-    title: "Rangga | Interactive Portfolio",
+    title: "Darell Rangga | Fullstack Developer & UI/UX Designer",
     description:
-      "Explore the futuristic portfolio of Darell Rangga. Featuring interactive 3D elements, modern tech stack, and creative projects.",
-    url: "https://darell-rangga.vercel.app",
-    siteName: "Rangga Portfolio",
-    locale: "en_US",
+      "Portfolio interaktif Darell Rangga - Fullstack Developer Indonesia. Spesialisasi React, Next.js, Laravel dengan project-project kreatif dan inovatif.",
+    url: "https://www.darellrangga.me",
+    siteName: "Darell Rangga Portfolio",
+    locale: "id_ID",
+    alternateLocale: "en_US",
     type: "website",
     images: [
       {
-        url: "/og-image.png", // We should ideally ensure this image exists, or use a placeholder if not
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Rangga Interactive Portfolio",
+        alt: "Darell Rangga - Fullstack Developer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rangga | Interactive Portfolio",
+    site: "@ranggsdarell",
+    title: "Darell Rangga | Fullstack Developer Indonesia",
     description:
-      "Frontend Developer specializing in React & Next.js. Check out my interactive portfolio.",
-    creator: "@Rangga11268", // Assuming this handle or similar
-    images: ["/og-image.png"],
+      "Fullstack Developer spesialisasi React, Next.js & Laravel. Lihat portfolio interaktif saya!",
+    creator: "@ranggsdarell",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
-  // icons property removed to let Next.js handle it automatically via icon.png
+  verification: {
+    google: "googlebbaa9ab4b882f7e2.html",
+  },
   category: "technology",
 };
 
@@ -97,13 +120,142 @@ export const viewport = {
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { BackgroundController } from "@/components/ui/background-controller";
 
+// JSON-LD Structured Data for SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.darellrangga.me/#website",
+      url: "https://www.darellrangga.me",
+      name: "Darell Rangga Portfolio",
+      description:
+        "Portfolio interaktif Darell Rangga - Fullstack Developer Indonesia",
+      publisher: { "@id": "https://www.darellrangga.me/#person" },
+      inLanguage: ["id-ID", "en-US"],
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.darellrangga.me/#person",
+      name: "Darell Rangga",
+      alternateName: ["Rangga", "Darell Rangga Putra Rachman"],
+      url: "https://www.darellrangga.me",
+      image: {
+        "@type": "ImageObject",
+        url: "https://www.darellrangga.me/img/saya/saya1.webp",
+        width: 400,
+        height: 400,
+      },
+      description:
+        "Fullstack Developer Indonesia spesialisasi React, Next.js, Laravel, dan UI/UX Design",
+      jobTitle: "Fullstack Developer",
+      worksFor: {
+        "@type": "Organization",
+        name: "Freelance",
+      },
+      alumniOf: {
+        "@type": "EducationalOrganization",
+        name: "Universitas Bina Sarana Informatika",
+      },
+      knowsAbout: [
+        "React.js",
+        "Next.js",
+        "TypeScript",
+        "Laravel",
+        "PHP",
+        "Tailwind CSS",
+        "UI/UX Design",
+        "Web Development",
+        "Frontend Development",
+        "Backend Development",
+      ],
+      sameAs: [
+        "https://github.com/Rangga11268",
+        "https://www.linkedin.com/in/darell-rangga-1320b634b/",
+        "https://x.com/ranggsdarell",
+        "https://www.instagram.com/darellrangga17/",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Bekasi",
+        addressCountry: "ID",
+      },
+      email: "darellrangga@gmail.com",
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.darellrangga.me/#webpage",
+      url: "https://www.darellrangga.me",
+      name: "Darell Rangga | Fullstack Developer & UI/UX Designer Indonesia",
+      description:
+        "Portfolio interaktif Darell Rangga - Fullstack Developer Indonesia. Spesialisasi React, Next.js, Laravel dengan project-project kreatif.",
+      isPartOf: { "@id": "https://www.darellrangga.me/#website" },
+      about: { "@id": "https://www.darellrangga.me/#person" },
+      inLanguage: ["id-ID", "en-US"],
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://www.darellrangga.me/#profilepage",
+      url: "https://www.darellrangga.me",
+      name: "Darell Rangga Portfolio",
+      mainEntity: { "@id": "https://www.darellrangga.me/#person" },
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.darellrangga.me/#services",
+      serviceType: "Web Development",
+      provider: { "@id": "https://www.darellrangga.me/#person" },
+      areaServed: {
+        "@type": "Country",
+        name: "Indonesia",
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Web Development Services",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Landing Page Development",
+              description: "Pembuatan landing page modern dengan Next.js",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Full Stack Web Application",
+              description: "Aplikasi web fullstack dengan Laravel & React",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "UI/UX Design",
+              description: "Desain antarmuka yang modern dan responsif",
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="id" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${outfit.variable} ${readexPro.variable} antialiased bg-background text-foreground`}
       >

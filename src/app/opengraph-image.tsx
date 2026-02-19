@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Darell Rangga - Interactive Portfolio";
+export const alt = "Darell Rangga - Fullstack Developer Indonesia | Portfolio";
 export const size = {
   width: 1200,
   height: 630,

@@ -1,38 +1,21 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://darell-rangga.vercel.app";
+  const baseUrl = "https://www.darellrangga.me";
+  const currentDate = new Date();
 
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/#about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#projects`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 1.0,
     },
     {
-      url: `${baseUrl}/#services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
+      url: `${baseUrl}/`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 1.0,
     },
   ];
 }

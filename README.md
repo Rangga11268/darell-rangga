@@ -11,7 +11,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animation-purple?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-[🚀 Live Demo](https://darell-rangga.vercel.app/) • [� View CV](public/img/saya/CV%20IND.pdf) • [🐛 Report Issue](https://github.com/Rangga11268/my-portfolio/issues)
+[🚀 Live Demo](https://www.darellrangga.me/) • [📄 View CV](public/img/saya/CV%20IND.pdf) • [🐛 Report Issue](https://github.com/Rangga11268/my-portfolio/issues)
 
 </div>
 
