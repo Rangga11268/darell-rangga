@@ -201,6 +201,28 @@
   }
 }
 
+/* --- PERFORMANCE: Reduced Motion Support --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Kill Framer Motion will-change to save GPU memory */
+  [style*="will-change"] {
+    will-change: auto !important;
+  }
+}
+
+/* --- PERFORMANCE: Containment hints --- */
+section {
+  contain: layout style;
+}
+
 /* --- LIQUID GLASS EFFECT (Apple-style) --- */
 .liquid-glass-dock {
   @apply h-16 md:h-20 px-3 md:px-6 rounded-full flex items-center gap-1 sm:gap-2 md:gap-4;

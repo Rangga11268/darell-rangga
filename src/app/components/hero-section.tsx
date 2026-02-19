@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -18,45 +12,25 @@ import { useLanguage } from "@/app/providers/language-provider";
 
 import { HeroIdCard } from "./hero-id-card";
 import { TextScramble } from "@/components/ui/text-scramble";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 
 export function HeroSection() {
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
   const { scrollY } = useScroll();
 
-  const yText = useTransform(scrollY, [0, 600], [0, 80]);
-  const opacityHero = useTransform(scrollY, [600, 1200], [1, 0]);
-
-  // 3D Tilt Effect
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { stiffness: 150, damping: 20 };
-  const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [15, -15]),
-    springConfig,
+  // Only apply scroll transforms on desktop to avoid continuous repaints on mobile
+  const yText = useTransform(scrollY, [0, 600], isMobile ? [0, 0] : [0, 60]);
+  const opacityHero = useTransform(
+    scrollY,
+    [600, 1200],
+    isMobile ? [1, 1] : [1, 0],
   );
-  const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-15, 15]),
-    springConfig,
-  );
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-
-    // Normalize -0.5 to 0.5
-    const x = clientX / innerWidth - 0.5;
-    const y = clientY / innerHeight - 0.5;
-
-    mouseX.set(x);
-    mouseY.set(y);
-  };
 
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-20"
-      onMouseMove={handleMouseMove}
     >
       {/* 1. Background: Grainy Mesh Gradient (Clean & Modern) */}
       <div className="absolute inset-0 w-full h-full bg-background">
@@ -210,11 +184,10 @@ export function HeroSection() {
 
         {/* 3. Visual (Right) - 3D Name Tag */}
         <motion.div
-          style={{ rotateX, rotateY, perspective: 1000 }}
-          initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="flex-1 w-full max-w-md flex justify-center perspective-1000"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="flex-1 w-full max-w-md flex justify-center"
         >
           <HeroIdCard />
         </motion.div>
