@@ -61,8 +61,8 @@ export function ProjectDetailModal({
 
   if (!project) return null;
 
-  const hasChallenges = Boolean(project.challenges?.length);
-  const hasSolutions = Boolean(project.solutions?.length);
+  const hasChallenges = Boolean(project.challenges?.en?.length);
+  const hasSolutions = Boolean(project.solutions?.en?.length);
   const hasTeam = Boolean(project.team?.length);
 
   const labels = {
@@ -279,7 +279,7 @@ export function ProjectDetailModal({
                       {labels.team}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {project.team.map((member, idx) => (
+                      {project.team?.map((member, idx) => (
                         <div
                           key={idx}
                           className="flex items-center gap-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 px-4 py-3"
