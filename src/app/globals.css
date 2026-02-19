@@ -219,8 +219,9 @@
 }
 
 /* --- PERFORMANCE: Containment hints --- */
+/* NOTE: contain:layout removed — it breaks position:fixed inside sections */
 section {
-  contain: layout style;
+  contain: style;
 }
 
 /* --- LIQUID GLASS EFFECT (Apple-style) --- */

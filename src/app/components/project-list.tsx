@@ -42,7 +42,7 @@ export function ProjectList({
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col items-center">
-      <motion.div className="w-full space-y-12 lg:space-y-32 mb-16 overflow-hidden px-4 md:px-0 py-10">
+      <motion.div className="w-full space-y-12 lg:space-y-32 mb-16 overflow-x-hidden px-4 md:px-0 py-10">
         {displayedProjects.map((project, index) => (
           <motion.div
             key={project.id}
