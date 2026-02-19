@@ -25,7 +25,7 @@ const readexPro = Readex_Pro({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.darellrangga.me"),
   title: {
-    default: "Darell Rangga | Fullstack Developer & UI/UX Designer Indonesia",
+    default: "Darell Rangga | Fullstack Developer Indonesia",
     template: "%s | Darell Rangga Portfolio",
   },
   description:
