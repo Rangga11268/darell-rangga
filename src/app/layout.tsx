@@ -103,7 +103,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "googlebbaa9ab4b882f7e2.html",
+    google: "JhY7zAsb9NU3JSzeGqjPidiX_cZQCoVdHZ7lN5grIyw",
   },
   category: "technology",
 };
