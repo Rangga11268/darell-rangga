@@ -1,22 +1,15 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Briefcase,
   GraduationCap,
   Trophy,
-  Code,
   Star,
   GitBranch,
 } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface Milestone {
   icon: React.ElementType;
@@ -142,53 +135,7 @@ export function AchievementsSection() {
   const { language } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const pixelGridRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-
-  // === GSAP PIXEL DISSOLVE TRANSITION (ENHANCED) ===
-  useEffect(() => {
-    if (!sectionRef.current || !pixelGridRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const pixels = gsap.utils.toArray(".pixel-block");
-
-      // Shuffle array for random dissolve order
-      const shuffledPixels = pixels.sort(() => Math.random() - 0.5);
-
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: "bottom bottom", // Start when bottom of section hits bottom of viewport
-        end: "bottom top",
-        scrub: 1, // Slower scrub for more visibility
-        // We use a timeline to animate scaling AND opacity
-        animation: gsap.timeline().to(shuffledPixels, {
-          scale: 1, // Scale up from 0
-          opacity: 1, // Fade in
-          duration: 0.5,
-          stagger: {
-            amount: 1.5, // Longer spread
-            from: "random",
-            grid: [10, 10], // Approximate grid
-          },
-          ease: "power2.out",
-        }),
-      });
-
-      // Parallax Content - moves slower to let pixels overtake it
-      gsap.to(".achievements-content", {
-        scale: 0.9,
-        filter: "blur(10px)",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "60% center",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const milestones: Milestone[] =
     language === "id"
@@ -198,7 +145,7 @@ export function AchievementsSection() {
             value: 10,
             suffix: "+",
             label: "Proyek Selesai",
-            description: "Solusi web yang berhasil dibangun dan diluncurkan",
+            description: "Solusi web yang berhasil dibangun",
             span: "md:col-span-2",
           },
           {
@@ -243,7 +190,7 @@ export function AchievementsSection() {
             suffix: "+",
             label: "Projects Completed",
             description:
-              "Real-world web solutions successfully built and launched",
+              "Real-world web solutions successfully built",
             span: "md:col-span-2",
           },
           {
@@ -281,11 +228,6 @@ export function AchievementsSection() {
           },
         ];
 
-  // Create Grid of Pixels (10x10 = 100 pixels for denser effect)
-  const cols = 10;
-  const rows = 10;
-  const pixels = Array.from({ length: cols * rows });
-
   return (
     <section
       ref={sectionRef}
@@ -305,7 +247,7 @@ export function AchievementsSection() {
       {/* Main Content */}
       <div
         ref={containerRef}
-        className="container mx-auto px-4 md:px-6 relative z-10 achievements-content"
+        className="container mx-auto px-4 md:px-6 relative z-10"
       >
         {/* Header */}
         <div className="mb-16 md:mb-24 space-y-4">
@@ -354,24 +296,6 @@ export function AchievementsSection() {
             />
           ))}
         </div>
-      </div>
-
-      {/* === PIXEL DISSOLVE OVERLAY (ENHANCED) === */}
-      <div
-        ref={pixelGridRef}
-        className="absolute inset-0 z-40 pointer-events-none grid grid-cols-10 grid-rows-10"
-        style={{ height: "100%", width: "100%" }}
-      >
-        {pixels.map((_, i) => (
-          <div
-            key={i}
-            className="pixel-block w-full h-full bg-background border-[0.5px] border-white/5" // Added subtle border for grid effect
-            style={{
-              opacity: 0,
-              transform: "scale(0)", // Start scaled down
-            }}
-          />
-        ))}
       </div>
     </section>
   );
