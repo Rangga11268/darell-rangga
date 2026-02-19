@@ -1,0 +1,8 @@
+{
+  "chat.tools.terminal.autoApprove": {
+    "/^git commit -m \"perf: reduce lag on mobile - disable heavy animations & parallax\" && git push origin perf/reduce-lag$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
+}

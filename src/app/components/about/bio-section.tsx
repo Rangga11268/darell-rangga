@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { User } from "@phosphor-icons/react";
+import { User, Code, Briefcase, Trophy } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useRef } from "react";
 
@@ -42,7 +42,7 @@ const TextReveal = ({ text }: { text: string }) => {
 };
 
 export function BioSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -166,17 +166,73 @@ export function BioSection() {
 
           {/* Text Content */}
           <div className="md:col-span-8 space-y-8 pl-0 md:pl-12">
+            {/* Stat Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="grid grid-cols-3 gap-3 md:gap-4"
+            >
+              {[
+                {
+                  icon: Briefcase,
+                  value: "2+",
+                  label: language === "id" ? "Tahun Exp" : "Years Exp",
+                  color: "text-primary",
+                },
+                {
+                  icon: Code,
+                  value: "10+",
+                  label: language === "id" ? "Proyek" : "Projects",
+                  color: "text-blue-500",
+                },
+                {
+                  icon: Trophy,
+                  value: "4.00",
+                  label: "GPA",
+                  color: "text-amber-500",
+                },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.15 + i * 0.08 }}
+                  className="flex flex-col items-center justify-center p-4 md:p-5 rounded-2xl bg-card border border-border hover:border-primary/30 transition-colors group"
+                >
+                  <stat.icon
+                    className={`w-5 h-5 mb-2 ${stat.color} opacity-70 group-hover:opacity-100 transition-opacity`}
+                    weight="duotone"
+                  />
+                  <span
+                    className={`text-2xl md:text-3xl font-black font-display ${stat.color}`}
+                  >
+                    {stat.value}
+                  </span>
+                  <span className="text-[10px] md:text-xs text-muted-foreground font-medium mt-0.5 uppercase tracking-wider text-center">
+                    {stat.label}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <TextReveal text={t.about.journeyText} />
               <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mt-8 p-6 md:p-8 rounded-2xl bg-secondary/30 border-l-4 border-primary backdrop-blur-sm"
+                className="mt-8 p-6 md:p-8 rounded-2xl bg-primary/5 border border-primary/20 relative overflow-hidden"
               >
-                <p className="text-lg md:text-xl italic text-muted-foreground m-0">
-                  &quot;{t.about.journeyDesc}&quot;
+                {/* Decorative quote mark */}
+                <span className="absolute top-3 left-5 text-6xl font-black text-primary/10 leading-none select-none">
+                  &ldquo;
+                </span>
+                <p className="text-lg md:text-xl text-muted-foreground m-0 relative z-10 pl-4">
+                  {t.about.journeyDesc}
                 </p>
               </motion.div>
             </div>

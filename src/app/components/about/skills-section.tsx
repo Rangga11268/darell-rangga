@@ -15,10 +15,10 @@ export function SkillsSection() {
       className="py-24 bg-secondary/30 relative overflow-hidden"
     >
       <ParallaxBackground
-        className="absolute inset-0 z-0 opacity-30"
+        className="absolute inset-0 z-0 opacity-20"
         speed={0.2}
       >
-        <div className="absolute inset-0 bg-[url('/img/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle,_hsl(var(--primary)/0.4)_1px,_transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       </ParallaxBackground>
 
       <div className="container px-4 md:px-6 mx-auto relative z-10">
