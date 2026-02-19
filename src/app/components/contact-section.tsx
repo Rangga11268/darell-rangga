@@ -246,7 +246,7 @@ export function ContactSection() {
             className="md:col-span-2 lg:col-span-2 md:row-span-2 relative group"
           >
             <Card className="h-full border-white/5 bg-primary overflow-hidden relative border-0">
-              <div className="absolute inset-0 bg-[url('/img/grid.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(0,0,0,0.4)_1px,_transparent_1px)] bg-[size:20px_20px] opacity-20 mix-blend-overlay pointer-events-none" />
               <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
                 <Envelope
                   size={180}

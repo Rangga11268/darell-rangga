@@ -377,7 +377,7 @@ function ServiceCard({
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
       {/* Decorative Grid Pattern (Subtle) */}
-      <div className="absolute inset-0 bg-[url('/img/grid.svg')] opacity-[0.02] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle,_hsl(var(--primary)/0.3)_1px,_transparent_1px)] bg-[size:24px_24px] opacity-[0.15] pointer-events-none" />
 
       <div className="relative z-10 h-full flex flex-col justify-between">
         <div className="space-y-6">
