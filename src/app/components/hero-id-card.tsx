@@ -11,90 +11,101 @@ import Image from "next/image";
 import { useCallback, useRef } from "react";
 import { QrCode } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 
 export function HeroIdCard() {
   const { t } = useLanguage();
   const ref = useRef<HTMLDivElement>(null);
-  // Motion values for 3D tilt
+  const isMobile = useIsMobile();
+
+  // Motion values for 3D tilt - only active on desktop
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Smooth spring physics for rotation
+  // Springs only used on desktop
   const mouseX = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseY = useSpring(y, { stiffness: 300, damping: 30 });
 
-  // Map mouse position to rotation degrees
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["25deg", "-25deg"]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-25deg", "25deg"]);
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-  // Holographic shimmer effect based on rotation
+  // Holographic shimmer - desktop only
   const glareX = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
 
+  // Pre-compute holographic background outside JSX to respect hooks rules
+  const holoBackground = useTransform(
+    [glareX, glareY],
+    () =>
+      `linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.1) 50%, transparent 54%)`,
+  );
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!ref.current) return;
-
+      if (!ref.current || isMobile) return;
       const rect = ref.current.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-
-      // Calculate normalized mouse position (-0.5 to 0.5)
-      // 0 is center, -0.5 is left/top, 0.5 is right/bottom
-      const mouseXPos = (e.clientX - rect.left) / width - 0.5;
-      const mouseYPos = (e.clientY - rect.top) / height - 0.5;
-
-      x.set(mouseXPos);
-      y.set(mouseYPos);
+      x.set((e.clientX - rect.left) / rect.width - 0.5);
+      y.set((e.clientY - rect.top) / rect.height - 0.5);
     },
-    [x, y],
+    [x, y, isMobile],
   );
 
   const handleMouseLeave = useCallback(() => {
-    // Reset to center but keep a slight idle float
     x.set(0);
     y.set(0);
   }, [x, y]);
 
-  // Variants for the drop animation
-  const cardVariants: Variants = {
-    hidden: { y: -1000, rotateX: 70 },
-    visible: {
-      y: 0,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 12,
-        mass: 1.2,
-        delay: 0.5,
-      },
-    },
-  };
+  // Simpler entrance animation on mobile
+  const cardVariants: Variants = isMobile
+    ? {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5, ease: "easeOut", delay: 0.3 },
+        },
+      }
+    : {
+        hidden: { y: -600, rotateX: 40, opacity: 0 },
+        visible: {
+          y: 0,
+          rotateX: 0,
+          opacity: 1,
+          transition: {
+            type: "spring",
+            stiffness: 80,
+            damping: 15,
+            mass: 1,
+            delay: 0.4,
+          },
+        },
+      };
 
   return (
     <div
       className="relative flex items-center justify-center py-24 md:py-20 overflow-visible"
-      style={{ perspective: "1200px" }}
+      style={!isMobile ? { perspective: "1200px" } : undefined}
     >
       <motion.div
         ref={ref}
         variants={cardVariants}
         initial="hidden"
         animate="visible"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
+        onMouseMove={!isMobile ? handleMouseMove : undefined}
+        onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+        style={
+          !isMobile
+            ? { rotateX, rotateY, transformStyle: "preserve-3d" }
+            : undefined
+        }
         className="relative w-[220px] h-[350px] md:w-[320px] md:h-[480px] rounded-[24px] md:rounded-[30px] z-10"
       >
         {/* === CARD CONTENT === */}
         <div className="absolute inset-0 bg-[#d4d4d8] dark:bg-neutral-900 rounded-[24px] md:rounded-[30px] border border-neutral-400/50 dark:border-white/20 shadow-2xl overflow-hidden flex flex-col items-center">
-          {/* Texture/Noise Overlay - Hidden in light mode for clarity */}
-          <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none mix-blend-overlay hidden dark:block" />
+          {/* Noise Overlay - Inline SVG, no external fetch, desktop only */}
+          {!isMobile && (
+            <div className="absolute inset-0 opacity-[0.06] pointer-events-none mix-blend-overlay hidden dark:block bg-noise" />
+          )}
 
           {/* Top Holder Hole */}
           <div className="mt-5 md:mt-6 w-14 md:w-16 h-2.5 md:h-3 bg-neutral-800/20 rounded-full shadow-inner mx-auto mb-2 md:mb-2" />
@@ -141,10 +152,9 @@ export function HeroIdCard() {
               src="/img/saya/saya2.webp"
               alt="Darell Rangga"
               fill
-              sizes="(max-width: 768px) 160px, 192px"
+              sizes="(max-width: 768px) 112px, 192px"
               className="object-cover scale-110"
               priority
-              unoptimized
             />
           </div>
 
@@ -174,22 +184,22 @@ export function HeroIdCard() {
             </div>
           </div>
 
-          {/* Background Gradient Orbs */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2" />
+          {/* Background Gradient Orbs - reduced on mobile */}
+          {!isMobile && (
+            <>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-primary/15 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2" />
+            </>
+          )}
         </div>
 
-        {/* === HOLOGRAPHIC OVERLAY === */}
-        <motion.div
-          className="absolute inset-0 rounded-[24px] md:rounded-[30px] pointer-events-none opacity-5 dark:opacity-40 mix-blend-overlay z-20"
-          style={{
-            background: useTransform(
-              [glareX, glareY],
-              () =>
-                `linear-gradient(${115}deg, transparent 40%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.1) 50%, transparent 54%)`,
-            ),
-          }}
-        />
+        {/* === HOLOGRAPHIC OVERLAY - Desktop only === */}
+        {!isMobile && (
+          <motion.div
+            className="absolute inset-0 rounded-[24px] md:rounded-[30px] pointer-events-none opacity-5 dark:opacity-30 mix-blend-overlay z-20"
+            style={{ background: holoBackground }}
+          />
+        )}
 
         <div className="absolute inset-0 rounded-[24px] md:rounded-[30px] ring-1 ring-white/20 z-30" />
 
