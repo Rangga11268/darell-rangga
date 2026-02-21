@@ -5,10 +5,8 @@ import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
 import { CustomizationProvider } from "@/app/providers/customization-provider";
 
-import { CursorFollower } from "@/app/components/cursor-follower";
-import { AITerminal } from "@/app/components/ai-terminal/ai-terminal";
 import { FileSystemProvider } from "@/app/providers/file-system-provider";
-import { FolderWindow } from "@/app/components/folder-window";
+import { ClientSideElements } from "@/app/components/client-side-elements";
 
 const outfit = Outfit({
   variable: "--font-display",
@@ -268,9 +266,7 @@ export default function RootLayout({
           <LanguageProvider>
             <CustomizationProvider>
               <FileSystemProvider>
-                <CursorFollower />
-                <AITerminal />
-                <FolderWindow />
+                <ClientSideElements />
                 {children}
               </FileSystemProvider>
             </CustomizationProvider>

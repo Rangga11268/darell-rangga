@@ -11,7 +11,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
     // Fixed duration intro instead of percentage calculation
     const timer = setTimeout(() => {
       onComplete();
-    }, 2800); // Intro duration ~2.8s
+    }, 1800); // Shortened duration to 1.8s for better performance metrics
 
     return () => clearTimeout(timer);
   }, [onComplete]);

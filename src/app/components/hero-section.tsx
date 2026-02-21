@@ -14,7 +14,7 @@ import { HeroIdCard } from "./hero-id-card";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 
-export function HeroSection() {
+export function HeroSection({ isReady = true }: { isReady?: boolean }) {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
   const { scrollY } = useScroll();
@@ -49,7 +49,9 @@ export function HeroSection() {
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20, letterSpacing: "-0.05em" }}
-            animate={{ opacity: 1, y: 0, letterSpacing: "0.05em" }}
+            animate={
+              isReady ? { opacity: 1, y: 0, letterSpacing: "0.05em" } : {}
+            }
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 bg-primary/5"
           >
@@ -58,7 +60,7 @@ export function HeroSection() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
             <span className="text-sm font-medium text-primary tracking-wide uppercase">
-              <TextScramble text={t.hero.available} />
+              <TextScramble text={t.hero.available} active={isReady} />
             </span>
           </motion.div>
 
@@ -71,10 +73,14 @@ export function HeroSection() {
                   y: "100%",
                   clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
                 }}
-                animate={{
-                  y: 0,
-                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                }}
+                animate={
+                  isReady
+                    ? {
+                        y: 0,
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                      }
+                    : {}
+                }
                 transition={{
                   duration: 1,
                   ease: [0.16, 1, 0.3, 1],
@@ -91,10 +97,14 @@ export function HeroSection() {
                   y: "100%",
                   clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
                 }}
-                animate={{
-                  y: 0,
-                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                }}
+                animate={
+                  isReady
+                    ? {
+                        y: 0,
+                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                      }
+                    : {}
+                }
                 transition={{
                   duration: 1,
                   ease: [0.16, 1, 0.3, 1],

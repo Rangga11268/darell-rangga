@@ -36,14 +36,21 @@ export function CursorFollower() {
     const handleMouseDown = () => setClicked(true);
     const handleMouseUp = () => setClicked(false);
 
-    const handleLinkHoverEvents = () => {
-      // Select all interactive elements
-      const selectors =
-        "a, button, input, textarea, select, [role='button'], .cursor-hover";
-      document.querySelectorAll(selectors).forEach((el) => {
-        el.addEventListener("mouseenter", () => setLinkHovered(true));
-        el.addEventListener("mouseleave", () => setLinkHovered(false));
-      });
+    // Optimized: Use event delegation instead of attaching listeners to every element
+    const handleOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const interactive = target.closest(
+        "a, button, input, textarea, select, [role='button'], .cursor-hover",
+      );
+      if (interactive) setLinkHovered(true);
+    };
+
+    const handleOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const interactive = target.closest(
+        "a, button, input, textarea, select, [role='button'], .cursor-hover",
+      );
+      if (interactive) setLinkHovered(false);
     };
 
     if (!isMobile) {
@@ -51,10 +58,9 @@ export function CursorFollower() {
       window.addEventListener("mousedown", handleMouseDown);
       window.addEventListener("mouseup", handleMouseUp);
 
-      handleLinkHoverEvents();
-      // Observer for dynamic content (modals, new elements)
-      const observer = new MutationObserver(handleLinkHoverEvents);
-      observer.observe(document.body, { childList: true, subtree: true });
+      // Event delegation is much more efficient than MutationObserver
+      document.body.addEventListener("mouseover", handleOver);
+      document.body.addEventListener("mouseout", handleOut);
 
       // Hide default cursor
       document.documentElement.style.cursor = "none";
@@ -65,7 +71,8 @@ export function CursorFollower() {
         window.removeEventListener("mousedown", handleMouseDown);
         window.removeEventListener("mouseup", handleMouseUp);
         window.removeEventListener("resize", checkMobile);
-        observer.disconnect();
+        document.body.removeEventListener("mouseover", handleOver);
+        document.body.removeEventListener("mouseout", handleOut);
         document.documentElement.style.cursor = "auto";
         document.body.style.cursor = "auto";
       };

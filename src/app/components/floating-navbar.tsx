@@ -111,7 +111,7 @@ export function FloatingNavbar() {
         <motion.nav
           initial={{ y: 100 }}
           animate={{ y: 0 }}
-          transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
+          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
           className="pointer-events-auto liquid-glass-dock"
         >
           {primaryItems.map((item) => (
@@ -143,7 +143,7 @@ export function FloatingNavbar() {
             badge={
               !isMenuOpen && (
                 <div className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span className="hidden md:animate-ping md:absolute md:inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500 border border-white dark:border-zinc-900"></span>
                 </div>
               )
@@ -174,10 +174,15 @@ function DockLink({
   label: string;
 }) {
   return (
-    <a href={href} className="liquid-glass-icon group" aria-label={label}>
+    <a
+      href={href}
+      className="liquid-glass-icon group flex-col !gap-0.5"
+      aria-label={label}
+    >
       <Icon className="w-5 h-5 md:w-6 md:h-6" weight="duotone" />
-      <span className="sr-only">{label}</span>
-      {/* Tooltip could go here */}
+      <span className="text-[9px] font-medium opacity-70 leading-none">
+        {label}
+      </span>
     </a>
   );
 }
@@ -199,7 +204,7 @@ function DockButton({
     <button
       onClick={onClick}
       className={cn(
-        "liquid-glass-icon group relative",
+        "liquid-glass-icon group relative flex-col !gap-0.5",
         isActive && "liquid-glass-icon-active",
       )}
       aria-label={label}
@@ -209,6 +214,9 @@ function DockButton({
         className="w-5 h-5 md:w-6 md:h-6"
         weight={isActive ? "fill" : "duotone"}
       />
+      <span className="text-[9px] font-medium opacity-70 leading-none">
+        {label}
+      </span>
     </button>
   );
 }

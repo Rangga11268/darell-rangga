@@ -10,6 +10,7 @@ interface TextScrambleProps {
   characters?: string;
   speed?: number;
   trigger?: "hover" | "always";
+  active?: boolean;
 }
 
 export function TextScramble({
@@ -18,12 +19,13 @@ export function TextScramble({
   characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+",
   speed = 50,
   trigger = "hover",
+  active = true,
 }: TextScrambleProps) {
   const [displayText, setDisplayText] = useState(text);
   const [isScrambling, setIsScrambling] = useState(false);
 
   const scramble = useCallback(() => {
-    if (isScrambling) return;
+    if (isScrambling || !active) return;
     setIsScrambling(true);
 
     let iteration = 0;
@@ -53,10 +55,10 @@ export function TextScramble({
 
   // Auto trigger on mount if 'always'
   useEffect(() => {
-    if (trigger === "always") {
+    if (trigger === "always" && active) {
       scramble();
     }
-  }, [trigger, scramble]);
+  }, [trigger, scramble, active]);
 
   return (
     <motion.span
