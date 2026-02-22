@@ -192,9 +192,10 @@ export function HeroSection({ isReady = true }: { isReady?: boolean }) {
           </motion.div>
         </motion.div>
 
-        {/* 3. Visual (Right) - 3D Name Tag */}
+        {/* 3. Visual (Right) - 3D Name Tag — opacity starts at 1 so the
+             photo is immediately eligible as LCP element (not hidden) */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 1, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           className="flex-1 w-full max-w-md flex justify-center"

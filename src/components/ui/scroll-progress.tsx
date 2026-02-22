@@ -1,19 +1,17 @@
-"use client";
-
-import { motion, useScroll, useSpring } from "framer-motion";
-
+// Pure CSS scroll-driven animation — zero JS, zero framer-motion, zero TBT cost
 export function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-purple-500 to-blue-500 origin-left z-[100]"
-      style={{ scaleX }}
+    <div
+      className="fixed top-0 left-0 right-0 h-1 z-[100] origin-left pointer-events-none"
+      style={{
+        background:
+          "linear-gradient(to right, var(--color-primary), #a855f7, #3b82f6)",
+        transformOrigin: "0 50%",
+        animation: "scroll-progress linear",
+        animationTimeline: "scroll()",
+        animationRangeStart: "0%",
+        animationRangeEnd: "100%",
+      }}
     />
   );
 }

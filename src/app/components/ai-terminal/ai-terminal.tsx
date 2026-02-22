@@ -41,46 +41,71 @@ function Typewriter({
   isStopped?: boolean;
 }) {
   const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isRedacted, setIsRedacted] = useState(false);
 
   const isStoppedRef = useRef(isStopped);
+  const rafRef = useRef<number | null>(null);
+  const indexRef = useRef(0);
+  const lastTimeRef = useRef<number>(0);
+  const onScrollRef = useRef(onScroll);
+  const onCompleteRef = useRef(onComplete);
 
+  // Keep callback refs up-to-date without re-triggering effect
   useEffect(() => {
     isStoppedRef.current = isStopped;
   }, [isStopped]);
+  useEffect(() => {
+    onScrollRef.current = onScroll;
+  }, [onScroll]);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
-    if (currentIndex === 0 && text.length > 0) {
-      setDisplayText("");
-      setIsRedacted(false);
-    }
-  }, [text, currentIndex]);
+    // Reset on new text
+    indexRef.current = 0;
+    lastTimeRef.current = 0;
+    setDisplayText("");
+    setIsRedacted(false);
 
+    if (!text) return;
+
+    // RAF-based typewriter — batches characters per frame, drastically
+    // reducing re-renders vs per-character setTimeout
+    const animate = (timestamp: number) => {
+      if (isStoppedRef.current) return;
+
+      if (indexRef.current >= text.length) {
+        onCompleteRef.current?.();
+        return;
+      }
+
+      const elapsed =
+        lastTimeRef.current === 0 ? speed : timestamp - lastTimeRef.current;
+      // How many chars fit in elapsed time at the given speed (ms/char)
+      const charsToAdd = Math.max(1, Math.floor(elapsed / speed));
+      lastTimeRef.current = timestamp;
+
+      const nextIndex = Math.min(indexRef.current + charsToAdd, text.length);
+      const chunk = text.slice(indexRef.current, nextIndex);
+      indexRef.current = nextIndex;
+
+      setDisplayText((prev) => prev + chunk);
+      onScrollRef.current?.();
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [text, speed]); // speed is stable; callbacks handled via refs
+
+  // Redaction effect (security flavour text)
   useEffect(() => {
-    // Immediate stop if halted
-    if (isStoppedRef.current) {
-      return;
-    }
-
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        // Double check inside timeout to prevent race conditions
-        if (!isStoppedRef.current) {
-          setDisplayText((prev) => prev + text[currentIndex]);
-          setCurrentIndex((prev) => prev + 1);
-          if (onScroll) onScroll();
-        }
-      }, speed);
-
-      return () => clearTimeout(timeout);
-    } else {
-      if (onComplete) onComplete();
-    }
-  }, [currentIndex, text, speed, onScroll, onComplete]); // Removed isStopped from dep array, handled by ref
-
-  useEffect(() => {
-    if (currentIndex >= text.length && !isRedacted && !isStopped) {
+    if (displayText.length >= text.length && !isRedacted && !isStopped) {
       if (text.includes("Trace:")) {
         const timeout = setTimeout(() => {
           setDisplayText((prev) => {
@@ -97,12 +122,12 @@ function Typewriter({
         return () => clearTimeout(timeout);
       }
     }
-  }, [currentIndex, text, isRedacted, isStopped]);
+  }, [displayText, text, isRedacted, isStopped]);
 
   return (
     <p className="whitespace-pre-wrap leading-relaxed">
       {displayText}
-      {currentIndex < text.length && !isStopped && (
+      {displayText.length < text.length && !isStopped && (
         <span className="inline-block w-2 h-4 bg-primary/80 ml-0.5 animate-pulse" />
       )}
     </p>

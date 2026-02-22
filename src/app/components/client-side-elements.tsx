@@ -23,6 +23,16 @@ const FolderWindow = dynamic(
   { ssr: false },
 );
 
+// BackgroundController moved here from layout.tsx — dynamic+ssr:false not
+// allowed in Server Components. Renders immediately (no delay needed).
+const BackgroundController = dynamic(
+  () =>
+    import("@/components/ui/background-controller").then(
+      (m) => m.BackgroundController,
+    ),
+  { ssr: false },
+);
+
 import { useEffect, useState } from "react";
 
 export function ClientSideElements() {
@@ -38,6 +48,8 @@ export function ClientSideElements() {
 
   return (
     <>
+      {/* Background always rendered (no delay) */}
+      <BackgroundController />
       <CursorFollower />
       <AITerminal />
       <FolderWindow />

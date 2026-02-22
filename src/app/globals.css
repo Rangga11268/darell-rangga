@@ -224,6 +224,16 @@ section {
   contain: style;
 }
 
+/* Scroll-driven animation for ScrollProgress bar (pure CSS, zero JS) */
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* --- LIQUID GLASS EFFECT (Apple-style) --- */
 .liquid-glass-dock {
   @apply h-[4.5rem] md:h-20 px-3 md:px-6 rounded-3xl md:rounded-full flex items-center justify-center gap-1 sm:gap-2 md:gap-4;
@@ -236,15 +246,34 @@ section {
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 0 12px rgba(255, 255, 255, 0.3);
   z-index: 50;
-  will-change: transform;
 }
 
 /* Reduce GPU-heavy effects on mobile */
 @media (max-width: 767px) {
   .liquid-glass-dock {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    /* Skip backdrop-filter on mobile — too GPU-expensive */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.88);
     box-shadow: 0 8px 30px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .liquid-glass-dock {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(20, 20, 20, 0.88);
+  }
+
+  .liquid-glass-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .dark .liquid-glass-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(20, 20, 25, 0.95);
   }
 }
 

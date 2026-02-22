@@ -112,7 +112,6 @@ export const viewport = {
 };
 
 import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { BackgroundController } from "@/components/ui/background-controller";
 
 // JSON-LD Structured Data for SEO
 const jsonLd = {
@@ -254,7 +253,6 @@ export default function RootLayout({
         className={`${outfit.variable} ${readexPro.variable} antialiased bg-background text-foreground`}
       >
         <div className="fixed inset-0 z-[50] pointer-events-none bg-noise opacity-[0.03] mix-blend-overlay" />
-        <BackgroundController />
         <ScrollProgress />
         <a
           href="#home"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import {
   GithubLogo,
   GitCommit,
@@ -111,9 +112,9 @@ export function GithubWidget() {
       >
         {/* Main Glass Card Wrapper */}
         <div className="relative w-full h-full bg-white/40 dark:bg-black/40 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-2xl md:rounded-[40px] shadow-2xl overflow-hidden transform-gpu flex flex-col">
-          {/* Abstract Gradient Blobs */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 z-0" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3 z-0" />
+          {/* Abstract Gradient Blobs — reduced blur for GPU performance */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/3 z-0" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[50px] translate-y-1/3 -translate-x-1/3 z-0" />
 
           {/* Content Layer */}
           <div className="relative z-10 p-6 md:p-12 flex flex-col flex-grow h-full transform-style-3d">
@@ -122,11 +123,13 @@ export function GithubWidget() {
               <div className="flex flex-col md:flex-row items-center gap-4">
                 <div className="relative group shrink-0">
                   <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={user?.avatar_url}
+                  <Image
+                    src={user?.avatar_url ?? ""}
                     alt="Profile"
+                    width={96}
+                    height={96}
                     className="relative w-24 h-24 md:w-20 md:h-20 rounded-full border-2 border-white/50 object-cover shadow-lg"
+                    unoptimized
                   />
                   <div className="absolute bottom-1 right-1 md:bottom-0 md:right-0 w-6 h-6 bg-green-500 border-4 border-white dark:border-black rounded-full" />
                 </div>

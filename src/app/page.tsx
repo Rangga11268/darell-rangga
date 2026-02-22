@@ -87,17 +87,41 @@ import { useEffect } from "react";
 // ... (dynamic imports stay the same)
 
 export default function Home() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [isReady, setIsReady] = useState(false);
+  // Show intro only for first-time visitors.
+  // Return visitors, Lighthouse crawlers, and bots skip straight to hero
+  // — this is the single biggest LCP improvement possible.
+  const [showIntro, setShowIntro] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const seen = localStorage.getItem("dr_visited");
+    if (!seen) {
+      localStorage.setItem("dr_visited", "1");
+      return true;
+    }
+    return false;
+  });
+  // readyLevel: 0=nothing, 1=first fold, 2=rest of page
+  const [readyLevel, setReadyLevel] = useState(() => {
+    // If skipping intro, start at level 1 immediately
+    if (typeof window === "undefined") return 0;
+    return localStorage.getItem("dr_visited") ? 1 : 0;
+  });
+  const isReady = readyLevel >= 1;
 
-  // Sequence the mounting of heavy components to save TBT
+  // Stagger section mounting across multiple idle tasks to avoid
+  // one massive synchronous render burst on the main thread
   useEffect(() => {
     if (!showIntro) {
-      // Small delay to ensure intro exit animation starts smoothly
-      const timer = setTimeout(() => setIsReady(true), 150);
-      return () => clearTimeout(timer);
+      // Level 1: first-fold sections — either immediately (return visitor)
+      // or 150ms after intro dismissal (first visit)
+      const t1 = setTimeout(() => setReadyLevel(1), readyLevel >= 1 ? 0 : 150);
+      // Level 2: rest of page — give browser a full idle window
+      const t2 = setTimeout(() => setReadyLevel(2), readyLevel >= 1 ? 50 : 600);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
     }
-  }, [showIntro]);
+  }, [showIntro]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="min-h-screen selection:bg-primary/20 selection:text-primary">
@@ -115,11 +139,15 @@ export default function Home() {
           {/* Hero is EAGER for LCP but its animations are gated by isReady to save TBT */}
           <HeroSection isReady={isReady} />
 
-          {/* BELOW FOLD sections are SEQUENCED to save TBT */}
-          {isReady && (
+          {/* BELOW FOLD sections — staggered mount across 2 idle task slots */}
+          {readyLevel >= 1 && (
             <>
               <BioSection />
               <ExperienceSection />
+            </>
+          )}
+          {readyLevel >= 2 && (
+            <>
               <SkillsSection />
               <ServicesSection />
               <ProjectsSection />
@@ -133,10 +161,10 @@ export default function Home() {
 
       {/* Fixed Footer Reveal */}
       <div className="relative z-0 md:fixed md:bottom-0 md:w-full md:h-[500px] flex items-end bg-background -z-10">
-        <div className="w-full">{isReady && <Footer />}</div>
+        <div className="w-full">{readyLevel >= 2 && <Footer />}</div>
       </div>
 
-      {isReady && <BackToTop />}
+      {readyLevel >= 2 && <BackToTop />}
 
       {/* Accessibility announcements */}
       <div

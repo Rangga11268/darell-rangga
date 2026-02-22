@@ -92,11 +92,19 @@ export function SkillGalaxy() {
                       <img
                         src={`https://skillicons.dev/icons?i=${skill.icon}&theme=light`}
                         alt={skill.name}
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        decoding="async"
                         className="w-10 h-10 md:w-12 md:h-12 block dark:hidden"
                       />
                       <img
                         src={`https://skillicons.dev/icons?i=${skill.icon}&theme=dark`}
                         alt={skill.name}
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        decoding="async"
                         className="w-10 h-10 md:w-12 md:h-12 hidden dark:block"
                       />
                     </>
