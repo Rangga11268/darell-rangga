@@ -42,21 +42,6 @@ export function FloatingNavbar() {
     { name: t.nav.contact, href: "#contact", icon: Envelope },
   ];
 
-  const tools = [
-    {
-      name: "Theme",
-      icon: theme === "dark" ? Moon : Sun,
-      onClick: () => setTheme(theme === "dark" ? "light" : "dark"),
-      active: false,
-    },
-    {
-      name: "Language",
-      icon: Translate,
-      onClick: toggleLanguage,
-      active: language === "id",
-    },
-  ];
-
   return (
     <>
       {/* Expanded Quick Actions Menu — Liquid Glass Panel */}
@@ -80,6 +65,17 @@ export function FloatingNavbar() {
 
             <div className="grid grid-cols-2 gap-3">
               <MenuItem
+                icon={theme === "dark" ? Moon : Sun}
+                label="Theme"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              />
+              <MenuItem
+                icon={Translate}
+                label={language === "id" ? "IND" : "ENG"}
+                onClick={toggleLanguage}
+                active={language === "id"}
+              />
+              <MenuItem
                 icon={Terminal}
                 label="Terminal"
                 onClick={() => setIsPlaygroundOpen(!isPlaygroundOpen)}
@@ -93,7 +89,7 @@ export function FloatingNavbar() {
               />
               <MenuItem
                 icon={FolderOpen}
-                label="System Files"
+                label="Files"
                 onClick={() =>
                   openFolders.includes("system-files")
                     ? closeFolder("system-files")
@@ -124,16 +120,6 @@ export function FloatingNavbar() {
           ))}
 
           <div className="liquid-glass-divider" />
-
-          {tools.map((item) => (
-            <DockButton
-              key={item.name}
-              icon={item.icon}
-              label={item.name}
-              onClick={item.onClick}
-              isActive={item.active}
-            />
-          ))}
 
           <DockButton
             icon={SquaresFour}
