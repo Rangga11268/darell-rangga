@@ -44,7 +44,7 @@ export function BackgroundController() {
   return (
     <motion.div
       key={resolvedTheme}
-      className="fixed inset-0 -z-50 pointer-events-none transition-colors duration-500"
+      className="fixed inset-0 -z-50 pointer-events-none"
       style={{ backgroundColor }}
     />
   );

@@ -88,46 +88,39 @@ import { useEffect } from "react";
 
 export default function Home() {
   // Show intro only for first-time visitors.
-  // Return visitors, Lighthouse crawlers, and bots skip straight to hero
-  // — this is the single biggest LCP improvement possible.
-  const [showIntro, setShowIntro] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const seen = localStorage.getItem("dr_visited");
-    if (!seen) {
-      localStorage.setItem("dr_visited", "1");
-      return true;
-    }
-    return false;
-  });
-  // readyLevel: 0=nothing, 1=first fold, 2=rest of page
-  const [readyLevel, setReadyLevel] = useState(() => {
-    // If skipping intro, start at level 1 immediately
-    if (typeof window === "undefined") return 0;
-    return localStorage.getItem("dr_visited") ? 1 : 0;
-  });
+  // Use useEffect to read localStorage — avoids SSR/client hydration mismatch.
+  const [showIntro, setShowIntro] = useState(false);
+  const [readyLevel, setReadyLevel] = useState(0);
   const isReady = readyLevel >= 1;
 
-  // Stagger section mounting across multiple idle tasks to avoid
-  // one massive synchronous render burst on the main thread
   useEffect(() => {
-    if (!showIntro) {
-      // Level 1: first-fold sections — either immediately (return visitor)
-      // or 150ms after intro dismissal (first visit)
-      const t1 = setTimeout(() => setReadyLevel(1), readyLevel >= 1 ? 0 : 150);
-      // Level 2: rest of page — give browser a full idle window
-      const t2 = setTimeout(() => setReadyLevel(2), readyLevel >= 1 ? 50 : 600);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-      };
+    const seen = localStorage.getItem("dr_visited");
+    if (!seen) {
+      // First visit: show intro, set flag
+      localStorage.setItem("dr_visited", "1");
+      setShowIntro(true);
+    } else {
+      // Return visitor: skip intro, go straight to level 1 + schedule level 2
+      setReadyLevel(1);
+      const t = setTimeout(() => setReadyLevel(2), 50);
+      return () => clearTimeout(t);
     }
-  }, [showIntro]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen selection:bg-primary/20 selection:text-primary">
       {/* Intro overlay — content renders BEHIND it for instant LCP */}
       <AnimatePresence mode="wait">
-        {showIntro && <CinematicIntro onComplete={() => setShowIntro(false)} />}
+        {showIntro && (
+          <CinematicIntro
+            onComplete={() => {
+              setShowIntro(false);
+              // First visit: stagger sections after intro exits
+              setTimeout(() => setReadyLevel(1), 150);
+              setTimeout(() => setReadyLevel(2), 600);
+            }}
+          />
+        )}
       </AnimatePresence>
 
       {/* Main content — always in DOM so Lighthouse can paint the hero */}
