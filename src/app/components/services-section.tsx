@@ -136,7 +136,7 @@ export function ServicesSection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {t.services.packages.tiers.map((tier, index) => (
               <motion.div
                 key={index}

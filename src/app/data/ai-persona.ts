@@ -60,6 +60,19 @@ export const AI_PERSONA = {
       "I don't just build websites; I build digital assets that drive growth. Every package includes custom design (No templates), mobile-first logic, and smooth performance.",
     packages: [
       {
+        name: "Hemat",
+        price: "Mulai Rp 299rb",
+        best_for:
+          "Landing page statis 1 halaman, bersih dan cepat, cocok untuk UMKM atau promosi singkat.",
+        features: [
+          "Landing Page Statis (1 Halaman)",
+          "HTML/CSS atau Next.js Ringan",
+          "Responsif di Semua Layar",
+          "Estimasi 3-5 Hari",
+          "Gratis Hosting (Vercel)",
+        ],
+      },
+      {
         name: "Starter",
         price: "Starts at Rp 1.2jt (Mulai 1.2jt)",
         old_price: "Rp 2.5jt",

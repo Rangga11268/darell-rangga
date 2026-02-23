@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { User, Code, Briefcase, Trophy } from "@phosphor-icons/react";
+import { User, Code, Briefcase } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useRef } from "react";
 
@@ -172,7 +172,7 @@ export function BioSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="grid grid-cols-3 gap-3 md:gap-4"
+              className="grid grid-cols-2 gap-3 md:gap-4"
             >
               {[
                 {
@@ -186,12 +186,6 @@ export function BioSection() {
                   value: "10+",
                   label: language === "id" ? "Proyek" : "Projects",
                   color: "text-blue-500",
-                },
-                {
-                  icon: Trophy,
-                  value: "4.00",
-                  label: "GPA",
-                  color: "text-amber-500",
                 },
               ].map((stat, i) => (
                 <motion.div

@@ -116,6 +116,26 @@ export const translations = {
         viewDetails: "View Details",
         tiers: [
           {
+            name: "Basic",
+            price: "Starts at $25",
+            desc: "The most affordable option for a clean, fast static landing page.",
+            features: [
+              "1-Page Static Landing Page",
+              "HTML/CSS or Lightweight Next.js",
+              "Fully Responsive",
+              "3–5 Day Delivery",
+              "Free Hosting (Vercel)",
+            ],
+            details: [
+              "Clean & Minimal Design",
+              "Mobile-First Layout",
+              "Contact Info / WhatsApp Button",
+              "Basic On-Page SEO",
+              "Fast Load Time",
+            ],
+            tech: "HTML, CSS, Tailwind",
+          },
+          {
             name: "Starter",
             price: "Starts at $80",
             oldPrice: "$150",
@@ -361,6 +381,26 @@ export const translations = {
         subtitle: "Pilih Solusi Anda",
         viewDetails: "Lihat Rincian",
         tiers: [
+          {
+            name: "Hemat",
+            price: "Mulai Rp 299rb",
+            desc: "Pilihan paling terjangkau untuk landing page bersih dan profesional.",
+            features: [
+              "Landing Page Statis (1 Halaman)",
+              "HTML/CSS atau Next.js Ringan",
+              "Responsif di Semua Layar",
+              "Estimasi 3–5 Hari",
+              "Gratis Hosting (Vercel)",
+            ],
+            details: [
+              "Desain Bersih & Minimalis",
+              "Tampilan Mobile-First",
+              "Info Kontak / Tombol WhatsApp",
+              "SEO On-Page Dasar",
+              "Load Time Cepat",
+            ],
+            tech: "HTML, CSS, Tailwind",
+          },
           {
             name: "Starter",
             price: "Mulai Rp 1.2jt",

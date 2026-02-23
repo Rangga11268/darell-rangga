@@ -110,8 +110,8 @@ function getFallbackResponse(message: string): string {
     msg.includes("buat web")
   ) {
     if (isIndonesian)
-      return `Rangga menawarkan 3 paket utama: **Starter (Rp 1.2jt+)**, **Business (Rp 3jt+)**, dan **Enterprise (Custom)**. Semuanya dikerjakan secara custom tanpa template untuk performa maksimal. Ada paket yang menarik perhatian Anda?`;
-    return `Rangga offers 3 primary packages: **Starter (Rp 1.2jt+)**, **Business (Rp 3jt+)**, and **Enterprise (Custom)**. All projects are custom-built for maximum performance. Which one interests you?`;
+      return `Rangga menawarkan 4 paket: **Hemat (Rp 299rb+)** untuk landing page statis, **Starter (Rp 1.2jt+)**, **Business (Rp 3jt+)**, dan **Enterprise (Custom)**. Semuanya dikerjakan secara custom tanpa template. Ada paket yang menarik perhatian Anda?`;
+    return `Rangga offers 4 packages: **Basic ($25+)** for static landing pages, **Starter ($80+)**, **Business ($200+)**, and **Enterprise (Custom)**. All custom-built, no templates. Which one interests you?`;
   }
 
   // 6. Personalized/Fun (Preserved)
