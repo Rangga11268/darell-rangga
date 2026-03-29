@@ -127,8 +127,8 @@ export default function Home() {
       <FloatingNavbar />
 
       {/* Main Content with Bottom Margin for Parallax Footer */}
-      <div className="relative z-10 bg-background shadow-2xl rounded-b-[40px] md:mb-[500px] pb-10">
-        <main>
+      <div className="relative z-10 bg-background shadow-2xl rounded-b-[40px] md:mb-[500px] pb-10 overflow-hidden">
+        <main className="bg-background relative z-10">
           {/* Hero is EAGER for LCP but its animations are gated by isReady to save TBT */}
           <HeroSection isReady={isReady} />
 
@@ -152,9 +152,11 @@ export default function Home() {
         </main>
       </div>
 
-      {/* Fixed Footer Reveal */}
-      <div className="relative z-0 md:fixed md:bottom-0 md:w-full md:h-[500px] flex items-end bg-background -z-10">
-        <div className="w-full">{readyLevel >= 2 && <Footer />}</div>
+      {/* Fixed Footer Reveal - Added pointer-events-none until visible to prevent glitching */}
+      <div className="relative z-0 md:fixed md:bottom-0 md:w-full md:h-[500px] flex items-end bg-background -z-50 pointer-events-none">
+        <div className="w-full pointer-events-auto">
+          {readyLevel >= 2 && <Footer />}
+        </div>
       </div>
 
       {readyLevel >= 2 && <BackToTop />}
