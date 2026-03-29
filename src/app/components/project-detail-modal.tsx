@@ -14,6 +14,7 @@ import {
   WarningCircle,
 } from "@phosphor-icons/react";
 import Image from "next/image";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Project } from "@/app/data/projects";
 import { Button } from "@/components/ui/button";
 
@@ -30,6 +31,7 @@ export function ProjectDetailModal({
   onClose,
   language,
 }: ProjectDetailModalProps) {
+  const isMobile = useIsMobile();
   // All hooks MUST be called before any early return (Rules of Hooks)
   const contentRef = useRef<HTMLDivElement>(null);
   const savedScrollY = useRef(0);
@@ -88,7 +90,7 @@ export function ProjectDetailModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm md:backdrop-blur-md z-[200]"
+            className={`fixed inset-0 bg-black/80 ${isMobile ? "" : "backdrop-blur-md"} z-[200] transform-gpu`}
           />
 
           {/* Modal Container */}
@@ -97,9 +99,9 @@ export function ProjectDetailModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 24 }}
             transition={{ type: "spring", duration: 0.4, bounce: 0.18 }}
-            className="fixed inset-0 z-[210] flex justify-center items-end md:items-center pointer-events-none px-0 pt-16 md:p-8"
+            className="fixed inset-0 z-[210] flex justify-center items-end md:items-center pointer-events-none px-0 pt-16 md:p-8 transform-gpu"
           >
-            <div className="w-full md:max-w-4xl h-[88dvh] md:h-[88vh] bg-white dark:bg-zinc-900 text-slate-900 dark:text-white rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl pointer-events-auto relative flex flex-col">
+            <div className="w-full md:max-w-4xl h-[88dvh] md:h-[88vh] bg-white dark:bg-zinc-900 text-slate-900 dark:text-white rounded-t-3xl md:rounded-3xl overflow-hidden shadow-2xl pointer-events-auto relative flex flex-col transform-gpu">
               {/* Close Button */}
               <button
                 onClick={onClose}

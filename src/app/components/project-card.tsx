@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, GithubLogo } from "@phosphor-icons/react";
+import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Project } from "@/app/data/projects";
 
 interface ProjectCardProps {
@@ -19,6 +20,7 @@ export function ProjectCard({
   onSelect,
   language,
 }: ProjectCardProps) {
+  const isMobile = useIsMobile();
   const isEven = index % 2 === 0;
 
   // 3D Tilt Logic
@@ -32,6 +34,7 @@ export function ProjectCard({
   const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
 
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    if (isMobile) return; // Disable for better mobile performance
     const rect = ref.current?.getBoundingClientRect();
     if (rect) {
       const width = rect.width;
@@ -73,14 +76,14 @@ export function ProjectCard({
         <motion.div
           ref={ref}
           style={{
-            rotateX: rotateX,
-            rotateY: rotateY,
+            rotateX: isMobile ? 0 : rotateX,
+            rotateY: isMobile ? 0 : rotateY,
             transformStyle: "preserve-3d",
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onClick={() => onSelect(project)}
-          className="relative group w-full aspect-video rounded-3xl cursor-pointer bg-card/10 border border-white/10 overflow-hidden shadow-2xl"
+          className="relative group w-full aspect-video rounded-3xl cursor-pointer bg-card/10 border border-white/10 overflow-hidden shadow-2xl transform-gpu"
         >
           {/* Animated Border Glow */}
           <div className="absolute -inset-[1px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/50 via-purple-500/50 to-blue-500/50 blur-sm -z-10" />
@@ -91,12 +94,12 @@ export function ProjectCard({
               src={project.imageUrl}
               alt={project.title}
               fill
-              className="object-cover transition-transform duration-[3000ms] ease-out group-hover:scale-110"
+              className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105 transform-gpu"
               sizes="(max-width: 768px) 100vw, 60vw"
               priority={index < 2}
             />
             {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 pointer-events-none" />
           </div>
 
           {/* Glare Effect */}

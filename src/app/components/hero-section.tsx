@@ -69,20 +69,10 @@ export function HeroSection({ isReady = true }: { isReady?: boolean }) {
           <div className="space-y-2">
             <div className="overflow-hidden">
               <motion.h1
-                initial={{
-                  y: "100%",
-                  clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-                }}
-                animate={
-                  isReady
-                    ? {
-                        y: 0,
-                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                      }
-                    : {}
-                }
+                initial={{ opacity: 0, y: 30 }}
+                animate={isReady ? { opacity: 1, y: 0 } : {}}
                 transition={{
-                  duration: 1,
+                  duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                   delay: 0.1,
                 }}
@@ -93,20 +83,10 @@ export function HeroSection({ isReady = true }: { isReady?: boolean }) {
             </div>
             <div className="overflow-hidden">
               <motion.h1
-                initial={{
-                  y: "100%",
-                  clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)",
-                }}
-                animate={
-                  isReady
-                    ? {
-                        y: 0,
-                        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
-                      }
-                    : {}
-                }
+                initial={{ opacity: 0, y: 30 }}
+                animate={isReady ? { opacity: 1, y: 0 } : {}}
                 transition={{
-                  duration: 1,
+                  duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                   delay: 0.25,
                 }}
