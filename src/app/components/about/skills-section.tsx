@@ -12,7 +12,7 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-24 bg-secondary/30 relative overflow-hidden"
+      className="py-24 bg-secondary/30 relative overflow-hidden section-contain"
     >
       <ParallaxBackground
         className="absolute inset-0 z-0 opacity-20"

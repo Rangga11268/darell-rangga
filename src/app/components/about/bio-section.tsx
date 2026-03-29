@@ -55,13 +55,13 @@ export function BioSection() {
   return (
     <section
       id="about"
-      className="py-32 relative overflow-hidden min-h-screen flex items-center"
+      className="py-32 relative overflow-hidden min-h-screen flex items-center section-contain"
       ref={containerRef}
     >
       {/* Background Typography (Parallax) */}
       <motion.div
         style={{ y, opacity }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 will-change-transform"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 gpu-layer"
       >
         <span className="text-[15vw] md:text-[20vw] font-black text-foreground/5 whitespace-nowrap select-none">
           THE STORY
@@ -73,18 +73,7 @@ export function BioSection() {
 
       {/* Modern Skills Marquee - Horizontal Scrolling */}
       <div className="absolute top-0 left-0 w-full overflow-hidden py-6 border-y border-foreground/5 bg-background/50 backdrop-blur-sm z-10">
-        <motion.div
-          className="flex gap-12 whitespace-nowrap"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 40,
-              ease: "linear",
-            },
-          }}
-        >
+        <div className="flex gap-12 whitespace-nowrap animate-marquee">
           {[
             "REACT",
             "NEXT.JS",
@@ -128,7 +117,7 @@ export function BioSection() {
               {skill} <span className="w-2 h-2 rounded-full bg-primary/40" />
             </span>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       <div className="container px-4 md:px-6 mx-auto relative z-10 mt-20">

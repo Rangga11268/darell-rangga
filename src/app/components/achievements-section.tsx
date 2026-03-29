@@ -232,7 +232,7 @@ export function AchievementsSection() {
     <section
       ref={sectionRef}
       id="achievements"
-      className="relative py-20 md:py-32 overflow-hidden"
+      className="relative py-20 md:py-32 overflow-hidden section-contain"
     >
       {/* Background */}
       <div className="absolute inset-0 bg-secondary/30 dark:bg-background pointer-events-none -z-20" />

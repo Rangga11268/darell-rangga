@@ -23,8 +23,8 @@ export function SkillGalaxy() {
   return (
     <div className="relative min-h-[400px] w-full flex items-center justify-center">
       <div className="relative w-full flex items-center justify-center">
-        {/* Background Ambience - Static, no animation */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent rounded-full opacity-30" />
+        {/* Background Ambience - Simplified to reduce paint cost */}
+        <div className="absolute inset-0 bg-primary/5 rounded-full opacity-20" />
 
         {/* Galaxy Container */}
         <div className="relative w-full max-w-5xl mx-auto min-h-[400px] flex items-center justify-center z-10">
@@ -42,7 +42,7 @@ export function SkillGalaxy() {
             {skills.map((skill, idx) => (
               <motion.div
                 key={skill.id}
-                className="relative group cursor-pointer"
+                className="relative group cursor-pointer gpu-layer"
                 onClick={() => setSelectedSkillId(skill.id)}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}

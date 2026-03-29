@@ -12,8 +12,8 @@ export function CursorFollower() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Smooth springs for the outer ring
-  const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
+  // Optimized spring config for lower CPU usage
+  const springConfig = { damping: 30, stiffness: 200, mass: 0.8 };
   const ringX = useSpring(mouseX, springConfig);
   const ringY = useSpring(mouseY, springConfig);
 
@@ -89,7 +89,7 @@ export function CursorFollower() {
     <>
       {/* Inner Dot - exact mouse position */}
       <motion.div
-        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white z-[9999] pointer-events-none mix-blend-difference"
+        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white z-[9999] pointer-events-none mix-blend-difference gpu-layer"
         style={{
           x: mouseX,
           y: mouseY,
@@ -100,7 +100,7 @@ export function CursorFollower() {
 
       {/* Outer Ring - smooth follow */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-white z-[9998] pointer-events-none mix-blend-difference"
+        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-white z-[9998] pointer-events-none mix-blend-difference gpu-layer"
         style={{
           x: ringX,
           y: ringY,

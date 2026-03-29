@@ -45,7 +45,7 @@ const TimelineItem = ({ data, index, type }: TimelineItemProps) => {
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5, type: "spring" }}
-          className="relative z-10"
+          className="relative z-10 gpu-layer"
         >
           {/* Pulsing Outer Ring */}
           <div
@@ -69,7 +69,7 @@ const TimelineItem = ({ data, index, type }: TimelineItemProps) => {
         className="w-full pl-12 md:pl-0 md:w-5/12 perspective-1000"
       >
         <div
-          className={`relative p-8 rounded-[2rem] bg-white/60 dark:bg-zinc-900/40 border border-black/5 dark:border-white/5 backdrop-blur-xl shadow-xl dark:shadow-2xl hover:shadow-primary/5 hover:border-black/10 dark:hover:border-white/10 transition-all duration-500 group overflow-hidden ${isLeft ? "md:text-left" : "md:text-left"}`}
+          className={`relative p-8 rounded-[2rem] bg-white/60 dark:bg-zinc-900/40 border border-black/5 dark:border-white/5 backdrop-blur-xl shadow-xl dark:shadow-2xl hover:shadow-primary/5 hover:border-black/10 dark:hover:border-white/10 transition-all duration-500 group overflow-hidden gpu-layer ${isLeft ? "md:text-left" : "md:text-left"}`}
         >
           {/* Cinematic Glow Effect */}
           <div
@@ -156,7 +156,7 @@ export function ExperienceSection() {
 
   return (
     <section
-      className="py-24 md:py-32 relative overflow-hidden"
+      className="py-24 md:py-32 relative overflow-hidden section-contain"
       ref={containerRef}
     >
       <div className="container px-4 md:px-6 mx-auto">

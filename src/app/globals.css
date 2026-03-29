@@ -67,7 +67,7 @@
 
   --animate-blob: blob 7s infinite;
   --animate-shine: shine 2s linear infinite;
-  --animate-marquee: marquee 25s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
 }
 
 :root {
@@ -199,6 +199,20 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+
+  /* Force GPU Layer for smoother animations */
+  .gpu-layer {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* Section Performance Containment */
+  .section-contain {
+    contain: paint layout style;
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1000px;
+  }
 }
 
 /* --- PERFORMANCE: Reduced Motion Support --- */
@@ -222,6 +236,8 @@
 /* NOTE: contain:layout removed — it breaks position:fixed inside sections */
 section {
   contain: style;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px; /* Helps layout estimation */
 }
 
 /* Scroll-driven animation for ScrollProgress bar (pure CSS, zero JS) */
