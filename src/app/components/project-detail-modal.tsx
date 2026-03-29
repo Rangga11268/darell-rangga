@@ -46,8 +46,13 @@ export function ProjectDetailModal({
     // Use overflow:hidden instead of position:fixed to avoid page jumping to top
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    
+    // Explicitly handle scrollbar width to prevent "layout jump"
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
+      // Also apply to fixed elements (navigation) to keep them stable
+      const navbar = document.querySelector('nav');
+      if (navbar) (navbar as HTMLElement).style.paddingRight = `${scrollbarWidth}px`;
     }
 
     if (contentRef.current) {
@@ -58,6 +63,8 @@ export function ProjectDetailModal({
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       document.body.style.paddingRight = "";
+      const navbar = document.querySelector('nav');
+      if (navbar) (navbar as HTMLElement).style.paddingRight = "";
     };
   }, [isOpen]);
 

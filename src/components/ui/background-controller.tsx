@@ -44,8 +44,11 @@ export function BackgroundController() {
   return (
     <motion.div
       key={resolvedTheme}
-      className="fixed inset-0 -z-50 pointer-events-none"
-      style={{ backgroundColor }}
+      className="fixed inset-0 -z-50 pointer-events-none transform-gpu"
+      style={{ 
+        backgroundColor,
+        willChange: "background-color"
+      }}
     />
   );
 }

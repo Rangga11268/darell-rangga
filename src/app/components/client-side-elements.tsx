@@ -37,22 +37,30 @@ import { useEffect, useState } from "react";
 
 export function ClientSideElements() {
   const [shouldMount, setShouldMount] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     // Delay mounting of peripheral layout tools to save TBT
-    const timer = setTimeout(() => setShouldMount(true), 2000);
+    const timer = setTimeout(() => setShouldMount(true), 1500);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!shouldMount) return null;
+  if (!isClient) return null;
 
   return (
     <>
-      {/* Background always rendered (no delay) */}
+      {/* Background Controller (Lightweight, no delay) */}
       <BackgroundController />
-      <CursorFollower />
-      <AITerminal />
-      <FolderWindow />
+      
+      {/* Heavy elements (Delayed to prioritize LCP) */}
+      {shouldMount && (
+        <>
+          <CursorFollower />
+          <AITerminal />
+          <FolderWindow />
+        </>
+      )}
     </>
   );
 }

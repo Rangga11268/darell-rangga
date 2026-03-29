@@ -205,7 +205,7 @@ export function HeroIdCard() {
 
         {/* === UPGRADED LANYARD === */}
         {/* Placed vertically to align Clip with Hole. z-20 to sit ON TOP of card background */}
-        <div className="flex absolute -top-[215px] md:-top-[300px] left-1/2 -translate-x-1/2 w-[220px] md:w-[300px] h-[240px] md:h-[320px] z-20 pointer-events-none flex-col items-center justify-end">
+        <div className="flex absolute -top-[215px] md:-top-[300px] left-1/2 -translate-x-1/2 w-[220px] md:w-[300px] h-[240px] md:h-[320px] z-20 pointer-events-none flex-col items-center justify-end transform-gpu">
           {/* V-Shape Strap (SVG) */}
           <svg
             className="w-full h-full drop-shadow-2xl"
@@ -255,14 +255,14 @@ export function HeroIdCard() {
 
             {/* Left Strap */}
             <path
-              d="M100 -50 C 100 50, 140 280, 150 280"
+              d="M100,-50 C100,50 140,280 150,280"
               stroke="url(#strap-gradient)"
               strokeWidth="28"
               strokeLinecap="butt"
               filter="url(#fabric-shadow)"
             />
             <path
-              d="M100 -50 C 100 50, 140 280, 150 280"
+              d="M100,-50 C100,50 140,280 150,280"
               stroke="url(#fabric-pattern)"
               strokeWidth="28"
               strokeLinecap="butt"
@@ -271,14 +271,14 @@ export function HeroIdCard() {
 
             {/* Right Strap */}
             <path
-              d="M200 -50 C 200 50, 160 280, 150 280"
+              d="M200,-50 C200,50 160,280 150,280"
               stroke="url(#strap-gradient)"
               strokeWidth="28"
               strokeLinecap="butt"
               filter="url(#fabric-shadow)"
             />
             <path
-              d="M200 -50 C 200 50, 160 280, 150 280"
+              d="M200,-50 C200,50 160,280 150,280"
               stroke="url(#fabric-pattern)"
               strokeWidth="28"
               strokeLinecap="butt"
@@ -288,7 +288,7 @@ export function HeroIdCard() {
             {/* Branding Text Path Left */}
             <path
               id="textPathLeft"
-              d="M105 0 C 105 80, 138 240, 144 260"
+              d="M105,0 C105,80 138,240 144,260"
               fill="transparent"
             />
             <text
@@ -309,7 +309,7 @@ export function HeroIdCard() {
             {/* Branding Text Path Right */}
             <path
               id="textPathRight"
-              d="M195 0 C 195 80, 162 240, 156 260"
+              d="M195,0 C195,80 162,240 156,260"
               fill="transparent"
             />
             <text
