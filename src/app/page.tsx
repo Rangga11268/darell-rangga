@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 
 // Eager imports — above the fold, critical for LCP
@@ -94,17 +94,21 @@ export default function Home() {
   const isReady = readyLevel >= 1;
 
   useEffect(() => {
+    // For review purposes, we always show the intro.
+    // In production, you might want to uncomment the localStorage logic.
+    setShowIntro(true);
+    
+    /*
     const seen = localStorage.getItem("dr_visited");
     if (!seen) {
-      // First visit: show intro, set flag
       localStorage.setItem("dr_visited", "1");
       setShowIntro(true);
     } else {
-      // Return visitor: skip intro, go straight to level 1 + schedule level 2
       setReadyLevel(1);
       const t = setTimeout(() => setReadyLevel(2), 50);
       return () => clearTimeout(t);
     }
+    */
   }, []);
 
   return (
@@ -129,25 +133,32 @@ export default function Home() {
       {/* Main Content with Bottom Margin for Parallax Footer */}
       <div className="relative z-10 bg-background pb-10 overflow-hidden">
         <main className="bg-background relative z-10">
-          {/* Hero is EAGER for LCP but its animations are gated by isReady to save TBT */}
           <HeroSection />
 
           {/* BELOW FOLD sections — staggered mount across 2 idle task slots */}
           {readyLevel >= 1 && (
-            <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <BioSection />
               <ExperienceSection />
-            </>
+            </motion.div>
           )}
           {readyLevel >= 2 && (
-            <>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            >
               <SkillsSection />
               <ServicesSection />
               <ProjectsSection />
               <AchievementsSection />
               <CommandCenter />
               <ContactSection />
-            </>
+            </motion.div>
           )}
         </main>
       </div>

@@ -20,38 +20,19 @@ export default async function Image() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#050505", // Dark background
-        backgroundImage:
-          "radial-gradient(circle at 25px 25px, #202020 2%, transparent 0%), radial-gradient(circle at 75px 75px, #202020 2%, transparent 0%)",
-        backgroundSize: "100px 100px",
+        backgroundColor: "#f9f7f2", // Creamy paper background
         position: "relative",
+        padding: "40px",
+        border: "20px solid #1a1c1c", // Thick ink border
       }}
     >
-      {/* Glow Effects */}
+      {/* Newspaper Grain/Texture simulation */}
       <div
         style={{
           position: "absolute",
-          top: "-10%",
-          left: "-10%",
-          width: "40%",
-          height: "40%",
-          borderRadius: "50%",
-          background: "linear-gradient(to right, #4f46e5, #ec4899)",
-          filter: "blur(100px)",
-          opacity: 0.2,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-10%",
-          right: "-10%",
-          width: "40%",
-          height: "40%",
-          borderRadius: "50%",
-          background: "linear-gradient(to right, #3b82f6, #10b981)",
-          filter: "blur(100px)",
-          opacity: 0.2,
+          inset: 0,
+          opacity: 0.03,
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/natural-paper.png')",
         }}
       />
 
@@ -61,79 +42,81 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.03)",
-          border: "1px solid rgba(255, 255, 255, 0.1)",
-          borderRadius: "32px",
-          padding: "60px 100px",
-          boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
-          backdropFilter: "blur(20px)",
+          border: "2px solid #1a1c1c",
+          padding: "60px 80px",
+          width: "100%",
+          height: "100%",
         }}
       >
-        {/* Badge */}
+        {/* Editorial Top Bar */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            padding: "10px 24px",
-            borderRadius: "99px",
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            marginBottom: "32px",
+            justifyContent: "space-between",
+            width: "100%",
+            borderBottom: "1px solid rgba(26, 28, 28, 0.2)",
+            paddingBottom: "10px",
+            marginBottom: "40px",
+            fontSize: 20,
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "#1a1c1c",
           }}
         >
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: "#22c55e",
-              boxShadow: "0 0 10px #22c55e",
-            }}
-          />
-          <span
-            style={{
-              color: "#e5e5e5",
-              fontSize: 16,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              fontFamily: "monospace",
-            }}
-          >
-            Available for Work
-          </span>
+          <span>Vol. 2025</span>
+          <span>Editorial Edition</span>
+          <span>No. 07</span>
         </div>
 
         <h1
           style={{
-            fontSize: 96,
-            fontWeight: 800,
-            background: "linear-gradient(to bottom right, #fff, #a3a3a3)",
-            backgroundClip: "text",
-            color: "transparent",
+            fontSize: 140,
+            fontWeight: 900,
+            color: "#1a1c1c",
             margin: 0,
             letterSpacing: "-0.05em",
             textAlign: "center",
-            lineHeight: 1,
+            lineHeight: 0.8,
+            textTransform: "uppercase",
+            borderBottom: "8px solid #1a1c1c",
+            paddingBottom: "20px",
+            marginBottom: "30px",
           }}
         >
-          DARELL
-          <br />
-          RANGGA
+          DARELL RANGGA
         </h1>
 
-        <p
+        <div
           style={{
-            fontSize: 24,
-            color: "#a3a3a3",
-            marginTop: 32,
-            fontFamily: "monospace",
-            letterSpacing: "0.2em",
+            fontSize: 32,
+            color: "#1a1c1c",
+            marginTop: 10,
+            fontWeight: "bold",
             textTransform: "uppercase",
+            letterSpacing: "0.4em",
+            fontStyle: "italic",
           }}
         >
-          Fullstack Developer
-        </p>
+          Fullstack Developer & Digital Craftsman
+        </div>
+
+        {/* Footer Bar */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            marginTop: "60px",
+            fontSize: 18,
+            color: "rgba(26, 28, 28, 0.5)",
+            fontFamily: "monospace",
+            textTransform: "uppercase",
+            letterSpacing: "0.5em",
+          }}
+        >
+          Available for Global Dispatch • Based in Indonesia
+        </div>
       </div>
     </div>,
     {

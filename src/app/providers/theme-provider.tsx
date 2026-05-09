@@ -17,5 +17,5 @@ export function ThemeProvider({
     return <>{children}</>;
   }
 
-  return <NextThemesProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange {...props}>{children}</NextThemesProvider>
+  return <NextThemesProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange {...props}>{children}</NextThemesProvider>
 }
