@@ -35,8 +35,18 @@ export function HeroSection() {
               </button>
             </div>
           </div>
-          <span className="hidden md:inline italic font-serif normal-case lowercase opacity-80 tracking-normal font-normal">Independent Developer & Digital Craftsman</span>
-          <span className="hidden sm:inline">No. 07</span>
+          <div className="hidden md:flex items-center gap-6 border-l hairline-l border-primary/20 pl-6 ml-auto">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="opacity-60">STATUS:</span>
+              <span>AVAILABLE FOR DISPATCH</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="opacity-60">LOCATION:</span>
+              <span>BEKASI DISPATCH</span>
+            </div>
+          </div>
+          <span className="hidden sm:inline ml-6">No. 07</span>
         </div>
 
         {/* Masthead - Precise Reference Styling */}
@@ -69,6 +79,31 @@ export function HeroSection() {
            </div>
            <span className="label-caps text-on-surface-variant font-bold">• EST. 2020</span>
         </nav>
+
+        {/* Tech Ticker - Modern Marquee with Editorial Flair */}
+        <div className="w-full bg-primary text-primary-foreground py-2 mb-8 overflow-hidden relative">
+          <div className="flex whitespace-nowrap animate-marquee font-bold label-caps text-[10px] tracking-[0.2em]">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="flex items-center gap-8 px-4">
+                <span>NEXT.JS EXPERTISE</span>
+                <span className="opacity-30">•</span>
+                <span>LARAVEL BACKEND</span>
+                <span className="opacity-30">•</span>
+                <span>REACT INTERFACES</span>
+                <span className="opacity-30">•</span>
+                <span>UI/UX DESIGN</span>
+                <span className="opacity-30">•</span>
+                <span>TYPESCRIPT SAFETY</span>
+                <span className="opacity-30">•</span>
+                <span>RESTFUL API</span>
+                <span className="opacity-30">•</span>
+              </div>
+            ))}
+          </div>
+          {/* Edge Fades */}
+          <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-primary to-transparent z-10" />
+          <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-primary to-transparent z-10" />
+        </div>
 
         {/* Hero Grid - 12 Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-b-rule-thick border-primary pb-12 pt-4">

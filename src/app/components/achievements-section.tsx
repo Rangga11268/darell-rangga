@@ -237,7 +237,7 @@ export function AchievementsSection() {
 
         <div
           ref={containerRef}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-t hairline-t border-l hairline-l border-primary/20"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-t hairline-t border-l hairline-l border-primary/20 mb-20"
         >
           {milestones.map((milestone, index) => (
             <MilestoneCard
@@ -247,6 +247,64 @@ export function AchievementsSection() {
               inView={isInView}
             />
           ))}
+        </div>
+
+        {/* Single Featured Certificate - Authentic Newspaper Cutout */}
+        <div className="pt-12 border-t-rule-thick border-primary">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="md:w-1/2">
+               <h3 className="headline-md uppercase tracking-tight italic mb-4">
+                {language === "id" ? "Sertifikasi Unggulan" : "Featured Certification"}
+              </h3>
+              <p className="body-md text-on-surface-variant mb-6 italic font-serif">
+                {language === "id" 
+                  ? "Pengakuan resmi atas kompetensi teknis dan dedikasi dalam pengembangan perangkat lunak modern." 
+                  : "Official recognition of technical competence and dedication in modern software development."}
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-px bg-primary" />
+                <span className="label-caps text-[10px] font-bold">Verified Professional</span>
+              </div>
+            </div>
+
+            <div className="md:w-1/2 flex justify-center">
+              <div 
+                className="relative group p-8 bg-paper border hairline border-primary/20 shadow-lg transition-transform hover:scale-[1.05] -rotate-1 cursor-default max-w-sm w-full"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E")`
+                }}
+              >
+                {/* Torn edge effect simulation */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-b from-primary/5 to-transparent" />
+                
+                <div className="border-2 border-primary/10 p-8 flex flex-col h-full bg-white/20 dark:bg-black/10">
+                  <div className="flex justify-between items-start mb-8">
+                    <Star size={32} weight="fill" className="text-primary opacity-20" />
+                    <span className="label-caps text-[8px] border border-primary/20 px-2 py-0.5">EXCEPTIONAL_RECORD</span>
+                  </div>
+                  
+                  <h4 className="headline-sm mb-3 uppercase leading-tight tracking-tight text-xl">
+                    Uji Kompetensi Basis Data
+                  </h4>
+                  <p className="label-caps text-[10px] font-bold mb-10 text-primary/60">
+                    ISSUED BY: PHPID COMMUNITY X BSI
+                  </p>
+                  
+                  <div className="mt-auto flex justify-between items-center pt-6 border-t hairline-t border-primary/10">
+                    <span className="label-caps text-[10px] opacity-40">JULY 2025</span>
+                    <button className="text-[11px] font-bold underline underline-offset-4 hover:text-primary transition-colors uppercase">
+                      View Certificate
+                    </button>
+                  </div>
+                </div>
+
+                {/* Pin/Clip simulation */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary/10 rounded-full border hairline border-primary/20 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-inner" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Footer of section */}
