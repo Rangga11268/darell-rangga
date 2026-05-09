@@ -39,9 +39,8 @@ export function CustomizationProvider({
   useEffect(() => {
     const root = document.documentElement;
 
-    // Apply Primary Color (OKLCH)
-    // Note: We are controlling the --primary variable directly
-    root.style.setProperty("--primary", `oklch(${config.primaryColor})`);
+    // Primary color override disabled for monochromatic consistency
+    // root.style.setProperty("--primary", `oklch(${config.primaryColor})`);
 
     // Apply Radius
     root.style.setProperty("--radius", `${config.radius}rem`);

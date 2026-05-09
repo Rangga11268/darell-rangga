@@ -4,35 +4,39 @@ import { Lightning } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { SkillGalaxy } from "@/app/components/skill-galaxy";
 
-import { ParallaxBackground } from "@/components/ui/parallax-background";
-
 export function SkillsSection() {
   const { t } = useLanguage();
 
   return (
     <section
       id="skills"
-      className="py-24 bg-secondary/30 relative overflow-hidden section-contain"
+      className="py-32 bg-paper relative overflow-hidden"
     >
-      <ParallaxBackground
-        className="absolute inset-0 z-0 opacity-20"
-        speed={0.2}
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle,_hsl(var(--primary)/0.4)_1px,_transparent_1px)] bg-[size:28px_28px] [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-      </ParallaxBackground>
-
-      <div className="container px-4 md:px-6 mx-auto relative z-10">
-        <div className="flex flex-col items-center text-center space-y-4 mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/50 border border-accent text-foreground text-sm font-medium">
-            <Lightning className="w-4 h-4" weight="duotone" />
-            <span>{t.about.arsenal}</span>
+      <div className="container px-margin-mobile md:px-margin-desktop mx-auto relative z-10">
+        {/* Editorial Section Header */}
+        <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-20 border-b hairline border-foreground/10 pb-12">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 bg-foreground text-background px-4 py-1 label-caps">
+              <Lightning size={14} weight="bold" />
+              <span>{t.about.arsenal}</span>
+            </div>
+            <h2 className="headline-lg text-foreground uppercase">
+              {t.about.incantations}
+            </h2>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display">
-            {t.about.incantations}
-          </h2>
+          <div className="max-w-xs text-right hidden md:block">
+            <p className="label-caps text-[10px] text-foreground/40 leading-relaxed uppercase tracking-widest">
+              Catalog of technical apparatus and conceptual frameworks utilized in the production of high-fidelity digital experiences.
+            </p>
+          </div>
         </div>
 
         <SkillGalaxy />
+      </div>
+
+      {/* Decorative Archival Marks */}
+      <div className="absolute bottom-8 right-8 pointer-events-none opacity-5">
+         <span className="text-8xl font-serif font-black italic">INDEX</span>
       </div>
     </section>
   );

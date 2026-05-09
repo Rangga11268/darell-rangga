@@ -1,188 +1,187 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowRight,
-  DownloadSimple,
-  GithubLogo,
-  LinkedinLogo,
-} from "@phosphor-icons/react";
+import { GithubLogo, LinkedinLogo, FilePdf } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "@phosphor-icons/react";
+import Image from "next/image";
 
-import { HeroIdCard } from "./hero-id-card";
-import { TextScramble } from "@/components/ui/text-scramble";
-import { useIsMobile } from "@/lib/hooks/use-is-mobile";
-
-export function HeroSection({ isReady = true }: { isReady?: boolean }) {
-  const { t } = useLanguage();
-  const isMobile = useIsMobile();
-  const { scrollY } = useScroll();
-
-  // Only apply scroll transforms on desktop to avoid continuous repaints on mobile
-  const yText = useTransform(scrollY, [0, 600], isMobile ? [0, 0] : [0, 60]);
-  const opacityHero = useTransform(
-    scrollY,
-    [600, 1200],
-    isMobile ? [1, 1] : [1, 0],
-  );
+export function HeroSection() {
+  const { t, language, toggleLanguage } = useLanguage();
+  const { theme, setTheme } = useTheme();
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-20"
-    >
-      {/* 1. Background: Grainy Mesh Gradient (Clean & Modern) */}
-      <div className="absolute inset-0 w-full h-full bg-background">
-        <div className="absolute inset-0 bg-mesh opacity-60" />
-      </div>
-
-      <motion.div
-        style={{ opacity: opacityHero }}
-        className="container relative z-10 px-4 md:px-6 h-full flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-24 pb-32 md:pb-0"
-      >
-        {/* ... Left Content (Text) ... */}
-        <motion.div
-          style={{ y: yText }}
-          className="flex-1 flex flex-col items-center md:items-start text-center md:text-left space-y-8"
-        >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, letterSpacing: "-0.05em" }}
-            animate={
-              isReady ? { opacity: 1, y: 0, letterSpacing: "0.05em" } : {}
-            }
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 bg-primary/5"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            <span className="text-sm font-medium text-primary tracking-wide uppercase">
-              <TextScramble text={t.hero.available} active={isReady} />
-            </span>
-          </motion.div>
-
-          {/* ... Headlines via diff context ... */}
-          {/* Reuse existing headlines code block or ensure context matches */}
-          <div className="space-y-2">
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={isReady ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: 0.1,
-                }}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold font-display tracking-tight text-foreground"
+    <section id="home" className="pt-8">
+      <div className="container mx-auto px-margin-mobile md:px-margin-desktop">
+        {/* Utility Bar - Precise Reference Layout */}
+        <div className="flex justify-between items-center mb-4 label-caps border-b hairline-b border-primary/20 pb-2 text-[10px] md:text-[11px] text-on-surface-variant font-bold">
+          <div className="flex items-center gap-3">
+            <span>{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <div className="flex items-center gap-1.5 border-l hairline-l border-primary/20 pl-3 ml-1">
+              <button 
+                onClick={toggleLanguage}
+                className="flex items-center gap-2 px-2 py-0.5 bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
               >
-                DARELL
-              </motion.h1>
+                <span className="opacity-60 hidden sm:inline">EDITION:</span>
+                <span>{language === "en" ? "ENGLISH" : "INDONESIA"}</span>
+              </button>
+              <button 
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="flex items-center justify-center w-6 h-6 bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                title="TOGGLE CONTRAST"
+              >
+                {theme === "dark" ? <Sun size={14} weight="bold" /> : <Moon size={14} weight="bold" />}
+              </button>
             </div>
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={isReady ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.8,
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: 0.25,
-                }}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold font-display tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/50"
-              >
-                RANGGA
-              </motion.h1>
+          </div>
+          <span className="hidden md:inline italic font-serif normal-case lowercase opacity-80 tracking-normal font-normal">Independent Developer & Digital Craftsman</span>
+          <span className="hidden sm:inline">No. 07</span>
+        </div>
+
+        {/* Masthead - Precise Reference Styling */}
+        <div className="text-center py-6 border-b-rule-thick border-primary mb-2 flex flex-col items-center">
+          <h1 className="text-masthead text-primary mb-4 leading-none select-none tracking-tighter whitespace-nowrap">
+            DARELL RANGGA
+          </h1>
+          <p className="editor-note flex items-center gap-4 text-on-surface-variant">
+            <span className="h-px w-12 bg-primary inline-block"></span>
+            Crafting Digital Experiences. Telling Stories Through Code.
+            <span className="h-px w-12 bg-primary inline-block"></span>
+          </p>
+        </div>
+
+        {/* Navigation - Embedded in Masthead structure as per reference */}
+        <nav className="flex justify-between items-center py-3 sticky top-0 bg-paper z-40 border-b hairline-b border-primary/20 mb-8 outline-none">
+           <button className="flex items-center gap-2 hover:text-primary transition-colors outline-none focus:outline-none">
+             <span className="font-bold text-xl font-serif">MENU</span>
+           </button>
+           <div className="hidden md:flex gap-8 lg:gap-12">
+             {["home", "about", "services", "projects", "skills", "experience", "contact"].map((item) => (
+               <a 
+                 key={item}
+                 href={`#${item}`} 
+                 className="label-caps text-on-surface-variant hover:text-primary transition-colors font-bold outline-none"
+               >
+                 {item}
+               </a>
+             ))}
+           </div>
+           <span className="label-caps text-on-surface-variant font-bold">• EST. 2020</span>
+        </nav>
+
+        {/* Hero Grid - 12 Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter border-b-rule-thick border-primary pb-12 pt-4">
+          
+          {/* Column 1: Intro (3 cols) */}
+          <div className="lg:col-span-3 flex flex-col border-b hairline-b lg:border-b-0 border-primary pb-8 lg:pb-0">
+            <div className="mb-6">
+              <span className="bg-primary text-primary-foreground label-caps px-3 py-1 inline-block mb-4">
+                Breaking News
+              </span>
+              <h2 className="headline-md italic mb-2">Hi, I&apos;m</h2>
+              <h1 className="headline-lg uppercase mb-4 leading-[0.9] tracking-tighter">
+                Darell<br />Rangga
+              </h1>
+              <h3 className="headline-sm italic text-on-surface-variant border-b hairline-b border-primary/20 pb-4 mb-4">
+                Creative Developer & Problem Solver
+              </h3>
+              <p className="body-lg mb-8 leading-relaxed">
+                {t.hero.description}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  variant="outline"
+                  className="border border-primary rounded-none px-6 py-6 label-caps hover:bg-primary hover:text-primary-foreground transition-colors tracking-widest font-bold"
+                  asChild
+                >
+                  <a href="#projects">{t.hero.viewWork}</a>
+                </Button>
+                <Button 
+                  variant="default"
+                  className="bg-primary text-paper rounded-none px-6 py-6 label-caps hover:bg-primary/90 transition-colors tracking-widest font-bold flex items-center gap-2"
+                  asChild
+                >
+                  <a href="/img/saya/CV IND.pdf" target="_blank">
+                    <FilePdf size={20} weight="bold" />
+                    CV.PDF
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="max-w-xl text-lg md:text-xl text-muted-foreground leading-relaxed"
-          >
-            {t.hero.description}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap justify-center md:justify-start gap-4"
-          >
-            <Button
-              size="lg"
-              className="rounded-full px-8 h-14 text-base font-medium bg-foreground text-background hover:bg-foreground/90 transition-all hover:scale-105 shadow-xl shadow-foreground/10"
-              asChild
-            >
-              <a href="#projects">
-                {t.hero.viewWork}
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </a>
-            </Button>
-
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-6 h-14 text-base font-medium border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
-                asChild
-              >
-                <a
-                  href="/img/saya/CV IND.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download
-                >
-                  <DownloadSimple className="mr-2 w-4 h-4" weight="duotone" />
-                  CV
-                </a>
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
-                asChild
-              >
-                <a
-                  href="https://github.com/Rangga11268/"
-                  target="_blank"
-                  aria-label="Github"
-                >
-                  <GithubLogo className="w-5 h-5" weight="duotone" />
-                </a>
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full w-14 h-14 border-border hover:bg-secondary transition-all hover:scale-105 bg-background shadow-sm"
-                asChild
-              >
-                <a
-                  href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
-                  target="_blank"
-                  aria-label="LinkedIn"
-                >
-                  <LinkedinLogo className="w-5 h-5" weight="duotone" />
-                </a>
-              </Button>
+          {/* Column 2: Main Feature Image (6 cols) */}
+          <div className="lg:col-span-6 lg:border-x lg:hairline-r lg:hairline-l border-primary px-0 lg:px-gutter">
+            <div className="relative aspect-[4/5] w-full grayscale contrast-125 sepia-[.15] border border-primary/10">
+              <Image 
+                src="/img/saya/saya1.webp" 
+                alt="Portrait" 
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 ring-1 ring-inset ring-primary/5" />
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
 
-        {/* 3. Visual (Right) - 3D Name Tag — opacity starts at 1 so the
-             photo is immediately eligible as LCP element (not hidden) */}
-        <motion.div
-          initial={{ opacity: 1, scale: 0.92 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="flex-1 w-full max-w-md flex justify-center"
-        >
-          <HeroIdCard />
-        </motion.div>
-      </motion.div>
+          {/* Column 3: Index & Aside (3 cols) */}
+          <div className="lg:col-span-3 flex flex-col gap-8">
+            <div>
+              <h4 className="editor-note text-on-surface-variant mb-2">{t.hero.featuredEdition}</h4>
+              <h3 className="headline-md leading-tight mb-4">{t.hero.mainHeadline}</h3>
+              <div className="flex gap-4 label-caps text-on-surface-variant mb-4 uppercase">
+                <span>{new Date().toLocaleDateString(language === 'id' ? 'id-ID' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <span>•</span>
+                <span>Portfolio</span>
+              </div>
+              <p className="body-md border-b hairline-b border-primary/20 pb-6 mb-6">
+                {t.hero.bio}
+              </p>
+            </div>
+
+            <div>
+              <h4 className="editor-note text-on-surface-variant mb-4 font-bold">{t.hero.inThisEdition}</h4>
+              <ul className="flex flex-col gap-3 label-caps tracking-widest font-bold">
+                {[
+                  { name: "About Me", page: "02", id: "about" },
+                  { name: "Services", page: "03", id: "services" },
+                  { name: "Projects", page: "04", id: "projects" },
+                  { name: "Skills", page: "05", id: "skills" },
+                  { name: "Experience", page: "06", id: "experience" },
+                  { name: "Contact", page: "07", id: "contact" }
+                ].map((item) => (
+                  <li key={item.id} className="flex justify-between items-center border-b hairline-b border-on-surface-variant/20 pb-2">
+                    <a href={`#${item.id}`} className="hover:underline">{item.name}</a>
+                    <span className="body-md font-normal">{item.page}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-auto border hairline border-primary p-4 bg-primary/5">
+              <h4 className="label-caps text-[10px] font-bold mb-2 opacity-60">{t.hero.archivedDocs}</h4>
+              <a 
+                href="/img/saya/CV IND.pdf" 
+                target="_blank"
+                className="flex items-center justify-between text-xs font-bold hover:underline group"
+              >
+                <span>{t.hero.cvPdf}</span>
+                <FilePdf size={16} weight="bold" className="group-hover:scale-110 transition-transform" />
+              </a>
+            </div>
+
+            <div className="flex gap-4 pt-6 border-t hairline-t border-primary/10">
+              <a href="https://github.com/Rangga11268/" target="_blank" className="hover:scale-110 transition-transform">
+                <GithubLogo size={24} weight="bold" />
+              </a>
+              <a href="https://www.linkedin.com/in/darell-rangga-1320b634b/" target="_blank" className="hover:scale-110 transition-transform">
+                <LinkedinLogo size={24} weight="bold" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

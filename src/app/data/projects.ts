@@ -20,7 +20,214 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  // ROW 1 & 2 (Top Section)
+  // THE BIG THREE (Main Stories)
+  {
+    id: "tujago",
+    title: "Tunggal Jaya (TUJAGO)",
+    shortDescription: {
+      en: "Digital Transformation Platform for bus operations.",
+      id: "Platform Transformasi Digital untuk operasional bus.",
+    },
+    fullDescription: {
+      en: "An end-to-end bus ticket booking platform that digitally transforms conventional bus operations. It combines ease of ticket booking for passengers with efficient fleet management, utilizing a Modern Monolith architecture.",
+      id: "Platform pemesanan tiket bus end-to-end yang mentransformasi operasional bus konvensional menjadi digital modern. Menggabungkan kemudahan booking tiket dengan manajemen armada yang efisien.",
+    },
+    tags: ["Laravel 12", "Vue 3", "Inertia"],
+    imageUrl: "/img/tujago.webp",
+    githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
+    liveUrl: "#",
+    colSpan: "md:col-span-2 md:row-span-2", // HERO ITEM (2x2)
+    year: "2025",
+    role: "Full Stack Developer",
+    features: {
+      en: [
+        "Cinematic Booking Experience",
+        "Real-time Seat Selection",
+        "Automated PDF Ticketing",
+        "Integrated Admin Dashboard",
+      ],
+      id: [
+        "Pengalaman Booking Sinematik",
+        "Pemilihan Kursi Real-time",
+        "Tiket PDF Otomatis",
+        "Dashboard Admin Terintegrasi",
+      ],
+    },
+    techStack: [
+      { name: "Laravel 12" },
+      { name: "Vue.js 3" },
+      { name: "Inertia.js" },
+      { name: "Tailwind v4" },
+      { name: "MySQL" },
+    ],
+    story: {
+      en: "Using the 'Modern Monolith' approach with Inertia.js allowed me to deliver a SPA experience without separate API complexity. This ensured rapid development and robust performance for the ticketing system.",
+      id: "Menggunakan pendekatan 'Modern Monolith' dengan Inertia.js memungkinkan saya menghadirkan pengalaman SPA tanpa kerumitan API terpisah. Ini menjamin pengembangan cepat dan performa tangguh untuk sistem tiket.",
+    },
+    challenges: {
+      en: [
+        "Handling concurrent seat bookings during peak times to prevent double-booking.",
+        "Generating complex PDF tickets with QR codes on the fly without blocking the main thread.",
+        "Migrating legacy data from manual Excel sheets to a relational MySQL database.",
+      ],
+      id: [
+        "Menangani pemesanan kursi bersamaan saat jam sibuk untuk mencegah double-booking.",
+        "Menghasilkan tiket PDF kompleks dengan kode QR secara on-the-fly tanpa memblokir thread utama.",
+        "Migrasi data lama dari lembar Excel manual ke database relasional MySQL.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Implemented database locking and transaction safeguards in Laravel to ensure atomic booking operations.",
+        "Offloaded PDF generation to a queued background job using Redis/Horizon.",
+        "Built a custom data seeder script with validation logic to sanitize and import legacy data accurately.",
+      ],
+      id: [
+        "Menerapkan safeguarding transaksi dan database locking di Laravel untuk memastikan operasi booking atomik.",
+        "Memindahkan pembuatan PDF ke background job antrian menggunakan Redis/Horizon.",
+        "Membuat skrip data seeder kustom dengan logika validasi untuk membersihkan dan mengimpor data lama secara akurat.",
+      ],
+    },
+  },
+  {
+    id: "srb-motor-v3",
+    title: "SRB Motor V3",
+    shortDescription: {
+      en: "Next-Gen Automotive Dealership Platform with Futuristic UI.",
+      id: "Platform Dealer Otomotif Next-Gen dengan UI Futuristik.",
+    },
+    fullDescription: {
+      en: "A web-based motorcycle dealership platform designed with a Futuristic 'Command Center' concept. This application is not just a standard e-commerce site, but combines a seamless Single Page Application (SPA) experience with High-Tech visuals for credit simulation, document management, and real-time dealer administration.",
+      id: "Platform dealer motor berbasis web yang dirancang dengan konsep Futuristic 'Command Center'. Aplikasi ini bukan sekadar e-commerce biasa, tetapi menggabungkan pengalaman Single Page Application (SPA) yang seamless dengan visual High-Tech untuk simulasi kredit, manajemen dokumen, dan administrasi dealer yang real-time.",
+    },
+    tags: ["Laravel", "Inertia", "React 19"],
+    imageUrl: "/img/srb motor.webp",
+    githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
+    liveUrl: "#",
+    colSpan: "md:col-span-2", // WIDE ITEM
+    year: "2025",
+    role: "Full Stack Developer",
+    features: {
+      en: [
+        "Hyper-Modern 'Neo-Automotive' UI",
+        "Dual-Mode Transaction (Cash & Credit)",
+        "Digital Vault for Secure Documents",
+        "Admin 'Command Center' with Live Search",
+      ],
+      id: [
+        "UI 'Neo-Automotive' Hyper-Modern",
+        "Transaksi Dual-Mode (Tunai & Kredit)",
+        "Brankas Digital Dokumen Aman",
+        "'Command Center' Admin Live Search",
+      ],
+    },
+    techStack: [
+      { name: "Laravel" },
+      { name: "Inertia.js" },
+      { name: "React 19" },
+      { name: "Tailwind 4.0" },
+      { name: "Recharts" },
+    ],
+    story: {
+      en: "I implemented Inertia.js to get mobile-app-like speed while keeping the robust data management of Laravel. The 'Command Center' dashboard features a custom-built Live Search grid that allows admins to filter thousands of records instantly without reloading.",
+      id: "Saya mengimplementasikan Inertia.js untuk mendapatkan kecepatan interaksi ala aplikasi mobile tapi tetap mempertahankan keamanan dan kemudahan manajemen data dari Laravel.",
+    },
+    challenges: {
+      en: [
+        "Filtering thousands of vehicle records instantly without performance lag.",
+        "Managing complex credit simulation logic across different leasing providers.",
+        "Creating a highly responsive high-tech UI that works on older tablets used in dealerships.",
+      ],
+      id: [
+        "Memfilter ribuan data kendaraan secara instan tanpa lag performa.",
+        "Mengelola logika simulasi kredit yang kompleks di berbagai penyedia leasing.",
+        "Membuat UI high-tech yang sangat responsif untuk tablet lama di dealer.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Developed a custom Live Search grid with client-side caching and debounced filtering.",
+        "Architected a polymorphic calculation engine to handle various credit schemes.",
+        "Optimized SVG-based dashboard elements and used hardware-accelerated transitions.",
+      ],
+      id: [
+        "Mengembangkan grid Live Search kustom dengan client-side caching.",
+        "Merancang mesin kalkulasi polimorfik untuk berbagai skema kredit.",
+        "Optimasi elemen dashboard berbasis SVG dan transisi akselerasi hardware.",
+      ],
+    },
+  },
+  {
+    id: "satya-hub",
+    title: "Satya Hub",
+    shortDescription: {
+      en: "Premium Unified School & Learning Ecosystem.",
+      id: "Ekosistem Pendidikan Digital Terpadu & Terintegrasi.",
+    },
+    fullDescription: {
+      en: "A unified digital education ecosystem platform that revolutionizes student-teacher interaction. It eliminates information fragmentation through the 'Unified Student Hub'—a central command suite combining schedules, real-time attendance, and task management.",
+      id: "Platform ekosistem pendidikan digital terpadu yang merombak cara siswa dan guru berinteraksi. Fokus utama aplikasi ini adalah menghapuskan fragmentasi informasi melalui 'Unified Student Hub'—sebuah central command suite bagi siswa.",
+    },
+    tags: ["React 19", "Node.js", "MongoDB"],
+    imageUrl: "/img/siakad.webp",
+    githubUrl: "#",
+    liveUrl: "#",
+    colSpan: "md:col-span-1",
+    year: "2026",
+    role: "Full Stack Developer",
+    features: {
+      en: [
+        "Unified Student Learning Hub",
+        "Teacher-Student Feedback Loop",
+        "Academic Precision Suite",
+        "Elite Glassmorphism Aesthetic",
+      ],
+      id: [
+        "Unified Student Learning Hub",
+        "Interactive Feedback Loop",
+        "Academic Precision Suite",
+        "Elite Aesthetics with Glassmorphism",
+      ],
+    },
+    techStack: [
+      { name: "React 19" },
+      { name: "TypeScript" },
+      { name: "Tailwind 4.0" },
+      { name: "Node.js" },
+      { name: "MongoDB" },
+      { name: "Midtrans" },
+    ],
+    story: {
+      en: "Built with a 'Zero Friction' philosophy, consolidating complex data logic into a single lightweight SPA with an 'Elite School' aesthetic.",
+      id: "Dibangun dengan filosofi 'Zero Friction'. Tantangan terbesarnya adalah mengonsolidasi logika data yang kompleks ke dalam satu SPA yang tetap ringan dan memiliki estetika 'Elite School'.",
+    },
+    challenges: {
+      en: [
+        "Consolidating fragmented data from various school departments into one source of truth.",
+        "Implementing a real-time notification system for attendance and task deadlines.",
+        "Designing a premium UI that feels sophisticated yet remains intuitive for younger students.",
+      ],
+      id: [
+        "Konsolidasi data terfragmentasi dari berbagai departemen sekolah.",
+        "Implementasi sistem notifikasi real-time untuk absensi dan tenggat tugas.",
+        "Mendesain UI premium yang canggih namun tetap intuitif bagi siswa muda.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Unified all data models under a strict MongoDB schema with cross-collection validation.",
+        "Used Socket.io for instant event-driven updates across the platform.",
+        "Applied 'Elite Glassmorphism' design tokens with high-contrast accessibility compliance.",
+      ],
+      id: [
+        "Penyatuan model data di bawah skema MongoDB yang ketat.",
+        "Menggunakan Socket.io untuk pembaruan instan berbasis event.",
+        "Menerapkan design tokens 'Elite Glassmorphism' yang memenuhi standar aksesibilitas.",
+      ],
+    },
+  },
+
+  // THE REST (Archives)
   {
     id: "aussie-rain-ai",
     title: "AussieRain AI",
@@ -97,74 +304,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "tujago",
-    title: "Tunggal Jaya (TUJAGO)",
-    shortDescription: {
-      en: "Digital Transformation Platform for bus operations.",
-      id: "Platform Transformasi Digital untuk operasional bus.",
-    },
-    fullDescription: {
-      en: "An end-to-end bus ticket booking platform that digitally transforms conventional bus operations. It combines ease of ticket booking for passengers with efficient fleet management, utilizing a Modern Monolith architecture.",
-      id: "Platform pemesanan tiket bus end-to-end yang mentransformasi operasional bus konvensional menjadi digital modern. Menggabungkan kemudahan booking tiket dengan manajemen armada yang efisien.",
-    },
-    tags: ["Laravel 12", "Vue 3", "Inertia"],
-    imageUrl: "/img/tujago.webp",
-    githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-    liveUrl: "#",
-    colSpan: "md:col-span-2 md:row-span-2", // HERO ITEM (2x2)
-    year: "2025",
-    role: "Full Stack Developer",
-    features: {
-      en: [
-        "Cinematic Booking Experience",
-        "Real-time Seat Selection",
-        "Automated PDF Ticketing",
-        "Integrated Admin Dashboard",
-      ],
-      id: [
-        "Pengalaman Booking Sinematik",
-        "Pemilihan Kursi Real-time",
-        "Tiket PDF Otomatis",
-        "Dashboard Admin Terintegrasi",
-      ],
-    },
-    techStack: [
-      { name: "Laravel 12" },
-      { name: "Vue.js 3" },
-      { name: "Inertia.js" },
-      { name: "Tailwind v4" },
-      { name: "MySQL" },
-    ],
-    story: {
-      en: "Using the 'Modern Monolith' approach with Inertia.js allowed me to deliver a SPA experience without separate API complexity. This ensured rapid development and robust performance for the ticketing system.",
-      id: "Menggunakan pendekatan 'Modern Monolith' dengan Inertia.js memungkinkan saya menghadirkan pengalaman SPA tanpa kerumitan API terpisah. Ini menjamin pengembangan cepat dan performa tangguh untuk sistem tiket.",
-    },
-    challenges: {
-      en: [
-        "Handling concurrent seat bookings during peak times to prevent double-booking.",
-        "Generating complex PDF tickets with QR codes on the fly without blocking the main thread.",
-        "Migrating legacy data from manual Excel sheets to a relational MySQL database.",
-      ],
-      id: [
-        "Menangani pemesanan kursi bersamaan saat jam sibuk untuk mencegah double-booking.",
-        "Menghasilkan tiket PDF kompleks dengan kode QR secara on-the-fly tanpa memblokir thread utama.",
-        "Migrasi data lama dari lembar Excel manual ke database relasional MySQL.",
-      ],
-    },
-    solutions: {
-      en: [
-        "Implemented database locking and transaction safeguards in Laravel to ensure atomic booking operations.",
-        "Offloaded PDF generation to a queued background job using Redis/Horizon.",
-        "Built a custom data seeder script with validation logic to sanitize and import legacy data accurately.",
-      ],
-      id: [
-        "Menerapkan safeguarding transaksi dan database locking di Laravel untuk memastikan operasi booking atomik.",
-        "Memindahkan pembuatan PDF ke background job antrian menggunakan Redis/Horizon.",
-        "Membuat skrip data seeder kustom dengan logika validasi untuk membersihkan dan mengimpor data lama secara akurat.",
-      ],
-    },
-  },
-  {
     id: "portfolio",
     title: "Interactive Portfolio",
     shortDescription: {
@@ -205,52 +344,6 @@ export const projects: Project[] = [
     story: {
       en: "The goal was to break the 'Static Resume' curse. I built a system where users don't just read about my skills—they interact with them. The 'Command Center' allows zero-latency navigation, while the AI Agent acts as a 24/7 representative.",
       id: "Tujuannya adalah mematahkan kutukan 'Resume Statis'. Saya membangun sistem di mana pengguna tidak hanya membaca tentang skill saya—mereka berinteraksi dengannya. 'Command Center' memungkinkan navigasi tanpa jeda, sementara Agen AI bertindak sebagai perwakilan 24/7.",
-    },
-  },
-
-  // ROW 3
-  {
-    id: "srb-motor-v2",
-    title: "SRB Motor V2",
-    shortDescription: {
-      en: "Next-Gen Automotive Dealership Platform with Futuristic UI.",
-      id: "Platform Dealer Otomotif Next-Gen dengan UI Futuristik.",
-    },
-    fullDescription: {
-      en: "A web-based motorcycle dealership platform designed with a Futuristic 'Command Center' concept. This application is not just a standard e-commerce site, but combines a seamless Single Page Application (SPA) experience with High-Tech visuals for credit simulation, document management, and real-time dealer administration.",
-      id: "Platform dealer motor berbasis web yang dirancang dengan konsep Futuristic 'Command Center'. Aplikasi ini bukan sekadar e-commerce biasa, tetapi menggabungkan pengalaman Single Page Application (SPA) yang seamless dengan visual High-Tech untuk simulasi kredit, manajemen dokumen, dan administrasi dealer yang real-time.",
-    },
-    tags: ["Laravel", "Inertia", "React 19"],
-    imageUrl: "/img/srb motor.webp",
-    githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
-    liveUrl: "#",
-    colSpan: "md:col-span-2", // WIDE ITEM
-    year: "2025",
-    role: "Full Stack Developer",
-    features: {
-      en: [
-        "Hyper-Modern 'Neo-Automotive' UI",
-        "Dual-Mode Transaction (Cash & Credit)",
-        "Digital Vault for Secure Documents",
-        "Admin 'Command Center' with Live Search",
-      ],
-      id: [
-        "UI 'Neo-Automotive' Hyper-Modern",
-        "Transaksi Dual-Mode (Tunai & Kredit)",
-        "Brankas Digital Dokumen Aman",
-        "'Command Center' Admin Live Search",
-      ],
-    },
-    techStack: [
-      { name: "Laravel" },
-      { name: "Inertia.js" },
-      { name: "React 19" },
-      { name: "Tailwind 4.0" },
-      { name: "Recharts" },
-    ],
-    story: {
-      en: "I implemented Inertia.js to get mobile-app-like speed while keeping the robust data management of Laravel. The 'Command Center' dashboard features a custom-built Live Search grid that allows admins to filter thousands of records instantly without reloading.",
-      id: "Saya mengimplementasikan Inertia.js untuk mendapatkan kecepatan interaksi ala aplikasi mobile tapi tetap mempertahankan keamanan dan kemudahan manajemen data dari Laravel.",
     },
   },
   {
@@ -296,8 +389,6 @@ export const projects: Project[] = [
       id: "Proyek ini memprioritaskan kesan pertama yang sinematik tanpa mengorbankan kecepatan. Saya menggunakan map facades dan dynamic imports untuk loading instan, sementara animasi Framer Motion berbasis GPU menciptakan nuansa 'Mewah' 60FPS.",
     },
   },
-
-  // ROW 4 (Bottom)
   {
     id: "navara-trans",
     title: "Navara Trans",
@@ -382,51 +473,6 @@ export const projects: Project[] = [
     story: {
       en: "The challenge was to create a visually 'heavy' and expensive-feeling website that remains lightweight on mobile. I used Code Splitting and optimized animations to achieve this balance.",
       id: "Tantangannya adalah menciptakan website yang terasa 'berat' dan mahal menyajikan visual yang seperti aplikasi native, namun tetap ringan di mobile.",
-    },
-  },
-  {
-    id: "satya-hub",
-    title: "Satya Hub",
-    shortDescription: {
-      en: "Premium Unified School & Learning Ecosystem.",
-      id: "Ekosistem Pendidikan Digital Terpadu & Terintegrasi.",
-    },
-    fullDescription: {
-      en: "A unified digital education ecosystem platform that revolutionizes student-teacher interaction. It eliminates information fragmentation through the 'Unified Student Hub'—a central command suite combining schedules, real-time attendance, and task management.",
-      id: "Platform ekosistem pendidikan digital terpadu yang merombak cara siswa dan guru berinteraksi. Fokus utama aplikasi ini adalah menghapuskan fragmentasi informasi melalui 'Unified Student Hub'—sebuah central command suite bagi siswa.",
-    },
-    tags: ["React 19", "Node.js", "MongoDB"],
-    imageUrl: "/img/siakad.webp",
-    githubUrl: "#",
-    liveUrl: "#",
-    colSpan: "md:col-span-2",
-    year: "2026",
-    role: "Full Stack Developer",
-    features: {
-      en: [
-        "Unified Student Learning Hub",
-        "Teacher-Student Feedback Loop",
-        "Academic Precision Suite",
-        "Elite Glassmorphism Aesthetic",
-      ],
-      id: [
-        "Unified Student Learning Hub",
-        "Interactive Feedback Loop",
-        "Academic Precision Suite",
-        "Elite Aesthetics with Glassmorphism",
-      ],
-    },
-    techStack: [
-      { name: "React 19" },
-      { name: "TypeScript" },
-      { name: "Tailwind 4.0" },
-      { name: "Node.js" },
-      { name: "MongoDB" },
-      { name: "Midtrans" },
-    ],
-    story: {
-      en: "Built with a 'Zero Friction' philosophy, consolidating complex data logic into a single lightweight SPA with an 'Elite School' aesthetic.",
-      id: "Dibangun dengan filosofi 'Zero Friction'. Tantangan terbesarnya adalah mengonsolidasi logika data yang kompleks ke dalam satu SPA yang tetap ringan dan memiliki estetika 'Elite School'.",
     },
   },
   {

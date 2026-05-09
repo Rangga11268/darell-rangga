@@ -6,46 +6,52 @@ import { useLanguage } from "@/app/providers/language-provider";
 import { GithubLogo } from "@phosphor-icons/react";
 
 export function CommandCenter() {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+
+  const title = language === "id" ? "Arsip Open Source" : "Open Source Archives";
+  const description = language === "id" 
+    ? "Eksplorasi dokumentasi kode dan aktivitas repositori publik yang tersentralisasi."
+    : "Exploration of centralized code documentation and public repository activity.";
 
   return (
-    <section id="github" className="py-32 relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] -z-10" />
-      </div>
-
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="flex flex-col items-center justify-center space-y-16">
-          {/* Section Header */}
+    <section id="github" className="bg-paper border-b-rule-thick border-primary py-16 md:py-24 overflow-hidden">
+      <div className="container mx-auto px-margin-mobile md:px-margin-desktop">
+        <div className="flex flex-col items-center justify-center space-y-12 md:space-y-16">
+          {/* Section Header - Official Bulletin Style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="text-center w-full"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4">
-              <GithubLogo className="w-4 h-4" />
-              <span>Open Source</span>
+            <div className="inline-flex items-center gap-3 border border-primary px-4 py-1.5 label-caps text-[10px] font-bold tracking-widest mb-6">
+              <GithubLogo size={16} weight="bold" />
+              <span>OFFICIAL REPOSITORY LOG</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-              {t.commandCenter.github.title}
+            <h2 className="headline-lg uppercase mb-4 tracking-tighter leading-[0.85]">
+              {title}
             </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto text-lg">
-              {t.commandCenter.github.description}
+            <p className="editor-note max-w-lg mx-auto text-lg italic opacity-60">
+              {description}
             </p>
           </motion.div>
 
-          {/* Modern GitHub Card */}
+          {/* GitHub Card - Framed like a printed diagram */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
+            initial={{ opacity: 0, scale: 0.98, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="w-full max-w-5xl min-h-[600px] md:min-h-[550px] h-auto flex justify-center perspective-1000"
+            className="w-full max-w-5xl h-auto flex justify-center border-rule-thick border-primary p-1 bg-paper shadow-[12px_12px_0px_#1a1c1c]"
           >
-            <GithubWidget />
+            <div className="w-full h-full border hairline border-primary bg-white/50 dark:bg-black/5 p-4 md:p-8">
+              <GithubWidget />
+            </div>
           </motion.div>
+          
+          <div className="label-caps text-[9px] font-bold opacity-30 tracking-[0.2em]">
+            END OF DATA_TRANSMISSION — REPO_REF_2025
+          </div>
         </div>
       </div>
     </section>

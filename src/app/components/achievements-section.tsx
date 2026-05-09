@@ -74,57 +74,43 @@ function MilestoneCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
-        duration: 0.6,
+        duration: 0.5,
         delay: index * 0.1,
-        ease: [0.16, 1, 0.3, 1],
       }}
-      className={`group relative ${milestone.span || ""}`}
+      className={`group relative border-r border-b hairline-r hairline-b border-primary/20 hover:bg-primary hover:text-primary-foreground transition-colors ${milestone.span || ""}`}
     >
-      {/* Animated Gradient Border */}
-      <div className="absolute -inset-[1px] rounded-[28px] bg-gradient-to-r from-primary via-primary/50 to-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[0.5px]" />
-
-      <div className="relative h-full rounded-[28px] bg-card/50 dark:bg-card/40 border border-border backdrop-blur-sm overflow-hidden p-8 md:p-10 transition-all duration-500 group-hover:bg-card/80 dark:group-hover:bg-card/60">
-        {/* Giant Watermark Number */}
-        <div className="absolute -bottom-4 -right-2 text-[140px] md:text-[180px] font-display font-black leading-none text-foreground/[0.03] dark:text-foreground/[0.04] group-hover:text-primary/[0.06] dark:group-hover:text-primary/[0.08] transition-colors duration-700 select-none pointer-events-none">
-          {milestone.value}
-          {milestone.suffix}
+      <div className="p-8 h-full flex flex-col justify-between gap-8 relative overflow-hidden">
+        {/* Background Label */}
+        <div className="absolute top-2 right-2 text-[8px] label-caps opacity-20 group-hover:opacity-100 font-bold">
+          RECORD_ID: 00{index + 1}
         </div>
 
-        {/* Hover Glow */}
-        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/4" />
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col h-full justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <motion.div
-              whileHover={{ scale: 1.15, rotate: -8 }}
-              transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              className="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/15 border border-primary/20 flex items-center justify-center text-primary"
-            >
-              <Icon className="w-6 h-6" weight="duotone" />
-            </motion.div>
-            <div className="h-[1px] flex-1 bg-gradient-to-r from-border to-transparent" />
+        <div className="flex items-start justify-between">
+          <div className="w-10 h-10 border hairline border-primary/20 flex items-center justify-center group-hover:border-paper group-hover:bg-paper group-hover:text-primary transition-all">
+            <Icon size={20} weight="bold" />
           </div>
-
-          <div>
-            <div className="text-5xl md:text-6xl lg:text-7xl font-display font-black text-foreground mb-3 tracking-tight group-hover:text-primary transition-colors duration-500">
+          <div className="text-right">
+            <div className="headline-lg text-4xl sm:text-5xl lg:text-6xl tracking-tighter leading-none group-hover:text-paper">
               <AnimatedCounter
                 value={milestone.value}
                 suffix={milestone.suffix}
                 inView={inView}
               />
             </div>
-            <h3 className="text-base font-bold text-foreground mb-1 font-display">
-              {milestone.label}
-            </h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {milestone.description}
-            </p>
           </div>
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="label-caps text-xs font-bold tracking-widest border-b hairline-b border-primary/10 pb-1 inline-block">
+            {milestone.label}
+          </h3>
+          <p className="body-md text-xs opacity-60 group-hover:opacity-100 leading-tight">
+            {milestone.description}
+          </p>
         </div>
       </div>
     </motion.div>
@@ -133,7 +119,6 @@ function MilestoneCard({
 
 export function AchievementsSection() {
   const { language } = useLanguage();
-  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
@@ -145,42 +130,40 @@ export function AchievementsSection() {
             value: 10,
             suffix: "+",
             label: "Proyek Selesai",
-            description: "Solusi web yang berhasil dibangun",
+            description: "Solusi perangkat lunak yang berhasil diterapkan secara penuh.",
             span: "md:col-span-2",
           },
           {
             icon: GraduationCap,
             value: 4.0,
             suffix: "",
-            label: "IPK Sempurna",
-            description: "Universitas Bina Sarana Informatika — Semester 3",
+            label: "Indeks Prestasi",
+            description: "Bina Sarana Informatika University — Akademik Semester 3.",
             span: "md:col-span-2",
           },
           {
             icon: GitBranch,
             value: 500,
             suffix: "+",
-            label: "Kontribusi GitHub",
-            description:
-              "Commits, PRs, dan code reviews dalam setahun terakhir",
-            span: "md:col-span-2",
+            label: "Kontribusi Kode",
+            description: "Aktivitas repositori terbuka melalui GitHub (Commits & PRs).",
+            span: "md:col-span-1",
           },
           {
             icon: Star,
             value: 6,
             suffix: "+",
-            label: "Tech Stack",
-            description:
-              "React, Next.js, Laravel, Node.js, TypeScript, dan lainnya",
-            span: "md:col-span-2",
+            label: "Teknologi Inti",
+            description: "Ekosistem JS, PHP, dan Cloud Infrastructure.",
+            span: "md:col-span-1",
           },
           {
             icon: Trophy,
             value: 99,
             suffix: "",
-            label: "Lighthouse Score",
-            description: "Performa optimal di setiap proyek yang dibangun",
-            span: "md:col-span-4",
+            label: "Skor Performa",
+            description: "Audit Lighthouse rata-rata pada proyek yang dioptimalkan.",
+            span: "md:col-span-2",
           },
         ]
       : [
@@ -189,104 +172,73 @@ export function AchievementsSection() {
             value: 10,
             suffix: "+",
             label: "Projects Completed",
-            description:
-              "Real-world web solutions successfully built",
+            description: "Full-cycle software solutions successfully deployed.",
             span: "md:col-span-2",
           },
           {
             icon: GraduationCap,
             value: 4.0,
             suffix: "",
-            label: "Perfect GPA",
-            description: "Bina Sarana Informatika University — Semester 3",
+            label: "Academic Score",
+            description: "Bina Sarana Informatika University — Semester 3 Records.",
             span: "md:col-span-2",
           },
           {
             icon: GitBranch,
             value: 500,
             suffix: "+",
-            label: "GitHub Contributions",
-            description: "Commits, PRs, and code reviews in the past year",
-            span: "md:col-span-2",
+            label: "Code Contributions",
+            description: "Open repository activity via GitHub (Commits & PRs).",
+            span: "md:col-span-1",
           },
           {
             icon: Star,
             value: 6,
             suffix: "+",
-            label: "Tech Stacks",
-            description:
-              "React, Next.js, Laravel, Node.js, TypeScript, and more",
-            span: "md:col-span-2",
+            label: "Core Tech",
+            description: "JS Ecosystem, PHP, and Cloud Infrastructure.",
+            span: "md:col-span-1",
           },
           {
             icon: Trophy,
             value: 99,
             suffix: "",
-            label: "Lighthouse Score",
-            description: "Optimal performance on every project built",
-            span: "md:col-span-4",
+            label: "Performance Score",
+            description: "Lighthouse audit average on optimized deployments.",
+            span: "md:col-span-2",
           },
         ];
 
   return (
     <section
-      ref={sectionRef}
       id="achievements"
-      className="relative py-20 md:py-32 overflow-hidden section-contain"
+      className="bg-paper border-b-rule-thick border-primary py-16 md:py-24"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-secondary/30 dark:bg-background pointer-events-none -z-20" />
-      <div className="absolute top-1/3 -left-32 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-1/3 -right-32 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -z-10" />
-
-      {/* Subtle Grid */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-      </div>
-
-      {/* Main Content */}
-      <div
-        ref={containerRef}
-        className="container mx-auto px-4 md:px-6 relative z-10"
-      >
-        {/* Header */}
-        <div className="mb-16 md:mb-24 space-y-4">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex items-center gap-2 text-primary font-mono text-sm uppercase tracking-wider"
-          >
-            <span className="w-8 h-[1px] bg-primary" />
-            {language === "id" ? "Pencapaian" : "Milestones"}
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-foreground via-foreground/80 to-foreground/40 max-w-2xl"
-          >
-            {language === "id" ? "Angka Berbicara" : "Numbers That Speak"}
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-muted-foreground max-w-lg"
-          >
-            {language === "id"
-              ? "Ringkasan pencapaian dan milestone selama perjalanan karir."
-              : "A snapshot of achievements and milestones throughout the journey."}
-          </motion.p>
+      <div className="container mx-auto px-margin-mobile md:px-margin-desktop">
+        {/* Header - Editorial Style */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-12 border-b-rule-thick border-primary pb-8">
+          <div className="md:col-span-8">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-primary text-paper px-2 py-0.5 text-[10px] label-caps font-bold">STATISTICAL DATA</div>
+              <span className="label-caps text-[10px] opacity-40">INDEX NO. 2025-ACH-01</span>
+            </div>
+            <h2 className="headline-lg mb-4 uppercase tracking-tighter leading-[0.85]">
+              {language === "id" ? "Angka Berbicara" : "Numbers In Archive"}
+            </h2>
+          </div>
+          <div className="md:col-span-4 flex items-end">
+            <p className="editor-note text-sm italic border-l hairline-l border-primary pl-6">
+              {language === "id"
+                ? "Ringkasan pencapaian dan milestone yang terdokumentasi selama perjalanan karir profesional."
+                : "A documented summary of achievements and career milestones recorded throughout the professional journey."}
+            </p>
+          </div>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div
+          ref={containerRef}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border-t hairline-t border-l hairline-l border-primary/20"
+        >
           {milestones.map((milestone, index) => (
             <MilestoneCard
               key={index}
@@ -295,6 +247,15 @@ export function AchievementsSection() {
               inView={isInView}
             />
           ))}
+        </div>
+
+        {/* Footer of section */}
+        <div className="mt-8 flex justify-between items-center opacity-40">
+          <div className="label-caps text-[9px] font-bold">END OF STATISTICAL REPORT</div>
+          <div className="flex gap-4">
+            <span className="label-caps text-[9px]">REF: DAR-2025</span>
+            <span className="label-caps text-[9px]">CERTIFIED_RECORD</span>
+          </div>
         </div>
       </div>
     </section>

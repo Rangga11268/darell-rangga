@@ -9,19 +9,17 @@ import {
   Envelope,
   Moon,
   Sun,
-  SquaresFour,
   X,
   Translate,
-  FolderOpen,
-  Terminal,
-  Sparkle,
-  IconWeight,
+  List,
+  FilePdf,
+  SealCheck,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
-import { useFileSystem } from "@/app/providers/file-system-provider";
 import { cn } from "@/lib/utils";
+import { useFileSystem } from "@/app/providers/file-system-provider";
 
 export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
@@ -29,7 +27,7 @@ export function FloatingNavbar() {
   const { theme, setTheme } = useTheme();
   const { t, language, toggleLanguage } = useLanguage();
   const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
-  const { openFolders, openFolder, closeFolder } = useFileSystem();
+  const { openFolder } = useFileSystem();
 
   useEffect(() => setMounted(true), []);
 
@@ -44,216 +42,113 @@ export function FloatingNavbar() {
 
   return (
     <>
-      {/* Expanded Quick Actions Menu — Liquid Glass Panel */}
+      {/* Archive Controls Menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: "spring", duration: 0.4 }}
-            className="fixed bottom-28 inset-x-4 md:w-[340px] md:left-1/2 md:-translate-x-1/2 z-40 rounded-3xl p-5 flex flex-col gap-4 liquid-glass-panel"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="fixed bottom-24 inset-x-margin-mobile md:w-[350px] md:left-auto md:right-margin-desktop z-[60] bg-paper border-rule-thick border-primary shadow-[8px_8px_0px_#1a1c1c] overflow-hidden"
           >
-            <div className="flex justify-between items-center px-2">
-              <span className="text-xs font-bold text-foreground/60 uppercase tracking-widest">
-                Quick Actions
+            <div className="flex justify-between items-center px-4 py-3 border-b hairline-b border-primary bg-primary text-primary-foreground">
+              <span className="label-caps font-bold tracking-widest text-[10px]">
+                Archive Settings
               </span>
-              <button onClick={() => setIsMenuOpen(false)}>
-                <X className="w-5 h-5 text-foreground/50 hover:text-foreground transition-colors" />
+              <button onClick={() => setIsMenuOpen(false)} className="hover:rotate-90 transition-transform">
+                <X size={16} weight="bold" />
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <MenuItem
-                icon={theme === "dark" ? Moon : Sun}
-                label="Theme"
+            <div className="grid grid-cols-1 divide-y hairline-t divide-primary/10">
+              <button 
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              />
-              <MenuItem
-                icon={Translate}
-                label={language === "id" ? "IND" : "ENG"}
-                onClick={toggleLanguage}
-                active={language === "id"}
-              />
-              <MenuItem
-                icon={Terminal}
-                label="Terminal"
-                onClick={() => setIsPlaygroundOpen(!isPlaygroundOpen)}
-                active={isPlaygroundOpen}
-                badge={
-                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-[10px] font-bold text-white shadow-lg shadow-purple-500/40 animate-pulse">
-                    <Sparkle weight="fill" className="w-3 h-3" />
-                    AI
-                  </span>
-                }
-              />
-              <MenuItem
-                icon={FolderOpen}
-                label="Files"
-                onClick={() =>
-                  openFolders.includes("system-files")
-                    ? closeFolder("system-files")
-                    : openFolder("system-files")
-                }
-                active={openFolders.includes("system-files")}
-              />
+                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
+              >
+                <span className="label-caps font-bold">Contrast Mode</span>
+                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+              
+              <button 
+                onClick={() => {
+                  setIsPlaygroundOpen(!isPlaygroundOpen);
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
+              >
+                <span className="label-caps font-bold">The Archivist</span>
+                <span className="body-md italic">{isPlaygroundOpen ? "Active" : "Launch"}</span>
+              </button>
+
+              <div className="bg-primary/5 px-4 py-2 border-b hairline-b border-primary/10">
+                <span className="label-caps font-bold text-[9px] opacity-40 italic">Special Supplements</span>
+              </div>
+
+              <button 
+                onClick={() => {
+                  openFolder("certificates-folder");
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
+              >
+                <span className="label-caps font-bold">{t.nav.certificates}</span>
+                <SealCheck size={20} />
+              </button>
+
+              <button 
+                onClick={() => {
+                  openFolder("system-files");
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
+              >
+                <span className="label-caps font-bold">{t.nav.curriculumVitae}</span>
+                <FilePdf size={20} />
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Floating Dock — Liquid Glass */}
-      <div className="fixed bottom-6 inset-x-0 z-50 flex justify-center pointer-events-none">
+      {/* Main Section Index (Bottom Bar) */}
+      <div className="fixed bottom-8 inset-x-0 z-50 flex justify-center pointer-events-none px-4">
         <motion.nav
           initial={{ y: 100 }}
           animate={{ y: 0 }}
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-          className="pointer-events-auto liquid-glass-dock"
+          className="pointer-events-auto flex items-stretch bg-paper border-rule-thick border-primary shadow-[6px_6px_0px_#1a1c1c] h-16 md:h-20"
         >
           {primaryItems.map((item) => (
-            <DockLink
+            <a
               key={item.name}
               href={item.href}
-              icon={item.icon}
-              label={item.name}
-            />
+              className="flex flex-col items-center justify-center px-4 md:px-10 border-r hairline-r border-primary hover:bg-primary hover:text-primary-foreground transition-all group relative overflow-hidden"
+            >
+              <item.icon className="w-5 h-5 md:w-6 md:h-6 mb-1 group-hover:scale-110 transition-transform" weight="bold" />
+              <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">{item.name}</span>
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </a>
           ))}
 
-          <div className="liquid-glass-divider" />
-
-          <DockButton
-            icon={SquaresFour}
-            label="More"
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            isActive={isMenuOpen}
-            badge={
-              !isMenuOpen && (
-                <div className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="hidden md:animate-ping md:absolute md:inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500 border border-white dark:border-zinc-900"></span>
-                </div>
-              )
-            }
-          />
+            className={cn(
+              "flex flex-col items-center justify-center px-4 md:px-10 transition-all group relative",
+              isMenuOpen ? "bg-primary text-primary-foreground" : "hover:bg-primary hover:text-primary-foreground"
+            )}
+          >
+            <List className="w-5 h-5 md:w-6 md:h-6 mb-1" weight="bold" />
+            <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">Index</span>
+          </button>
+
+          <button
+            onClick={toggleLanguage}
+            className="flex flex-col items-center justify-center px-4 md:px-8 border-l hairline-l border-primary hover:bg-primary hover:text-primary-foreground transition-all group relative"
+          >
+            <Translate className="w-5 h-5 md:w-6 md:h-6 mb-1 group-hover:rotate-12 transition-transform" weight="bold" />
+            <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">{language === "id" ? "IND" : "ENG"}</span>
+          </button>
         </motion.nav>
       </div>
-
-      {/* SVG filter for glass refraction — rendered once, used by CSS */}
-      <svg className="absolute w-0 h-0" aria-hidden="true">
-        <defs>
-          <filter id="liquid-glass-blur">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
-          </filter>
-        </defs>
-      </svg>
     </>
-  );
-}
-
-function DockLink({
-  href,
-  icon: Icon,
-  label,
-}: {
-  href: string;
-  icon: React.ElementType;
-  label: string;
-}) {
-  return (
-    <a
-      href={href}
-      className="liquid-glass-icon group flex-col !gap-0.5"
-      aria-label={label}
-    >
-      <Icon className="w-5 h-5 md:w-6 md:h-6" weight="duotone" />
-      <span className="text-[9px] font-medium opacity-70 leading-none">
-        {label}
-      </span>
-    </a>
-  );
-}
-
-function DockButton({
-  icon: Icon,
-  label,
-  onClick,
-  isActive,
-  badge,
-}: {
-  icon: React.ComponentType<{ className?: string; weight?: IconWeight }>;
-  label: string;
-  onClick: () => void;
-  isActive?: boolean;
-  badge?: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "liquid-glass-icon group relative flex-col !gap-0.5",
-        isActive && "liquid-glass-icon-active",
-      )}
-      aria-label={label}
-    >
-      {badge}
-      <Icon
-        className="w-5 h-5 md:w-6 md:h-6"
-        weight={isActive ? "fill" : "duotone"}
-      />
-      <span className="text-[9px] font-medium opacity-70 leading-none">
-        {label}
-      </span>
-    </button>
-  );
-}
-
-function MenuItem({
-  icon: Icon,
-  label,
-  onClick,
-  active,
-  badge,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  onClick: () => void;
-  active?: boolean;
-  badge?: React.ReactNode;
-}) {
-  return (
-    <button onClick={onClick} className="w-full text-left relative group/item">
-      {badge && (
-        <div className="absolute top-2 right-2 z-10 pointer-events-none">
-          {badge}
-        </div>
-      )}
-      <div
-        className={cn(
-          "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer group backdrop-blur-sm h-24",
-          active
-            ? "bg-primary/10 border-primary/20"
-            : "bg-foreground/[0.04] hover:bg-foreground/[0.08] border-foreground/[0.06] hover:border-foreground/[0.12]",
-        )}
-      >
-        <div
-          className={cn(
-            "p-2 rounded-xl border transition-all",
-            active
-              ? "bg-primary/20 border-primary/30 text-primary"
-              : "bg-foreground/[0.06] border-foreground/[0.08] group-hover:border-primary/40 text-muted-foreground",
-          )}
-        >
-          <Icon className="w-5 h-5" />
-        </div>
-        <span
-          className={cn(
-            "text-xs font-bold",
-            active ? "text-primary" : "text-foreground/60",
-          )}
-        >
-          {label}
-        </span>
-      </div>
-    </button>
   );
 }

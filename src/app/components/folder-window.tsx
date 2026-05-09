@@ -7,13 +7,10 @@ import {
   Folder,
   FileText,
   CaretRight,
-  ArrowsOut,
-  ArrowsIn,
   House,
   MagnifyingGlass,
   SquaresFour,
   List,
-  Lock,
   HardDrive,
   FilePdf,
   FileCode,
@@ -54,345 +51,219 @@ function Window({
   onOpenSubfolder: (id: string) => void;
 }) {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [isMaximized, setIsMaximized] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredChildren = folder.children?.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  // Get appropriate icon for file type
   const getFileIcon = (name: string) => {
     const ext = name.split(".").pop()?.toLowerCase();
     switch (ext) {
-      case "pdf":
-        return FilePdf;
+      case "pdf": return FilePdf;
       case "tsx":
       case "ts":
       case "js":
       case "jsx":
       case "html":
-      case "css":
-        return FileCode;
+      case "css": return FileCode;
       case "png":
       case "jpg":
       case "jpeg":
       case "gif":
-      case "webp":
-        return ImageIcon;
-      default:
-        return FileText;
+      case "webp": return ImageIcon;
+      default: return FileText;
     }
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      initial={{ opacity: 0, scale: 0.9, y: 40 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95, y: 20 }}
-      transition={{ type: "spring", damping: 25, stiffness: 300 }}
-      drag={!isMaximized}
+      exit={{ opacity: 0, scale: 0.9, y: 40 }}
+      drag
       dragMomentum={false}
-      dragConstraints={{
-        top: -200,
-        left: -400,
-        right: 400,
-        bottom: 200,
-      }}
-      dragElastic={0.1}
-      className={`fixed z-[60] flex flex-col overflow-hidden shadow-2xl ${!isMaximized && "cursor-grab active:cursor-grabbing"} ${
-        isMaximized
-          ? "inset-4"
-          : "inset-x-4 top-24 bottom-36 md:inset-auto md:left-1/2 md:-translate-x-1/2 md:top-1/2 md:-translate-y-1/2 md:w-[700px] md:h-[500px]"
-      }`}
+      className="fixed z-[90] flex flex-col bg-paper border-rule-thick border-primary shadow-[12px_12px_0px_#1a1c1c] w-full max-w-[90vw] md:w-[700px] h-[550px] left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
     >
-      {/* Animated Gradient Border */}
-      <div className="absolute inset-0 rounded-2xl p-[1px] bg-gradient-to-br from-primary/40 via-blue-500/20 to-purple-500/30 animate-gradient-shift">
-        <div className="h-full w-full rounded-2xl bg-white/90 dark:bg-black/95 backdrop-blur-2xl" />
-      </div>
-
-      {/* Background Effects */}
-      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/10 rounded-full blur-3xl opacity-50" />
-        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl opacity-50" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col h-full rounded-2xl overflow-hidden text-foreground">
-        {/* Title Bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-foreground/5 bg-muted/20">
-          {/* Traffic Lights */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={onClose}
-              className="group w-3.5 h-3.5 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors flex items-center justify-center"
-            >
-              <X
-                className="w-2 h-2 text-red-900 opacity-0 group-hover:opacity-100 transition-opacity"
-                weight="bold"
-              />
-            </button>
-            <button
-              onClick={() => setIsMaximized(false)}
-              className="group w-3.5 h-3.5 rounded-full bg-yellow-500/80 hover:bg-yellow-500 transition-colors flex items-center justify-center"
-            >
-              <ArrowsIn
-                className="w-2 h-2 text-yellow-900 opacity-0 group-hover:opacity-100 transition-opacity"
-                weight="bold"
-              />
-            </button>
-            <button
-              onClick={() => setIsMaximized(!isMaximized)}
-              className="group w-3.5 h-3.5 rounded-full bg-green-500/80 hover:bg-green-500 transition-colors flex items-center justify-center"
-            >
-              <ArrowsOut
-                className="w-2 h-2 text-green-900 opacity-0 group-hover:opacity-100 transition-opacity"
-                weight="bold"
-              />
-            </button>
-
-            {/* Spacer */}
-            <div className="w-4" />
-
-            {/* Back Button */}
-            <button
-              onClick={onClose}
-              className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-foreground/5 text-muted-foreground hover:text-foreground transition-all text-xs"
-              title="Go Back"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" weight="bold" />
-              <span className="hidden md:inline">Back</span>
-            </button>
-          </div>
-
-          {/* Title */}
-          <div className="flex items-center gap-2">
-            <Folder className="w-4 h-4 text-primary" weight="duotone" />
-            <span className="text-sm font-semibold text-foreground/90">
-              {folder.name}
-            </span>
-          </div>
-
-          {/* View Toggle */}
-          <div className="flex items-center gap-1 bg-foreground/5 rounded-lg p-1">
-            <button
-              onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-md transition-all ${
-                viewMode === "grid"
-                  ? "bg-background shadow-sm text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <SquaresFour className="w-3.5 h-3.5" weight="duotone" />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-md transition-all ${
-                viewMode === "list"
-                  ? "bg-background shadow-sm text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <List className="w-3.5 h-3.5" weight="duotone" />
-            </button>
-          </div>
-
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="p-1.5 hover:bg-red-500/10 rounded-lg transition-all text-muted-foreground hover:text-red-500"
-            title="Close"
-          >
-            <X className="w-4 h-4" weight="bold" />
-          </button>
-        </div>
-
-        {/* Toolbar */}
-        <div className="flex items-center gap-3 px-4 py-2.5 border-b border-foreground/5 bg-black/5 dark:bg-black/20">
-          {/* Breadcrumbs */}
-          <div className="flex items-center gap-1.5 text-xs">
-            <button className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-foreground/5 text-muted-foreground hover:text-foreground transition-all">
-              <House className="w-3.5 h-3.5" weight="duotone" />
-              <span>root</span>
-            </button>
-            <CaretRight
-              className="w-3 h-3 text-muted-foreground/50"
-              weight="bold"
-            />
-            <span className="px-2 py-1 rounded-md bg-primary/10 text-primary font-medium">
-              {folder.name.toLowerCase().replace(/\s+/g, "-")}
-            </span>
-          </div>
-
-          <div className="flex-1" />
-
-          {/* Search */}
-          <div className="relative">
-            <MagnifyingGlass
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground"
-              weight="duotone"
-            />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search..."
-              className="w-40 bg-background/50 border border-border rounded-lg py-1.5 pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-all"
-            />
-          </div>
-        </div>
-
-        {/* Content Grid/List */}
-        <div className="flex-1 overflow-y-auto p-4 scrollbar-hide bg-muted/5">
-          {viewMode === "grid" ? (
-            <motion.div
-              className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.05,
-                  },
-                },
-              }}
-            >
-              {filteredChildren?.map((item) => {
-                const ItemIcon =
-                  item.type === "folder" ? Folder : getFileIcon(item.name);
-                return (
-                  <motion.button
-                    key={item.id}
-                    variants={{
-                      hidden: { opacity: 0, y: 10 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                    onClick={() => {
-                      if (item.type === "folder") {
-                        onOpenSubfolder(item.id);
-                      } else if (item.content) {
-                        window.open(item.content, "_blank");
-                      }
-                    }}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="group flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-foreground/5 transition-all outline-none"
-                  >
-                    <div className="relative">
-                      {/* Glow Effect */}
-                      <div
-                        className={`absolute inset-0 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity ${
-                          item.type === "folder"
-                            ? "bg-primary/30"
-                            : "bg-blue-500/30"
-                        }`}
-                      />
-                      {/* Icon */}
-                      <div
-                        className={`relative z-10 w-14 h-14 rounded-xl flex items-center justify-center transition-transform ${
-                          item.type === "folder"
-                            ? "bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20"
-                            : "bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/20"
-                        }`}
-                      >
-                        <ItemIcon
-                          className={`w-7 h-7 ${
-                            item.type === "folder"
-                              ? "text-primary dark:text-primary"
-                              : "text-blue-500 dark:text-blue-400"
-                          }`}
-                          weight="duotone"
-                        />
-                      </div>
-                    </div>
-                    <span className="text-[11px] text-muted-foreground group-hover:text-foreground text-center font-medium truncate w-full leading-tight">
-                      {item.name}
-                    </span>
-                  </motion.button>
-                );
-              })}
-            </motion.div>
-          ) : (
-            <div className="space-y-1">
-              {filteredChildren?.map((item) => {
-                const ItemIcon =
-                  item.type === "folder" ? Folder : getFileIcon(item.name);
-                return (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    onClick={() => {
-                      if (item.type === "folder") {
-                        onOpenSubfolder(item.id);
-                      } else if (item.content) {
-                        window.open(item.content, "_blank");
-                      }
-                    }}
-                    className="group w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-foreground/5 transition-all outline-none text-left"
-                  >
-                    <ItemIcon
-                      className={`w-5 h-5 ${
-                        item.type === "folder"
-                          ? "text-primary"
-                          : "text-blue-500 dark:text-blue-400"
-                      }`}
-                      weight="duotone"
-                    />
-                    <span className="flex-1 text-sm text-foreground/80 group-hover:text-foreground truncate">
-                      {item.name}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground uppercase">
-                      {item.type}
-                    </span>
-                  </motion.button>
-                );
-              })}
-            </div>
-          )}
-
-          {filteredChildren?.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-              <MagnifyingGlass className="w-10 h-10 mb-2" weight="duotone" />
-              <span className="text-sm">No items found</span>
-            </div>
-          )}
-        </div>
-
-        {/* Status Bar */}
-        <div className="flex items-center justify-between px-4 py-2 border-t border-foreground/5 bg-muted/20">
-          <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <HardDrive className="w-3 h-3" weight="duotone" />
-              {folder.children?.length || 0} items
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Lock className="w-3 h-3" weight="duotone" />
-              Secure Access
-            </span>
-          </div>
-          <span className="text-[10px] text-muted-foreground font-mono">
-            v2.5.0
+      {/* Title Bar - News Archive Style */}
+      <div className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground border-b border-primary">
+        <div className="flex items-center gap-3">
+          <div className="bg-paper text-primary px-2 py-0.5 text-[10px] label-caps font-bold">ARCHIVE</div>
+          <span className="headline-sm text-sm tracking-widest uppercase truncate max-w-[200px]">
+            {folder.name}
           </span>
         </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2 text-[9px] label-caps opacity-60">
+            <span>VOL. 2025</span>
+            <span className="w-1 h-1 bg-paper rounded-full"></span>
+            <span>REF: {folder.id.slice(0, 8).toUpperCase()}</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-paper hover:text-primary transition-colors border border-transparent hover:border-primary"
+          >
+            <X size={20} weight="bold" />
+          </button>
+        </div>
       </div>
 
-      {/* Custom CSS for gradient animation */}
-      <style jsx>{`
-        @keyframes gradient-shift {
-          0%,
-          100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        .animate-gradient-shift {
-          background-size: 200% 200%;
-          animation: gradient-shift 8s ease infinite;
-        }
-      `}</style>
+      {/* Toolbar - Classified Style */}
+      <div className="flex items-center gap-3 px-4 py-2 border-b hairline-b border-primary bg-primary/5">
+        <button
+          onClick={onClose}
+          className="flex items-center gap-1 px-2 py-1 border hairline border-primary/20 hover:border-primary label-caps text-[10px] transition-all"
+        >
+          <ArrowLeft size={12} weight="bold" />
+          BACK
+        </button>
+
+        <div className="flex-1 flex items-center gap-1.5 overflow-hidden">
+          <House size={14} weight="bold" className="flex-shrink-0" />
+          <CaretRight size={10} weight="bold" className="opacity-30 flex-shrink-0" />
+          <span className="label-caps text-[10px] truncate opacity-60">ROOT / {folder.name.toLowerCase()}</span>
+        </div>
+
+        <div className="relative">
+          <MagnifyingGlass size={14} className="absolute left-2 top-1/2 -translate-y-1/2 opacity-40" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="SEARCH RECORDS..."
+            className="bg-transparent border hairline border-primary/20 focus:border-primary px-8 py-1.5 text-[10px] label-caps outline-none w-32 md:w-48 transition-all"
+          />
+        </div>
+
+        <div className="flex gap-1 border-l hairline-l border-primary/20 pl-3">
+          <button 
+            onClick={() => setViewMode("grid")} 
+            className={`p-1 transition-all ${viewMode === "grid" ? "bg-primary text-primary-foreground" : "opacity-40 hover:opacity-100 hover:bg-primary/10"}`}
+            title="GRID VIEW"
+          >
+            <SquaresFour size={16} weight="bold" />
+          </button>
+          <button 
+            onClick={() => setViewMode("list")} 
+            className={`p-1 transition-all ${viewMode === "list" ? "bg-primary text-primary-foreground" : "opacity-40 hover:opacity-100 hover:bg-primary/10"}`}
+            title="ARCHIVE LIST"
+          >
+            <List size={16} weight="bold" />
+          </button>
+        </div>
+      </div>
+
+      {/* Microfilm Metadata Header */}
+      <div className="px-6 py-2 bg-primary/5 border-b hairline-b border-primary/20 flex justify-between items-center overflow-hidden">
+        <div className="flex gap-4 label-caps text-[8px] md:text-[9px] font-bold tracking-tighter opacity-60">
+          <span>REEL_ID: {folder.id.slice(0, 4).toUpperCase()}_00{folder.children?.length}</span>
+          <span className="hidden sm:inline">INDEX_TYPE: CLASSIFIED_RECORDS</span>
+          <span>LOCATION: SECURE_VAULT_A1</span>
+        </div>
+        <div className="flex gap-2">
+          <div className="w-2 h-2 rounded-full bg-primary/20 animate-pulse"></div>
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse delay-75"></div>
+          <div className="w-2 h-2 rounded-full bg-primary/20 animate-pulse delay-150"></div>
+        </div>
+      </div>
+
+      {/* Main Content - Newsprint Grid */}
+      <div className="flex-1 overflow-y-auto p-6 bg-paper custom-scrollbar">
+        {viewMode === "grid" ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+            {filteredChildren?.map((item) => {
+              const ItemIcon = item.type === "folder" ? Folder : getFileIcon(item.name);
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (item.type === "folder") onOpenSubfolder(item.id);
+                    else if (item.content) window.open(item.content, "_blank");
+                  }}
+                  className="group flex flex-col items-center gap-3 p-4 border hairline border-transparent hover:border-primary hover:bg-primary/5 transition-all text-center"
+                >
+                  <div className="w-12 h-12 flex items-center justify-center border-rule-thin border-primary/20 group-hover:border-primary group-hover:bg-paper transition-all relative">
+                    <ItemIcon size={28} weight={item.type === "folder" ? "fill" : "bold"} className="group-hover:scale-110 transition-transform" />
+                    {item.type === "folder" && (
+                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-primary"></div>
+                    )}
+                  </div>
+                  <span className="text-[11px] font-bold uppercase tracking-tight leading-none truncate w-full">
+                    {item.name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="border border-primary">
+            {/* List Header */}
+            <div className="grid grid-cols-12 gap-2 px-4 py-2 bg-primary text-primary-foreground label-caps text-[10px] font-bold border-b border-primary sticky top-0 z-10">
+              <div className="col-span-6 flex items-center gap-2">
+                <CaretRight size={10} weight="bold" className="rotate-90" />
+                RECORD NAME
+              </div>
+              <div className="col-span-2 hidden md:block">DATE</div>
+              <div className="col-span-2 hidden md:block">CATEGORY</div>
+              <div className="col-span-2 text-right">SIZE</div>
+            </div>
+
+            {filteredChildren?.map((item) => {
+              const ItemIcon = item.type === "folder" ? Folder : getFileIcon(item.name);
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (item.type === "folder") onOpenSubfolder(item.id);
+                    else if (item.content) window.open(item.content, "_blank");
+                  }}
+                  className="w-full grid grid-cols-12 gap-2 items-center px-4 py-3 border-b hairline-b border-primary hover:bg-primary hover:text-primary-foreground transition-all group text-left"
+                >
+                  <div className="col-span-6 flex items-center gap-4">
+                    <div className="w-6 h-6 flex items-center justify-center border hairline border-primary/20 group-hover:border-paper/40 group-hover:bg-paper/10">
+                      <ItemIcon size={12} weight="bold" />
+                    </div>
+                    <span className="text-[11px] font-bold uppercase truncate">{item.name}</span>
+                  </div>
+                  <div className="col-span-2 hidden md:block label-caps text-[9px] opacity-60 group-hover:opacity-100">
+                    {item.date || "2025.01.01"}
+                  </div>
+                  <div className="col-span-2 hidden md:block">
+                    <span className="label-caps text-[8px] px-1.5 py-0.5 border hairline border-primary/20 group-hover:border-paper/40 font-bold">
+                      {item.category || item.type.toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="col-span-2 text-right label-caps text-[9px] font-bold tabular-nums opacity-60 group-hover:opacity-100">
+                    {item.size || "0.0 KB"}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {filteredChildren?.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full opacity-20 py-20">
+            <MagnifyingGlass size={48} weight="thin" />
+            <p className="label-caps mt-4">No Records Found</p>
+          </div>
+        )}
+      </div>
+
+      {/* Footer - Index Stats */}
+      <div className="flex items-center justify-between px-4 py-2 border-t border-primary bg-primary/5">
+        <div className="flex items-center gap-4 text-[9px] label-caps font-bold">
+          <span className="flex items-center gap-1.5">
+            <HardDrive size={12} weight="bold" />
+            TOTAL: {folder.children?.length || 0} ITEMS
+          </span>
+          <span className="flex items-center gap-1.5 border-l hairline-l border-primary/20 pl-4">
+            STATUS: SECURE_ARCHIVE
+          </span>
+        </div>
+        <span className="text-[9px] font-mono opacity-40">SYSTEM_INDEX_V.2.5</span>
+      </div>
     </motion.div>
   );
 }

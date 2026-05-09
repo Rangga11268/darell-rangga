@@ -6,6 +6,8 @@ export const translations = {
       projects: "Work",
       services: "Services",
       contact: "Contact",
+      curriculumVitae: "Curriculum Vitae",
+      certificates: "Certificates",
     },
     hero: {
       available: "Open to Work",
@@ -18,6 +20,12 @@ export const translations = {
       badgeFast: "High Performance",
       badgeFull: "Full Stack",
       scrollText: "Explore",
+      featuredEdition: "Featured Edition",
+      mainHeadline: "Building the Web, One Line at a Time",
+      bio: "A passionate developer dedicated to creating clean, user-focused, and impactful digital solutions. I believe great code tells a story.",
+      inThisEdition: "In This Edition",
+      archivedDocs: "Archived Documents",
+      cvPdf: "CURRICULUM VITAE (PDF)",
     },
     about: {
       title: "About Me",
@@ -177,6 +185,8 @@ export const translations = {
       projects: "Portofolio",
       services: "Layanan",
       contact: "Kontak",
+      curriculumVitae: "Daftar Riwayat Hidup",
+      certificates: "Sertifikat",
     },
     hero: {
       available: "Siap Bekerja",
@@ -189,6 +199,12 @@ export const translations = {
       badgeFast: "Performa Tinggi",
       badgeFull: "Full Stack",
       scrollText: "Jelajahi",
+      featuredEdition: "Edisi Unggulan",
+      mainHeadline: "Membangun Web, Baris demi Baris",
+      bio: "Seorang pengembang yang berdedikasi untuk menciptakan solusi digital yang bersih, fokus pada pengguna, dan berdampak. Saya percaya kode yang hebat menceritakan sebuah kisah.",
+      inThisEdition: "Dalam Edisi Ini",
+      archivedDocs: "Dokumen Arsip",
+      cvPdf: "DAFTAR RIWAYAT HIDUP (PDF)",
     },
     about: {
       title: "Tentang Saya",

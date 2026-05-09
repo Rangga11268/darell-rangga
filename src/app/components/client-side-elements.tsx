@@ -50,8 +50,8 @@ export function ClientSideElements() {
 
   return (
     <>
-      {/* Background Controller (Lightweight, no delay) */}
-      <BackgroundController />
+      {/* Background Controller Disabled for Archive Aesthetic */}
+      {/* <BackgroundController /> */}
       
       {/* Heavy elements (Delayed to prioritize LCP) */}
       {shouldMount && (

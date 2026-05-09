@@ -1,5 +1,5 @@
-import type { Metadata } from "next"; // Typography: Outfit + Readex Pro
-import { Outfit, Readex_Pro } from "next/font/google";
+import type { Metadata } from "next";
+import { Inter, Bodoni_Moda, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
@@ -8,14 +8,20 @@ import { CustomizationProvider } from "@/app/providers/customization-provider";
 import { FileSystemProvider } from "@/app/providers/file-system-provider";
 import { ClientSideElements } from "@/app/components/client-side-elements";
 
-const outfit = Outfit({
-  variable: "--font-display",
+const bodoni = Bodoni_Moda({
+  variable: "--font-serif",
   subsets: ["latin"],
   display: "swap",
 });
 
-const readexPro = Readex_Pro({
+const inter = Inter({
   variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const sourceSans = Source_Sans_3({
+  variable: "--font-label",
   subsets: ["latin"],
   display: "swap",
 });
@@ -250,7 +256,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${readexPro.variable} antialiased bg-background text-foreground`}
+        className={`${bodoni.variable} ${inter.variable} ${sourceSans.variable} antialiased bg-background text-foreground`}
       >
         <div className="fixed inset-0 z-[50] pointer-events-none bg-noise opacity-[0.03] mix-blend-overlay" />
         <ScrollProgress />
