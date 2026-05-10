@@ -11,6 +11,10 @@ export function HeroSection() {
   const { t, language, toggleLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
 
+  const cvPath = language === "id" 
+    ? "/pdf/DarellRangga_CV_IND.pdf" 
+    : "/pdf/DarellRangga_CV_ENG.pdf";
+
   return (
     <section id="home" className="pt-8">
       <div className="container mx-auto px-margin-mobile md:px-margin-desktop">
@@ -137,7 +141,7 @@ export function HeroSection() {
                   className="bg-primary text-paper rounded-none px-6 py-6 label-caps hover:bg-primary/90 transition-colors tracking-widest font-bold flex items-center gap-2"
                   asChild
                 >
-                  <a href="/img/saya/CV IND.pdf" target="_blank">
+                  <a href={cvPath} target="_blank">
                     <FilePdf size={20} weight="bold" />
                     CV.PDF
                   </a>
@@ -197,7 +201,7 @@ export function HeroSection() {
             <div className="mt-auto border hairline border-primary p-4 bg-primary/5">
               <h4 className="label-caps text-[10px] font-bold mb-2 opacity-60">{t.hero.archivedDocs}</h4>
               <a 
-                href="/img/saya/CV IND.pdf" 
+                href={cvPath} 
                 target="_blank"
                 className="flex items-center justify-between text-xs font-bold hover:underline group"
               >
