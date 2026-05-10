@@ -169,7 +169,6 @@ export default function Home() {
         </div>
       </div>
 
-      {readyLevel >= 2 && <BackToTop />}
 
       {/* Accessibility announcements */}
       <div

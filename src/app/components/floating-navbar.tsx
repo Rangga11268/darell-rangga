@@ -177,40 +177,40 @@ export function FloatingNavbar() {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           whileHover={{ x: -2 }}
           className={cn(
-            "flex items-center gap-4 bg-primary text-primary-foreground shadow-[-4px_0_20px_rgba(0,0,0,0.2)] group transition-all h-[180px] w-10 md:w-12 relative",
+            "flex items-center gap-4 bg-primary text-primary-foreground shadow-[-4px_0_20px_rgba(0,0,0,0.2)] group transition-all h-[140px] md:h-[180px] w-8 md:w-12 relative",
             isMenuOpen && "opacity-0 pointer-events-none"
           )}
         >
           {/* Vertical Text Label */}
           <div 
-            className="flex items-center gap-6 rotate-180 absolute inset-0 justify-center"
+            className="flex items-center gap-4 md:gap-6 rotate-180 absolute inset-0 justify-center"
             style={{ writingMode: "vertical-rl" }}
           >
             <div className="flex items-center gap-2">
-               <CaretLeft size={14} weight="bold" className="group-hover:-translate-y-1 transition-transform" />
-               <span className="label-caps text-[10px] md:text-[11px] font-black tracking-[0.3em] uppercase">THE INDEX</span>
+               <CaretLeft size={12} weight="bold" className="md:w-3.5 md:h-3.5 group-hover:-translate-y-1 transition-transform" />
+               <span className="label-caps text-[9px] md:text-[11px] font-black tracking-[0.3em] uppercase">THE INDEX</span>
             </div>
           </div>
           
           {/* Decorative Edge Detail (Archive Stamp) */}
           <div className="absolute top-2 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none flex flex-col items-center">
-             <span className="text-[7px] font-bold leading-none">EDITION</span>
-             <span className="text-[7px] font-bold leading-none">2025</span>
+             <span className="text-[6px] md:text-[7px] font-bold leading-none">EDITION</span>
+             <span className="text-[6px] md:text-[7px] font-bold leading-none">2025</span>
           </div>
         </motion.button>
       </div>
 
       {/* Floating Language Toggle (Outside) */}
-      <div className="fixed bottom-32 left-4 md:bottom-32 md:left-8 z-50">
+      <div className="fixed bottom-24 left-4 md:bottom-32 md:left-8 z-50">
         <motion.button
           onClick={toggleLanguage}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="w-12 h-12 md:w-14 md:h-14 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[4px_4px_0px_#1a1c1c] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all group overflow-hidden"
+          className="w-10 h-10 md:w-14 md:h-14 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[3px_3px_0px_#1a1c1c] md:shadow-[4px_4px_0px_#1a1c1c] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all group overflow-hidden"
         >
           <div className="flex flex-col items-center">
-            <Translate size={20} weight="bold" />
-            <span className="text-[7px] font-bold mt-0.5">{language === "id" ? "IND" : "ENG"}</span>
+            <Translate size={16} weight="bold" className="md:w-5 md:h-5" />
+            <span className="text-[6px] md:text-[7px] font-bold mt-0.5">{language === "id" ? "IND" : "ENG"}</span>
           </div>
           {/* Tooltip */}
           <div className="absolute -top-10 left-0 bg-primary text-primary-foreground px-2 py-1 label-caps text-[8px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">

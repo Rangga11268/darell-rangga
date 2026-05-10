@@ -299,11 +299,11 @@ export function AITerminal() {
           animate={{ scale: 1 }}
           className="fixed bottom-8 left-4 md:bottom-8 md:left-8 z-50 group"
         >
-          <div className="relative w-16 h-16 md:w-20 md:h-20 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[6px_6px_0px_#1a1c1c] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all overflow-hidden">
-            <div className="absolute top-1 left-1 label-caps text-[8px] font-bold opacity-30">PRESS</div>
-            <div className="absolute bottom-1 right-1 label-caps text-[8px] font-bold opacity-30">ARCHIVE</div>
-            <IdentificationCard size={32} weight="bold" className="group-hover:scale-110 transition-transform" />
-            <div className="absolute inset-0 border-4 border-double border-primary/10 pointer-events-none" />
+          <div className="relative w-12 h-12 md:w-20 md:h-20 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[4px_4px_0px_#1a1c1c] md:shadow-[6px_6px_0px_#1a1c1c] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all overflow-hidden">
+            <div className="absolute top-0.5 left-0.5 md:top-1 md:left-1 label-caps text-[6px] md:text-[8px] font-bold opacity-30">PRESS</div>
+            <div className="absolute bottom-0.5 right-0.5 md:bottom-1 md:right-1 label-caps text-[6px] md:text-[8px] font-bold opacity-30">ARCHIVE</div>
+            <IdentificationCard size={24} weight="bold" className="md:w-8 md:h-8 group-hover:scale-110 transition-transform" />
+            <div className="absolute inset-0 border-2 md:border-4 border-double border-primary/10 pointer-events-none" />
           </div>
           <div className="absolute -top-12 left-0 bg-primary text-primary-foreground px-3 py-1 label-caps text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
             Ask The Editor
