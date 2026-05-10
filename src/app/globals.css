@@ -69,18 +69,18 @@
 }
 
 .dark {
-  /* Midnight Edition - Dark Editorial Archive */
-  --background: #111212;
-  --foreground: #f4eee6;
-  --on-surface: #f4eee6;
-  --on-surface-variant: #a0a0a0;
+  /* Deep Ink Edition - Refined Editorial Archive */
+  --background: #0d0e0e;
+  --foreground: #dcd7cf;
+  --on-surface: #dcd7cf;
+  --on-surface-variant: #8a8d8e;
   
-  --primary: #ffffff;
-  --primary-foreground: #111212;
+  --primary: #f4eee6;
+  --primary-foreground: #0d0e0e;
   
-  --border: #333636;
-  --input: #333636;
-  --ring: #f4eee6;
+  --border: #2a2c2c;
+  --input: #2a2c2c;
+  --ring: #dcd7cf;
 }
 
 @layer base {

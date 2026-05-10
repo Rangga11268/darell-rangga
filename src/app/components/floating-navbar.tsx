@@ -118,7 +118,13 @@ export function FloatingNavbar() {
                       </div>
                     </button>
                     <button 
-                      onClick={() => { openFolder("system-files"); setIsMenuOpen(false); }}
+                      onClick={() => { 
+                        const cvPath = language === "id" 
+                          ? "/pdf/DarellRangga_CV_IND.pdf" 
+                          : "/pdf/DarellRangga_CV_ENG.pdf";
+                        window.open(cvPath, "_blank");
+                        setIsMenuOpen(false); 
+                      }}
                       className="flex items-center justify-between p-3 border hairline border-primary/5 hover:border-primary/30 transition-all text-left group"
                     >
                       <div className="flex items-center gap-3">
