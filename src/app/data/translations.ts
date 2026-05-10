@@ -81,6 +81,7 @@ export const translations = {
           desc: "Staying ahead of the tech curve",
         },
       },
+      bioQuote: "The best websites are not just built, they are crafted with meaning.",
     },
     projects: {
       title: "Selected Work",
@@ -146,7 +147,7 @@ export const translations = {
     },
     footer: {
       copyright: "Darell Rangga.",
-      quote: "Building the future, one pixel at a time.",
+      quote: "The best websites are not just built, they are crafted with meaning.",
       madeWith: "Built with",
       using: "Next.js & Tailwind",
       chronicle: "Local Time",
@@ -260,6 +261,7 @@ export const translations = {
           desc: "Selalu mengikuti perkembangan teknologi",
         },
       },
+      bioQuote: "Website terbaik tidak hanya sekadar dibuat, ia ditempa dengan penuh makna.",
     },
     projects: {
       title: "Karya Terpilih",
@@ -324,7 +326,7 @@ export const translations = {
     },
     footer: {
       copyright: "Darell Rangga.",
-      quote: "Membangun masa depan, satu piksel setiap waktu.",
+      quote: "Website terbaik tidak hanya sekadar dibuat, ia ditempa dengan penuh makna.",
       madeWith: "Dibuat dengan",
       using: "Next.js & Tailwind",
       chronicle: "Waktu Lokal",

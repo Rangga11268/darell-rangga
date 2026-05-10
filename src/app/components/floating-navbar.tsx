@@ -168,7 +168,7 @@ export function FloatingNavbar() {
                 <div className="flex flex-col gap-2">
                   <span className="label-caps text-[8px] font-bold opacity-30">ARCHIVE DISPATCH</span>
                   <p className="text-[11px] font-serif italic opacity-60 leading-relaxed">
-                    &quot;Documentation is a love letter that you write to your future self.&quot;
+                    &quot;{t.footer.quote}&quot;
                   </p>
                 </div>
               </div>

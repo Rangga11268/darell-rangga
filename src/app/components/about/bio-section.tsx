@@ -63,7 +63,7 @@ export function BioSection() {
             <div className="border-t hairline-t border-primary pt-6 mt-auto">
               <span className="w-8 h-px bg-primary inline-block mb-4"></span>
               <p className="headline-sm italic leading-snug mb-6">
-                &quot;The best websites are not just built, they are crafted with intention.&quot;
+                &quot;{t.about.bioQuote}&quot;
               </p>
               <div className="font-serif italic text-3xl opacity-80">Darell Rangga</div>
             </div>
