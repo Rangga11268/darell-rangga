@@ -66,17 +66,31 @@ const ContactSection = dynamic(
     })),
   { ssr: false },
 );
+const LettersToEditor = dynamic(
+  () =>
+    import("@/app/components/letters-to-editor").then((m) => ({
+      default: m.LettersToEditor,
+    })),
+  { ssr: false },
+);
+const ClassifiedAds = dynamic(
+  () =>
+    import("@/app/components/classified-ads").then((m) => ({
+      default: m.ClassifiedAds,
+    })),
+  { ssr: false },
+);
+const SocialDispatch = dynamic(
+  () =>
+    import("@/app/components/social-dispatch").then((m) => ({
+      default: m.SocialDispatch,
+    })),
+  { ssr: false },
+);
 const Footer = dynamic(
   () =>
     import("@/app/components/footer").then((m) => ({
       default: m.Footer,
-    })),
-  { ssr: false },
-);
-const BackToTop = dynamic(
-  () =>
-    import("@/app/components/back-to-top").then((m) => ({
-      default: m.BackToTop,
     })),
   { ssr: false },
 );
@@ -154,9 +168,12 @@ export default function Home() {
               <SkillsSection />
               <ServicesSection />
               <ProjectsSection />
+              <LettersToEditor />
               <AchievementsSection />
               <CommandCenter />
+              <SocialDispatch />
               <ContactSection />
+              <ClassifiedAds />
             </motion.div>
           )}
         </main>

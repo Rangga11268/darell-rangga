@@ -198,3 +198,71 @@
     opacity: 0.3;
   }
 }
+
+@media print {
+  .no-print, nav, button, .sticky, [role="button"], .cursor-follower, .ai-terminal-trigger { 
+    display: none !important; 
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 10pt;
+    line-height: 1.3;
+  }
+  
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Force high contrast for print */
+  * {
+    color: black !important;
+    border-color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .bg-primary {
+    background-color: black !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .text-primary-foreground {
+    color: white !important;
+  }
+  
+  /* Show link destinations */
+  a:after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666 !important;
+  }
+  
+  /* Layout adjustments */
+  .grid {
+    display: block !important;
+  }
+  
+  section {
+    page-break-inside: avoid;
+    border-bottom: 1pt solid black !important;
+    padding-bottom: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  img {
+    filter: grayscale(100%) contrast(150%) !important;
+    max-width: 100% !important;
+  }
+}

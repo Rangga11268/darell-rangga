@@ -6,6 +6,7 @@ import { useLanguage } from "@/app/providers/language-provider";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "@phosphor-icons/react";
 import Image from "next/image";
+import { MarketReport } from "./market-report";
 
 export function HeroSection() {
   const { t, language, toggleLanguage } = useLanguage();
@@ -83,6 +84,8 @@ export function HeroSection() {
            </div>
            <span className="label-caps text-on-surface-variant font-bold">• EST. 2020</span>
         </nav>
+
+        <MarketReport />
 
         {/* Tech Ticker - Modern Marquee with Editorial Flair */}
         <div className="w-full bg-primary text-primary-foreground py-2 mb-8 overflow-hidden relative">
