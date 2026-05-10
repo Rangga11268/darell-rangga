@@ -91,7 +91,6 @@ export default function Home() {
   // Use useEffect to read localStorage — avoids SSR/client hydration mismatch.
   const [showIntro, setShowIntro] = useState(false);
   const [readyLevel, setReadyLevel] = useState(0);
-  const isReady = readyLevel >= 1;
 
   useEffect(() => {
     // For review purposes, we always show the intro.

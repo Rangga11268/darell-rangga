@@ -194,7 +194,7 @@ export function AITerminal() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-24 right-4 md:right-8 md:bottom-32 w-[calc(100%-2rem)] md:w-[450px] h-[70vh] md:h-[600px] z-[100] bg-paper border-rule-thick border-primary shadow-[12px_12px_0px_#1a1c1c] flex flex-col overflow-hidden"
+          className="fixed bottom-24 left-4 md:left-8 md:bottom-32 w-[calc(100%-2rem)] md:w-[450px] h-[70vh] md:h-[600px] z-[100] bg-paper border-rule-thick border-primary shadow-[12px_12px_0px_#1a1c1c] flex flex-col overflow-hidden"
         >
           {/* Header */}
           <div className="bg-primary text-primary-foreground px-6 py-4 flex justify-between items-center">
@@ -297,7 +297,7 @@ export function AITerminal() {
           onClick={() => setIsPlaygroundOpen(true)}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="fixed bottom-28 right-4 md:bottom-12 md:right-12 z-50 group"
+          className="fixed bottom-8 left-4 md:bottom-8 md:left-8 z-50 group"
         >
           <div className="relative w-16 h-16 md:w-20 md:h-20 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[6px_6px_0px_#1a1c1c] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all overflow-hidden">
             <div className="absolute top-1 left-1 label-caps text-[8px] font-bold opacity-30">PRESS</div>
@@ -305,7 +305,7 @@ export function AITerminal() {
             <IdentificationCard size={32} weight="bold" className="group-hover:scale-110 transition-transform" />
             <div className="absolute inset-0 border-4 border-double border-primary/10 pointer-events-none" />
           </div>
-          <div className="absolute -top-12 right-0 bg-primary text-primary-foreground px-3 py-1 label-caps text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+          <div className="absolute -top-12 left-0 bg-primary text-primary-foreground px-3 py-1 label-caps text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
             Ask The Editor
           </div>
         </motion.button>

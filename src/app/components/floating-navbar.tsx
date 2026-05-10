@@ -14,6 +14,7 @@ import {
   List,
   FilePdf,
   SealCheck,
+  CaretLeft,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -42,112 +43,180 @@ export function FloatingNavbar() {
 
   return (
     <>
-      {/* Archive Controls Menu */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="fixed bottom-24 inset-x-margin-mobile md:w-[350px] md:left-auto md:right-margin-desktop z-[60] bg-paper border-rule-thick border-primary shadow-[8px_8px_0px_#1a1c1c] overflow-hidden"
-          >
-            <div className="flex justify-between items-center px-4 py-3 border-b hairline-b border-primary bg-primary text-primary-foreground">
-              <span className="label-caps font-bold tracking-widest text-[10px]">
-                Archive Settings
-              </span>
-              <button onClick={() => setIsMenuOpen(false)} className="hover:rotate-90 transition-transform">
-                <X size={16} weight="bold" />
-              </button>
-            </div>
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-[80]"
+            />
+            
+            {/* Right Side Editorial Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 h-full w-full sm:w-[400px] z-[90] bg-paper border-l-rule-thick border-primary shadow-[-10px_0_30px_rgba(0,0,0,0.1)] flex flex-col"
+            >
+              <div className="flex-1 p-8 overflow-y-auto">
+                {/* Panel Header */}
+                <div className="flex justify-between items-start mb-12">
+                  <div className="space-y-1">
+                    <span className="label-caps text-[9px] font-bold opacity-40">ARCHIVE INDEX</span>
+                    <h2 className="headline-md text-3xl font-serif">Digital Archivist</h2>
+                  </div>
+                  <button 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-2 hover:bg-primary/5 transition-colors border border-transparent hover:border-primary/20"
+                  >
+                    <X size={24} weight="bold" />
+                  </button>
+                </div>
 
-            <div className="grid grid-cols-1 divide-y hairline-t divide-primary/10">
-              <button 
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
-              >
-                <span className="label-caps font-bold">Contrast Mode</span>
-                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              
-              <button 
-                onClick={() => {
-                  setIsPlaygroundOpen(!isPlaygroundOpen);
-                  setIsMenuOpen(false);
-                }}
-                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
-              >
-                <span className="label-caps font-bold">The Archivist</span>
-                <span className="body-md italic">{isPlaygroundOpen ? "Active" : "Launch"}</span>
-              </button>
+                {/* Section: Main Navigation (Editions) */}
+                <div className="space-y-6 mb-12">
+                  <div className="border-b hairline-b border-primary/20 pb-2 flex justify-between items-end">
+                    <span className="label-caps text-[10px] font-bold">THE EDITIONS</span>
+                    <span className="text-[9px] italic opacity-40">Select Section</span>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    {primaryItems.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="group flex items-center justify-between p-4 border hairline border-primary/10 hover:border-primary hover:bg-primary/5 transition-all"
+                      >
+                        <div className="flex items-center gap-4">
+                          <item.icon size={20} weight="bold" className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                          <span className="headline-sm text-lg uppercase tracking-tight group-hover:translate-x-1 transition-transform">{item.name}</span>
+                        </div>
+                        <span className="text-[10px] opacity-0 group-hover:opacity-40 transition-opacity font-serif italic">Go to page →</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
 
-              <div className="bg-primary/5 px-4 py-2 border-b hairline-b border-primary/10">
-                <span className="label-caps font-bold text-[9px] opacity-40 italic">Special Supplements</span>
+                {/* Section: Special Supplements */}
+                <div className="space-y-6 mb-12">
+                  <div className="border-b hairline-b border-primary/20 pb-2 flex justify-between items-end">
+                    <span className="label-caps text-[10px] font-bold">SUPPLEMENTS</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-2">
+                    <button 
+                      onClick={() => { openFolder("certificates-folder"); setIsMenuOpen(false); }}
+                      className="flex items-center justify-between p-3 border hairline border-primary/5 hover:border-primary/30 transition-all text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <SealCheck size={16} className="opacity-40" />
+                        <span className="label-caps text-[10px] font-bold">{t.nav.certificates}</span>
+                      </div>
+                    </button>
+                    <button 
+                      onClick={() => { openFolder("system-files"); setIsMenuOpen(false); }}
+                      className="flex items-center justify-between p-3 border hairline border-primary/5 hover:border-primary/30 transition-all text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <FilePdf size={16} className="opacity-40" />
+                        <span className="label-caps text-[10px] font-bold">{t.nav.curriculumVitae}</span>
+                      </div>
+                    </button>
+                    <button 
+                      onClick={() => { setIsPlaygroundOpen(!isPlaygroundOpen); setIsMenuOpen(false); }}
+                      className="flex items-center justify-between p-3 border hairline border-primary/5 hover:border-primary/30 transition-all text-left group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={cn("w-2 h-2 rounded-full", isPlaygroundOpen ? "bg-primary animate-pulse" : "bg-primary/20")} />
+                        <span className="label-caps text-[10px] font-bold">THE ARCHIVIST (AI)</span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Settings Quick Bar */}
+                <div className="grid grid-cols-2 gap-4">
+                   <button 
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="flex items-center justify-center gap-2 p-3 border hairline border-primary/10 hover:bg-primary/5 transition-colors"
+                  >
+                    {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+                    <span className="label-caps text-[9px] font-bold">CONTRAST</span>
+                  </button>
+                  <button 
+                    onClick={toggleLanguage}
+                    className="flex items-center justify-center gap-2 p-3 border hairline border-primary/10 hover:bg-primary/5 transition-colors"
+                  >
+                    <Translate size={14} />
+                    <span className="label-caps text-[9px] font-bold">{language === "id" ? "BAHASA" : "LANGUAGE"}</span>
+                  </button>
+                </div>
               </div>
 
-              <button 
-                onClick={() => {
-                  openFolder("certificates-folder");
-                  setIsMenuOpen(false);
-                }}
-                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
-              >
-                <span className="label-caps font-bold">{t.nav.certificates}</span>
-                <SealCheck size={20} />
-              </button>
-
-              <button 
-                onClick={() => {
-                  openFolder("system-files");
-                  setIsMenuOpen(false);
-                }}
-                className="flex items-center justify-between p-4 hover:bg-primary hover:text-primary-foreground transition-colors group"
-              >
-                <span className="label-caps font-bold">{t.nav.curriculumVitae}</span>
-                <FilePdf size={20} />
-              </button>
-            </div>
-          </motion.div>
+              {/* Panel Footer */}
+              <div className="p-8 border-t hairline-t border-primary/10 bg-primary/5">
+                <div className="flex flex-col gap-2">
+                  <span className="label-caps text-[8px] font-bold opacity-30">ARCHIVE DISPATCH</span>
+                  <p className="text-[11px] font-serif italic opacity-60 leading-relaxed">
+                    &quot;Documentation is a love letter that you write to your future self.&quot;
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
-      {/* Main Section Index (Bottom Bar) */}
-      <div className="fixed bottom-8 inset-x-0 z-50 flex justify-center pointer-events-none px-4">
-        <motion.nav
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          className="pointer-events-auto flex items-stretch bg-paper border-rule-thick border-primary shadow-[6px_6px_0px_#1a1c1c] h-16 md:h-20"
+      {/* Vertical Editorial Tab (The Trigger) */}
+      <div className="fixed top-1/2 -translate-y-1/2 right-0 z-[85]">
+        <motion.button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          whileHover={{ x: -2 }}
+          className={cn(
+            "flex items-center gap-4 bg-primary text-primary-foreground shadow-[-4px_0_20px_rgba(0,0,0,0.2)] group transition-all h-[180px] w-10 md:w-12 relative",
+            isMenuOpen && "opacity-0 pointer-events-none"
+          )}
         >
-          {primaryItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="flex flex-col items-center justify-center px-4 md:px-10 border-r hairline-r border-primary hover:bg-primary hover:text-primary-foreground transition-all group relative overflow-hidden"
-            >
-              <item.icon className="w-5 h-5 md:w-6 md:h-6 mb-1 group-hover:scale-110 transition-transform" weight="bold" />
-              <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">{item.name}</span>
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </a>
-          ))}
-
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={cn(
-              "flex flex-col items-center justify-center px-4 md:px-10 transition-all group relative",
-              isMenuOpen ? "bg-primary text-primary-foreground" : "hover:bg-primary hover:text-primary-foreground"
-            )}
+          {/* Vertical Text Label */}
+          <div 
+            className="flex items-center gap-6 rotate-180 absolute inset-0 justify-center"
+            style={{ writingMode: "vertical-rl" }}
           >
-            <List className="w-5 h-5 md:w-6 md:h-6 mb-1" weight="bold" />
-            <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">Index</span>
-          </button>
+            <div className="flex items-center gap-2">
+               <CaretLeft size={14} weight="bold" className="group-hover:-translate-y-1 transition-transform" />
+               <span className="label-caps text-[10px] md:text-[11px] font-black tracking-[0.3em] uppercase">THE INDEX</span>
+            </div>
+          </div>
+          
+          {/* Decorative Edge Detail (Archive Stamp) */}
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 opacity-20 pointer-events-none flex flex-col items-center">
+             <span className="text-[7px] font-bold leading-none">EDITION</span>
+             <span className="text-[7px] font-bold leading-none">2025</span>
+          </div>
+        </motion.button>
+      </div>
 
-          <button
-            onClick={toggleLanguage}
-            className="flex flex-col items-center justify-center px-4 md:px-8 border-l hairline-l border-primary hover:bg-primary hover:text-primary-foreground transition-all group relative"
-          >
-            <Translate className="w-5 h-5 md:w-6 md:h-6 mb-1 group-hover:rotate-12 transition-transform" weight="bold" />
-            <span className="label-caps text-[8px] md:text-[10px] font-bold tracking-widest">{language === "id" ? "IND" : "ENG"}</span>
-          </button>
-        </motion.nav>
+      {/* Floating Language Toggle (Outside) */}
+      <div className="fixed bottom-32 left-4 md:bottom-32 md:left-8 z-50">
+        <motion.button
+          onClick={toggleLanguage}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="w-12 h-12 md:w-14 md:h-14 bg-paper border-rule-thick border-primary flex items-center justify-center shadow-[4px_4px_0px_#1a1c1c] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all group overflow-hidden"
+        >
+          <div className="flex flex-col items-center">
+            <Translate size={20} weight="bold" />
+            <span className="text-[7px] font-bold mt-0.5">{language === "id" ? "IND" : "ENG"}</span>
+          </div>
+          {/* Tooltip */}
+          <div className="absolute -top-10 left-0 bg-primary text-primary-foreground px-2 py-1 label-caps text-[8px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+             Switch Language
+          </div>
+        </motion.button>
       </div>
     </>
   );

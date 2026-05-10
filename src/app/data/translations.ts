@@ -57,7 +57,7 @@ export const translations = {
             school: "Bina Sarana Informatika University",
             period: "2024 - Present",
             description:
-              "Study Focus: Web Application Development, Relational & NoSQL Databases, and Information System Analysis & Design. Current GPA: 4.00/4.00 (Sem 3).",
+              "Study Focus: Web Application Development, Relational & NoSQL Databases, and Information System Analysis & Design. Current GPA: 4.00/4.00 (sem 4).",
             logo: "/img/ubsi.webp",
             tech: ["System Analysis", "Database Design", "Web Programming"],
           },
@@ -236,7 +236,7 @@ export const translations = {
             school: "Universitas Bina Sarana Informatika",
             period: "2024 - Sekarang",
             description:
-              "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi. IPK Saat Ini: 4.00/4.00 (Sem 3).",
+              "Fokus Studi: Pengembangan Aplikasi Web, Basis Data Relasional & NoSQL, serta Analisis dan Perancangan Sistem Informasi. IPK Saat Ini: 4.00/4.00 (sem 4).",
             logo: "/img/ubsi.webp",
             tech: ["Analisis Sistem", "Desain Basis Data", "Pemrograman Web"],
           },
