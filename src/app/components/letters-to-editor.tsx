@@ -118,6 +118,19 @@ export function LettersToEditor() {
     loadUserProfile();
   }, [session]);
 
+  // Auto-scroll to guestbook after successful login redirect
+  useEffect(() => {
+    if (session) {
+      const justLoggedIn = sessionStorage.getItem("just_logged_in");
+      if (justLoggedIn) {
+        sessionStorage.removeItem("just_logged_in");
+        setTimeout(() => {
+          document.getElementById("letters")?.scrollIntoView({ behavior: "smooth" });
+        }, 500);
+      }
+    }
+  }, [session]);
+
   // 2. Fetch Komentar dari API Next.js
   const fetchComments = async () => {
     try {
@@ -143,7 +156,7 @@ export function LettersToEditor() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: window.location.origin + "/#letters",
+          redirectTo: window.location.origin,
         },
       });
       if (error) throw error;
