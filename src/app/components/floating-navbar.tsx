@@ -17,6 +17,8 @@ import {
   CaretLeft,
 } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
 import { cn } from "@/lib/utils";
@@ -26,6 +28,7 @@ export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
   const { t, language, toggleLanguage } = useLanguage();
   const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
   const { openFolder } = useFileSystem();
@@ -34,11 +37,13 @@ export function FloatingNavbar() {
 
   if (!mounted) return null;
 
+  const isHome = pathname === "/";
+
   const primaryItems = [
-    { name: t.nav.home, href: "#home", icon: House },
-    { name: t.nav.about, href: "#about", icon: User },
-    { name: t.nav.projects, href: "#projects", icon: Code },
-    { name: t.nav.contact, href: "#contact", icon: Envelope },
+    { name: t.nav.home, href: isHome ? "#home" : "/#home", icon: House, isExternal: false },
+    { name: t.nav.about, href: isHome ? "#about" : "/#about", icon: User, isExternal: false },
+    { name: t.nav.projects, href: "/projects", icon: Code, isExternal: true },
+    { name: t.nav.contact, href: isHome ? "#contact" : "/#contact", icon: Envelope, isExternal: false },
   ];
 
   return (
@@ -86,18 +91,33 @@ export function FloatingNavbar() {
                   </div>
                   <div className="flex flex-col gap-3">
                     {primaryItems.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="group flex items-center justify-between p-4 border hairline border-primary/10 hover:border-primary hover:bg-primary/5 transition-all"
-                      >
-                        <div className="flex items-center gap-4">
-                          <item.icon size={20} weight="bold" className="opacity-40 group-hover:opacity-100 transition-opacity" />
-                          <span className="headline-sm text-lg uppercase tracking-tight group-hover:translate-x-1 transition-transform">{item.name}</span>
-                        </div>
-                        <span className="text-[10px] opacity-0 group-hover:opacity-40 transition-opacity font-serif italic">Go to page →</span>
-                      </a>
+                      item.href.startsWith("#") ? (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="group flex items-center justify-between p-4 border hairline border-primary/10 hover:border-primary hover:bg-primary/5 transition-all"
+                        >
+                          <div className="flex items-center gap-4">
+                            <item.icon size={20} weight="bold" className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                            <span className="headline-sm text-lg uppercase tracking-tight group-hover:translate-x-1 transition-transform">{item.name}</span>
+                          </div>
+                          <span className="text-[10px] opacity-0 group-hover:opacity-40 transition-opacity font-serif italic">Go to page →</span>
+                        </a>
+                      ) : (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="group flex items-center justify-between p-4 border hairline border-primary/10 hover:border-primary hover:bg-primary/5 transition-all"
+                        >
+                          <div className="flex items-center gap-4">
+                            <item.icon size={20} weight="bold" className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                            <span className="headline-sm text-lg uppercase tracking-tight group-hover:translate-x-1 transition-transform">{item.name}</span>
+                          </div>
+                          <span className="text-[10px] opacity-0 group-hover:opacity-40 transition-opacity font-serif italic">Go to page →</span>
+                        </Link>
+                      )
                     ))}
                   </div>
                 </div>

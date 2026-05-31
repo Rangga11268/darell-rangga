@@ -6,13 +6,12 @@ import { projects, Project } from "@/app/data/projects";
 import { ProjectDetailModal } from "./project-detail-modal";
 import Image from "next/image";
 import { ArrowRight } from "@phosphor-icons/react";
-import { useFileSystem } from "@/app/providers/file-system-provider";
+import Link from "next/link";
 
 export function ProjectsSection() {
   const { t, language } = useLanguage();
   const langKey = language === "id" ? "id" : "en";
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const { openFolder } = useFileSystem();
 
   const skills = [
     { name: "HTML / CSS", level: "95%" },
@@ -43,13 +42,13 @@ export function ProjectsSection() {
                     {language === "id" ? "Cerita Utama" : "Featured Stories"}
                   </h2>
                 </div>
-                <button 
-                  onClick={() => openFolder("projects-folder")}
-                  className="label-caps hover:underline flex items-center gap-2 tracking-widest font-bold self-start sm:self-auto group"
+                <Link 
+                  href="/projects"
+                  className="label-caps hover:underline flex items-center gap-2 tracking-widest font-bold self-start sm:self-auto group border border-primary px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-all"
                 >
                   {language === "id" ? "Lihat Semua Arsip" : "View All Archives"} 
                   <ArrowRight size={16} weight="bold" className="group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

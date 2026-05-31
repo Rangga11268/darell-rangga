@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
 } from "@phosphor-icons/react";
-import Image from "next/image";
 import { Project } from "@/app/data/projects";
+import { DeviceMockup } from "./device-mockup";
 
 interface ProjectDetailModalProps {
   project: Project | null;
@@ -83,15 +83,17 @@ export function ProjectDetailModal({
 
               {/* Sidebar: Image & Lead Info */}
               <div className="w-full md:w-2/5 border-b md:border-b-0 md:border-r hairline-r border-primary flex flex-col">
-                <div className="relative aspect-video md:aspect-[3/4] w-full border-b hairline-b border-primary bg-black/5">
-                  <Image
-                    src={project.imageUrl}
-                    alt={project.title}
-                    fill
-                    className="object-cover grayscale contrast-125 sepia-[.1]"
-                  />
-                  <div className="absolute top-4 left-4 bg-primary text-primary-foreground label-caps px-3 py-1">
+                <div className="p-4 border-b hairline-b border-primary bg-black/5 flex flex-col items-center justify-center relative overflow-hidden">
+                  <div className="absolute top-4 left-4 bg-primary text-primary-foreground label-caps px-3 py-1 z-10">
                     Vol. {project.year}
+                  </div>
+                  <div className="w-[85%] mx-auto pt-12 pb-4">
+                    <DeviceMockup
+                      imageUrl={project.imageUrl}
+                      title={project.title}
+                      defaultMode={project.id === "srb-motor-app" ? "phone" : "laptop"}
+                      allowToggle={project.id !== "srb-motor-app"}
+                    />
                   </div>
                 </div>
                 

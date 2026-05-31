@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, GithubLogo } from "@phosphor-icons/react";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Project } from "@/app/data/projects";
+import { DeviceMockup } from "./device-mockup";
 
 interface ProjectCardProps {
   project: Project;
@@ -88,18 +88,16 @@ export function ProjectCard({
           {/* Animated Border Glow */}
           <div className="absolute -inset-[1px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary/50 via-purple-500/50 to-blue-500/50 blur-sm -z-10" />
 
-          {/* Base Image with Ken Burns Effect */}
-          <div className="absolute inset-0 transform-style-3d overflow-hidden rounded-3xl">
-            <Image
-              src={project.imageUrl}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105 transform-gpu"
-              sizes="(max-width: 768px) 100vw, 60vw"
-              priority={index < 2}
-            />
-            {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 pointer-events-none" />
+          {/* Device Mockup display */}
+          <div className="w-full h-full flex items-center justify-center p-4 bg-zinc-950/20 group-hover:bg-zinc-950/0 transition-colors duration-500 overflow-hidden relative">
+            <div className="scale-[0.78] group-hover:scale-[0.83] transition-transform duration-500 w-full flex justify-center">
+              <DeviceMockup
+                imageUrl={project.imageUrl}
+                title={project.title}
+                defaultMode={project.id === "srb-motor-app" ? "phone" : "laptop"}
+                allowToggle={false}
+              />
+            </div>
           </div>
 
           {/* Glare Effect */}
@@ -107,7 +105,7 @@ export function ProjectCard({
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%)",
+                "radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 75%)",
               mixBlendMode: "overlay",
             }}
           />
