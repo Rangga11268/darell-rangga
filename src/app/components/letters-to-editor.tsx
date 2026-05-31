@@ -31,6 +31,42 @@ export function LettersToEditor() {
   const [replyContent, setReplyContent] = useState("");
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
 
+
+
+  // Butterfly Easter Egg States & Logic
+  interface ButterflyInstance {
+    id: number;
+    left: number;
+    size: number;
+    delay: number;
+    duration: number;
+  }
+  const [butterflies, setButterflies] = useState<ButterflyInstance[]>([]);
+
+
+
+  // Auto-spawn slow butterflies
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newB = {
+        id: Date.now() + Math.random(),
+        left: Math.random() * 90 + 5,
+        size: Math.random() * 12 + 10,
+        delay: 0,
+        duration: Math.random() * 4 + 6,
+      };
+      setButterflies((prev) => [...prev, newB]);
+
+      setTimeout(() => {
+        setButterflies((prev) => prev.filter((b) => b.id !== newB.id));
+      }, 10000);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
+
   // 1. Dapatkan Session & Listen Perubahan Auth
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -450,6 +486,68 @@ export function LettersToEditor() {
           </div>
         </div>
       </div>
+
+
+
+
+      {/* Butterfly Easter Egg Particles */}
+      {butterflies.map((b) => (
+        <div
+          key={b.id}
+          className="butterfly-container pointer-events-none"
+          style={{
+            left: `${b.left}%`,
+            width: `${b.size}px`,
+            height: `${b.size}px`,
+            animationDelay: `${b.delay}s`,
+            animationDuration: `${b.duration}s`,
+          }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="butterfly-wings w-full h-full fill-green-500 dark:fill-green-400 drop-shadow-[0_0_6px_rgba(34,197,94,0.6)]"
+          >
+            <path d="M12 10C11.5 5 6 2 2 6c0 0-1 4 3 6c2 1 4 .5 5-2c0 2.5 1.5 3 2 4c.5-1 2-1.5 2-4c1 2.5 3 3 5 2c4-2 3-6 3-6c-4-4-9.5-1-10 4z" />
+          </svg>
+        </div>
+      ))}
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes floatUp {
+          0% {
+            transform: translateY(110vh) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.8;
+          }
+          90% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(-20vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        @keyframes wingFlap {
+          0%, 100% {
+            transform: scaleX(1);
+          }
+          50% {
+            transform: scaleX(0.2);
+          }
+        }
+        .butterfly-container {
+          position: fixed;
+          bottom: -50px;
+          z-index: 9999;
+          animation: floatUp linear forwards;
+        }
+        .butterfly-wings {
+          animation: wingFlap 0.15s infinite ease-in-out;
+          transform-origin: center;
+        }
+      ` }} />
     </section>
   );
 }
