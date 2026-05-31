@@ -45,6 +45,13 @@ const ProjectsSection = dynamic(
     })),
   { ssr: false },
 );
+const JobMatcher = dynamic(
+  () =>
+    import("@/app/components/job-matcher").then((m) => ({
+      default: m.JobMatcher,
+    })),
+  { ssr: false },
+);
 const AchievementsSection = dynamic(
   () =>
     import("@/app/components/achievements-section").then((m) => ({
@@ -100,6 +107,9 @@ import { useEffect } from "react";
 // Lazy imports — below the fold, code-split to reduce TBT
 // ... (dynamic imports stay the same)
 
+// Module-level variable to prevent preloader from ever showing again during the same SPA session navigation
+let hasShownIntroSession = false;
+
 export default function Home() {
   // Show intro only for first-time visitors.
   // Use useEffect to read localStorage — avoids SSR/client hydration mismatch.
@@ -107,21 +117,17 @@ export default function Home() {
   const [readyLevel, setReadyLevel] = useState(0);
 
   useEffect(() => {
-    // For review purposes, we always show the intro.
-    // In production, you might want to uncomment the localStorage logic.
-    setShowIntro(true);
-    
-    /*
     const seen = localStorage.getItem("dr_visited");
-    if (!seen) {
+    if (!seen && !hasShownIntroSession) {
       localStorage.setItem("dr_visited", "1");
+      hasShownIntroSession = true;
       setShowIntro(true);
     } else {
+      hasShownIntroSession = true;
       setReadyLevel(1);
       const t = setTimeout(() => setReadyLevel(2), 50);
       return () => clearTimeout(t);
     }
-    */
   }, []);
 
   return (
@@ -168,6 +174,7 @@ export default function Home() {
               <SkillsSection />
               <ServicesSection />
               <ProjectsSection />
+              <JobMatcher />
               <LettersToEditor />
               <AchievementsSection />
               <CommandCenter />

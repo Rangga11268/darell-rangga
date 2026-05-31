@@ -17,7 +17,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#f9f7f2]"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background"
       initial={{ opacity: 1 }}
       exit={{
         opacity: 0,

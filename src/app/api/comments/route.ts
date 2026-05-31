@@ -1,0 +1,172 @@
+import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
+
+// GET /api/comments - Ambil daftar komentar (bisa filter berdasarkan project_id)
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const projectId = searchParams.get("project_id");
+
+    let query = supabase.from("comments").select("*");
+
+    if (projectId) {
+      query = query.eq("project_id", projectId);
+    } else {
+      query = query.is("project_id", null);
+    }
+
+    // Ambil berurutan tertua dahulu agar balasan tersusun secara kronologis
+    const { data: comments, error } = await query.order("created_at", { ascending: true });
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    interface DbComment {
+      id: string;
+      user_id: string;
+      user_name: string;
+      user_avatar: string;
+      content: string;
+      parent_id: string | null;
+      created_at: string;
+      replies?: DbComment[];
+    }
+
+    const typedComments = (comments || []) as unknown as DbComment[];
+
+    // Merge custom profiles secara dinamis
+    if (typedComments.length > 0) {
+      const userIds = Array.from(new Set(typedComments.map((c) => c.user_id).filter(Boolean)));
+      if (userIds.length > 0) {
+        const { data: profiles } = await supabase
+          .from("profiles")
+          .select("id, display_name, avatar_url")
+          .in("id", userIds);
+
+        if (profiles) {
+          const profileMap = new Map(profiles.map(p => [p.id, p]));
+          typedComments.forEach((c) => {
+            const prof = profileMap.get(c.user_id);
+            if (prof) {
+              if (prof.display_name) c.user_name = prof.display_name;
+              if (prof.avatar_url) c.user_avatar = prof.avatar_url;
+            }
+          });
+        }
+      }
+    }
+
+    // Konstruksi pohon balasan komentar (max 1 level)
+    const mainComments: DbComment[] = [];
+    const repliesMap = new Map<string, DbComment[]>();
+
+    typedComments.forEach((c) => {
+      if (!c.parent_id) {
+        c.replies = [];
+        mainComments.push(c);
+      } else {
+        if (!repliesMap.has(c.parent_id)) {
+          repliesMap.set(c.parent_id, []);
+        }
+        repliesMap.get(c.parent_id)!.push(c);
+      }
+    });
+
+    mainComments.forEach((c) => {
+      c.replies = repliesMap.get(c.id) || [];
+    });
+
+    // Balik urutan komentar utama agar yang terbaru berada di atas
+    mainComments.reverse();
+
+    return NextResponse.json(mainComments);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+// POST /api/comments - Kirim komentar baru
+export async function POST(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { error: "Missing or invalid Authorization header" },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    // Buat client Supabase khusus untuk request ini menggunakan token JWT user
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+    const supabaseUserClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+
+    // Ambil user dari Supabase menggunakan token JWT
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: "Unauthorized: Invalid or expired token" },
+        { status: 401 }
+      );
+    }
+
+    const body = await request.json();
+    const { content, project_id, parent_id } = body;
+
+    if (!content || typeof content !== "string" || content.trim() === "") {
+      return NextResponse.json(
+        { error: "Comment content cannot be empty" },
+        { status: 400 }
+      );
+    }
+
+    // Cari profil kustom di database menggunakan client terautentikasi
+    const { data: customProfile } = await supabaseUserClient
+      .from("profiles")
+      .select("display_name, avatar_url")
+      .eq("id", user.id)
+      .single();
+
+    // Fallback ke metadata OAuth jika profil kustom tidak ada
+    const userMetadata = user.user_metadata || {};
+    const userName = customProfile?.display_name || userMetadata.full_name || userMetadata.name || userMetadata.user_name || "Anonymous";
+    const userAvatar = customProfile?.avatar_url || userMetadata.avatar_url || userMetadata.picture || "";
+
+    // Simpan ke database menggunakan client terautentikasi (memenuhi kebijakan RLS)
+    const { data, error: dbError } = await supabaseUserClient
+      .from("comments")
+      .insert([
+        {
+          user_id: user.id,
+          user_name: userName,
+          user_avatar: userAvatar,
+          content: content.trim(),
+          project_id: project_id || null, // project_id opsional
+          parent_id: parent_id || null, // parent_id opsional
+        },
+      ])
+      .select()
+      .single();
+
+    if (dbError) {
+      return NextResponse.json({ error: dbError.message }, { status: 500 });
+    }
+
+    return NextResponse.json(data, { status: 201 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

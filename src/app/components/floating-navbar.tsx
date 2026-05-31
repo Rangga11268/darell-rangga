@@ -23,6 +23,10 @@ import { useLanguage } from "@/app/providers/language-provider";
 import { useCustomization } from "@/app/providers/customization-provider";
 import { cn } from "@/lib/utils";
 import { useFileSystem } from "@/app/providers/file-system-provider";
+import { supabase } from "@/lib/supabase";
+import { Session } from "@supabase/supabase-js";
+import { GoogleLogo, GithubLogo, SignOut } from "@phosphor-icons/react";
+import { UserAvatar } from "./user-avatar";
 
 export function FloatingNavbar() {
   const [mounted, setMounted] = useState(false);
@@ -32,8 +36,88 @@ export function FloatingNavbar() {
   const { t, language, toggleLanguage } = useLanguage();
   const { isPlaygroundOpen, setIsPlaygroundOpen } = useCustomization();
   const { openFolder } = useFileSystem();
+  const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<{ display_name: string; avatar_url: string } | null>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const checkJustLoggedIn = () => {
+      const justLoggedIn = sessionStorage.getItem("just_logged_in");
+      if (justLoggedIn) {
+        sessionStorage.removeItem("just_logged_in");
+        alert(language === "id" ? "Pendaftaran berhasil! Selamat datang di Kearsipan." : "Log entry recorded! Welcome to the Archival Registry.");
+      }
+    };
+
+    setMounted(true);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) checkJustLoggedIn();
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) checkJustLoggedIn();
+    });
+
+    return () => subscription.unsubscribe();
+  }, [language]);
+
+  // Fetch custom profile data
+  useEffect(() => {
+    if (!session) {
+      setProfile(null);
+      return;
+    }
+    const loadUserProfile = async () => {
+      try {
+        const { data } = await supabase
+          .from("profiles")
+          .select("display_name, avatar_url")
+          .eq("id", session.user.id)
+          .single();
+        
+        if (data) {
+          setProfile({
+            display_name: data.display_name || "",
+            avatar_url: data.avatar_url || "",
+          });
+        } else {
+          setProfile({
+            display_name: session.user.user_metadata.full_name || session.user.user_metadata.name || "User",
+            avatar_url: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || "",
+          });
+        }
+      } catch (err) {
+        console.error("Error loading user profile", err);
+        setProfile({
+          display_name: session.user.user_metadata.full_name || session.user.user_metadata.name || "User",
+          avatar_url: session.user.user_metadata.avatar_url || session.user.user_metadata.picture || "",
+        });
+      }
+    };
+    loadUserProfile();
+  }, [session]);
+
+  const handleLogin = async (provider: "google" | "github") => {
+    try {
+      sessionStorage.setItem("just_logged_in", "1");
+      await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: window.location.href,
+        },
+      });
+    } catch (err) {
+      sessionStorage.removeItem("just_logged_in");
+      console.error(err);
+    }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   if (!mounted) return null;
 
@@ -57,7 +141,7 @@ export function FloatingNavbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-[80]"
+              className="fixed inset-0 bg-black/50 z-[80]"
             />
             
             {/* Right Side Editorial Panel */}
@@ -162,6 +246,58 @@ export function FloatingNavbar() {
                       </div>
                     </button>
                   </div>
+                </div>
+
+                {/* Section: Archival Registry (Authentication) */}
+                <div className="space-y-6 mb-12">
+                  <div className="border-b hairline-b border-primary/20 pb-2 flex justify-between items-end">
+                    <span className="label-caps text-[10px] font-bold">ARCHIVAL REGISTRY</span>
+                  </div>
+                  {!session ? (
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => handleLogin("google")}
+                        className="flex items-center justify-center gap-2 border border-primary p-3 text-[10px] font-bold uppercase bg-background hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
+                      >
+                        <GoogleLogo size={14} /> Google Login
+                      </button>
+                      <button
+                        onClick={() => handleLogin("github")}
+                        className="flex items-center justify-center gap-2 border border-primary p-3 text-[10px] font-bold uppercase bg-background hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
+                      >
+                        <GithubLogo size={14} /> GitHub Login
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between border border-primary p-3 bg-primary/5">
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <UserAvatar 
+                          src={profile?.avatar_url} 
+                          name={profile?.display_name || "User"} 
+                          size="md" 
+                        />
+                        <div className="flex flex-col overflow-hidden">
+                          <Link
+                            href="/profile"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="font-bold text-[10px] uppercase truncate max-w-[180px] hover:underline"
+                          >
+                            {profile?.display_name || "User"}
+                          </Link>
+                          <span className="text-[8px] opacity-50 truncate max-w-[180px]">
+                            {session.user.email}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="p-2 border border-primary hover:bg-red-500 hover:text-white transition-all cursor-pointer"
+                        title="Logout"
+                      >
+                        <SignOut size={14} />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Settings Quick Bar */}

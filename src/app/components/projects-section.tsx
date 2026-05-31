@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { projects, Project } from "@/app/data/projects";
 import { ProjectDetailModal } from "./project-detail-modal";
+import { ProjectCommentsDrawer } from "./project-comments-drawer";
 import Image from "next/image";
 import { ArrowRight } from "@phosphor-icons/react";
 import Link from "next/link";
@@ -12,6 +13,8 @@ export function ProjectsSection() {
   const { t, language } = useLanguage();
   const langKey = language === "id" ? "id" : "en";
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [commentProjectId, setCommentProjectId] = useState<string | null>(null);
+  const [commentProjectName, setCommentProjectName] = useState<string>("");
 
   const skills = [
     { name: "HTML / CSS", level: "95%" },
@@ -114,6 +117,16 @@ export function ProjectsSection() {
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
         language={langKey}
+        onOpenComments={(id, title) => {
+          setCommentProjectId(id);
+          setCommentProjectName(title);
+        }}
+      />
+
+      <ProjectCommentsDrawer
+        projectId={commentProjectId}
+        projectName={commentProjectName}
+        onClose={() => setCommentProjectId(null)}
       />
     </>
   );

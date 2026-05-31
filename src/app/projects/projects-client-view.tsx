@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Project } from "@/app/data/projects";
 import { FloatingNavbar } from "@/app/components/floating-navbar";
 import { ProjectDetailModal } from "@/app/components/project-detail-modal";
+import { ProjectCommentsDrawer } from "@/app/components/project-comments-drawer";
 import { DeviceMockup } from "@/app/components/device-mockup";
 import { useLanguage } from "@/app/providers/language-provider";
 import { motion } from "framer-motion";
@@ -15,7 +16,8 @@ import {
   BookOpen, 
   BracketsCurly, 
   Gear,
-  ArrowLeft
+  ArrowLeft,
+  ChatCircleDots
 } from "@phosphor-icons/react";
 import Link from "next/link";
 
@@ -28,6 +30,8 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string>("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [commentProjectId, setCommentProjectId] = useState<string | null>(null);
+  const [commentProjectName, setCommentProjectName] = useState<string>("");
 
   // Divide into Featured (have image & detail) and Minor (pure GitHub repos)
   const featuredProjects = initialProjects.filter(p => p.imageUrl !== "");
@@ -173,13 +177,25 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
                       </div>
 
                       {/* Action Row */}
-                      <div className="flex items-center justify-between border-t border-primary/10 pt-4">
-                        <button
-                          onClick={() => setSelectedProject(project)}
-                          className="flex items-center gap-1.5 label-caps text-[10px] font-bold text-primary group-hover:translate-x-1 transition-transform"
-                        >
-                          <BookOpen size={14} /> VIEW CASE STUDY
-                        </button>
+                      <div className="flex items-center justify-between border-t border-primary/10 pt-4 flex-wrap gap-2">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => setSelectedProject(project)}
+                            className="flex items-center gap-1.5 label-caps text-[10px] font-bold text-primary group-hover:translate-x-1 transition-transform cursor-pointer"
+                          >
+                            <BookOpen size={14} /> VIEW CASE STUDY
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setCommentProjectId(project.id);
+                              setCommentProjectName(project.title);
+                            }}
+                            className="flex items-center gap-1.5 label-caps text-[10px] font-bold text-primary hover:opacity-80 transition-opacity cursor-pointer"
+                          >
+                            <ChatCircleDots size={14} /> DISCUSS
+                          </button>
+                        </div>
 
                         <div className="flex gap-2">
                           {project.githubUrl && project.githubUrl !== "#" && (
@@ -295,6 +311,16 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
         language={language}
+        onOpenComments={(id, title) => {
+          setCommentProjectId(id);
+          setCommentProjectName(title);
+        }}
+      />
+
+      <ProjectCommentsDrawer
+        projectId={commentProjectId}
+        projectName={commentProjectName}
+        onClose={() => setCommentProjectId(null)}
       />
     </div>
   );

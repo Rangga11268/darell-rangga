@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { GithubLogo, LinkedinLogo, FilePdf } from "@phosphor-icons/react";
+import { GithubLogo, LinkedinLogo, FilePdf, FolderOpen, ChatCircleDots } from "@phosphor-icons/react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
 import { MarketReport } from "./market-report";
 
 export function HeroSection() {
@@ -134,14 +135,14 @@ export function HeroSection() {
               <div className="flex flex-wrap gap-4">
                 <Button 
                   variant="outline"
-                  className="border border-primary rounded-none px-6 py-6 label-caps hover:bg-primary hover:text-primary-foreground transition-colors tracking-widest font-bold"
+                  className="border border-primary rounded-none px-6 py-6 label-caps hover:bg-primary hover:text-primary-foreground transition-colors tracking-widest font-bold cursor-pointer"
                   asChild
                 >
                   <a href="#projects">{t.hero.viewWork}</a>
                 </Button>
                 <Button 
                   variant="default"
-                  className="bg-primary text-paper rounded-none px-6 py-6 label-caps hover:bg-primary/90 transition-colors tracking-widest font-bold flex items-center gap-2"
+                  className="bg-primary text-paper rounded-none px-6 py-6 label-caps hover:bg-primary/90 transition-colors tracking-widest font-bold flex items-center gap-2 cursor-pointer"
                   asChild
                 >
                   <a href={cvPath} target="_blank">
@@ -150,6 +151,24 @@ export function HeroSection() {
                   </a>
                 </Button>
               </div>
+
+              {/* Quick Navigation Panel */}
+              <div className="flex gap-3 mt-6 border-t border-dashed border-primary/20 pt-4 w-full">
+                <Link
+                  href="/projects"
+                  className="flex-1 flex items-center justify-center gap-1.5 border hairline border-primary px-3 py-3 text-[10px] font-black uppercase tracking-wider bg-background hover:bg-primary hover:text-primary-foreground transition-all"
+                >
+                  <FolderOpen size={14} weight="bold" />
+                  {language === "id" ? "Arsip Proyek" : "All Projects"}
+                </Link>
+                <a
+                  href="#letters"
+                  className="flex-1 flex items-center justify-center gap-1.5 border hairline border-primary px-3 py-3 text-[10px] font-black uppercase tracking-wider bg-background hover:bg-primary hover:text-primary-foreground transition-all"
+                >
+                  <ChatCircleDots size={14} weight="bold" />
+                  {language === "id" ? "Buku Tamu" : "Guestbook"}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -157,7 +176,7 @@ export function HeroSection() {
           <div className="lg:col-span-6 lg:border-x lg:hairline-r lg:hairline-l border-primary px-0 lg:px-gutter">
             <div className="relative aspect-[4/5] w-full grayscale contrast-125 sepia-[.15] border border-primary/10">
               <Image 
-                src="/img/saya/saya1.webp" 
+                src="/img/meRapih.png" 
                 alt="Portrait" 
                 fill
                 className="object-cover"

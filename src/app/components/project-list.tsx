@@ -12,6 +12,7 @@ interface ProjectListProps {
   projects: Project[];
   onSelect: (project: Project) => void;
   language: "en" | "id";
+  onOpenComments?: (projectId: string, projectName: string) => void;
 }
 
 const cardVariants: Variants = {
@@ -34,6 +35,7 @@ export function ProjectList({
   projects,
   onSelect,
   language,
+  onOpenComments,
 }: ProjectListProps) {
   const [showAll, setShowAll] = useState(false);
 
@@ -57,6 +59,7 @@ export function ProjectList({
               index={index}
               onSelect={onSelect}
               language={language}
+              onOpenComments={onOpenComments}
             />
           </motion.div>
         ))}

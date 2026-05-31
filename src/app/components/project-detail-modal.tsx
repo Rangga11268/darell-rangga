@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
+  ChatCircleDots,
 } from "@phosphor-icons/react";
 import { Project } from "@/app/data/projects";
 import { DeviceMockup } from "./device-mockup";
@@ -13,6 +14,7 @@ interface ProjectDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   language: "en" | "id";
+  onOpenComments?: (projectId: string, projectName: string) => void;
 }
 
 export function ProjectDetailModal({
@@ -20,6 +22,7 @@ export function ProjectDetailModal({
   isOpen,
   onClose,
   language,
+  onOpenComments,
 }: ProjectDetailModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -136,6 +139,15 @@ export function ProjectDetailModal({
                       >
                         {labels.sourceCode}
                       </a>
+                    )}
+                    {onOpenComments && (
+                      <button
+                        onClick={() => onOpenComments(project.id, project.title)}
+                        className="border border-primary bg-primary/5 hover:bg-primary hover:text-primary-foreground label-caps text-center py-4 transition-all cursor-pointer flex items-center justify-center gap-2"
+                      >
+                        <ChatCircleDots size={16} weight="bold" />
+                        {language === "en" ? "Project Discussion" : "Diskusi Proyek"}
+                      </button>
                     )}
                   </div>
                 </div>

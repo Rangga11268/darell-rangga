@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight, GithubLogo } from "@phosphor-icons/react";
+import { ArrowUpRight, GithubLogo, ChatCircleDots } from "@phosphor-icons/react";
 import { useIsMobile } from "@/lib/hooks/use-is-mobile";
 import { Project } from "@/app/data/projects";
 import { DeviceMockup } from "./device-mockup";
@@ -12,6 +12,7 @@ interface ProjectCardProps {
   index: number;
   onSelect: (project: Project) => void;
   language: "en" | "id";
+  onOpenComments?: (projectId: string, projectName: string) => void;
 }
 
 export function ProjectCard({
@@ -19,6 +20,7 @@ export function ProjectCard({
   index,
   onSelect,
   language,
+  onOpenComments,
 }: ProjectCardProps) {
   const isMobile = useIsMobile();
   const isEven = index % 2 === 0;
@@ -166,10 +168,10 @@ export function ProjectCard({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-4 pt-4">
+        <div className="flex items-center gap-4 pt-4 flex-wrap">
           <button
             onClick={() => onSelect(project)}
-            className="group flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all font-medium"
+            className="group flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-all font-medium cursor-pointer"
           >
             <span>View Case Study</span>
             <ArrowUpRight
@@ -177,6 +179,16 @@ export function ProjectCard({
               className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
             />
           </button>
+
+          {onOpenComments && (
+            <button
+              onClick={() => onOpenComments(project.id, project.title)}
+              className="flex items-center gap-2 px-6 py-3 border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all rounded-full font-medium cursor-pointer"
+            >
+              <ChatCircleDots size={16} weight="bold" />
+              <span>{language === "id" ? "Diskusi" : "Discuss"}</span>
+            </button>
+          )}
 
           {/* Only show GitHub if there is no Live Demo link */}
           {(!project.liveUrl || project.liveUrl === "#") &&
