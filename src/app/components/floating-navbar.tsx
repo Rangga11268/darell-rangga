@@ -38,13 +38,18 @@ export function FloatingNavbar() {
   const { openFolder } = useFileSystem();
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<{ display_name: string; avatar_url: string } | null>(null);
+  const [notification, setNotification] = useState<{ message: string; type: "success" | "info" } | null>(null);
 
   useEffect(() => {
     const checkJustLoggedIn = () => {
       const justLoggedIn = sessionStorage.getItem("just_logged_in");
       if (justLoggedIn) {
         sessionStorage.removeItem("just_logged_in");
-        alert(language === "id" ? "Pendaftaran berhasil! Selamat datang di Kearsipan." : "Log entry recorded! Welcome to the Archival Registry.");
+        setNotification({
+          message: language === "id" ? "Pendaftaran berhasil! Selamat datang di Kearsipan." : "Log entry recorded! Welcome to the Archival Registry.",
+          type: "success",
+        });
+        setTimeout(() => setNotification(null), 5000);
       }
     };
 
@@ -380,6 +385,41 @@ export function FloatingNavbar() {
           </div>
         </motion.button>
       </div>
+
+      {/* Custom Toast Notification */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-md bg-paper border-2 border-primary shadow-[6px_6px_0px_#1a1c1c] dark:shadow-[6px_6px_0px_rgba(255,255,255,0.1)] p-4 flex items-start gap-3.5"
+          >
+            {/* Stamp decoration */}
+            <div className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center shrink-0 border border-primary/20 shadow-[2px_2px_0px_rgba(0,0,0,0.15)] font-mono font-bold text-lg select-none">
+              A
+            </div>
+            
+            <div className="flex-1 flex flex-col min-w-0">
+              <div className="flex items-center justify-between">
+                <span className="label-caps text-[8px] font-bold text-primary tracking-widest opacity-60">
+                  {language === "id" ? "PEMBERITAHUAN KEARSIPAN" : "ARCHIVAL LOG NOTIFICATION"}
+                </span>
+                <button 
+                  onClick={() => setNotification(null)}
+                  className="text-primary hover:opacity-75 transition-opacity opacity-50 shrink-0 cursor-pointer"
+                >
+                  <X size={12} weight="bold" />
+                </button>
+              </div>
+              <p className="font-serif italic text-xs md:text-sm text-on-surface mt-1 leading-relaxed text-left">
+                {notification.message}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
