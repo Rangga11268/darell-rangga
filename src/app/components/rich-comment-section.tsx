@@ -55,6 +55,8 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editContent, setEditContent] = useState("");
   const [isSubmittingEdit, setIsSubmittingEdit] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Textarea references for formatting toolbar
   const mainTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -255,17 +257,16 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
     }
   };
 
-  const handleDeleteComment = async (commentId: string) => {
+  const handleDeleteComment = (commentId: string) => {
     if (!session) return;
-    const confirmDelete = window.confirm(
-      language === "id" 
-        ? "Apakah Anda yakin ingin menghapus komentar ini?" 
-        : "Are you sure you want to delete this comment?"
-    );
-    if (!confirmDelete) return;
+    setDeleteConfirmId(commentId);
+  };
 
+  const confirmDeleteAction = async () => {
+    if (!deleteConfirmId || !session) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`/api/comments?id=${encodeURIComponent(commentId)}`, {
+      const res = await fetch(`/api/comments?id=${encodeURIComponent(deleteConfirmId)}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${session.access_token}`,
@@ -274,12 +275,15 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
 
       if (res.ok) {
         fetchComments();
+        setDeleteConfirmId(null);
       } else {
         const err = await res.json();
         alert(err.error || "Gagal menghapus komentar");
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -753,6 +757,38 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* Custom Delete Confirmation Modal */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 bg-primary/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-paper border-rule-thick border-primary p-6 max-w-sm w-full shadow-[8px_8px_0px_rgba(0,0,0,0.15)] dark:shadow-[8px_8px_0px_rgba(255,255,255,0.05)] rounded-[8px] animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="headline-sm text-lg uppercase font-black leading-tight tracking-tighter mb-3">
+              {language === "id" ? "KONFIRMASI PENGHAPUSAN" : "CONFIRM DELETION"}
+            </h3>
+            <p className="body-md text-xs font-serif italic mb-6 opacity-80 leading-relaxed">
+              {language === "id"
+                ? "Apakah Anda yakin ingin menghapus komentar ini? Tindakan ini tidak dapat dibatalkan."
+                : "Are you sure you want to delete this comment? This action cannot be undone."}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                disabled={isDeleting}
+                className="px-4 py-2 border border-primary text-[10px] font-bold uppercase tracking-wider hover:bg-primary/5 transition-all rounded-[4px] disabled:opacity-50"
+              >
+                {language === "id" ? "BATAL" : "CANCEL"}
+              </button>
+              <button
+                onClick={confirmDeleteAction}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-red-600 text-white border border-red-700 text-[10px] font-bold uppercase tracking-wider hover:bg-red-700 transition-all rounded-[4px] disabled:opacity-50"
+              >
+                {isDeleting ? (language === "id" ? "PROSES..." : "DELETING...") : (language === "id" ? "HAPUS" : "DELETE")}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

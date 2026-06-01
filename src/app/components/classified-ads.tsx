@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/app/providers/language-provider";
-import { Megaphone, Handshake, Briefcase, Star } from "@phosphor-icons/react";
+import { Megaphone, Briefcase, Star, Disc } from "@phosphor-icons/react";
 
 export function ClassifiedAds() {
   const { language } = useLanguage();
@@ -32,12 +32,10 @@ export function ClassifiedAds() {
       category: "BUSINESS"
     },
     {
-      title: language === "id" ? "KEMITRAAN: KODE" : "PARTNERSHIP: CODE",
-      content: language === "id"
-        ? "Membangun masa depan baris demi baris. Mari buat sesuatu yang luar biasa."
-        : "Building the future line by line. Let's create something extraordinary.",
-      icon: Handshake,
-      category: "LATEST"
+      title: language === "id" ? "SPONSOR: PLAYLIST" : "SPONSOR: PLAYLIST",
+      content: "",
+      icon: Disc,
+      category: "SOUNDTRACK"
     }
   ];
 
@@ -52,32 +50,52 @@ export function ClassifiedAds() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-l hairline-l border-primary">
-          {ads.map((ad, index) => (
-            <div 
-              key={index} 
-              className="p-6 border-r border-b hairline-r hairline-b border-primary hover:bg-primary/[0.02] transition-colors group relative flex flex-col h-full"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="label-caps text-[8px] bg-primary text-primary-foreground px-1.5 py-0.5">{ad.category}</span>
-                <ad.icon size={16} className="opacity-20 group-hover:opacity-100 transition-opacity" />
+          {ads.map((ad, index) => {
+            const isSpotifyAd = ad.category === "SOUNDTRACK";
+
+            return (
+              <div 
+                key={index} 
+                className="p-6 border-r border-b hairline-r hairline-b border-primary hover:bg-primary/[0.02] transition-colors group relative flex flex-col h-full"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="label-caps text-[8px] bg-primary text-primary-foreground px-1.5 py-0.5">{ad.category}</span>
+                  <ad.icon size={16} className="opacity-20 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <h4 className="headline-sm text-sm uppercase mb-2 font-black leading-tight tracking-tighter">
+                  {ad.title}
+                </h4>
+                
+                {isSpotifyAd ? (
+                  <div className="w-full h-[152px] border border-primary p-[1px] bg-transparent overflow-hidden rounded-[8px] mb-4">
+                    <iframe
+                      data-testid="embed-iframe"
+                      style={{ borderRadius: "8px", width: "100%", height: "152px" }}
+                      src={`https://open.spotify.com/embed/playlist/${process.env.NEXT_PUBLIC_SPOTIFY_PLAYLIST_ID || "3epWoGlNfC8AadULiXKV38"}?utm_source=generator`}
+                      frameBorder="0"
+                      allowFullScreen
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                ) : (
+                  <p className="body-md text-[13px] leading-relaxed opacity-80 mb-4 font-serif italic flex-1">
+                    {ad.content}
+                  </p>
+                )}
+                
+                <div className="text-[9px] font-bold label-caps opacity-30 mt-auto pt-4">
+                  {isSpotifyAd ? "LISTEN: SPOTIFY APP" : "INQUIRE: @RANGGA11268"}
+                </div>
+                
+                {/* Decorative Newspaper Dots */}
+                <div className="absolute bottom-2 right-2 flex gap-1 opacity-10">
+                  <div className="w-1 h-1 bg-primary rounded-full" />
+                  <div className="w-1 h-1 bg-primary rounded-full" />
+                </div>
               </div>
-              <h4 className="headline-sm text-sm uppercase mb-2 font-black leading-tight tracking-tighter">
-                {ad.title}
-              </h4>
-              <p className="body-md text-[13px] leading-relaxed opacity-80 mb-4 font-serif italic flex-1">
-                {ad.content}
-              </p>
-              <div className="text-[9px] font-bold label-caps opacity-30 mt-auto pt-4">
-                INQUIRE: @RANGGA11268
-              </div>
-              
-              {/* Decorative Newspaper Dots */}
-              <div className="absolute bottom-2 right-2 flex gap-1 opacity-10">
-                <div className="w-1 h-1 bg-primary rounded-full" />
-                <div className="w-1 h-1 bg-primary rounded-full" />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
         <div className="mt-8 text-center">

@@ -248,6 +248,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Comment ID is required" }, { status: 400 });
     }
 
+    // First, try hard deletion
     const { error: dbError } = await supabaseUserClient
       .from("comments")
       .delete()
@@ -255,7 +256,18 @@ export async function DELETE(request: Request) {
       .eq("user_id", user.id);
 
     if (dbError) {
-      return NextResponse.json({ error: dbError.message }, { status: 500 });
+      console.warn("Hard delete failed, falling back to soft update:", dbError.message);
+      // Fallback: If delete fails (due to RLS or foreign key constraints),
+      // we update the content to a deleted placeholder.
+      const { error: updateError } = await supabaseUserClient
+        .from("comments")
+        .update({ content: "[Komentar dihapus]" })
+        .eq("id", commentId)
+        .eq("user_id", user.id);
+
+      if (updateError) {
+        return NextResponse.json({ error: updateError.message }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ success: true });
