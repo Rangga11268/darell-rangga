@@ -188,6 +188,11 @@ export async function PUT(request: Request) {
       global: { headers: { Authorization: `Bearer ${token}` } },
     });
 
+    await supabaseUserClient.auth.setSession({
+      access_token: token,
+      refresh_token: "",
+    });
+
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -236,6 +241,12 @@ export async function DELETE(request: Request) {
       global: { headers: { Authorization: `Bearer ${token}` } },
     });
 
+    // Establish authenticated session context in the client SDK explicitly
+    await supabaseUserClient.auth.setSession({
+      access_token: token,
+      refresh_token: "",
+    });
+
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
     if (authError || !user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -278,12 +289,21 @@ export async function DELETE(request: Request) {
         .eq("user_id", user.id)
         .select();
 
+      console.log("Soft update fallback execution results:", {
+        commentId,
+        userId: user.id,
+        updateData,
+        updateError: updateError ? updateError.message : null
+      });
+
       if (updateError) {
         return NextResponse.json({ error: updateError.message }, { status: 500 });
       }
 
       if (!updateData || updateData.length === 0) {
-        return NextResponse.json({ error: "Gagal memperbarui status komentar" }, { status: 400 });
+        return NextResponse.json({ 
+          error: `Gagal memperbarui status komentar. Silakan periksa izin edit komentar Anda.` 
+        }, { status: 400 });
       }
     }
 
