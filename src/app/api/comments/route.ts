@@ -258,24 +258,32 @@ export async function DELETE(request: Request) {
     // Verify if the comment was actually deleted
     const { data: checkData } = await supabase
       .from("comments")
-      .select("id")
+      .select("id, user_id")
       .eq("id", commentId)
       .maybeSingle();
 
     if (checkData) {
       console.warn("Hard delete did not remove the comment. Falling back to soft update...");
-      // Fallback: If delete didn't remove it (e.g. due to RLS or foreign key constraints),
-      // we update the content to a deleted placeholder.
-      const { error: updateError } = await supabaseUserClient
+      
+      // Check if user is the owner of the comment
+      if (checkData.user_id !== user.id) {
+        return NextResponse.json({ error: "Anda tidak memiliki akses untuk menghapus komentar ini" }, { status: 403 });
+      }
+
+      // Fallback: update the content to a deleted placeholder without calling .single()
+      const { data: updateData, error: updateError } = await supabaseUserClient
         .from("comments")
         .update({ content: "[Komentar dihapus]" })
         .eq("id", commentId)
         .eq("user_id", user.id)
-        .select()
-        .single();
+        .select();
 
       if (updateError) {
         return NextResponse.json({ error: updateError.message }, { status: 500 });
+      }
+
+      if (!updateData || updateData.length === 0) {
+        return NextResponse.json({ error: "Gagal memperbarui status komentar" }, { status: 400 });
       }
     }
 
