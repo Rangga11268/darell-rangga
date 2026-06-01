@@ -3,18 +3,15 @@
 import { useState } from "react";
 import { useLanguage } from "@/app/providers/language-provider";
 import { projects, Project } from "@/app/data/projects";
-import { ProjectDetailModal } from "./project-detail-modal";
-import { ProjectCommentsDrawer } from "./project-comments-drawer";
 import Image from "next/image";
 import { ArrowRight } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function ProjectsSection() {
   const { t, language } = useLanguage();
   const langKey = language === "id" ? "id" : "en";
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [commentProjectId, setCommentProjectId] = useState<string | null>(null);
-  const [commentProjectName, setCommentProjectName] = useState<string>("");
+  const router = useRouter();
 
   const skills = [
     { name: "HTML / CSS", level: "95%" },
@@ -59,7 +56,7 @@ export function ProjectsSection() {
                   <article 
                     key={project.id} 
                     className="flex flex-col group cursor-pointer"
-                    onClick={() => setSelectedProject(project)}
+                    onClick={() => router.push(`/projects/${project.id}`)}
                   >
                     <div className="relative mb-4 border border-primary/20 p-1 overflow-hidden">
                       <span className="absolute top-2 left-2 bg-background px-2 py-0.5 text-[10px] label-caps z-10 border border-primary">
@@ -112,22 +109,7 @@ export function ProjectsSection() {
         </div>
       </section>
 
-      <ProjectDetailModal
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-        language={langKey}
-        onOpenComments={(id, title) => {
-          setCommentProjectId(id);
-          setCommentProjectName(title);
-        }}
-      />
 
-      <ProjectCommentsDrawer
-        projectId={commentProjectId}
-        projectName={commentProjectName}
-        onClose={() => setCommentProjectId(null)}
-      />
     </>
   );
 }

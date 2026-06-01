@@ -170,3 +170,97 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+
+// PUT /api/comments - Edit komentar
+export async function PUT(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { error: "Missing or invalid Authorization header" },
+        { status: 401 }
+      );
+    }
+    const token = authHeader.split(" ")[1];
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+    const supabaseUserClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    if (authError || !user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { commentId, content } = body;
+
+    if (!commentId || !content || content.trim() === "") {
+      return NextResponse.json({ error: "Comment ID and content are required" }, { status: 400 });
+    }
+
+    const { data, error: dbError } = await supabaseUserClient
+      .from("comments")
+      .update({ content: content.trim() })
+      .eq("id", commentId)
+      .eq("user_id", user.id)
+      .select()
+      .single();
+
+    if (dbError) {
+      return NextResponse.json({ error: dbError.message }, { status: 500 });
+    }
+
+    return NextResponse.json(data);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+// DELETE /api/comments - Hapus komentar
+export async function DELETE(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return NextResponse.json(
+        { error: "Missing or invalid Authorization header" },
+        { status: 401 }
+      );
+    }
+    const token = authHeader.split(" ")[1];
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+    const supabaseUserClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+    });
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    if (authError || !user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const commentId = searchParams.get("id");
+
+    if (!commentId) {
+      return NextResponse.json({ error: "Comment ID is required" }, { status: 400 });
+    }
+
+    const { error: dbError } = await supabaseUserClient
+      .from("comments")
+      .delete()
+      .eq("id", commentId)
+      .eq("user_id", user.id);
+
+    if (dbError) {
+      return NextResponse.json({ error: dbError.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

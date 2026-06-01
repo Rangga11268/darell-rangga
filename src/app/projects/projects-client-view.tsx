@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { Project } from "@/app/data/projects";
 import { FloatingNavbar } from "@/app/components/floating-navbar";
-import { ProjectDetailModal } from "@/app/components/project-detail-modal";
-import { ProjectCommentsDrawer } from "@/app/components/project-comments-drawer";
 import { DeviceMockup } from "@/app/components/device-mockup";
 import { useLanguage } from "@/app/providers/language-provider";
 import { motion } from "framer-motion";
@@ -20,6 +18,7 @@ import {
   ChatCircleDots
 } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface ProjectsClientViewProps {
   initialProjects: Project[];
@@ -29,9 +28,7 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
   const { language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string>("All");
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [commentProjectId, setCommentProjectId] = useState<string | null>(null);
-  const [commentProjectName, setCommentProjectName] = useState<string>("");
+  const router = useRouter();
 
   // Divide into Featured (have image & detail) and Minor (pure GitHub repos)
   const featuredProjects = initialProjects.filter(p => p.imageUrl !== "");
@@ -160,7 +157,7 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
                   <div className="p-6 flex-1 flex flex-col justify-between">
                     <div>
                       <span className="label-caps text-[8px] font-bold text-primary opacity-60">ROLE: {project.role.toUpperCase()}</span>
-                      <h3 className="headline-sm text-xl uppercase tracking-tight font-black mt-1.5 mb-3 group-hover:text-primary transition-colors cursor-pointer" onClick={() => setSelectedProject(project)}>
+                      <h3 className="headline-sm text-xl uppercase tracking-tight font-black mt-1.5 mb-3 group-hover:text-primary transition-colors cursor-pointer" onClick={() => router.push(`/projects/${project.id}`)}>
                         {project.title}
                       </h3>
                       <p className="body-md text-sm text-muted-foreground line-clamp-3 leading-relaxed mb-6 font-serif">
@@ -180,17 +177,14 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
                       <div className="flex items-center justify-between border-t border-primary/10 pt-4 flex-wrap gap-2">
                         <div className="flex items-center gap-3">
                           <button
-                            onClick={() => setSelectedProject(project)}
+                            onClick={() => router.push(`/projects/${project.id}`)}
                             className="flex items-center gap-1.5 label-caps text-[10px] font-bold text-primary group-hover:translate-x-1 transition-transform cursor-pointer"
                           >
                             <BookOpen size={14} /> VIEW CASE STUDY
                           </button>
 
                           <button
-                            onClick={() => {
-                              setCommentProjectId(project.id);
-                              setCommentProjectName(project.title);
-                            }}
+                            onClick={() => router.push(`/projects/${project.id}`)}
                             className="flex items-center gap-1.5 label-caps text-[10px] font-bold text-primary hover:opacity-80 transition-opacity cursor-pointer"
                           >
                             <ChatCircleDots size={14} /> DISCUSS
@@ -305,23 +299,6 @@ export function ProjectsClientView({ initialProjects }: ProjectsClientViewProps)
         )}
       </main>
 
-      {/* Case Study Modal Popup */}
-      <ProjectDetailModal
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-        language={language}
-        onOpenComments={(id, title) => {
-          setCommentProjectId(id);
-          setCommentProjectName(title);
-        }}
-      />
-
-      <ProjectCommentsDrawer
-        projectId={commentProjectId}
-        projectName={commentProjectName}
-        onClose={() => setCommentProjectId(null)}
-      />
     </div>
   );
 }
