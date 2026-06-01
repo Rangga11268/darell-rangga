@@ -45,6 +45,7 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [profile, setProfile] = useState<{ display_name: string; avatar_url: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   // Action states
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
@@ -121,6 +122,8 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
       }
     } catch (err) {
       console.error("Failed to fetch comments", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -525,7 +528,20 @@ export function RichCommentSection({ projectId }: RichCommentSectionProps) {
       </div>
 
       {/* List Komentar */}
-      {comments.length === 0 ? (
+      {isLoading ? (
+        <div className="flex flex-col gap-6 animate-pulse">
+          {[1, 2, 3].map((n) => (
+            <div key={n} className="border-t hairline-t border-primary/10 pt-4 flex flex-col gap-2.5">
+              <div className="h-4 w-3/4 bg-primary/10 rounded"></div>
+              <div className="h-3.5 w-1/2 bg-primary/5 rounded"></div>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="w-6 h-6 rounded-full bg-primary/10 shrink-0"></div>
+                <div className="h-3 w-24 bg-primary/10 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : comments.length === 0 ? (
         <div className="p-8 border border-dashed border-primary/20 bg-primary/2 text-center text-xs italic text-on-surface-variant font-serif">
           {language === "id" ? "Belum ada diskusi untuk proyek ini. Kirimkan tanggapan Anda pertama kali!" : "No discussions yet for this project. Be the first to start!"}
         </div>
