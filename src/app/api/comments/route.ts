@@ -249,21 +249,30 @@ export async function DELETE(request: Request) {
     }
 
     // First, try hard deletion
-    const { error: dbError } = await supabaseUserClient
+    await supabaseUserClient
       .from("comments")
       .delete()
       .eq("id", commentId)
       .eq("user_id", user.id);
 
-    if (dbError) {
-      console.warn("Hard delete failed, falling back to soft update:", dbError.message);
-      // Fallback: If delete fails (due to RLS or foreign key constraints),
+    // Verify if the comment was actually deleted
+    const { data: checkData } = await supabase
+      .from("comments")
+      .select("id")
+      .eq("id", commentId)
+      .maybeSingle();
+
+    if (checkData) {
+      console.warn("Hard delete did not remove the comment. Falling back to soft update...");
+      // Fallback: If delete didn't remove it (e.g. due to RLS or foreign key constraints),
       // we update the content to a deleted placeholder.
       const { error: updateError } = await supabaseUserClient
         .from("comments")
         .update({ content: "[Komentar dihapus]" })
         .eq("id", commentId)
-        .eq("user_id", user.id);
+        .eq("user_id", user.id)
+        .select()
+        .single();
 
       if (updateError) {
         return NextResponse.json({ error: updateError.message }, { status: 500 });
