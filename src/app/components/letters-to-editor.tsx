@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/providers/language-provider";
-import { ChatCircleDots, Quotes, GithubLogo, GoogleLogo, SignOut, PaperPlaneTilt } from "@phosphor-icons/react";
+import { ChatCircleDots, Quotes, GithubLogo, GoogleLogo, SignOut, PaperPlaneTilt, Trash, PencilSimple } from "@phosphor-icons/react";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { Session } from "@supabase/supabase-js";
@@ -10,6 +10,7 @@ import { UserAvatar } from "./user-avatar";
 
 interface DBComment {
   id: string;
+  user_id: string;
   user_name: string;
   user_avatar: string;
   content: string;
@@ -30,6 +31,12 @@ export function LettersToEditor() {
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState("");
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
+  
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState("");
+  const [isSubmittingEdit, setIsSubmittingEdit] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
 
@@ -241,6 +248,69 @@ export function LettersToEditor() {
     }
   };
 
+  const handleEditSubmit = async (e: React.FormEvent, commentId: string) => {
+    e.preventDefault();
+    if (!editContent.trim() || !session) return;
+
+    setIsSubmittingEdit(true);
+    try {
+      const res = await fetch("/api/comments", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          commentId,
+          content: editContent,
+        }),
+      });
+
+      if (res.ok) {
+        setEditingCommentId(null);
+        setEditContent("");
+        fetchComments();
+      } else {
+        const err = await res.json();
+        alert(err.error || "Gagal mengedit komentar");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmittingEdit(false);
+    }
+  };
+
+  const handleDeleteComment = (commentId: string) => {
+    if (!session) return;
+    setDeleteConfirmId(commentId);
+  };
+
+  const confirmDeleteAction = async () => {
+    if (!deleteConfirmId || !session) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/comments?id=${encodeURIComponent(deleteConfirmId)}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (res.ok) {
+        fetchComments();
+        setDeleteConfirmId(null);
+      } else {
+        const err = await res.json();
+        alert(err.error || "Gagal menghapus komentar");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <section id="letters" className="bg-paper border-b-rule-thick border-primary py-16">
       <div className="container mx-auto px-margin-mobile md:px-margin-desktop">
@@ -379,10 +449,41 @@ export function LettersToEditor() {
                       weight="fill"
                     />
                     
-                    {/* Main Comment Content */}
-                    <p className="body-md italic mb-4 leading-relaxed font-serif text-on-surface whitespace-pre-wrap">
-                      &quot;{comment.content}&quot;
-                    </p>
+                     {/* Main Comment Content / Edit Form */}
+                    {editingCommentId === comment.id ? (
+                      <form onSubmit={(e) => handleEditSubmit(e, comment.id)} className="flex flex-col gap-2 mb-4 w-full">
+                        <textarea
+                          value={editContent}
+                          onChange={(e) => setEditContent(e.target.value)}
+                          rows={3}
+                          className="w-full p-2 border border-primary bg-background text-xs focus:outline-none focus:ring-1 focus:ring-primary font-sans"
+                          required
+                        />
+                        <div className="flex gap-2 justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingCommentId(null);
+                              setEditContent("");
+                            }}
+                            className="px-3 py-1 border border-primary bg-background hover:bg-primary/5 text-[9px] font-bold uppercase transition-all cursor-pointer"
+                          >
+                            {language === "id" ? "BATAL" : "CANCEL"}
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={isSubmittingEdit}
+                            className="px-3 py-1 bg-primary text-primary-foreground border border-primary hover:bg-background hover:text-primary text-[9px] font-bold uppercase transition-all disabled:opacity-50 cursor-pointer"
+                          >
+                            {isSubmittingEdit ? "..." : (language === "id" ? "SIMPAN" : "SAVE")}
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <p className="body-md italic mb-4 leading-relaxed font-serif text-on-surface whitespace-pre-wrap">
+                        &quot;{comment.content}&quot;
+                      </p>
+                    )}
                     
                     {/* Author & Actions Bar */}
                     <div className="flex items-center justify-between mb-4 mt-auto">
@@ -410,24 +511,49 @@ export function LettersToEditor() {
                         </div>
                       </div>
                       
-                      {/* Reply Trigger (hanya jika sudah login) */}
-                      {session && (
-                        <button
-                          onClick={() => {
-                            if (replyingToId === comment.id) {
-                              setReplyingToId(null);
-                            } else {
-                              setReplyingToId(comment.id);
-                              setReplyContent("");
-                            }
-                          }}
-                          className="border border-primary px-3 py-1 text-[9px] font-bold uppercase bg-background hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
-                        >
-                          {replyingToId === comment.id 
-                            ? (language === "id" ? "BATAL" : "CANCEL") 
-                            : (language === "id" ? "BALAS" : "REPLY")}
-                        </button>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {/* Reply Trigger (hanya jika sudah login) */}
+                        {session && (
+                          <button
+                            onClick={() => {
+                              if (replyingToId === comment.id) {
+                                setReplyingToId(null);
+                              } else {
+                                setReplyingToId(comment.id);
+                                setReplyContent("");
+                              }
+                            }}
+                            className="border border-primary px-3 py-1 text-[9px] font-bold uppercase bg-background hover:bg-primary hover:text-primary-foreground transition-all cursor-pointer"
+                          >
+                            {replyingToId === comment.id 
+                              ? (language === "id" ? "BATAL" : "CANCEL") 
+                              : (language === "id" ? "BALAS" : "REPLY")}
+                          </button>
+                        )}
+
+                        {/* Edit & Delete Actions for Owners */}
+                        {session && comment.user_id === session.user.id && (
+                          <div className="flex items-center gap-1.5 border-l border-primary/20 pl-2">
+                            <button
+                              onClick={() => {
+                                setEditingCommentId(comment.id);
+                                setEditContent(comment.content);
+                              }}
+                              title={language === "id" ? "Edit" : "Edit comment"}
+                              className="p-1 hover:text-primary transition-all cursor-pointer"
+                            >
+                              <PencilSimple size={12} />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteComment(comment.id)}
+                              title={language === "id" ? "Hapus" : "Delete comment"}
+                              className="p-1 hover:text-red-500 transition-all cursor-pointer"
+                            >
+                              <Trash size={12} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* Inline Reply Form */}
@@ -461,32 +587,88 @@ export function LettersToEditor() {
                     {comment.replies && comment.replies.length > 0 && (
                       <div className="pl-8 border-l-2 border-primary/10 mt-2 flex flex-col gap-4">
                         {comment.replies.map((reply) => (
-                          <div key={reply.id} className="border-t hairline-t border-primary/10 pt-4 flex flex-col">
-                            <p className="body-sm italic mb-3 leading-relaxed font-serif text-on-surface/90 text-[11px] whitespace-pre-wrap">
-                              &quot;{reply.content}&quot;
-                            </p>
-                            <div className="flex items-center gap-2">
-                              <UserAvatar 
-                                src={reply.user_avatar} 
-                                name={reply.user_name} 
-                                size="sm" 
-                              />
-                              <div>
-                                <span className="block font-bold text-[10px] uppercase flex items-center">
-                                  {reply.user_name}
-                                  {reply.user_name.toUpperCase() === "DARELL RANGGA" && (
-                                    <span className="ml-1.5 px-1 py-0.2 text-[7px] font-black uppercase bg-primary text-primary-foreground tracking-wider leading-none">
-                                      ARCHIVIST
-                                    </span>
-                                  )}
-                                </span>
-                                <span className="block text-[8px] label-caps opacity-50 font-mono">
-                                  {new Date(reply.created_at).toLocaleDateString(
-                                    language === "id" ? "id-ID" : "en-US",
-                                    { year: "numeric", month: "short", day: "numeric" }
-                                  )}
-                                </span>
+                           <div key={reply.id} className="border-t hairline-t border-primary/10 pt-4 flex flex-col">
+                            {editingCommentId === reply.id ? (
+                              <form onSubmit={(e) => handleEditSubmit(e, reply.id)} className="flex flex-col gap-2 mb-3 w-full">
+                                <textarea
+                                  value={editContent}
+                                  onChange={(e) => setEditContent(e.target.value)}
+                                  rows={2}
+                                  className="w-full p-2 border border-primary bg-background text-[11px] focus:outline-none focus:ring-1 focus:ring-primary font-sans"
+                                  required
+                                />
+                                <div className="flex gap-2 justify-end">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setEditingCommentId(null);
+                                      setEditContent("");
+                                    }}
+                                    className="px-2 py-0.5 border border-primary bg-background hover:bg-primary/5 text-[8px] font-bold uppercase transition-all cursor-pointer"
+                                  >
+                                    {language === "id" ? "BATAL" : "CANCEL"}
+                                  </button>
+                                  <button
+                                    type="submit"
+                                    disabled={isSubmittingEdit}
+                                    className="px-2 py-0.5 bg-primary text-primary-foreground border border-primary hover:bg-background hover:text-primary text-[8px] font-bold uppercase transition-all disabled:opacity-50 cursor-pointer"
+                                  >
+                                    {isSubmittingEdit ? "..." : (language === "id" ? "SIMPAN" : "SAVE")}
+                                  </button>
+                                </div>
+                              </form>
+                            ) : (
+                              <p className="body-sm italic mb-3 leading-relaxed font-serif text-on-surface/90 text-[11px] whitespace-pre-wrap">
+                                &quot;{reply.content}&quot;
+                              </p>
+                            )}
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <UserAvatar 
+                                  src={reply.user_avatar} 
+                                  name={reply.user_name} 
+                                  size="sm" 
+                                />
+                                <div>
+                                  <span className="block font-bold text-[10px] uppercase flex items-center">
+                                    {reply.user_name}
+                                    {reply.user_name.toUpperCase() === "DARELL RANGGA" && (
+                                      <span className="ml-1.5 px-1 py-0.2 text-[7px] font-black uppercase bg-primary text-primary-foreground tracking-wider leading-none">
+                                        ARCHIVIST
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span className="block text-[8px] label-caps opacity-50 font-mono">
+                                    {new Date(reply.created_at).toLocaleDateString(
+                                      language === "id" ? "id-ID" : "en-US",
+                                      { year: "numeric", month: "short", day: "numeric" }
+                                    )}
+                                  </span>
+                                </div>
                               </div>
+
+                              {/* Reply Owner actions */}
+                              {session && reply.user_id === session.user.id && (
+                                <div className="flex items-center gap-1.5 pl-2">
+                                  <button
+                                    onClick={() => {
+                                      setEditingCommentId(reply.id);
+                                      setEditContent(reply.content);
+                                    }}
+                                    title={language === "id" ? "Edit" : "Edit reply"}
+                                    className="p-1 hover:text-primary transition-all cursor-pointer"
+                                  >
+                                    <PencilSimple size={10} />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteComment(reply.id)}
+                                    title={language === "id" ? "Hapus" : "Delete reply"}
+                                    className="p-1 hover:text-red-500 transition-all cursor-pointer"
+                                  >
+                                    <Trash size={10} />
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -524,6 +706,38 @@ export function LettersToEditor() {
           </svg>
         </div>
       ))}
+
+      {/* Custom Delete Confirmation Modal */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 bg-primary/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-paper border-rule-thick border-primary p-6 max-w-sm w-full shadow-[8px_8px_0px_rgba(0,0,0,0.15)] dark:shadow-[8px_8px_0px_rgba(255,255,255,0.05)] rounded-[8px] animate-in fade-in zoom-in-95 duration-200">
+            <h3 className="headline-sm text-lg uppercase font-black leading-tight tracking-tighter mb-3">
+              {language === "id" ? "KONFIRMASI PENGHAPUSAN" : "CONFIRM DELETION"}
+            </h3>
+            <p className="body-md text-xs font-serif italic mb-6 opacity-80 leading-relaxed">
+              {language === "id"
+                ? "Apakah Anda yakin ingin menghapus surat ini? Tindakan ini tidak dapat dibatalkan."
+                : "Are you sure you want to delete this letter? This action cannot be undone."}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                disabled={isDeleting}
+                className="px-4 py-2 border border-primary text-[10px] font-bold uppercase tracking-wider hover:bg-primary/5 transition-all rounded-[4px] disabled:opacity-50"
+              >
+                {language === "id" ? "BATAL" : "CANCEL"}
+              </button>
+              <button
+                onClick={confirmDeleteAction}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-red-600 text-white border border-red-700 text-[10px] font-bold uppercase tracking-wider hover:bg-red-700 transition-all rounded-[4px] disabled:opacity-50"
+              >
+                {isDeleting ? (language === "id" ? "PROSES..." : "DELETING...") : (language === "id" ? "HAPUS" : "DELETE")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes floatUp {
