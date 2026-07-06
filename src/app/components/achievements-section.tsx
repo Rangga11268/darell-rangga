@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import {
   Briefcase,
   GraduationCap,
@@ -165,6 +166,14 @@ export function AchievementsSection() {
             description: "Audit Lighthouse rata-rata pada proyek yang dioptimalkan.",
             span: "md:col-span-2",
           },
+          {
+            icon: Trophy,
+            value: 1,
+            suffix: "st",
+            label: "Juara 1",
+            description: "IT Bootcamp: Software Development for Industry — Project Manager & Lead Developer untuk TitikAman.",
+            span: "md:col-span-2",
+          },
         ]
       : [
           {
@@ -205,6 +214,14 @@ export function AchievementsSection() {
             suffix: "",
             label: "Performance Score",
             description: "Lighthouse audit average on optimized deployments.",
+            span: "md:col-span-2",
+          },
+          {
+            icon: Trophy,
+            value: 1,
+            suffix: "st",
+            label: "1st Place Winner",
+            description: "IT Bootcamp: Software Development for Industry — Project Manager & Lead Developer for TitikAman.",
             span: "md:col-span-2",
           },
         ];
@@ -295,6 +312,75 @@ export function AchievementsSection() {
                     <button className="text-[11px] font-bold underline underline-offset-4 hover:text-primary transition-colors uppercase">
                       View Certificate
                     </button>
+                  </div>
+                </div>
+
+                {/* Pin/Clip simulation */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary/10 rounded-full border hairline border-primary/20 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-primary rounded-full shadow-inner" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Featured Award - IT Bootcamp 1st Place */}
+        <div className="pt-12 border-t-rule-thick border-primary mt-12">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="md:w-1/2">
+               <h3 className="headline-md uppercase tracking-tight italic mb-4">
+                {language === "id" ? "Pencapaian Terkini" : "Latest Achievement"}
+              </h3>
+              <p className="body-md text-on-surface-variant mb-6 italic font-serif">
+                {language === "id" 
+                  ? "Juara 1 IT Bootcamp: Software Development for Industry — memimpin tim 11 orang dalam membangun TitikAman, platform mitigasi banjir dan navigasi evakuasi real-time."
+                  : "1st Place Winner at IT Bootcamp: Software Development for Industry — led a team of 11 to build TitikAman, a real-time flood mitigation and evacuation navigation platform."}
+              </p>
+              <div className="border-l hairline-l border-primary/20 pl-4 space-y-2 mb-6">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                  <span className="label-caps text-[10px] font-bold">Laravel 12 + PHP 8.3 + MySQL</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                  <span className="label-caps text-[10px] font-bold">Laravel Reverb WebSocket + Leaflet.js</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                  <span className="label-caps text-[10px] font-bold">100% Black Box Testing — 88.3% UEQ Score</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-px bg-primary" />
+                <span className="label-caps text-[10px] font-bold">IT BOOTCAMP 2026</span>
+              </div>
+            </div>
+
+            <div className="md:w-1/2 flex justify-center">
+              <div 
+                className="relative group bg-paper border hairline border-primary/20 shadow-lg transition-transform hover:scale-[1.05] rotate-1 cursor-default max-w-sm w-full overflow-hidden"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E")`
+                }}
+              >
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-b from-primary/5 to-transparent" />
+                
+                <div className="relative">
+                  <Image 
+                    src="/img/saya/sayaPengangPiala (1).jpeg"
+                    alt="1st Place Winner - IT Bootcamp 2026"
+                    width={600}
+                    height={800}
+                    className="w-full h-auto object-cover grayscale contrast-125 sepia-[.15]"
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-primary/5" />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-paper via-paper/80 to-transparent p-6 pt-16">
+                    <div className="border-l hairline-l border-primary pl-3">
+                      <span className="label-caps text-[10px] font-bold text-primary/60">2026</span>
+                      <h4 className="headline-sm text-sm font-bold uppercase tracking-tight">
+                        TitikAman — Project Manager & Lead Developer
+                      </h4>
+                    </div>
                   </div>
                 </div>
 

@@ -229,8 +229,8 @@ export function FloatingNavbar() {
                     <button 
                       onClick={() => { 
                         const cvPath = language === "id" 
-                          ? "/pdf/DarellRangga_CV_IND.pdf" 
-                          : "/pdf/DarellRangga_CV_ENG.pdf";
+                          ? "/pdf/CV_Master_Software_Engineer_Darell_Rangga_v4_ID.pdf" 
+                          : "/pdf/CV_Master_Software_Engineer_Darell_Rangga_v4_EN.pdf";
                         window.open(cvPath, "_blank");
                         setIsMenuOpen(false); 
                       }}

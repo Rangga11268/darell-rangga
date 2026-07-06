@@ -14,8 +14,8 @@ export function HeroSection() {
   const { theme, setTheme } = useTheme();
 
   const cvPath = language === "id" 
-    ? "/pdf/DarellRangga_CV_IND.pdf" 
-    : "/pdf/DarellRangga_CV_ENG.pdf";
+    ? "/pdf/CV_Master_Software_Engineer_Darell_Rangga_v4_ID.pdf" 
+    : "/pdf/CV_Master_Software_Engineer_Darell_Rangga_v4_EN.pdf";
 
   return (
     <section id="home" className="pt-8">
