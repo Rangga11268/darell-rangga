@@ -32,13 +32,13 @@ const initialFileSystem: FileNode[] = [
     children: [
       {
         id: "cv-id",
-        name: "CV IND.pdf",
+        name: "Resume_Darell_Rangga_ID.pdf",
         type: "file",
-        path: "/img/saya/CV IND.pdf",
-        content: "/img/saya/CV IND.pdf",
-        date: "2025-05-10",
+        path: "/pdf/Resume_Darell_Rangga_ID.pdf",
+        content: "/pdf/Resume_Darell_Rangga_ID.pdf",
+        date: "2026-07-30",
         category: "DOCUMENT",
-        size: "1.2 MB",
+        size: "34.0 KB",
       },
       {
         id: "certificates-folder",

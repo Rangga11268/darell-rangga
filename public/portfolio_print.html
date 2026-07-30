@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darell Rangga - Portfolio 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f5f5f5;
+            --accent-color: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.3);
+            --paper-2: #171717;
+            --paper-3: #262626;
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Presentation Slide Setup */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            /* Force 16:9 aspect ratio content area if possible, but 100vh/vw works for print */
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--paper-3);
+            padding: 4rem;
+            box-sizing: border-box;
+        }
+
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.1; }
+        .mono { font-family: var(--font-mono); }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: var(--paper-3);
+            color: #a3a3a3;
+            border: 1px solid #404040;
+        }
+
+        .image-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--paper-3);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Glassmorphism effect for text blocks over images */
+        .glass {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Print Settings for PDF Export */
+        @media print {
+            @page {
+                size: 16in 9in; /* 16:9 Landscape */
+                margin: 0;
+            }
+            body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .slide {
+                page-break-after: always;
+                break-after: page;
+                width: 16in;
+                height: 9in;
+                border-bottom: none;
+            }
+        }
+        
+        /* Grid Helpers */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; height: 100%; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Cover -->
+    <section class="slide">
+        <div class="absolute top-12 left-12">
+            <span class="mono text-sm text-neutral-500 uppercase tracking-widest">Portfolio 2026</span>
+        </div>
+        <div class="grid-2">
+            <div>
+                <h1 class="text-7xl font-bold mb-4">DARELL<br><span class="text-blue-600">RANGGA</span></h1>
+                <h2 class="text-2xl text-neutral-400 font-light mb-12">Full-Stack Software Engineer & ML Enthusiast</h2>
+                
+                <div class="flex flex-col gap-3 font-mono text-sm text-neutral-500">
+                    <p>🌐 darellrangga.me</p>
+                    <p>📧 darrelrangga@gmail.com</p>
+                    <p>📱 +62 897-8638-973</p>
+                </div>
+            </div>
+            <div class="h-full flex items-center justify-center">
+                <div class="w-[400px] h-[500px] image-container grayscale hover:grayscale-0 transition-all duration-500">
+                    <!-- Photo: Rapih -->
+                    <img src="file:///D:/Ngoding/WEB%20Poject/my-portfolio/public/img/meRapih.png" alt="Darell Rangga" style="object-position: top;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: About Me -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="grid-2">
+                <div class="pr-8">
+                    <h2 class="text-5xl font-bold mb-8">About Me</h2>
+                    <p class="text-xl leading-relaxed text-neutral-300 mb-6">
+                        An independent Software Engineer with 1.5+ years of experience building end-to-end web applications, cross-platform mobile systems, and Edge AI solutions. 
+                    </p>
+                    <p class="text-xl leading-relaxed text-neutral-300 mb-12">
+                        Passionate about writing clean code, optimizing database queries, and solving complex business problems with modern tech stacks. Current Information Systems student (GPA 4.00).
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="badge">Agile Learner</span>
+                        <span class="badge">Team Player</span>
+                        <span class="badge">Problem Solver</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6 border-b border-neutral-800 pb-4">Core Arsenal</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <p class="text-sm mono text-neutral-500 mb-2">01 / FRONTEND</p>
+                            <p class="text-lg">React.js, Next.js, Vue.js, Tailwind CSS, Flutter</p>
+                        </div>
+                        <div>
+                            <p class="text-sm mono text-neutral-500 mb-2">02 / BACKEND</p>
+                            <p class="text-lg">Laravel (PHP), Express (Node.js), RESTful APIs</p>
+                        </div>
+                        <div>
+                            <p class="text-sm mono text-neutral-500 mb-2">03 / DB & DEVOPS</p>
+                            <p class="text-lg">MySQL, PostgreSQL, Docker, Nginx, CI/CD</p>
+                        </div>
+                        <div>
+                            <p class="text-sm mono text-neutral-500 mb-2">04 / MACHINE LEARNING</p>
+                            <p class="text-lg">Python, Scikit-Learn, ONNX Runtime Web</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Achievement -->
+    <section class="slide relative">
+        <!-- Background Image of Trophy -->
+        <div class="absolute inset-0 opacity-20">
+            <img src="file:///D:/Ngoding/WEB%20Poject/my-portfolio/public/img/saya/sayaPengangPiala%20(1).jpeg" alt="Trophy" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-transparent"></div>
+        
+        <div class="slide-content relative z-10 w-2/3">
+            <span class="mono text-yellow-500 mb-4 block tracking-widest">ACHIEVEMENT HIGHLIGHT</span>
+            <h2 class="text-7xl font-bold mb-6 text-yellow-500">1st Place Winner</h2>
+            <h3 class="text-3xl font-medium mb-12 text-white">IT Bootcamp Software Development 2026: "Futurecode"</h3>
+            
+            <ul class="space-y-6 text-xl text-neutral-300 list-disc pl-6">
+                <li>Served as <strong>Project Manager & Lead Developer</strong> for "TitikAman".</li>
+                <li>Successfully led a team of 11 members to design a real-time WebSocket disaster mitigation system.</li>
+                <li>Achieved a <strong>100% functional test pass rate</strong> across all black-box scenarios.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Slide 4: TitikAman Cover -->
+    <section class="slide relative bg-[#121212]">
+        <div class="absolute top-12 left-12 z-20">
+            <span class="mono text-sm text-neutral-500 uppercase">01 / Featured Project</span>
+        </div>
+        <div class="slide-content flex items-center justify-center">
+            <!-- Project Image -->
+            <div class="w-[85%] h-[60%] image-container relative">
+                <img src="file:///E:/CV/CVNew-20260720T125919Z-1-001/CVNew/Porto/titikaman.png" alt="TitikAman Dashboard">
+                
+                <!-- Floating Info Box -->
+                <div class="absolute bottom-8 left-8 p-8 glass rounded-xl w-[500px]">
+                    <h2 class="text-4xl font-bold mb-2">TitikAman</h2>
+                    <p class="text-neutral-300 text-lg mb-6">Real-Time Flood Evacuation Map & SOS Navigation System</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Laravel 12</span>
+                        <span class="badge">MySQL</span>
+                        <span class="badge">WebSockets</span>
+                        <span class="badge">Leaflet.js</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: TitikAman Deep Dive -->
+    <section class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="mono text-blue-500 mb-4 block">TITIKAMAN / DEEP DIVE</span>
+                <h2 class="text-5xl font-bold mb-8">Engineering Highlights</h2>
+                <p class="text-xl text-neutral-400 mb-10 leading-relaxed">
+                    A comprehensive disaster mitigation system mapping secure evacuation routes and managing live emergency SOS requests.
+                </p>
+                
+                <div class="space-y-8">
+                    <div class="border-l-2 border-blue-600 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">Low-Latency Sync</h4>
+                        <p class="text-neutral-400 text-lg">Integrated <strong>Laravel Reverb (WebSockets)</strong> to ensure live SOS signals are broadcasted and received instantly by administrators.</p>
+                    </div>
+                    <div class="border-l-2 border-green-600 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">High Reliability</h4>
+                        <p class="text-neutral-400 text-lg">Engineered <strong>59 automated tests (200 assertions)</strong> using PHPUnit, achieving a 100% pass rate in functional Black Box testing to guarantee critical system uptime.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="h-full w-full bg-[#1e1e1e] rounded-xl border border-[#333] flex flex-col overflow-hidden">
+                <div class="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2 border-b border-[#444]">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-4 mono text-xs text-neutral-400">phpunit tests/Feature</span>
+                </div>
+                <div class="p-6 mono text-sm text-green-400 overflow-hidden leading-loose">
+                    > php artisan test<br><br>
+                    <span class="text-white">PASS</span>  Tests\Feature\AuthTest<br>
+                    <span class="text-white">PASS</span>  Tests\Feature\SOSEmergencyTest<br>
+                    <span class="text-white">PASS</span>  Tests\Feature\EvacuationRouteTest<br>
+                    <span class="text-white">PASS</span>  Tests\Feature\WebSocketBroadcastTest<br><br>
+                    <span class="bg-green-600 text-black px-2">OK</span> <span class="text-white">59 tests, 200 assertions</span><br>
+                    <span class="text-neutral-500">Time: 1.2s</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: SRB Motor Cover -->
+    <section class="slide relative bg-[#121212]">
+        <div class="absolute top-12 left-12 z-20">
+            <span class="mono text-sm text-neutral-500 uppercase">02 / Featured Project</span>
+        </div>
+        <div class="slide-content flex items-center justify-center">
+            <div class="w-[85%] h-[60%] image-container relative">
+                <img src="file:///E:/CV/CVNew-20260720T125919Z-1-001/CVNew/Porto/SRB.png" alt="SRB Motor Ecosystem">
+                
+                <div class="absolute bottom-8 right-8 p-8 glass rounded-xl w-[500px] text-right">
+                    <h2 class="text-4xl font-bold mb-2">SRB Motor</h2>
+                    <p class="text-neutral-300 text-lg mb-6">Catalog & Financing Ecosystem</p>
+                    <div class="flex flex-wrap gap-2 justify-end">
+                        <span class="badge">Flutter</span>
+                        <span class="badge">Laravel 11</span>
+                        <span class="badge">Midtrans SDK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: SRB Motor Deep Dive -->
+    <section class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="mono text-blue-500 mb-4 block">SRB MOTOR / DEEP DIVE</span>
+                <h2 class="text-5xl font-bold mb-8">Engineering Highlights</h2>
+                <p class="text-xl text-neutral-400 mb-10 leading-relaxed">
+                    A unified digital ecosystem consisting of a Laravel-powered Web Admin and a Flutter Mobile App for digital product catalogs and motorcycle credit financing.
+                </p>
+                
+                <div class="space-y-8">
+                    <div class="border-l-2 border-purple-500 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">Seamless Transactions</h4>
+                        <p class="text-neutral-400 text-lg">Integrated <strong>Midtrans SDK</strong> directly into the Flutter application to facilitate secure, in-app checkout flows.</p>
+                    </div>
+                    <div class="border-l-2 border-indigo-500 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">Deep Linking</h4>
+                        <p class="text-neutral-400 text-lg">Implemented custom Flutter Deep Linking (<code>srbmotor://</code>) to smoothly handle payment gateway callback responses and update database transaction statuses instantly.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Abstract visual representation of Deep Linking / API -->
+            <div class="h-full w-full flex items-center justify-center p-12">
+                <div class="w-full border border-neutral-800 rounded-2xl p-8 bg-neutral-900/50">
+                    <div class="flex justify-between items-center mb-12">
+                        <div class="w-24 h-24 rounded-2xl bg-blue-600/20 border border-blue-500 flex items-center justify-center text-blue-500 font-bold">App</div>
+                        <div class="flex-1 h-px bg-gradient-to-r from-blue-500 to-purple-500 mx-4 relative">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 mono text-xs text-neutral-400 bg-neutral-900 px-2">Midtrans SDK</div>
+                        </div>
+                        <div class="w-24 h-24 rounded-2xl bg-purple-600/20 border border-purple-500 flex items-center justify-center text-purple-500 font-bold">Gateway</div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="w-24 h-24 rounded-2xl bg-green-600/20 border border-green-500 flex items-center justify-center text-green-500 font-bold">Webhook</div>
+                        <div class="flex-1 h-px bg-gradient-to-l from-purple-500 to-green-500 mx-4 relative">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 mono text-xs text-neutral-400 bg-neutral-900 px-2">srbmotor:// Callback</div>
+                        </div>
+                        <div class="w-24 h-24 rounded-2xl bg-transparent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Tunggal Jaya Cover -->
+    <section class="slide relative bg-[#121212]">
+        <div class="absolute top-12 left-12 z-20">
+            <span class="mono text-sm text-neutral-500 uppercase">03 / Featured Project</span>
+        </div>
+        <div class="slide-content flex items-center justify-center">
+            <div class="w-[85%] h-[60%] image-container relative">
+                <img src="file:///E:/CV/CVNew-20260720T125919Z-1-001/CVNew/Porto/TUjago.png" alt="Tunggal Jaya Transport">
+                
+                <div class="absolute bottom-8 left-8 p-8 glass rounded-xl w-[500px]">
+                    <h2 class="text-4xl font-bold mb-2">Tunggal Jaya Transport</h2>
+                    <p class="text-neutral-300 text-lg mb-6">Premium Bus Booking Ecosystem</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Vue 3</span>
+                        <span class="badge">Flutter</span>
+                        <span class="badge">Pusher</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: Tunggal Jaya Deep Dive -->
+    <section class="slide">
+        <div class="grid-2">
+            <div>
+                <span class="mono text-blue-500 mb-4 block">TUNGGAL JAYA / DEEP DIVE</span>
+                <h2 class="text-5xl font-bold mb-8">Engineering Highlights</h2>
+                <p class="text-xl text-neutral-400 mb-10 leading-relaxed">
+                    An end-to-end ticketing ecosystem enabling users to book premium bus seats seamlessly across interactive web and mobile platforms.
+                </p>
+                
+                <div class="space-y-8">
+                    <div class="border-l-2 border-emerald-500 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">Reactive UI</h4>
+                        <p class="text-neutral-400 text-lg">Built a highly interactive web interface utilizing <strong>Vue 3 Composition API</strong> and <strong>Inertia.js</strong> for a buttery-smooth SPA experience without leaving the Laravel ecosystem.</p>
+                    </div>
+                    <div class="border-l-2 border-sky-500 pl-6">
+                        <h4 class="text-2xl font-semibold mb-2">Live Seat Availability</h4>
+                        <p class="text-neutral-400 text-lg">Integrated <strong>Pusher Channels</strong> to broadcast real-time seat occupation events, preventing double-booking and ensuring data consistency across all active clients globally.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Abstract WebSocket Visual -->
+            <div class="h-full w-full flex items-center justify-center p-12">
+                 <div class="relative w-full aspect-square max-w-[400px] border border-neutral-800 rounded-full flex items-center justify-center">
+                     <div class="absolute inset-0 border border-sky-500/30 rounded-full animate-ping" style="animation-duration: 3s;"></div>
+                     <div class="absolute inset-4 border border-sky-500/20 rounded-full"></div>
+                     <div class="absolute inset-12 border border-sky-500/10 rounded-full"></div>
+                     <div class="w-20 h-20 bg-sky-600 rounded-full flex items-center justify-center text-white font-bold z-10 shadow-[0_0_30px_rgba(2,132,199,0.5)]">
+                         Pusher
+                     </div>
+                     <!-- Nodes -->
+                     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-neutral-800 border border-neutral-600 rounded-lg flex items-center justify-center text-xs mono">Client A</div>
+                     <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-12 h-12 bg-neutral-800 border border-neutral-600 rounded-lg flex items-center justify-center text-xs mono">Client B</div>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: AI & Data Engineering -->
+    <section class="slide">
+        <div class="absolute top-12 left-12">
+            <span class="mono text-sm text-neutral-500 uppercase tracking-widest">Beyond Web Development</span>
+        </div>
+        <div class="slide-content">
+            <h2 class="text-5xl font-bold mb-12">Edge AI & Machine Learning Solutions</h2>
+            
+            <div class="grid-2">
+                <div class="bg-neutral-900 border border-neutral-800 p-8 rounded-2xl h-full flex flex-col">
+                    <h3 class="text-3xl font-semibold mb-4">TirtaSense AI</h3>
+                    <p class="text-neutral-400 text-lg mb-8 leading-relaxed">
+                        Trained flood risk prediction models (Scikit-Learn) and converted them to ONNX format. Deployed via <strong>ONNX Runtime Web on Next.js</strong> for zero-latency, client-side offline execution.
+                    </p>
+                    <div class="mt-auto pt-4 border-t border-neutral-800 flex gap-2">
+                        <span class="badge">Python</span>
+                        <span class="badge">ONNX Runtime</span>
+                        <span class="badge">Next.js</span>
+                    </div>
+                </div>
+                
+                <div class="bg-neutral-900 border border-neutral-800 p-8 rounded-2xl h-full flex flex-col relative overflow-hidden">
+                    <!-- Background Image snippet for FaktaNesia -->
+                    <div class="absolute inset-0 opacity-10">
+                        <img src="file:///E:/CV/CVNew-20260720T125919Z-1-001/CVNew/Porto/Faktanesia.png" class="w-full h-full object-cover grayscale">
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-3xl font-semibold mb-4">FaktaNesia</h3>
+                        <p class="text-neutral-400 text-lg mb-8 leading-relaxed">
+                            Developed a Python RESTful API serving a <strong>TF-IDF & Logistic Regression NLP model</strong> to detect news hoaxes and render confidence scores in real-time via React.js.
+                        </p>
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-neutral-800 flex gap-2 relative z-10">
+                        <span class="badge">Scikit-Learn</span>
+                        <span class="badge">Flask API</span>
+                        <span class="badge">React</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Call to Action -->
+    <section class="slide bg-blue-600 text-white">
+        <div class="slide-content text-center max-w-4xl mx-auto">
+            <h2 class="text-6xl font-bold mb-6">Let's Build Something Great Together.</h2>
+            <p class="text-2xl text-blue-200 mb-16">Open for full-time, internship, or freelance opportunities.</p>
+            
+            <div class="grid grid-cols-2 gap-8 text-left max-w-2xl mx-auto bg-blue-700/50 p-10 rounded-2xl border border-blue-500">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white text-blue-600 rounded-full flex items-center justify-center font-bold">W</div>
+                    <div>
+                        <p class="text-blue-200 text-sm">Website</p>
+                        <p class="text-lg font-medium">darellrangga.me</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white text-blue-600 rounded-full flex items-center justify-center font-bold">E</div>
+                    <div>
+                        <p class="text-blue-200 text-sm">Email</p>
+                        <p class="text-lg font-medium">darrelrangga@gmail.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white text-blue-600 rounded-full flex items-center justify-center font-bold">L</div>
+                    <div>
+                        <p class="text-blue-200 text-sm">LinkedIn</p>
+                        <p class="text-lg font-medium">/in/darellrangga</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white text-blue-600 rounded-full flex items-center justify-center font-bold">G</div>
+                    <div>
+                        <p class="text-blue-200 text-sm">GitHub</p>
+                        <p class="text-lg font-medium">/Rangga11268</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-16 text-blue-300 mono text-sm">THANK YOU FOR REVIEWING MY PORTFOLIO</p>
+        </div>
+    </section>
+
+</body>
+</html>
