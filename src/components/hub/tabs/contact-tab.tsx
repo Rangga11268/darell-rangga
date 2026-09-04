@@ -101,7 +101,6 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                     WhatsApp Direct
                   </div>
                   <div className="text-xs text-muted-foreground font-mono">
-                    +62 812 9255 8509
                     +62 897 8638 973
                   </div>
                 </div>
