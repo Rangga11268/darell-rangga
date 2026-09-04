@@ -312,17 +312,29 @@ export function RightSidebar({
             {isId ? "Kebijakan Privasi" : "Privacy Policy"}
           </Link>
           <span>·</span>
-          <a href="https://github.com/Rangga11268" target="_blank" rel="noopener noreferrer" className="hover:underline">
+          <a
+            href="https://github.com/Rangga11268"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
             GitHub
           </a>
           <span>·</span>
-          <a href="https://www.linkedin.com/in/darellrangga/" target="_blank" rel="noopener noreferrer" className="hover:underline">
+          <a
+            href="https://www.linkedin.com/in/darellrangga/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
             LinkedIn
           </a>
         </div>
         <p className="text-[11px] pt-1">
           &copy; {new Date().getFullYear()} Darell Rangga Portfolio.{" "}
-          {isId ? "Dibangun untuk performa tinggi." : "Built for high performance."}
+          {isId
+            ? "Dibangun untuk performa tinggi."
+            : "Built for high performance."}
         </p>
       </div>
     </aside>

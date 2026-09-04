@@ -68,7 +68,9 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                 />
               </div>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-medium">
-                {isId ? "Aktif Sekarang • Balas dalam < 2 jam" : "Active Now • Fast reply < 2 hours"}
+                {isId
+                  ? "Aktif Sekarang • Balas dalam < 2 jam"
+                  : "Active Now • Fast reply < 2 hours"}
               </span>
             </div>
           </div>
@@ -232,7 +234,11 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
         </div>
 
         <div className="mt-6 pt-4 border-t border-border/60 text-xs text-muted-foreground flex items-center justify-between">
-          <span>{isId ? "Domisili: Bekasi, Indonesia" : "Location: Bekasi, Indonesia"}</span>
+          <span>
+            {isId
+              ? "Domisili: Bekasi, Indonesia"
+              : "Location: Bekasi, Indonesia"}
+          </span>
           <span className="font-semibold text-foreground flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
             <span>Ready to Relocate / Remote</span>
