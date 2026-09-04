@@ -302,44 +302,27 @@ export function RightSidebar({
         </div>
       </div>
 
-      {/* 5. Micro Footer */}
       <div className="px-3 pt-2 pb-6 text-[11px] text-muted-foreground space-y-1 select-none">
         <div className="flex flex-wrap gap-x-2 gap-y-1">
           <Link href="/privacy" className="hover:underline">
-            Terms of Service
             {isId ? "Ketentuan Layanan" : "Terms of Service"}
           </Link>
           <span>·</span>
           <Link href="/privacy" className="hover:underline">
-            Privacy Policy
             {isId ? "Kebijakan Privasi" : "Privacy Policy"}
           </Link>
           <span>·</span>
-          <a
-            href="https://github.com/Rangga11268"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
+          <a href="https://github.com/Rangga11268" target="_blank" rel="noopener noreferrer" className="hover:underline">
             GitHub
           </a>
           <span>·</span>
-          <a
-            href="https://www.linkedin.com/in/darellrangga/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline"
-          >
+          <a href="https://www.linkedin.com/in/darellrangga/" target="_blank" rel="noopener noreferrer" className="hover:underline">
             LinkedIn
           </a>
         </div>
         <p className="text-[11px] pt-1">
-          &copy; {new Date().getFullYear()} Darell Rangga Portfolio. Built for
-          High Performance. &copy; {new Date().getFullYear()} Darell Rangga
-          Portfolio.{" "}
-          {isId
-            ? "Dibangun untuk performa tinggi."
-            : "Built for high performance."}
+          &copy; {new Date().getFullYear()} Darell Rangga Portfolio.{" "}
+          {isId ? "Dibangun untuk performa tinggi." : "Built for high performance."}
         </p>
       </div>
     </aside>

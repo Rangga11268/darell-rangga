@@ -32,104 +32,29 @@ export function LeftSidebar({ activeTab, onSelectTab }: LeftSidebarProps) {
   const navItems = [
     { key: "why-hire" as TabKey, label: isId ? "Utas Utama" : "Feed", icon: House },
     { key: "projects" as TabKey, label: isId ? "Karya Terpilih" : "Projects", icon: Code, badge: "12" },
-    { key: "experience" as TabKey, label: isId ? "Pencapaian" : "Highlights", icon: Trophy, badge: "Juara 1" },
+    { key: "experience" as TabKey, label: isId ? "Pencapaian" : "Highlights", icon: Trophy },
     { key: "skills" as TabKey, label: isId ? "Keahlian" : "Tech Radar", icon: Cpu },
     { key: "contact" as TabKey, label: isId ? "Hubungi Saya" : "Get in Touch", icon: ChatCircleDots },
-    {
-      key: "why-hire" as TabKey,
-      label: isId ? "Utas Utama" : "Feed",
-      icon: House,
-    },
-    {
-      key: "projects" as TabKey,
-      label: isId ? "Karya Terpilih" : "Projects",
-      icon: Code,
-      badge: "12",
-    },
-    {
-      key: "experience" as TabKey,
-      label: isId ? "Pencapaian" : "Highlights",
-      icon: Trophy,
-      badge: "Juara 1",
-    },
-    {
-      key: "skills" as TabKey,
-      label: isId ? "Keahlian" : "Tech Radar",
-      icon: Cpu,
-    },
-    {
-      key: "contact" as TabKey,
-      label: isId ? "Hubungi Saya" : "Get in Touch",
-      icon: ChatCircleDots,
-    },
-    {
-      key: "why-hire" as TabKey,
-      label: isId ? "Utas Utama" : "Feed",
-      icon: House,
-    },
-    {
-      key: "projects" as TabKey,
-      label: isId ? "Karya Terpilih" : "Projects",
-      icon: Code,
-      badge: "12",
-    },
-    {
-      key: "experience" as TabKey,
-      label: isId ? "Pencapaian" : "Highlights",
-      icon: Trophy,
-    },
-    {
-      key: "skills" as TabKey,
-      label: isId ? "Keahlian" : "Tech Radar",
-      icon: Cpu,
-    },
-    {
-      key: "contact" as TabKey,
-      label: isId ? "Hubungi Saya" : "Get in Touch",
-      icon: ChatCircleDots,
-    },
   ];
 
   return (
     <aside className="w-16 xl:w-[260px] shrink-0 hidden md:flex flex-col justify-between py-4 px-2 xl:px-4 sticky top-0 h-screen select-none border-r border-border/60 bg-background/50 backdrop-blur-md z-30">
       {/* Top Brand & Navigation */}
       <div className="space-y-4">
-        {/* Brand Header with Darell Rangga Logo */}
+        {/* Brand Header */}
         <div
           onClick={() => onSelectTab("why-hire")}
           className="flex items-center gap-3 px-2 py-1.5 rounded-2xl hover:bg-muted/50 transition-all cursor-pointer group"
           title="Darell Rangga Portfolio"
         >
           <div className="relative w-10 h-10 rounded-2xl overflow-hidden shrink-0 border border-border/80 p-1.5 bg-card shadow-xs group-hover:scale-105 transition-transform">
-            <Image
-              src="/img/saya/logo-white.webp"
-              alt="Darell Rangga Logo"
-              fill
-              className="object-contain p-1 dark:block hidden"
-            />
-            <Image
-              src="/img/saya/logo-new.webp"
-              alt="Darell Rangga Logo"
-              fill
-              className="object-contain p-1 dark:hidden block"
-            />
+            <Image src="/img/saya/logo-white.webp" alt="Darell Rangga Logo" fill className="object-contain p-1 dark:block hidden" />
+            <Image src="/img/saya/logo-new.webp" alt="Darell Rangga Logo" fill className="object-contain p-1 dark:hidden block" />
           </div>
           <div className="hidden xl:block min-w-0">
             <div className="flex items-center gap-1">
-              <span className="text-sm font-black font-display text-foreground block truncate">
-                Darell Rangga
-              </span>
+              <span className="text-sm font-black font-display text-foreground block truncate">Darell Rangga</span>
               <CheckCircle size={14} weight="fill" className="text-primary shrink-0" />
-              <CheckCircle
-                size={14}
-                weight="fill"
-                className="text-primary shrink-0"
-              />
-              <CheckCircle
-                size={14}
-                weight="fill"
-                className="text-primary shrink-0"
-              />
             </div>
             <span className="text-[11px] font-mono text-muted-foreground block truncate">
               Fullstack Engineer
