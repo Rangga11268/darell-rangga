@@ -4,6 +4,7 @@ import { useState, memo } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
 import { TabKey } from "../types";
+import { GithubContributionsCard } from "../github-contributions-card";
 import { motion } from "framer-motion";
 import {
   PushPin,
@@ -565,6 +566,9 @@ export function PinnedThreadTab({
                 </>
               )}
             </p>
+
+            {/* GitHub Real Contribution Heatmap Card (Stats Hijau-Hijau) */}
+            <GithubContributionsCard />
 
             <div className="flex items-center justify-between text-muted-foreground text-xs pt-3 mt-3 border-t border-border/40 max-w-xs">
               <div className="flex items-center gap-1">
