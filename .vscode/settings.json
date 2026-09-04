@@ -1,4 +1,4 @@
-{
+﻿{
   "chat.tools.terminal.autoApprove": {
     "/^git commit -m \"perf: reduce lag on mobile - disable heavy animations & parallax\" && git push origin perf/reduce-lag$/": {
       "approve": true,
@@ -10,6 +10,7 @@
     "**/.git/subtree-cache/**": true,
     "**/.git/refs/**": true,
     "**/.git/logs/**": true,
+    "**/.git/index": true,
     "**/node_modules/**": true,
     "**/.next/**": true,
     "**/.next-dev/**": true,
@@ -22,5 +23,7 @@
   "git.detectSubmodules": false,
   "git.autoRepositoryDetection": false,
   "git.statusLimit": 10000,
-  "git.indexLockTimeout": 10
+  "git.indexLockTimeout": 30,
+  "git.openRepositoryInParentFolders": "never",
+  "scm.autoReveal": false
 }
