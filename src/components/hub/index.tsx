@@ -62,6 +62,10 @@ export function ExecutiveHub() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [activeTab]);
+
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
@@ -167,6 +171,48 @@ export function ExecutiveHub() {
       })
     : baseProjects;
 
+  const getHeaderMeta = () => {
+    switch (activeTab) {
+      case "projects":
+        return {
+          title: isId ? "Karya Terpilih" : "Featured Projects",
+          subtitle: isId
+            ? `${allProjects.length} Sistem Produksi · Fullstack & AI`
+            : `${allProjects.length} Production Systems · Fullstack & AI`,
+        };
+      case "experience":
+        return {
+          title: isId ? "Pencapaian & Riwayat" : "Milestones & Honors",
+          subtitle: isId
+            ? "Juara 1 IT Bootcamp 2026 · IPK 4.00"
+            : "1st Place IT Bootcamp 2026 · GPA 4.00",
+        };
+      case "skills":
+        return {
+          title: isId ? "Tech Radar & Arsitektur" : "Tech Radar & Stack",
+          subtitle: isId
+            ? "Keahlian Inti · Frameworks & Cloud"
+            : "Core Competencies · Frameworks & Cloud",
+        };
+      case "contact":
+        return {
+          title: isId ? "Kirim Pesan & Rekrutmen" : "Get in Touch & Hire",
+          subtitle: isId
+            ? "Tersedia untuk Kontrak & Full-Time"
+            : "Available for Full-Time & Contract",
+        };
+      default:
+        return {
+          title: "Darell Rangga",
+          subtitle: isId
+            ? `${allProjects.length} Karya Rekayasa · Juara 1 Nasional`
+            : `${allProjects.length} Projects · National 1st Place`,
+        };
+    }
+  };
+
+  const headerMeta = getHeaderMeta();
+
   return (
     <div className="min-h-screen bg-background text-foreground w-full flex justify-center">
       {/* 3-Column Outer Container matching X / Twitter Desktop */}
@@ -181,7 +227,10 @@ export function ExecutiveHub() {
             <div className="flex items-center gap-3 sm:gap-4 min-w-0">
               {activeTab !== "why-hire" && (
                 <button
-                  onClick={() => setActiveTab("why-hire")}
+                  onClick={() => {
+                    setActiveTab("why-hire");
+                    window.scrollTo({ top: 0, behavior: "instant" });
+                  }}
                   className="p-1.5 rounded-full hover:bg-muted/80 text-foreground transition-colors cursor-pointer shrink-0"
                   title={isId ? "Kembali ke Beranda" : "Back to Home"}
                 >
@@ -190,14 +239,13 @@ export function ExecutiveHub() {
               )}
               <div className="min-w-0">
                 <div className="text-base font-black font-display text-foreground leading-tight flex items-center gap-1.5 truncate">
-                  Darell Rangga
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                  {headerMeta.title}
+                  {activeTab === "why-hire" && (
+                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                  )}
                 </div>
                 <p className="text-[11px] font-mono text-muted-foreground leading-none truncate">
-                  {allProjects.length}{" "}
-                  {isId
-                    ? "Karya Rekayasa · Juara 1 Nasional"
-                    : "Projects · National 1st Place"}
+                  {headerMeta.subtitle}
                 </p>
               </div>
             </div>
@@ -249,16 +297,18 @@ export function ExecutiveHub() {
             </div>
           </header>
 
-          {/* Profile Header & Banner (Flush to feed edges) */}
-          <ProfileHeader
-            profileLikes={profileLikes}
-            hasLikedProfile={hasLikedProfile}
-            onLikeProfile={handleLikeProfile}
-            onCopyEmail={handleCopyEmail}
-            copied={copied}
-            onCopyLink={handleCopyLink}
-            linkCopied={linkCopied}
-          />
+          {/* Profile Header & Banner (Only rendered on Home / Utas tab) */}
+          {activeTab === "why-hire" && (
+            <ProfileHeader
+              profileLikes={profileLikes}
+              hasLikedProfile={hasLikedProfile}
+              onLikeProfile={handleLikeProfile}
+              onCopyEmail={handleCopyEmail}
+              copied={copied}
+              onCopyLink={handleCopyLink}
+              linkCopied={linkCopied}
+            />
+          )}
 
           {/* Social Navigation Tabs (Desktop/Tablet only - mobile uses MobileBottomBar) */}
           <div className="hidden md:block">

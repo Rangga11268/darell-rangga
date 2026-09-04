@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
@@ -111,6 +112,7 @@ export const viewport = {
 };
 
 import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { TopLoader } from "@/components/ui/top-loader";
 
 // JSON-LD Structured Data for SEO
 const jsonLd = {
@@ -252,6 +254,9 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontDisplay.variable} font-sans antialiased bg-background text-foreground`}
       >
+        <Suspense fallback={null}>
+          <TopLoader />
+        </Suspense>
         <ScrollProgress />
         <a
           href="#home"

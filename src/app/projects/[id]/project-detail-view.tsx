@@ -146,9 +146,9 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {isDark ? (
-                <Sun size={15} weight="fill" className="text-amber-400" />
+                <Sun size={15} weight="bold" className="text-foreground" />
               ) : (
-                <Moon size={15} weight="fill" className="text-indigo-500" />
+                <Moon size={15} weight="bold" className="text-foreground" />
               )}
             </button>
 

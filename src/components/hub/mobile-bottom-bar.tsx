@@ -15,16 +15,37 @@ interface MobileBottomBarProps {
   onSelectTab: (tab: TabKey) => void;
 }
 
-export function MobileBottomBar({ activeTab, onSelectTab }: MobileBottomBarProps) {
+export function MobileBottomBar({
+  activeTab,
+  onSelectTab,
+}: MobileBottomBarProps) {
   const { language } = useLanguage();
   const isId = language === "id";
 
   const navItems = [
-    { key: "why-hire" as TabKey, label: isId ? "Beranda" : "Home", icon: House },
-    { key: "projects" as TabKey, label: isId ? "Karya" : "Projects", icon: Code, badge: "12" },
-    { key: "experience" as TabKey, label: isId ? "Prestasi" : "Highlights", icon: Trophy, badge: "Juara 1" },
+    {
+      key: "why-hire" as TabKey,
+      label: isId ? "Beranda" : "Home",
+      icon: House,
+    },
+    {
+      key: "projects" as TabKey,
+      label: isId ? "Karya" : "Projects",
+      icon: Code,
+      badge: "12",
+    },
+    {
+      key: "experience" as TabKey,
+      label: isId ? "Prestasi" : "Highlights",
+      icon: Trophy,
+      badge: "Juara 1",
+    },
     { key: "skills" as TabKey, label: isId ? "Stack" : "Stack", icon: Cpu },
-    { key: "contact" as TabKey, label: isId ? "Pesan" : "Messages", icon: ChatCircleDots },
+    {
+      key: "contact" as TabKey,
+      label: isId ? "Pesan" : "Messages",
+      icon: ChatCircleDots,
+    },
   ];
 
   return (
@@ -37,7 +58,7 @@ export function MobileBottomBar({ activeTab, onSelectTab }: MobileBottomBarProps
             key={item.key}
             onClick={() => {
               onSelectTab(item.key);
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              window.scrollTo({ top: 0, behavior: "instant" });
             }}
             className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl transition-all relative ${
               isActive
@@ -54,7 +75,9 @@ export function MobileBottomBar({ activeTab, onSelectTab }: MobileBottomBarProps
                 <span className="w-2 h-2 rounded-full bg-emerald-500 absolute -top-0.5 -right-0.5" />
               )}
             </div>
-            <span className="text-[10px] font-semibold mt-0.5">{item.label}</span>
+            <span className="text-[10px] font-semibold mt-0.5">
+              {item.label}
+            </span>
           </button>
         );
       })}
