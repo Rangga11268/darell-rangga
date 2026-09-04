@@ -76,11 +76,11 @@ export function ProfileHeader({
       </div>
 
       {/* 2. Avatar & Action Buttons Row */}
-      <div className="px-4 sm:px-6 pt-3 pb-5">
-        <div className="flex items-end justify-between gap-3 -mt-16 sm:-mt-20 md:-mt-24 mb-3 sm:mb-4">
+      <div className="px-4 sm:px-6 pt-2 sm:pt-3 pb-5">
+        <div className="flex items-end justify-between gap-2 sm:gap-3 -mt-12 sm:-mt-20 md:-mt-24 mb-3 sm:mb-4">
           {/* Avatar with live status */}
           <div className="relative shrink-0">
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-background shadow-lg bg-background">
+            <div className="relative w-20 h-20 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-background shadow-lg bg-background">
               <Image
                 src="/img/saya/saya1.webp"
                 alt="Darell Rangga"
@@ -90,13 +90,13 @@ export function ProfileHeader({
               />
             </div>
             <span
-              className="absolute bottom-2 right-2 w-4 h-4 rounded-full bg-emerald-500 border-2 border-background shadow-xs"
+              className="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-500 border-2 border-background shadow-xs"
               title="Aktif & Siap Wawancara"
             />
           </div>
 
-          {/* Action Buttons (M3 Filled + Outlined Buttons) */}
-          <div className="flex items-center gap-2 flex-wrap justify-end">
+          {/* Action Buttons (Compact, single non-wrapping row on mobile) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 justify-end flex-nowrap shrink-0">
             <a
               href={
                 isId
@@ -105,7 +105,7 @@ export function ProfileHeader({
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl border border-border/80 bg-background hover:bg-muted text-xs font-bold text-foreground transition-all cursor-pointer shadow-xs"
+              className="hidden md:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-border/80 bg-background hover:bg-muted text-xs font-bold text-foreground transition-all cursor-pointer shadow-xs shrink-0"
             >
               <FilePdf size={16} weight="bold" />
               <span>{isId ? "Unduh CV" : "Download CV"}</span>
@@ -115,15 +115,15 @@ export function ProfileHeader({
               href="https://wa.me/628978638973"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-foreground text-background text-xs font-extrabold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0"
             >
-              <WhatsappLogo size={16} weight="fill" />
+              <WhatsappLogo size={15} weight="fill" />
               <span>{isId ? "Kirim Tawaran" : "Contact / Hire"}</span>
             </a>
 
             <button
               onClick={onLikeProfile}
-              className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all shadow-xs cursor-pointer ${
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ${
                 hasLikedProfile
                   ? "border-red-500/40 bg-red-500/10 text-red-500"
                   : "border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground"
@@ -131,7 +131,7 @@ export function ProfileHeader({
               title={isId ? "Dukung Profil" : "Endorse Profile"}
             >
               <Heart
-                size={17}
+                size={16}
                 weight={hasLikedProfile ? "fill" : "bold"}
                 className={hasLikedProfile ? "text-red-500" : ""}
               />
@@ -139,25 +139,25 @@ export function ProfileHeader({
 
             <button
               onClick={onCopyEmail}
-              className="w-10 h-10 rounded-2xl border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0"
               title={isId ? "Salin Email" : "Copy Email"}
             >
               {copied ? (
                 <Check size={16} weight="bold" className="text-emerald-500" />
               ) : (
-                <EnvelopeSimple size={17} weight="bold" />
+                <EnvelopeSimple size={16} weight="bold" />
               )}
             </button>
 
             <button
               onClick={onCopyLink}
-              className="w-10 h-10 rounded-2xl border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0"
               title={isId ? "Bagikan Profil" : "Share Profile"}
             >
               {linkCopied ? (
                 <Check size={16} weight="bold" className="text-emerald-500" />
               ) : (
-                <ShareNetwork size={17} weight="bold" />
+                <ShareNetwork size={16} weight="bold" />
               )}
             </button>
           </div>

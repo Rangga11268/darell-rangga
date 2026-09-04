@@ -180,9 +180,9 @@ export function LeftSidebar({ activeTab, onSelectTab }: LeftSidebarProps) {
             title={isDark ? "Mode Terang" : "Mode Gelap"}
           >
             {isDark ? (
-              <Sun size={16} weight="fill" className="text-amber-400" />
+              <Sun size={16} weight="bold" className="text-foreground" />
             ) : (
-              <Moon size={16} weight="fill" className="text-indigo-400" />
+              <Moon size={16} weight="bold" className="text-foreground" />
             )}
           </button>
         </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { projects } from "@/app/data/projects";
 import { AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
+import { useTheme } from "next-themes";
 import { TabKey, ProjectFilterKey, ProjectLikesState } from "./types";
 import { LeftSidebar } from "./left-sidebar";
 import { RightSidebar } from "./right-sidebar";
@@ -16,10 +17,12 @@ import { ProjectsFeedTab } from "./tabs/projects-feed-tab";
 import { ExperienceTab } from "./tabs/experience-tab";
 import { SkillsTab } from "./tabs/skills-tab";
 import { ContactTab } from "./tabs/contact-tab";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { ArrowLeft, Translate, Sun, Moon } from "@phosphor-icons/react";
 
 export function ExecutiveHub() {
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
   const isId = language === "id";
   const [activeTab, setActiveTab] = useState<TabKey>("why-hire");
   const [projectFilter, setProjectFilter] = useState<ProjectFilterKey>("all");
@@ -174,29 +177,75 @@ export function ExecutiveHub() {
         {/* 2. Middle Column: Main Feed Timeline with fluid flex-1 filling */}
         <main className="flex-1 min-w-0 max-w-[800px] xl:max-w-[860px] border-r border-border/60 min-h-screen pb-24 md:pb-12">
           {/* Top Sticky Header */}
-          <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md px-4 py-2.5 flex items-center justify-between border-b border-border/60">
-            <div className="flex items-center gap-4">
+          <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md px-3.5 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between border-b border-border/60">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
               {activeTab !== "why-hire" && (
                 <button
                   onClick={() => setActiveTab("why-hire")}
-                  className="p-1.5 rounded-full hover:bg-muted/80 text-foreground transition-colors cursor-pointer"
-                  title="Kembali ke Beranda"
+                  className="p-1.5 rounded-full hover:bg-muted/80 text-foreground transition-colors cursor-pointer shrink-0"
+                  title={isId ? "Kembali ke Beranda" : "Back to Home"}
                 >
                   <ArrowLeft size={18} weight="bold" />
                 </button>
               )}
-              <div>
-                <div className="text-base font-black font-display text-foreground leading-tight flex items-center gap-1.5">
+              <div className="min-w-0">
+                <div className="text-base font-black font-display text-foreground leading-tight flex items-center gap-1.5 truncate">
                   Darell Rangga
-                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                 </div>
-                <p className="text-[11px] font-mono text-muted-foreground leading-none">
+                <p className="text-[11px] font-mono text-muted-foreground leading-none truncate">
                   {allProjects.length}{" "}
                   {isId
                     ? "Karya Rekayasa · Juara 1 Nasional"
                     : "Projects · National 1st Place"}
                 </p>
               </div>
+            </div>
+
+            {/* Quick Controls: Language Switcher & Dark/Light Mode Toggle */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-border/70 bg-muted/40 hover:bg-muted text-xs font-bold font-mono text-foreground transition-all cursor-pointer active:scale-95"
+                title={
+                  isId
+                    ? "Ganti Bahasa ke English"
+                    : "Switch Language to Bahasa Indonesia"
+                }
+                aria-label={
+                  isId
+                    ? "Ganti Bahasa ke English"
+                    : "Switch Language to Bahasa Indonesia"
+                }
+              >
+                <Translate size={14} weight="bold" className="text-primary" />
+                <span className="uppercase text-[11px] font-extrabold">
+                  {language}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setTheme(isDark ? "light" : "dark")}
+                className="p-1.5 sm:p-2 rounded-full border border-border/70 bg-muted/40 hover:bg-muted text-foreground transition-all cursor-pointer active:scale-95"
+                title={
+                  isDark
+                    ? isId
+                      ? "Mode Terang"
+                      : "Light Mode"
+                    : isId
+                      ? "Mode Gelap"
+                      : "Dark Mode"
+                }
+                aria-label={
+                  isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
+                }
+              >
+                {isDark ? (
+                  <Sun size={16} weight="bold" className="text-foreground" />
+                ) : (
+                  <Moon size={16} weight="bold" className="text-foreground" />
+                )}
+              </button>
             </div>
           </header>
 
