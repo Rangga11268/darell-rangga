@@ -46,75 +46,38 @@ export function ProjectsFeedTab({
       transition={{ duration: 0.2 }}
       className="space-y-6"
     >
-      {/* Filters Bar */}
-      <div className="flex items-center justify-between flex-wrap gap-2 pb-2">
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/60 border border-border/80 text-xs flex-wrap">
-          <button
-            onClick={() => onFilterChange("all")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "all"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <span>{isId ? "Semua (12)" : "All (12)"}</span>
-          </button>
-          <button
-            onClick={() => onFilterChange("web")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "web" || projectFilter === "live-web"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>
-              {isId ? "Fullstack Web (8)" : "Fullstack Web (8)"}
-            </span>
-          </button>
-          <button
-            onClick={() => onFilterChange("systems")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "systems"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Cpu size={14} weight="bold" />
-            <span>
-              {isId ? "Sistem & Backend (5)" : "Systems & Backend (5)"}
-            </span>
-          </button>
-          <button
-            onClick={() => onFilterChange("mobile-apps")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "mobile-apps"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <DeviceMobile size={14} weight="bold" className="text-indigo-400" />
-            <span>
-              {isId ? "Aplikasi Mobile (3)" : "Mobile Apps (3)"}
-            </span>
-          </button>
-          <button
-            onClick={() => onFilterChange("ai-ml")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "ai-ml"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Sparkle size={14} weight="bold" />
-            <span>
-              {isId ? "AI & Data (3)" : "AI & Data (3)"}
-            </span>
-          </button>
+      {/* Filters Bar — horizontal scroll, single row */}
+      <div className="flex items-center gap-3 pb-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 flex-1">
+          {([
+            { key: "all", label: isId ? "Semua (12)" : "All (12)", icon: null },
+            { key: "web", label: "Fullstack Web (8)", icon: "pulse" },
+            { key: "systems", label: isId ? "Sistem & Backend (5)" : "Systems & Backend (5)", icon: "cpu" },
+            { key: "mobile-apps", label: isId ? "Mobile Apps (3)" : "Mobile Apps (3)", icon: "mobile" },
+            { key: "ai-ml", label: "AI & Data (3)", icon: "sparkle" },
+          ] as { key: ProjectFilterKey; label: string; icon: string | null }[]).map(({ key, label, icon }) => {
+            const isActive = projectFilter === key || (key === "web" && projectFilter === "live-web");
+            return (
+              <button
+                key={key}
+                onClick={() => onFilterChange(key)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                  isActive
+                    ? "bg-foreground text-background"
+                    : "bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted border border-border/60"
+                }`}
+              >
+                {icon === "pulse" && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
+                {icon === "cpu" && <Cpu size={12} weight="bold" />}
+                {icon === "mobile" && <DeviceMobile size={12} weight="bold" />}
+                {icon === "sparkle" && <Sparkle size={12} weight="bold" />}
+                {label}
+              </button>
+            );
+          })}
         </div>
-
-        <span className="text-[11px] font-mono text-muted-foreground hidden sm:inline-block">
-          {isId ? "Ketuk kartu untuk baca utas" : "Tap card to read thread"}
+        <span className="text-[11px] font-mono text-muted-foreground hidden sm:inline-block shrink-0">
+          {isId ? "Ketuk untuk baca" : "Tap to read"}
         </span>
       </div>
 
