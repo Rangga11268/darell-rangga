@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -65,23 +65,24 @@ export function ProfileHeader({
             <span className="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-500 border-2 border-background shadow-xs" title="Aktif & Siap Wawancara" />
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 justify-end flex-nowrap shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 justify-end flex-nowrap shrink-0">
             <a href={isId ? "/pdf/Resume_Darell_Rangga_ID.pdf" : "/pdf/Resume_Darell_Rangga_EN.pdf"} target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-border/80 bg-background hover:bg-muted text-xs font-bold text-foreground transition-all cursor-pointer shadow-xs shrink-0">
               <FilePdf size={16} weight="bold" />
               <span>{isId ? "Unduh CV" : "Download CV"}</span>
             </a>
-            <a href="https://wa.me/628978638973" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0">
+            <a href="https://wa.me/628978638973" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-full bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer shrink-0">
               <WhatsappLogo size={15} weight="fill" />
-              <span>{isId ? "Kirim Tawaran" : "Contact / Hire"}</span>
+              <span className="hidden xs:inline sm:inline">{isId ? "Kirim Tawaran" : "Contact / Hire"}</span>
+              <span className="xs:hidden sm:hidden">{isId ? "Kontak" : "Hire"}</span>
             </a>
-            <button onClick={onLikeProfile} className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ${hasLikedProfile ? "border-red-500/40 bg-red-500/10 text-red-500" : "border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground"}`} title={isId ? "Dukung Profil" : "Endorse Profile"}>
-              <Heart size={16} weight={hasLikedProfile ? "fill" : "bold"} className={hasLikedProfile ? "text-red-500" : ""} />
+            <button onClick={onLikeProfile} className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ${hasLikedProfile ? "border-red-500/40 bg-red-500/10 text-red-500" : "border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground"}`} title={isId ? "Dukung Profil" : "Endorse Profile"}>
+              <Heart size={15} weight={hasLikedProfile ? "fill" : "bold"} className={hasLikedProfile ? "text-red-500" : ""} />
             </button>
-            <button onClick={onCopyEmail} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0" title={isId ? "Salin Email" : "Copy Email"}>
-              {copied ? <Check size={16} weight="bold" className="text-emerald-500" /> : <EnvelopeSimple size={16} weight="bold" />}
+            <button onClick={onCopyEmail} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0" title={isId ? "Salin Email" : "Copy Email"}>
+              {copied ? <Check size={15} weight="bold" className="text-emerald-500" /> : <EnvelopeSimple size={15} weight="bold" />}
             </button>
-            <button onClick={onCopyLink} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0" title={isId ? "Bagikan Profil" : "Share Profile"}>
-              {linkCopied ? <Check size={16} weight="bold" className="text-emerald-500" /> : <ShareNetwork size={16} weight="bold" />}
+            <button onClick={onCopyLink} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-border/80 bg-background hover:bg-muted text-muted-foreground hover:text-foreground flex items-center justify-center transition-all cursor-pointer shadow-xs shrink-0" title={isId ? "Bagikan Profil" : "Share Profile"}>
+              {linkCopied ? <Check size={15} weight="bold" className="text-emerald-500" /> : <ShareNetwork size={15} weight="bold" />}
             </button>
           </div>
         </div>

@@ -73,11 +73,14 @@ export function ProjectsClientView({
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-foreground/80 hover:text-foreground bg-muted/70 hover:bg-muted px-3 py-1.5 rounded-full border border-border/70 transition-all shadow-xs"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-xs font-bold text-foreground/80 hover:text-foreground bg-muted/70 hover:bg-muted px-3 py-1.5 rounded-full border border-border/70 transition-all shadow-xs shrink-0"
           >
             <ArrowLeft size={14} weight="bold" />
-            <span>
+            <span className="hidden sm:inline">
               {language === "id" ? "Kembali ke Profil" : "Back to Profile"}
+            </span>
+            <span className="sm:hidden">
+              {language === "id" ? "Profil" : "Back"}
             </span>
           </Link>
 

@@ -27,8 +27,8 @@ export function ExperienceTab() {
     >
       {/* Flagship Achievement Card */}
       <div className="p-5 sm:p-7 rounded-3xl bg-card border border-border/80 shadow-xs relative overflow-hidden">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-border/60">
-          <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 mb-4 border-b border-border/60">
+          <div className="flex items-center gap-2.5 min-w-0">
             <div className="relative w-8 h-8 rounded-full overflow-hidden border border-border/60 shrink-0">
               <Image
                 src="/img/saya/saya1.webp"
@@ -37,30 +37,25 @@ export function ExperienceTab() {
                 className="object-cover"
               />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-1">
-                <span className="text-xs font-bold text-foreground font-display">
+                <span className="text-xs font-bold text-foreground font-display truncate">
                   Darell Rangga
                 </span>
-                <CheckCircle size={13} weight="fill" className="text-foreground" />
                 <CheckCircle
                   size={13}
                   weight="fill"
-                  className="text-foreground"
-                />
-                <CheckCircle
-                  size={13}
-                  weight="fill"
-                  className="text-foreground"
+                  className="text-foreground shrink-0"
                 />
               </div>
-              <span className="text-[10px] text-muted-foreground font-mono">
-                @darellrangga • {isId ? "Pengumuman Prestasi 2026" : "Honors & Milestones 2026"}
+              <span className="text-[10px] text-muted-foreground font-mono truncate block">
+                @darellrangga •{" "}
+                {isId ? "Pengumuman Prestasi 2026" : "Honors & Milestones 2026"}
               </span>
             </div>
           </div>
 
-          <span className="px-2.5 py-1 rounded-full bg-foreground/10 text-foreground text-xs font-bold font-display border border-foreground/15 flex items-center gap-1">
+          <span className="self-start sm:self-auto px-2.5 py-1 rounded-full bg-foreground/10 text-foreground text-xs font-bold font-display border border-foreground/15 flex items-center gap-1 shrink-0">
             <Trophy size={13} weight="fill" />
             {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
           </span>
@@ -95,7 +90,9 @@ export function ExperienceTab() {
               <div className="flex flex-wrap items-center gap-2 mb-2.5">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-muted text-foreground text-[11px] font-mono font-bold">
                   <Users size={12} weight="bold" />
-                  {isId ? "Lead Developer (Tim 11 Orang)" : "Lead Developer (11 Engineers)"}
+                  {isId
+                    ? "Lead Developer (Tim 11 Orang)"
+                    : "Lead Developer (11 Engineers)"}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-bold">
                   100% Black-Box Tested
@@ -139,12 +136,25 @@ export function ExperienceTab() {
 
             <div className="mt-5 pt-4 border-t border-border/60 flex flex-wrap items-center justify-between gap-3 text-xs">
               <span className="font-semibold text-foreground flex items-center gap-1.5">
-                <CheckCircle size={15} weight="fill" className="text-emerald-500" />
-                {isId ? "Validasi Kepemimpinan & Rekayasa Skala Nyata" : "Proven Leadership & Real-Scale Engineering"}
+                <CheckCircle
+                  size={15}
+                  weight="fill"
+                  className="text-emerald-500"
+                />
+                {isId
+                  ? "Validasi Kepemimpinan & Rekayasa Skala Nyata"
+                  : "Proven Leadership & Real-Scale Engineering"}
               </span>
-              <a href="https://github.com/Rangga11268/titikAman" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all shadow-xs">
+              <a
+                href="https://github.com/Rangga11268/titikAman"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all shadow-xs"
+              >
                 <Code size={14} weight="bold" />
-                {isId ? "Lihat Repositori TitikAman" : "View TitikAman Repository"}
+                {isId
+                  ? "Lihat Repositori TitikAman"
+                  : "View TitikAman Repository"}
               </a>
             </div>
           </div>
@@ -195,7 +205,11 @@ export function ExperienceTab() {
         <div className="p-5 sm:p-6 rounded-3xl bg-card border border-border/80 shadow-xs flex flex-col justify-between">
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4 font-display">
-              <GraduationCap size={16} weight="bold" className="text-foreground" />
+              <GraduationCap
+                size={16}
+                weight="bold"
+                className="text-foreground"
+              />
               {isId ? "Pendidikan & Akademik" : "Education & Academics"}
             </div>
 
@@ -226,12 +240,28 @@ export function ExperienceTab() {
                 {isId ? "Kredensial Terverifikasi" : "Verified Credentials"}
               </div>
               <div className="flex items-center gap-2 text-xs text-foreground font-semibold">
-                <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-                <span>{isId ? "Lulusan Terbaik (Top Graduate) Bootcamp" : "Top Graduate Bootcamp"}</span>
+                <CheckCircle
+                  size={14}
+                  weight="fill"
+                  className="text-emerald-500"
+                />
+                <span>
+                  {isId
+                    ? "Lulusan Terbaik (Top Graduate) Bootcamp"
+                    : "Top Graduate Bootcamp"}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-xs text-foreground font-semibold">
-                <CheckCircle size={14} weight="fill" className="text-emerald-500" />
-                <span>{isId ? "Sertifikasi Dicoding: Web & AI Track" : "Certified Dicoding: Web & AI Track"}</span>
+                <CheckCircle
+                  size={14}
+                  weight="fill"
+                  className="text-emerald-500"
+                />
+                <span>
+                  {isId
+                    ? "Sertifikasi Dicoding: Web & AI Track"
+                    : "Certified Dicoding: Web & AI Track"}
+                </span>
               </div>
             </div>
           </div>

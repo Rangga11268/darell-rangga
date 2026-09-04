@@ -112,11 +112,16 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={handleBack}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground transition-all active:scale-95 cursor-pointer shadow-xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground transition-all active:scale-95 cursor-pointer shadow-xs shrink-0"
               aria-label={isId ? "Kembali ke Feed" : "Back to Feed"}
             >
               <ArrowLeft size={14} weight="bold" />
-              <span>{isId ? "Kembali ke Profil" : "Back to Profile"}</span>
+              <span className="hidden sm:inline">
+                {isId ? "Kembali ke Profil" : "Back to Profile"}
+              </span>
+              <span className="sm:hidden">
+                {isId ? "Profil" : "Back"}
+              </span>
             </button>
             <div className="hidden sm:flex items-center gap-2">
               <span className="text-border text-xs">/</span>
@@ -134,7 +139,9 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               title={isId ? "Switch to English" : "Ganti ke Indonesia"}
             >
               <Translate size={14} weight="bold" className="text-primary" />
-              <span className="font-mono text-[11px]">{isId ? "ID" : "EN"}</span>
+              <span className="font-mono text-[11px]">
+                {isId ? "ID" : "EN"}
+              </span>
             </button>
 
             {/* Dark / Light Toggle */}
@@ -143,7 +150,11 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               className="flex items-center justify-center w-8 h-8 rounded-full border border-border/80 bg-card hover:bg-muted text-foreground transition-all cursor-pointer shadow-xs active:scale-95"
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {isDark ? <Sun size={15} weight="bold" className="text-foreground" /> : <Moon size={15} weight="bold" className="text-foreground" />}
+              {isDark ? (
+                <Sun size={15} weight="bold" className="text-foreground" />
+              ) : (
+                <Moon size={15} weight="bold" className="text-foreground" />
+              )}
             </button>
 
             {/* Share — icon only on mobile */}
@@ -151,7 +162,11 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               onClick={handleShare}
               className="flex items-center justify-center w-8 h-8 rounded-full border border-border/80 bg-card hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs"
             >
-              {copied ? <Check size={14} weight="bold" className="text-emerald-500" /> : <ShareNetwork size={14} />}
+              {copied ? (
+                <Check size={14} weight="bold" className="text-emerald-500" />
+              ) : (
+                <ShareNetwork size={14} />
+              )}
             </button>
 
             <Link
