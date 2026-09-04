@@ -126,17 +126,15 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Translate Button */}
+          <div className="flex items-center gap-1.5">
+            {/* Translate */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-full border border-border/80 bg-card hover:bg-muted text-xs font-bold text-foreground transition-all cursor-pointer shadow-xs active:scale-95"
+              className="flex items-center justify-center gap-1 px-2 py-1.5 rounded-full border border-border/80 bg-card hover:bg-muted text-xs font-bold text-foreground transition-all cursor-pointer shadow-xs active:scale-95"
               title={isId ? "Switch to English" : "Ganti ke Indonesia"}
             >
               <Translate size={14} weight="bold" className="text-primary" />
-              <span className="font-mono text-[11px]">
-                {isId ? "ID" : "EN"}
-              </span>
+              <span className="font-mono text-[11px]">{isId ? "ID" : "EN"}</span>
             </button>
 
             {/* Dark / Light Toggle */}
@@ -145,37 +143,20 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
               className="flex items-center justify-center w-8 h-8 rounded-full border border-border/80 bg-card hover:bg-muted text-foreground transition-all cursor-pointer shadow-xs active:scale-95"
               title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
-              {isDark ? (
-                <Sun size={15} weight="bold" className="text-foreground" />
-              ) : (
-                <Moon size={15} weight="bold" className="text-foreground" />
-              )}
+              {isDark ? <Sun size={15} weight="bold" className="text-foreground" /> : <Moon size={15} weight="bold" className="text-foreground" />}
             </button>
 
+            {/* Share — icon only on mobile */}
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/80 bg-card hover:bg-muted text-xs font-medium text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs"
+              className="flex items-center justify-center w-8 h-8 rounded-full border border-border/80 bg-card hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer shadow-xs"
             >
-              {copied ? (
-                <>
-                  <Check size={14} weight="bold" className="text-emerald-500" />
-                  <span className="text-emerald-500 font-semibold">
-                    {isId ? "Tersalin!" : "Copied!"}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <ShareNetwork size={14} />
-                  <span className="hidden sm:inline">
-                    {isId ? "Bagikan" : "Share"}
-                  </span>
-                </>
-              )}
+              {copied ? <Check size={14} weight="bold" className="text-emerald-500" /> : <ShareNetwork size={14} />}
             </button>
 
             <Link
               href="/#hub"
-              className="text-xs font-bold px-3.5 py-1.5 rounded-full bg-foreground text-background hover:opacity-90 transition-all shadow-xs"
+              className="text-xs font-bold px-3 py-1.5 rounded-full bg-foreground text-background hover:opacity-90 transition-all shadow-xs"
             >
               Feed
             </Link>

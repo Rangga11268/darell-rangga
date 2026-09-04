@@ -55,19 +55,14 @@ export function ExperienceTab() {
                 />
               </div>
               <span className="text-[10px] text-muted-foreground font-mono">
-                @darellrangga • Pengumuman Prestasi 2026
-                @darellrangga • Pengumuman Prestasi 2026 @darellrangga •{" "}
-                {isId ? "Pengumuman Prestasi 2026" : "Honors & Milestones 2026"}
+                @darellrangga • {isId ? "Pengumuman Prestasi 2026" : "Honors & Milestones 2026"}
               </span>
             </div>
           </div>
 
           <span className="px-2.5 py-1 rounded-full bg-foreground/10 text-foreground text-xs font-bold font-display border border-foreground/15 flex items-center gap-1">
             <Trophy size={13} weight="fill" />
-            <span>Juara 1 IT Bootcamp 2026</span>
-            <span>
-              {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
-            </span>
+            {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
           </span>
         </div>
 
@@ -89,9 +84,7 @@ export function ExperienceTab() {
                   className="text-foreground shrink-0"
                 />
                 <span className="truncate">
-                  Darell Rangga • Juara 1
-                  Darell Rangga • Juara 1 Darell Rangga •{" "}
-                  {isId ? "Juara 1" : "1st Place"}
+                  Darell Rangga • {isId ? "Juara 1" : "1st Place"}
                 </span>
               </div>
             </div>
@@ -102,12 +95,7 @@ export function ExperienceTab() {
               <div className="flex flex-wrap items-center gap-2 mb-2.5">
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-muted text-foreground text-[11px] font-mono font-bold">
                   <Users size={12} weight="bold" />
-                  <span>Lead Developer (Tim 11 Orang)</span>
-                  <span>
-                    {isId
-                      ? "Lead Developer (Tim 11 Orang)"
-                      : "Lead Developer (11 Engineers)"}
-                  </span>
+                  {isId ? "Lead Developer (Tim 11 Orang)" : "Lead Developer (11 Engineers)"}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-bold">
                   100% Black-Box Tested
@@ -118,7 +106,6 @@ export function ExperienceTab() {
                 Lead Developer & System Architect — TitikAman
               </h3>
               <div className="text-xs text-muted-foreground font-mono mt-0.5 mb-3">
-                IT Bootcamp 2026 • Platform Keselamatan Warga & SOS Real-Time
                 {isId
                   ? "IT Bootcamp 2026 • Platform Keselamatan Warga & SOS Real-Time"
                   : "IT Bootcamp 2026 • Citizen Safety & Real-Time SOS Platform"}
@@ -152,29 +139,12 @@ export function ExperienceTab() {
 
             <div className="mt-5 pt-4 border-t border-border/60 flex flex-wrap items-center justify-between gap-3 text-xs">
               <span className="font-semibold text-foreground flex items-center gap-1.5">
-                <CheckCircle
-                  size={15}
-                  weight="fill"
-                  className="text-emerald-500"
-                />
-                Validasi Kepemimpinan & Rekayasa Skala Nyata
-                {isId
-                  ? "Validasi Kepemimpinan & Rekayasa Skala Nyata"
-                  : "Proven Leadership & Real-Scale Engineering"}
+                <CheckCircle size={15} weight="fill" className="text-emerald-500" />
+                {isId ? "Validasi Kepemimpinan & Rekayasa Skala Nyata" : "Proven Leadership & Real-Scale Engineering"}
               </span>
-              <a
-                href="https://github.com/Rangga11268/titikAman"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all shadow-xs"
-              >
+              <a href="https://github.com/Rangga11268/titikAman" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all shadow-xs">
                 <Code size={14} weight="bold" />
-                <span>Lihat Repositori TitikAman</span>
-                <span>
-                  {isId
-                    ? "Lihat Repositori TitikAman"
-                    : "View TitikAman Repository"}
-                </span>
+                {isId ? "Lihat Repositori TitikAman" : "View TitikAman Repository"}
               </a>
             </div>
           </div>
@@ -185,20 +155,8 @@ export function ExperienceTab() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
         <div className="p-5 sm:p-6 rounded-3xl bg-card border border-border/80 shadow-xs">
           <div className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4 font-display">
-            <Briefcase
-              size={16}
-              weight="bold"
-              className="text-foreground"
-            />
             <Briefcase size={16} weight="bold" className="text-foreground" />
-            <Briefcase size={16} weight="bold" className="text-foreground" />
-            <span>
-              {isId
-                ? "Pengalaman Kerja Produksi"
-                : "Production Work History"}
-              {isId ? "Pengalaman Kerja Produksi" : "Production Work History"}
-              {isId ? "Pengalaman Kerja Produksi" : "Production Work History"}
-            </span>
+            {isId ? "Pengalaman Kerja Produksi" : "Production Work History"}
           </div>
 
           <div className="space-y-5">
@@ -237,18 +195,8 @@ export function ExperienceTab() {
         <div className="p-5 sm:p-6 rounded-3xl bg-card border border-border/80 shadow-xs flex flex-col justify-between">
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4 font-display">
-              <GraduationCap
-                size={16}
-                weight="bold"
-                className="text-foreground"
-              />
-              <span>
-                {isId
-                  ? "Pendidikan & Akademik"
-                  : "Education & Academics"}
-                {isId ? "Pendidikan & Akademik" : "Education & Academics"}
-                {isId ? "Pendidikan & Akademik" : "Education & Academics"}
-              </span>
+              <GraduationCap size={16} weight="bold" className="text-foreground" />
+              {isId ? "Pendidikan & Akademik" : "Education & Academics"}
             </div>
 
             <div className="p-4 rounded-2xl bg-muted/40 border border-border/60 mb-4">
@@ -257,12 +205,10 @@ export function ExperienceTab() {
                   2024 - {isId ? "Sekarang" : "Present"}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-extrabold font-display">
-                  IPK 4.00 / 4.00
                   {isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}
                 </span>
               </div>
               <h4 className="text-sm font-bold text-foreground mt-1 font-display">
-                S1 Sistem Informasi
                 {isId ? "S1 Sistem Informasi" : "B.S. Information Systems"}
               </h4>
               <div className="text-xs text-muted-foreground">
@@ -277,35 +223,15 @@ export function ExperienceTab() {
 
             <div className="space-y-2">
               <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider font-display">
-                {isId
-                  ? "Kredensial Terverifikasi"
-                  : "Verified Credentials"}
-                {isId ? "Kredensial Terverifikasi" : "Verified Credentials"}
                 {isId ? "Kredensial Terverifikasi" : "Verified Credentials"}
               </div>
               <div className="flex items-center gap-2 text-xs text-foreground font-semibold">
-                <CheckCircle
-                  size={14}
-                  weight="fill"
-                  className="text-emerald-500"
-                />
-                <span>
-                  {isId
-                    ? "Lulusan Terbaik (Top Graduate) Bootcamp"
-                    : "Top Graduate Bootcamp"}
-                </span>
+                <CheckCircle size={14} weight="fill" className="text-emerald-500" />
+                <span>{isId ? "Lulusan Terbaik (Top Graduate) Bootcamp" : "Top Graduate Bootcamp"}</span>
               </div>
               <div className="flex items-center gap-2 text-xs text-foreground font-semibold">
-                <CheckCircle
-                  size={14}
-                  weight="fill"
-                  className="text-emerald-500"
-                />
-                <span>
-                  {isId
-                    ? "Sertifikasi Dicoding: Web & AI Track"
-                    : "Certified Dicoding: Web & AI Track"}
-                </span>
+                <CheckCircle size={14} weight="fill" className="text-emerald-500" />
+                <span>{isId ? "Sertifikasi Dicoding: Web & AI Track" : "Certified Dicoding: Web & AI Track"}</span>
               </div>
             </div>
           </div>
@@ -314,10 +240,6 @@ export function ExperienceTab() {
             <span className="text-muted-foreground">
               {isId ? "Status Kelulusan" : "Graduation Track"}
             </span>
-            <span className="font-bold text-foreground">
-              Cum Laude Track
-            </span>
-            <span className="font-bold text-foreground">Cum Laude Track</span>
             <span className="font-bold text-foreground">Cum Laude Track</span>
           </div>
         </div>
