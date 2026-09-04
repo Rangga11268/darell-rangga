@@ -63,7 +63,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
           </span>
           <span className="px-2 py-0.5 rounded-md bg-foreground/15 text-foreground text-[9px] font-mono font-semibold flex items-center gap-1">
             <Trophy size={11} weight="fill" />
-            Juara 1 IT Bootcamp 2026
             {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
           </span>
         </div>
@@ -72,7 +71,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
           <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-zinc-700 shadow-sm shrink-0">
             <Image
               src="/img/saya/trophy-juara.jpg"
-              alt="Piala Juara 1"
               alt={isId ? "Piala Juara 1" : "Champion Trophy"}
               fill
               className="object-cover"
@@ -83,7 +81,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
               Citizen Safety & Real-Time SOS
             </div>
             <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
-              Laravel Reverb WebSockets • Lead of 11 Engineers
               {isId
                 ? "Laravel Reverb WebSockets • Lead Tim 11 Orang"
                 : "Laravel Reverb WebSockets • Lead of 11 Engineers"}
@@ -114,7 +111,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
             makarya.mahasiswa-umkm.id
           </span>
           <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 text-[9px] font-mono font-semibold">
-            Skripsi UBSI 2026
             {isId ? "Skripsi UBSI 2026" : "UBSI Thesis 2026"}
           </span>
         </div>
@@ -133,7 +129,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
               Micro-Freelancing Platform
             </div>
             <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
-              Escrow Protection • Max Rp 2.000.000 / Proyek
               {isId
                 ? "Proteksi Rekber • Maks Rp 2.000.000 / Proyek"
                 : "Escrow Protection • Max Rp 2,000,000 / Project"}
@@ -145,7 +140,6 @@ export function ProjectVisualCard({ project }: { project: Project }) {
           <span className="text-zinc-200 font-semibold">
             FastAPI + React 18 + React Native
           </span>
-          <span className="text-emerald-400 font-semibold">Midtrans Escrow</span>
           <span className="text-emerald-400 font-semibold">
             Midtrans Escrow
           </span>

@@ -38,7 +38,6 @@ export function MobileBottomBar({
       key: "experience" as TabKey,
       label: isId ? "Prestasi" : "Highlights",
       icon: Trophy,
-      badge: "Juara 1",
     },
     { key: "skills" as TabKey, label: isId ? "Stack" : "Stack", icon: Cpu },
     {
@@ -68,9 +67,6 @@ export function MobileBottomBar({
           >
             <div className="relative">
               <Icon size={22} weight={isActive ? "fill" : "regular"} />
-              {item.badge === "Juara 1" && !isActive && (
-                <span className="w-2 h-2 rounded-full bg-primary absolute -top-0.5 -right-0.5" />
-              )}
               {item.key === "projects" && !isActive && (
                 <span className="w-2 h-2 rounded-full bg-emerald-500 absolute -top-0.5 -right-0.5" />
               )}

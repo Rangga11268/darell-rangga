@@ -4,5 +4,17 @@
       "approve": true,
       "matchCommandLine": true
     }
-  }
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/.next-dev/**": true,
+    "**/build/**": true,
+    "**/out/**": true
+  },
+  "git.autorefresh": true,
+  "git.decorations.enabled": true,
+  "git.detectSubmodules": false
 }

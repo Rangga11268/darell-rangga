@@ -118,16 +118,9 @@ export function ExecutiveHub() {
     projects.find((p) => p.id === "have-a-treat")!,
   ].filter(Boolean);
 
-  const systemProjects = [
   const webProjects = [
     projects.find((p) => p.id === "titik-aman")!,
     projects.find((p) => p.id === "makarya")!,
-    projects.find((p) => p.id === "tujago")!,
-    projects.find((p) => p.id === "srb-motor-v3")!,
-    projects.find((p) => p.id === "satya-hub")!,
-  ].filter(Boolean);
-
-  const liveWebProjects = [
     projects.find((p) => p.id === "tujago")!,
     projects.find((p) => p.id === "phd-trans")!,
     projects.find((p) => p.id === "navara-trans")!,
@@ -159,8 +152,6 @@ export function ExecutiveHub() {
   const baseProjects =
     projectFilter === "systems"
       ? systemProjects
-      : projectFilter === "live-web"
-        ? liveWebProjects
       : projectFilter === "web" || projectFilter === "live-web"
         ? webProjects
         : projectFilter === "mobile-apps"
