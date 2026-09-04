@@ -46,16 +46,33 @@ export function ProfileHeader({
 
   return (
     <div className="border-b border-border/60 bg-card/40">
-      {/* 1. Profile Banner (Framer / Dribbble Clean Showcase) */}
-      <div className="h-44 sm:h-56 md:h-64 w-full relative overflow-hidden bg-zinc-900">
-        <Image
-          src="/img/bannerLinkedin.png"
-          alt="Darell Rangga Profile Banner"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
+      {/* 1. Profile Banner (Framer / Dribbble Clean Showcase - Responsive Multi-Device) */}
+      <div className="h-44 sm:h-56 md:h-64 w-full relative overflow-hidden bg-zinc-950">
+        {/* Mobile Viewport Banner (< 640px) */}
+        <div className="block sm:hidden absolute inset-0">
+          <Image
+            src="/img/banner-grid-mobile.webp"
+            alt="Darell Rangga Architectural Grid Banner"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+
+        {/* Tablet & Desktop Viewport Banner (>= 640px) */}
+        <div className="hidden sm:block absolute inset-0">
+          <Image
+            src="/img/banner-grid-desktop.webp"
+            alt="Darell Rangga Architectural Grid Banner"
+            fill
+            priority
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            className="object-cover object-center"
+          />
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
       </div>
 
       {/* 2. Avatar & Action Buttons Row */}
