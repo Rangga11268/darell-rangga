@@ -91,6 +91,7 @@ export function RightSidebar({
       name: "TitikAman",
       handle: "@titikaman",
       category: "Emergency & SOS Network",
+      category: isId ? "Jaringan Darurat & SOS" : "Emergency & SOS Network",
       image: "/img/logo-titikaman.png",
       url: "/projects/titik-aman",
       filter: "systems" as ProjectFilterKey,
@@ -99,14 +100,19 @@ export function RightSidebar({
       name: "TUJAGO",
       handle: "@tujago_bus",
       category: "Enterprise Bus Booking",
+      category: isId ? "Tiket Bus Modern Monolith" : "Enterprise Bus Platform",
       image: "/img/phd.webp",
       url: "/projects/tujago",
       filter: "live-web" as ProjectFilterKey,
+      filter: "web" as ProjectFilterKey,
     },
     {
       name: "Makarya",
       handle: "@makarya_id",
       category: "Escrow & Freelance Platform",
+      category: isId
+        ? "Platform Rekber & Freelance"
+        : "Escrow & Freelance Platform",
       image: "/img/makarya-logo.webp",
       url: "/projects/makarya",
       filter: "systems" as ProjectFilterKey,
@@ -115,6 +121,9 @@ export function RightSidebar({
       name: "Faktanesia",
       handle: "@faktanesia_ai",
       category: "Realtime Fact-Check Engine",
+      category: isId
+        ? "Deteksi Hoaks Realtime AI"
+        : "Realtime Fact-Check Engine",
       image: "/img/logo_faktanesia.png",
       url: "/projects/faktanesia",
       filter: "ai-ml" as ProjectFilterKey,
@@ -303,10 +312,12 @@ export function RightSidebar({
         <div className="flex flex-wrap gap-x-2 gap-y-1">
           <Link href="/privacy" className="hover:underline">
             Terms of Service
+            {isId ? "Ketentuan Layanan" : "Terms of Service"}
           </Link>
           <span>·</span>
           <Link href="/privacy" className="hover:underline">
             Privacy Policy
+            {isId ? "Kebijakan Privasi" : "Privacy Policy"}
           </Link>
           <span>·</span>
           <a
@@ -330,6 +341,10 @@ export function RightSidebar({
         <p className="text-[11px] pt-1">
           &copy; {new Date().getFullYear()} Darell Rangga Portfolio. Built for
           High Performance.
+          &copy; {new Date().getFullYear()} Darell Rangga Portfolio.{" "}
+          {isId
+            ? "Dibangun untuk performa tinggi."
+            : "Built for high performance."}
         </p>
       </div>
     </aside>

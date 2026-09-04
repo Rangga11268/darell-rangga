@@ -35,6 +35,59 @@ export function LeftSidebar({ activeTab, onSelectTab }: LeftSidebarProps) {
     { key: "experience" as TabKey, label: isId ? "Pencapaian" : "Highlights", icon: Trophy, badge: "Juara 1" },
     { key: "skills" as TabKey, label: isId ? "Keahlian" : "Tech Radar", icon: Cpu },
     { key: "contact" as TabKey, label: isId ? "Hubungi Saya" : "Get in Touch", icon: ChatCircleDots },
+    {
+      key: "why-hire" as TabKey,
+      label: isId ? "Utas Utama" : "Feed",
+      icon: House,
+    },
+    {
+      key: "projects" as TabKey,
+      label: isId ? "Karya Terpilih" : "Projects",
+      icon: Code,
+      badge: "12",
+    },
+    {
+      key: "experience" as TabKey,
+      label: isId ? "Pencapaian" : "Highlights",
+      icon: Trophy,
+      badge: "Juara 1",
+    },
+    {
+      key: "skills" as TabKey,
+      label: isId ? "Keahlian" : "Tech Radar",
+      icon: Cpu,
+    },
+    {
+      key: "contact" as TabKey,
+      label: isId ? "Hubungi Saya" : "Get in Touch",
+      icon: ChatCircleDots,
+    },
+    {
+      key: "why-hire" as TabKey,
+      label: isId ? "Utas Utama" : "Feed",
+      icon: House,
+    },
+    {
+      key: "projects" as TabKey,
+      label: isId ? "Karya Terpilih" : "Projects",
+      icon: Code,
+      badge: "12",
+    },
+    {
+      key: "experience" as TabKey,
+      label: isId ? "Pencapaian" : "Highlights",
+      icon: Trophy,
+    },
+    {
+      key: "skills" as TabKey,
+      label: isId ? "Keahlian" : "Tech Radar",
+      icon: Cpu,
+    },
+    {
+      key: "contact" as TabKey,
+      label: isId ? "Hubungi Saya" : "Get in Touch",
+      icon: ChatCircleDots,
+    },
   ];
 
   return (
@@ -67,6 +120,16 @@ export function LeftSidebar({ activeTab, onSelectTab }: LeftSidebarProps) {
                 Darell Rangga
               </span>
               <CheckCircle size={14} weight="fill" className="text-primary shrink-0" />
+              <CheckCircle
+                size={14}
+                weight="fill"
+                className="text-primary shrink-0"
+              />
+              <CheckCircle
+                size={14}
+                weight="fill"
+                className="text-primary shrink-0"
+              />
             </div>
             <span className="text-[11px] font-mono text-muted-foreground block truncate">
               Fullstack Engineer

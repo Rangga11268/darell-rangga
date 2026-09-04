@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -57,32 +57,19 @@ export function ProjectsFeedTab({
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <span>{isId ? "Semua Karya (12)" : "All Projects (12)"}</span>
+            <span>{isId ? "Semua (12)" : "All (12)"}</span>
           </button>
           <button
-            onClick={() => onFilterChange("live-web")}
+            onClick={() => onFilterChange("web")}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "live-web"
+              projectFilter === "web" || projectFilter === "live-web"
                 ? "bg-background text-foreground shadow-xs"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>
-              {isId ? "Web Live Vercel (6)" : "Live Web Vercel (6)"}
-            </span>
-          </button>
-          <button
-            onClick={() => onFilterChange("mobile-apps")}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-              projectFilter === "mobile-apps"
-                ? "bg-background text-foreground shadow-xs"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <DeviceMobile size={14} weight="bold" className="text-indigo-400" />
-            <span>
-              {isId ? "Mobile Apps (3)" : "Mobile Apps (3)"}
+              {isId ? "Fullstack Web (8)" : "Fullstack Web (8)"}
             </span>
           </button>
           <button
@@ -95,7 +82,20 @@ export function ProjectsFeedTab({
           >
             <Cpu size={14} weight="bold" />
             <span>
-              {isId ? "Arsitektur Sistem (5)" : "Systems & Backend (5)"}
+              {isId ? "Sistem & Backend (5)" : "Systems & Backend (5)"}
+            </span>
+          </button>
+          <button
+            onClick={() => onFilterChange("mobile-apps")}
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+              projectFilter === "mobile-apps"
+                ? "bg-background text-foreground shadow-xs"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <DeviceMobile size={14} weight="bold" className="text-indigo-400" />
+            <span>
+              {isId ? "Aplikasi Mobile (3)" : "Mobile Apps (3)"}
             </span>
           </button>
           <button
@@ -107,7 +107,9 @@ export function ProjectsFeedTab({
             }`}
           >
             <Sparkle size={14} weight="bold" />
-            <span>{isId ? "Edge AI & ML (3)" : "Edge AI & ML (3)"}</span>
+            <span>
+              {isId ? "AI & Data (3)" : "AI & Data (3)"}
+            </span>
           </button>
         </div>
 

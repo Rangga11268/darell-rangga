@@ -1,10 +1,13 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { Project } from "@/app/data/projects";
 import { Lock, Trophy, DeviceMobile } from "@phosphor-icons/react";
+import { useLanguage } from "@/app/providers/language-provider";
 
 export function ProjectVisualCard({ project }: { project: Project }) {
+  const { language } = useLanguage();
+  const isId = language === "id";
   if (project.id === "tujago") {
     return (
       <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-zinc-950 border border-border/80 p-4 flex flex-col justify-between">
@@ -61,6 +64,7 @@ export function ProjectVisualCard({ project }: { project: Project }) {
           <span className="px-2 py-0.5 rounded-md bg-foreground/15 text-foreground text-[9px] font-mono font-semibold flex items-center gap-1">
             <Trophy size={11} weight="fill" />
             Juara 1 IT Bootcamp 2026
+            {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
           </span>
         </div>
 
@@ -69,6 +73,7 @@ export function ProjectVisualCard({ project }: { project: Project }) {
             <Image
               src="/img/saya/trophy-juara.jpg"
               alt="Piala Juara 1"
+              alt={isId ? "Piala Juara 1" : "Champion Trophy"}
               fill
               className="object-cover"
             />
@@ -79,6 +84,9 @@ export function ProjectVisualCard({ project }: { project: Project }) {
             </div>
             <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
               Laravel Reverb WebSockets • Lead of 11 Engineers
+              {isId
+                ? "Laravel Reverb WebSockets • Lead Tim 11 Orang"
+                : "Laravel Reverb WebSockets • Lead of 11 Engineers"}
             </div>
           </div>
         </div>
@@ -107,6 +115,7 @@ export function ProjectVisualCard({ project }: { project: Project }) {
           </span>
           <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 text-[9px] font-mono font-semibold">
             Skripsi UBSI 2026
+            {isId ? "Skripsi UBSI 2026" : "UBSI Thesis 2026"}
           </span>
         </div>
 
@@ -125,6 +134,9 @@ export function ProjectVisualCard({ project }: { project: Project }) {
             </div>
             <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
               Escrow Protection • Max Rp 2.000.000 / Proyek
+              {isId
+                ? "Proteksi Rekber • Maks Rp 2.000.000 / Proyek"
+                : "Escrow Protection • Max Rp 2,000,000 / Project"}
             </div>
           </div>
         </div>
@@ -134,6 +146,9 @@ export function ProjectVisualCard({ project }: { project: Project }) {
             FastAPI + React 18 + React Native
           </span>
           <span className="text-emerald-400 font-semibold">Midtrans Escrow</span>
+          <span className="text-emerald-400 font-semibold">
+            Midtrans Escrow
+          </span>
         </div>
       </div>
     );

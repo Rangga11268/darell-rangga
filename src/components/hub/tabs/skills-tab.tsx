@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useLanguage } from "@/app/providers/language-provider";
 import { TabKey } from "../types";
@@ -66,19 +66,19 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5">
           <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
             <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground font-mono block">
-              Spesialisasi Utama
+              {isId ? "Spesialisasi Utama" : "Core Role"}
             </span>
             <div className="text-sm sm:text-base font-black text-foreground font-display mt-0.5">
               Fullstack Dev
             </div>
             <span className="text-[11px] text-muted-foreground mt-0.5 block">
-              Web, API & Mobile
+              {isId ? "Web, API & Mobile" : "Web, APIs & Mobile"}
             </span>
           </div>
 
           <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
             <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground font-mono block">
-              Backend Utama
+              {isId ? "Backend Utama" : "Core Backend"}
             </span>
             <div className="text-sm sm:text-base font-black text-foreground font-display mt-0.5">
               Laravel & FastAPI
@@ -90,7 +90,7 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
 
           <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
             <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground font-mono block">
-              Frontend Utama
+              {isId ? "Frontend Utama" : "Core Frontend"}
             </span>
             <div className="text-sm sm:text-base font-black text-foreground font-display mt-0.5">
               Next.js & React 19
@@ -102,14 +102,14 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
 
           <div className="p-3 rounded-2xl bg-muted/40 border border-border/50">
             <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground font-mono block">
-              Prestasi Kompetisi
+              {isId ? "Prestasi Kompetisi" : "Competition Honor"}
             </span>
             <div className="text-sm sm:text-base font-black text-foreground font-display mt-0.5 flex items-center gap-1">
               <Trophy size={14} weight="fill" className="text-foreground shrink-0" />
-              <span>Juara 1 IT</span>
+              <span>{isId ? "Juara 1 IT" : "1st Place IT"}</span>
             </div>
             <span className="text-[11px] text-muted-foreground mt-0.5 block">
-              Bootcamp 2026 (Lead 11 Org)
+              {isId ? "Bootcamp 2026 (Lead 11 Org)" : "Bootcamp 2026 (Led 11)"}
             </span>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
               </div>
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-mono block">
-                  Sisi Server & Integrasi
+                  {isId ? "Sisi Server & Integrasi" : "Server-Side & Integration"}
                 </span>
                 <h4 className="text-base font-bold text-foreground font-display">
                   Backend & API Development
@@ -182,7 +182,7 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
               </div>
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-mono block">
-                  Tampilan Pengguna & Responsif
+                  {isId ? "Tampilan Pengguna & Responsif" : "UI & Responsive Layouts"}
                 </span>
                 <h4 className="text-base font-bold text-foreground font-display">
                   Frontend Web Development
@@ -238,7 +238,9 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
               </div>
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-mono block">
-                  Aplikasi Ponsel (Android & iOS)
+                  {isId
+                    ? "Aplikasi Ponsel (Android & iOS)"
+                    : "Mobile Platforms (Android & iOS)"}
                 </span>
                 <h4 className="text-base font-bold text-foreground font-display">
                   Mobile App Development
@@ -294,7 +296,9 @@ export function SkillsTab({ onSelectTab }: SkillsTabProps) {
               </div>
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground font-mono block">
-                  Database, QA & Kolaborasi
+                  {isId
+                    ? "Database, QA & Kolaborasi"
+                    : "Database, QA & Collaboration"}
                 </span>
                 <h4 className="text-base font-bold text-foreground font-display">
                   Database, QA & Engineering Workflow

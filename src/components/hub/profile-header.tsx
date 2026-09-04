@@ -239,18 +239,34 @@ export function ProfileHeader({
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-muted/50 border border-border/50">
               <MapPin size={14} className="text-foreground/70" />
               <span>Bekasi, Indonesia (Open Remote)</span>
+              <span>
+                {isId
+                  ? "Bekasi, Indonesia (Siap Remote)"
+                  : "Bekasi, Indonesia (Open Remote)"}
+              </span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-muted/50 border border-border/50 text-foreground font-semibold">
               <GraduationCap size={15} />
               <span>S1 Sistem Informasi UBSI</span>
+              <span>
+                {isId
+                  ? "S1 Sistem Informasi UBSI"
+                  : "B.S. Information Systems UBSI"}
+              </span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-foreground/5 border border-border/80 text-foreground font-bold">
               <Trophy size={14} weight="fill" />
               <span>Juara 1 IT Bootcamp 2026</span>
+              <span>
+                {isId
+                  ? "Juara 1 IT Bootcamp 2026"
+                  : "1st Place IT Bootcamp 2026"}
+              </span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-muted/50 border border-border/50">
               <Users size={14} />
               <span>11 Engineers Led</span>
+              <span>{isId ? "Memimpin 11 Rekan Tim" : "11 Engineers Led"}</span>
             </span>
           </div>
 
@@ -259,48 +275,58 @@ export function ProfileHeader({
             <div className="p-3 rounded-2xl bg-muted/40 border border-border/40">
               <span className="text-[10px] uppercase font-bold text-muted-foreground font-display block">
                 Akademik
+                {isId ? "Akademik" : "Academics"}
               </span>
               <span className="text-base sm:text-lg font-black text-foreground font-display mt-0.5 block">
                 4.00 / 4.00
               </span>
               <span className="text-[11px] text-muted-foreground truncate block">
                 IPK S1 UBSI
+                {isId ? "IPK S1 UBSI" : "GPA S1 UBSI"}
               </span>
             </div>
 
             <div className="p-3 rounded-2xl bg-muted/40 border border-border/40">
               <span className="text-[10px] uppercase font-bold text-muted-foreground font-display block">
                 Portofolio
+                {isId ? "Portofolio" : "Portfolio"}
               </span>
               <span className="text-base sm:text-lg font-black text-foreground font-display mt-0.5 block">
                 12+ Rilis
+                12+ {isId ? "Rilis" : "Shipped"}
               </span>
               <span className="text-[11px] text-muted-foreground truncate block">
                 Sistem Produksi
+                {isId ? "Sistem Produksi" : "Production Systems"}
               </span>
             </div>
 
             <div className="p-3 rounded-2xl bg-muted/40 border border-border/40">
               <span className="text-[10px] uppercase font-bold text-muted-foreground font-display block">
                 Prestasi
+                {isId ? "Prestasi" : "Honors"}
               </span>
               <span className="text-base sm:text-lg font-black text-foreground font-display mt-0.5 block">
                 Juara 1
+                {isId ? "Juara 1" : "1st Place"}
               </span>
               <span className="text-[11px] text-muted-foreground truncate block">
                 Bootcamp Nasional
+                {isId ? "Bootcamp Nasional" : "National Bootcamp"}
               </span>
             </div>
 
             <div className="p-3 rounded-2xl bg-muted/40 border border-border/40">
               <span className="text-[10px] uppercase font-bold text-muted-foreground font-display block">
                 Dukungan
+                {isId ? "Dukungan" : "Endorsements"}
               </span>
               <span className="text-base sm:text-lg font-black text-foreground font-display mt-0.5 block">
                 {profileLikes}
               </span>
               <span className="text-[11px] text-muted-foreground truncate block">
                 Rekomendasi
+                {isId ? "Rekomendasi" : "Recommendations"}
               </span>
             </div>
           </div>

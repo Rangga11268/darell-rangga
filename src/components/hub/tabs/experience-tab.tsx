@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -43,9 +43,21 @@ export function ExperienceTab() {
                   Darell Rangga
                 </span>
                 <CheckCircle size={13} weight="fill" className="text-foreground" />
+                <CheckCircle
+                  size={13}
+                  weight="fill"
+                  className="text-foreground"
+                />
+                <CheckCircle
+                  size={13}
+                  weight="fill"
+                  className="text-foreground"
+                />
               </div>
               <span className="text-[10px] text-muted-foreground font-mono">
                 @darellrangga • Pengumuman Prestasi 2026
+                @darellrangga • Pengumuman Prestasi 2026 @darellrangga •{" "}
+                {isId ? "Pengumuman Prestasi 2026" : "Honors & Milestones 2026"}
               </span>
             </div>
           </div>
@@ -53,6 +65,9 @@ export function ExperienceTab() {
           <span className="px-2.5 py-1 rounded-full bg-foreground/10 text-foreground text-xs font-bold font-display border border-foreground/15 flex items-center gap-1">
             <Trophy size={13} weight="fill" />
             <span>Juara 1 IT Bootcamp 2026</span>
+            <span>
+              {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
+            </span>
           </span>
         </div>
 
@@ -75,6 +90,8 @@ export function ExperienceTab() {
                 />
                 <span className="truncate">
                   Darell Rangga • Juara 1
+                  Darell Rangga • Juara 1 Darell Rangga •{" "}
+                  {isId ? "Juara 1" : "1st Place"}
                 </span>
               </div>
             </div>
@@ -86,6 +103,11 @@ export function ExperienceTab() {
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-muted text-foreground text-[11px] font-mono font-bold">
                   <Users size={12} weight="bold" />
                   <span>Lead Developer (Tim 11 Orang)</span>
+                  <span>
+                    {isId
+                      ? "Lead Developer (Tim 11 Orang)"
+                      : "Lead Developer (11 Engineers)"}
+                  </span>
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono font-bold">
                   100% Black-Box Tested
@@ -97,6 +119,9 @@ export function ExperienceTab() {
               </h3>
               <div className="text-xs text-muted-foreground font-mono mt-0.5 mb-3">
                 IT Bootcamp 2026 • Platform Keselamatan Warga & SOS Real-Time
+                {isId
+                  ? "IT Bootcamp 2026 • Platform Keselamatan Warga & SOS Real-Time"
+                  : "IT Bootcamp 2026 • Citizen Safety & Real-Time SOS Platform"}
               </div>
 
               <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
@@ -133,6 +158,9 @@ export function ExperienceTab() {
                   className="text-emerald-500"
                 />
                 Validasi Kepemimpinan & Rekayasa Skala Nyata
+                {isId
+                  ? "Validasi Kepemimpinan & Rekayasa Skala Nyata"
+                  : "Proven Leadership & Real-Scale Engineering"}
               </span>
               <a
                 href="https://github.com/Rangga11268/titikAman"
@@ -142,6 +170,11 @@ export function ExperienceTab() {
               >
                 <Code size={14} weight="bold" />
                 <span>Lihat Repositori TitikAman</span>
+                <span>
+                  {isId
+                    ? "Lihat Repositori TitikAman"
+                    : "View TitikAman Repository"}
+                </span>
               </a>
             </div>
           </div>
@@ -157,10 +190,14 @@ export function ExperienceTab() {
               weight="bold"
               className="text-foreground"
             />
+            <Briefcase size={16} weight="bold" className="text-foreground" />
+            <Briefcase size={16} weight="bold" className="text-foreground" />
             <span>
               {isId
                 ? "Pengalaman Kerja Produksi"
                 : "Production Work History"}
+              {isId ? "Pengalaman Kerja Produksi" : "Production Work History"}
+              {isId ? "Pengalaman Kerja Produksi" : "Production Work History"}
             </span>
           </div>
 
@@ -209,6 +246,8 @@ export function ExperienceTab() {
                 {isId
                   ? "Pendidikan & Akademik"
                   : "Education & Academics"}
+                {isId ? "Pendidikan & Akademik" : "Education & Academics"}
+                {isId ? "Pendidikan & Akademik" : "Education & Academics"}
               </span>
             </div>
 
@@ -219,10 +258,12 @@ export function ExperienceTab() {
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-extrabold font-display">
                   IPK 4.00 / 4.00
+                  {isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}
                 </span>
               </div>
               <h4 className="text-sm font-bold text-foreground mt-1 font-display">
                 S1 Sistem Informasi
+                {isId ? "S1 Sistem Informasi" : "B.S. Information Systems"}
               </h4>
               <div className="text-xs text-muted-foreground">
                 Universitas Bina Sarana Informatika (UBSI)
@@ -239,6 +280,8 @@ export function ExperienceTab() {
                 {isId
                   ? "Kredensial Terverifikasi"
                   : "Verified Credentials"}
+                {isId ? "Kredensial Terverifikasi" : "Verified Credentials"}
+                {isId ? "Kredensial Terverifikasi" : "Verified Credentials"}
               </div>
               <div className="flex items-center gap-2 text-xs text-foreground font-semibold">
                 <CheckCircle
@@ -274,6 +317,8 @@ export function ExperienceTab() {
             <span className="font-bold text-foreground">
               Cum Laude Track
             </span>
+            <span className="font-bold text-foreground">Cum Laude Track</span>
+            <span className="font-bold text-foreground">Cum Laude Track</span>
           </div>
         </div>
       </div>
