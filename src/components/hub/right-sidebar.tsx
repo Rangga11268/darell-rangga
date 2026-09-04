@@ -90,7 +90,6 @@ export function RightSidebar({
     {
       name: "TitikAman",
       handle: "@titikaman",
-      category: "Emergency & SOS Network",
       category: isId ? "Jaringan Darurat & SOS" : "Emergency & SOS Network",
       image: "/img/logo-titikaman.png",
       url: "/projects/titik-aman",
@@ -99,17 +98,14 @@ export function RightSidebar({
     {
       name: "TUJAGO",
       handle: "@tujago_bus",
-      category: "Enterprise Bus Booking",
       category: isId ? "Tiket Bus Modern Monolith" : "Enterprise Bus Platform",
       image: "/img/phd.webp",
       url: "/projects/tujago",
-      filter: "live-web" as ProjectFilterKey,
       filter: "web" as ProjectFilterKey,
     },
     {
       name: "Makarya",
       handle: "@makarya_id",
-      category: "Escrow & Freelance Platform",
       category: isId
         ? "Platform Rekber & Freelance"
         : "Escrow & Freelance Platform",
@@ -120,7 +116,6 @@ export function RightSidebar({
     {
       name: "Faktanesia",
       handle: "@faktanesia_ai",
-      category: "Realtime Fact-Check Engine",
       category: isId
         ? "Deteksi Hoaks Realtime AI"
         : "Realtime Fact-Check Engine",
@@ -340,8 +335,8 @@ export function RightSidebar({
         </div>
         <p className="text-[11px] pt-1">
           &copy; {new Date().getFullYear()} Darell Rangga Portfolio. Built for
-          High Performance.
-          &copy; {new Date().getFullYear()} Darell Rangga Portfolio.{" "}
+          High Performance. &copy; {new Date().getFullYear()} Darell Rangga
+          Portfolio.{" "}
           {isId
             ? "Dibangun untuk performa tinggi."
             : "Built for high performance."}
