@@ -17,6 +17,9 @@ export interface Project {
   challenges?: { en: string[]; id: string[] };
   solutions?: { en: string[]; id: string[] };
   team?: { name: string; role: string }[];
+  isLive?: boolean;
+  hasMobileApp?: boolean;
+  mobileStack?: string;
 }
 
 export const projects: Project[] = [
@@ -33,9 +36,9 @@ export const projects: Project[] = [
       id: "Platform pemesanan tiket bus end-to-end yang mentransformasi operasional bus konvensional menjadi digital modern. Menggabungkan kemudahan booking tiket dengan manajemen armada yang efisien.",
     },
     tags: ["Laravel 12", "Vue 3", "Inertia"],
-    imageUrl: "/img/tujago.webp",
+    imageUrl: "/img/phd.webp",
     githubUrl: "https://github.com/Rangga11268/TunggalJayaTransport",
-    liveUrl: "#",
+    liveUrl: "https://tunggal-jaya-trans.vercel.app",
     colSpan: "md:col-span-2 md:row-span-2", // HERO ITEM (2x2)
     year: "2025",
     role: "Full Stack Developer",
@@ -61,7 +64,7 @@ export const projects: Project[] = [
       { name: "MySQL" },
     ],
     story: {
-      en: "Using the 'Modern Monolith' approach with Inertia.js allowed me to deliver a SPA experience without separate API complexity. This ensured rapid development and robust performance for the ticketing system.",
+      en: "Using the 'Modern Monolith' approach with Inertia.js allowed me to deliver a SPA experience without separate API complexity. This ensured rapid development and high-speed reliability for the ticketing system.",
       id: "Menggunakan pendekatan 'Modern Monolith' dengan Inertia.js memungkinkan saya menghadirkan pengalaman SPA tanpa kerumitan API terpisah. Ini menjamin pengembangan cepat dan performa tangguh untuk sistem tiket.",
     },
     challenges: {
@@ -88,6 +91,135 @@ export const projects: Project[] = [
         "Membuat skrip data seeder kustom dengan logika validasi untuk membersihkan dan mengimpor data lama secara akurat.",
       ],
     },
+    isLive: true,
+    hasMobileApp: true,
+    mobileStack: "React Native (Expo) & Flutter",
+  },
+  {
+    id: "makarya",
+    title: "Makarya Ecosystem",
+    shortDescription: {
+      en: "Student-to-SME Micro-Freelancing Ecosystem with Escrow Payment Protection.",
+      id: "Ekosistem Kolaborasi Micro-Freelancing Mahasiswa × UMKM dengan Escrow Protection.",
+    },
+    fullDescription: {
+      en: "A comprehensive digital ecosystem bridging active university students with local micro-enterprises (UMKM) for structured digital micro-projects. Built with Python FastAPI backend, React.js web portal, and React Native (Expo) mobile application, secured with automated Midtrans escrow payment holding until work approval.",
+      id: "Platform ekosistem digital terpadu yang menghubungkan mahasiswa aktif dengan UMKM lokal untuk kolaborasi proyek digital skala mikro secara terstruktur dan aman. Dibangun dengan backend Python FastAPI, web portal React.js, serta aplikasi mobile React Native (Expo), dilengkapi sistem proteksi pembayaran rekber (Escrow) Midtrans otomatis.",
+    },
+    tags: ["FastAPI", "React 18", "React Native", "Midtrans Escrow", "MySQL"],
+    imageUrl: "/img/makarya-hero.webp",
+    githubUrl: "https://github.com/Rangga11268",
+    liveUrl: "#",
+    colSpan: "md:col-span-2",
+    year: "2026",
+    role: "Lead Architect & Fullstack",
+    isLive: false,
+    hasMobileApp: true,
+    mobileStack: "React Native (Expo + TypeScript)",
+    features: {
+      en: [
+        "Escrow Payment Protection via Midtrans (Anti-Fraud)",
+        "Dual Platform: Web Portal + React Native Mobile App",
+        "FastAPI High-Performance Async Architecture",
+        "Firebase Push Notification & SLA Revision Control",
+      ],
+      id: [
+        "Sistem Rekber / Escrow Otomatis via Midtrans (Anti-Penipuan)",
+        "Dual Platform: Web Portal + Aplikasi Mobile React Native",
+        "Arsitektur Backend Async Performa Tinggi FastAPI",
+        "Notifikasi Firebase Push & Pembatasan Revisi Terukur",
+      ],
+    },
+    techStack: [
+      { name: "Python FastAPI" },
+      { name: "React Native (Expo)" },
+      { name: "React.js 18" },
+      { name: "MySQL" },
+      { name: "Midtrans Escrow" },
+      { name: "Firebase Cloud Messaging" },
+    ],
+    challenges: {
+      en: [
+        "Implementing an automated escrow state machine to protect student milestone payouts.",
+        "Synchronizing real-time application states between the React web portal and React Native mobile clients.",
+      ],
+      id: [
+        "Mengimplementasikan state machine escrow otomatis untuk mengamankan pembayaran milestone mahasiswa.",
+        "Sinkronisasi status proyek real-time antara portal web React dan aplikasi mobile React Native.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Engineered transactional webhook handlers reconciling Midtrans payment triggers with database isolation.",
+        "Built centralized REST endpoints in FastAPI with strict Pydantic schemas shared across web and mobile.",
+      ],
+      id: [
+        "Membangun webhook handler transaksional untuk rekonsiliasi pembayaran Midtrans dengan isolasi database.",
+        "Merancang REST endpoint terpusat di FastAPI dengan skema validasi ketat Pydantic untuk web dan mobile.",
+      ],
+    },
+  },
+  {
+    id: "titik-aman",
+    title: "TitikAman Citizen Safety Network",
+    shortDescription: {
+      en: "1st Place Winner at IT Bootcamp 2026. Real-time citizen safety and SOS broadcast platform powered by Laravel 12 and Laravel Reverb.",
+      id: "Juara 1 IT Bootcamp 2026. Platform pelaporan darurat dan SOS real-time warga berbasis Laravel 12 dan Laravel Reverb.",
+    },
+    fullDescription: {
+      en: "The Champion / 1st Place Winner at IT Bootcamp 2026. Led a cross-functional team of 11 engineers to architect and build TitikAman—a real-time civic emergency and incident reporting network. Engineered the backend using Laravel 12, MySQL, and Laravel Reverb WebSockets for instant SOS emergency broadcasting, fully validated through rigorous black-box testing.",
+      id: "Proyek Juara 1 IT Bootcamp 2026. Memimpin tim lintas fungsi beranggotakan 11 orang untuk merancang arsitektur sistem TitikAman—platform pelaporan insiden darurat dan keselamatan warga. Dibangun menggunakan Laravel 12, MySQL, dan Laravel Reverb WebSockets untuk broadcast SOS darurat secara real-time, lolos uji black-box testing tanpa celah.",
+    },
+    tags: ["Laravel 12", "Laravel Reverb", "MySQL", "WebSockets"],
+    imageUrl: "/img/saya/trophy-juara.jpg",
+    githubUrl: "https://github.com/Rangga11268/titikAman",
+    liveUrl: "#",
+    colSpan: "md:col-span-2",
+    year: "2026",
+    role: "Lead Developer (Tim 11 Orang)",
+    features: {
+      en: [
+        "Real-Time Emergency SOS Broadcast (Laravel Reverb)",
+        "Geospatial Danger Hotspot Heatmap",
+        "Passed Rigorous Black-Box Testing",
+        "Champion / 1st Place IT Bootcamp 2026",
+      ],
+      id: [
+        "Broadcast SOS Darurat Real-Time (Laravel Reverb)",
+        "Peta Sebaran Titik Rawan Geospasial",
+        "Lolos Uji Menyeluruh Black-Box Testing",
+        "Juara 1 / Champion IT Bootcamp 2026",
+      ],
+    },
+    techStack: [
+      { name: "Laravel 12" },
+      { name: "Laravel Reverb" },
+      { name: "MySQL" },
+      { name: "WebSockets" },
+      { name: "Tailwind CSS" },
+    ],
+    challenges: {
+      en: [
+        "Structuring geo-tagged incident queries efficiently without spatial query bottlenecks.",
+        "Preventing spam reports through client-side throttling and database integrity constraints.",
+      ],
+      id: [
+        "Mengoptimalkan query database untuk pemetaan laporan geospasial tanpa degradasi performa.",
+        "Mencegah laporan palsu melalui pembatasan kuota pengiriman dan validasi integritas data.",
+      ],
+    },
+    solutions: {
+      en: [
+        "Indexed latitude/longitude coordinates and leveraged spatial bounding box lookups in MySQL.",
+        "Implemented session-based rate limiting and multi-step verification before reports are published.",
+      ],
+      id: [
+        "Mengindeks koordinat latitude/longitude dan menerapkan pencarian bounding-box pada database MySQL.",
+        "Menerapkan rate limiting dan verifikasi bertingkat sebelum laporan ditampilkan ke publik.",
+      ],
+    },
+    isLive: false,
+    hasMobileApp: false,
   },
   {
     id: "srb-motor-v3",
@@ -97,16 +229,19 @@ export const projects: Project[] = [
       id: "Platform Dealer Otomotif Next-Gen dengan UI Futuristik.",
     },
     fullDescription: {
-      en: "A web-based motorcycle dealership platform designed with a Futuristic 'Command Center' concept. This application is not just a standard e-commerce site, but combines a seamless Single Page Application (SPA) experience with High-Tech visuals for credit simulation, document management, and real-time dealer administration.",
-      id: "Platform dealer motor berbasis web yang dirancang dengan konsep Futuristic 'Command Center'. Aplikasi ini bukan sekadar e-commerce biasa, tetapi menggabungkan pengalaman Single Page Application (SPA) yang seamless dengan visual High-Tech untuk simulasi kredit, manajemen dokumen, dan administrasi dealer yang real-time.",
+      en: "A web-based motorcycle dealership platform designed with a Futuristic 'Command Center' concept. This application is not just a standard e-commerce site, but combines a responsive Single Page Application (SPA) experience with High-Tech visuals for credit simulation, document management, and real-time dealer administration.",
+      id: "Platform dealer motor berbasis web yang dirancang dengan konsep Futuristic 'Command Center'. Aplikasi ini bukan sekadar e-commerce biasa, tetapi menggabungkan pengalaman Single Page Application (SPA) yang responsif dan lancar dengan visual High-Tech untuk simulasi kredit, manajemen dokumen, dan administrasi dealer yang real-time.",
     },
     tags: ["Laravel", "Inertia", "React 19"],
-    imageUrl: "/img/srb motor.webp",
-    githubUrl: "https://github.com/Rangga11268/SrbMotorV2",
-    liveUrl: "#",
+    imageUrl: "/img/logo_srb.webp",
+    githubUrl: "https://github.com/Rangga11268/SrbMotorV3",
+    liveUrl: "https://srb-motor.vercel.app",
     colSpan: "md:col-span-2", // WIDE ITEM
     year: "2025",
     role: "Full Stack Developer",
+    isLive: true,
+    hasMobileApp: true,
+    mobileStack: "Flutter (Dart)",
     features: {
       en: [
         "Hyper-Modern 'Neo-Automotive' UI",
@@ -129,7 +264,7 @@ export const projects: Project[] = [
       { name: "Recharts" },
     ],
     story: {
-      en: "I implemented Inertia.js to get mobile-app-like speed while keeping the robust data management of Laravel. The 'Command Center' dashboard features a custom-built Live Search grid that allows admins to filter thousands of records instantly without reloading.",
+      en: "I implemented Inertia.js to get mobile-app-like speed while keeping the structured data management of Laravel. The 'Command Center' dashboard features a custom-built Live Search grid that allows admins to filter thousands of records instantly without reloading.",
       id: "Saya mengimplementasikan Inertia.js untuk mendapatkan kecepatan interaksi ala aplikasi mobile tapi tetap mempertahankan keamanan dan kemudahan manajemen data dari Laravel.",
     },
     challenges: {
@@ -170,7 +305,7 @@ export const projects: Project[] = [
     },
     tags: ["React 19", "Node.js", "MongoDB"],
     imageUrl: "/img/siakad.webp",
-    githubUrl: "#",
+    githubUrl: "https://github.com/Rangga11268/siakad-smp",
     liveUrl: "#",
     colSpan: "md:col-span-1",
     year: "2026",
@@ -241,7 +376,8 @@ export const projects: Project[] = [
     },
     tags: ["Python Flask", "Scikit-Learn", "Alpine.js"],
     imageUrl: "/img/MLProject1.webp",
-    githubUrl: "https://github.com/Rangga11268/ProjectFDA",
+    githubUrl:
+      "https://github.com/Rangga11268/Australian-Weather-Prediction-AI",
     liveUrl: "#",
     colSpan: "md:col-span-1 md:row-span-2", // SIDEBAR ITEM
     year: "2024",
@@ -364,6 +500,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Full Stack Developer",
+    isLive: true,
+    hasMobileApp: false,
     features: {
       en: [
         "'Electric Royal' Aesthetic",
@@ -407,6 +545,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Full Stack Developer",
+    isLive: true,
+    hasMobileApp: false,
     features: {
       en: [
         "WhatsApp Booking Engine",
@@ -450,6 +590,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Full Stack Developer",
+    isLive: true,
+    hasMobileApp: false,
     features: {
       en: [
         "Ultra-Modern Bento Design",
@@ -483,7 +625,7 @@ export const projects: Project[] = [
       id: "Platform pesan terenkripsi yang aman dan fokus pada privasi.",
     },
     fullDescription: {
-      en: "Apapesan is a privacy-first messaging application designed to compete with mainstream platforms by offering enhanced security features. It prioritizes user anonymity and data protection through robust encryption protocols.",
+      en: "Apapesan is a privacy-first messaging application designed to compete with mainstream platforms by offering enhanced security features. It prioritizes user anonymity and data protection through end-to-end encryption protocols.",
       id: "Apapesan adalah aplikasi pesan yang mengutamakan privasi, dirancang untuk bersaing dengan platform utama dengan menawarkan fitur keamanan yang ditingkatkan. Prioritasnya adalah anonimitas pengguna dan perlindungan data.",
     },
     tags: ["Laravel", "MySQL", "Pusher"],
@@ -493,6 +635,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2024",
     role: "Full Stack Developer",
+    isLive: false,
+    hasMobileApp: false,
     features: {
       en: [
         "End-to-End Encryption",
@@ -528,10 +672,12 @@ export const projects: Project[] = [
     tags: ["React", "Python Flask", "Scikit-Learn", "Tesseract.js"],
     imageUrl: "/img/logo_faktanesia.png",
     githubUrl: "https://github.com/Rangga11268/FaktaNesia",
-    liveUrl: "http://faktanesia.vercel.app/",
+    liveUrl: "#",
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Lead AI Developer",
+    isLive: false,
+    hasMobileApp: false,
     features: {
       en: [
         "99.22% Accuracy AI Model",
@@ -576,6 +722,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "AI & Full Stack Developer",
+    isLive: false,
+    hasMobileApp: false,
     features: {
       en: [
         "7-Point Flood Risk Predictor",
@@ -620,6 +768,9 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Mobile App Developer",
+    isLive: false,
+    hasMobileApp: true,
+    mobileStack: "Flutter (Dart)",
     features: {
       en: [
         "Clean State Management (Provider)",
@@ -642,7 +793,7 @@ export const projects: Project[] = [
       { name: "SQLite (sqflite)" },
     ],
     story: {
-      en: "Designing SrbMotorApp allowed me to bridge native mobile experiences with modern automotive commerce. Managing secure state for document uploads and integrating the payment SDK directly within the mobile environment was key to building a robust utility.",
+      en: "Designing SrbMotorApp allowed me to bridge native mobile experiences with modern automotive commerce. Managing secure state for document uploads and integrating the payment SDK directly within the mobile environment was key to building a reliable utility.",
       id: "Mendesain SrbMotorApp memungkinkan saya menjembatani pengalaman mobile native dengan e-commerce otomotif modern. Mengelola state yang aman untuk unggahan dokumen dan mengintegrasikan SDK pembayaran langsung di lingkungan mobile adalah kunci membangun utilitas tangguh ini.",
     },
   },
@@ -655,7 +806,7 @@ export const projects: Project[] = [
     },
     fullDescription: {
       en: "An interactive learning platform tailored for Bina Sarana Informatika (BSI) students. It features a complete UTS MPSI simulator (60 questions), progressive level gating, automated explanation feedback, and light academic styling, constructed with pure Vanilla CSS for visual control.",
-      id: "Platform pembelajaran interaktif yang disesuaikan untuk mahasiswa Bina Sarana Informatika (BSI). Menampilkan simulator UTS MPSI lengkap (60 soal), pembatasan level progresif, pembahasan jawaban otomatis, dan styling akademis yang ringan, dibuat dengan Vanilla CSS murni untuk kontrol visual penuh."
+      id: "Platform pembelajaran interaktif yang disesuaikan untuk mahasiswa Bina Sarana Informatika (BSI). Menampilkan simulator UTS MPSI lengkap (60 soal), pembatasan level progresif, pembahasan jawaban otomatis, dan styling akademis yang ringan, dibuat dengan Vanilla CSS murni untuk kontrol visual penuh.",
     },
     tags: ["React", "Vite", "Vanilla CSS"],
     imageUrl: "/img/logo_cumlaude.png",
@@ -664,6 +815,8 @@ export const projects: Project[] = [
     colSpan: "md:col-span-1",
     year: "2025",
     role: "Front End Developer",
+    isLive: false,
+    hasMobileApp: false,
     features: {
       en: [
         "60-Question UTS MPSI Simulator",
@@ -703,10 +856,12 @@ export const projects: Project[] = [
     tags: ["Next.js 14", "Tailwind CSS", "Framer Motion"],
     imageUrl: "/img/haveatreat_hero.png",
     githubUrl: "https://github.com/Rangga11268/haveatreat",
-    liveUrl: "https://have-a-treat.vercel.app/",
+    liveUrl: "https://haveatreat.vercel.app",
     colSpan: "md:col-span-1",
     year: "2026",
     role: "Full Stack Developer",
+    isLive: true,
+    hasMobileApp: false,
     features: {
       en: [
         "WhatsApp Checkout Engine",
@@ -734,4 +889,3 @@ export const projects: Project[] = [
     },
   },
 ];
-

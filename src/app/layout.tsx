@@ -1,29 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Bodoni_Moda, Source_Sans_3 } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
-import { CustomizationProvider } from "@/app/providers/customization-provider";
+import { ClientSideElements } from "@/components/client-side-elements";
 
-import { FileSystemProvider } from "@/app/providers/file-system-provider";
-import { ClientSideElements } from "@/app/components/client-side-elements";
-
-const bodoni = Bodoni_Moda({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const inter = Inter({
+const fontSans = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-label",
+const fontDisplay = Sora({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
+  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -256,24 +249,19 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${bodoni.variable} ${inter.variable} ${sourceSans.variable} antialiased bg-background text-foreground`}
+        className={`${fontSans.variable} ${fontDisplay.variable} font-sans antialiased bg-background text-foreground`}
       >
-        <div className="fixed inset-0 z-[50] pointer-events-none bg-noise opacity-[0.03] mix-blend-overlay" />
         <ScrollProgress />
         <a
           href="#home"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] px-4 py-2 bg-primary text-secondary-foreground rounded-md font-bold transition-all"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] px-4 py-2 bg-primary text-primary-foreground rounded-lg font-semibold shadow-lg transition-all"
         >
           Skip to main content
         </a>
         <ThemeProvider>
           <LanguageProvider>
-            <CustomizationProvider>
-              <FileSystemProvider>
-                <ClientSideElements />
-                {children}
-              </FileSystemProvider>
-            </CustomizationProvider>
+            <ClientSideElements />
+            {children}
           </LanguageProvider>
         </ThemeProvider>
       </body>

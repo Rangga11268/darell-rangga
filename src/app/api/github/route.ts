@@ -130,10 +130,22 @@ export async function GET() {
         color: LANGUAGE_COLORS[name] || "#8b8b8b",
       }));
 
-    // Top repos (non-fork), sorted by stars then forks
+    const EXCLUDED_REPOS = new Set([
+      "Rangga11268",
+      "darell-rangga",
+      "md-to-pdf-converter",
+      "md2cv-pdf-server",
+      "tokoOnlineWp2Smt3",
+      "Blog-Website-PHP-Native",
+      "frontend-perpustakaan",
+      "pet-loft-web",
+      "Xolvon",
+    ]);
+
+    // Top repos (non-fork, worthy), sorted by stars then forks
     const topRepos = Array.isArray(reposData)
       ? (reposData as GithubRepo[])
-          .filter((r) => !r.fork)
+          .filter((r) => !r.fork && !EXCLUDED_REPOS.has(r.name))
           .sort(
             (a, b) =>
               b.stargazers_count - a.stargazers_count ||

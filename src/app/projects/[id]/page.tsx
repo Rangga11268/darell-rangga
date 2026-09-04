@@ -6,6 +6,12 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+export async function generateStaticParams() {
+  return localProjects.map((p) => ({
+    id: p.id,
+  }));
+}
+
 async function getProject(id: string): Promise<Project | null> {
   const local = localProjects.find((p) => p.id === id);
   if (local) return local;
