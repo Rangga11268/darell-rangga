@@ -260,8 +260,10 @@ export function ExecutiveHub() {
             linkCopied={linkCopied}
           />
 
-          {/* Social Navigation Tabs (Sticky) */}
-          <TabNavigation activeTab={activeTab} onSelectTab={setActiveTab} />
+          {/* Social Navigation Tabs (Desktop/Tablet only - mobile uses MobileBottomBar) */}
+          <div className="hidden md:block">
+            <TabNavigation activeTab={activeTab} onSelectTab={setActiveTab} />
+          </div>
 
           {/* Compose Box (Rendered on Home / Utas tab) */}
           {activeTab === "why-hire" && (

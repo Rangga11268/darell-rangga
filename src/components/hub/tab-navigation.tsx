@@ -47,64 +47,9 @@ export function TabNavigation({ activeTab, onSelectTab }: TabNavigationProps) {
   ];
 
   return (
-    <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-md border-b border-border/60 select-none">
-      {/* Mobile: Equal 5-column Icon-Only Tab Bar (No horizontal scrolling) */}
-      <div className="grid grid-cols-5 md:hidden w-full">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.key;
-          return (
-            <button
-              key={tab.key}
-              onClick={() => onSelectTab(tab.key)}
-              className={`py-3 flex items-center justify-center relative transition-all cursor-pointer active:scale-90 ${
-                isActive
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              title={tab.label}
-              aria-label={tab.label}
-            >
-              <div className="relative flex items-center justify-center">
-                <Icon
-                  size={21}
-                  weight={isActive ? "fill" : "regular"}
-                  className={`transition-all ${
-                    isActive
-                      ? "text-foreground scale-105"
-                      : "text-muted-foreground"
-                  }`}
-                />
-                {tab.badge === "Juara 1" && (
-                  <span
-                    className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-primary ring-2 ring-background"
-                    title="Juara 1"
-                  />
-                )}
-                {tab.key === "projects" && (
-                  <span
-                    className={`absolute -top-1.5 -right-2.5 text-[9px] font-mono font-bold px-1 rounded-full leading-tight ${
-                      isActive
-                        ? "bg-foreground text-background"
-                        : "bg-muted text-muted-foreground border border-border/80"
-                    }`}
-                  >
-                    12
-                  </span>
-                )}
-              </div>
-
-              {/* Active Indicator Underline (X / Twitter style indicator) */}
-              {isActive && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2.5px] bg-foreground rounded-full" />
-              )}
-            </button>
-          );
-        })}
-      </div>
-
+    <div className="hidden md:block sticky top-0 z-30 bg-background/90 backdrop-blur-md border-b border-border/60 select-none">
       {/* Desktop (md+): Equal-width segmented M3 tabs */}
-      <div className="hidden md:grid md:grid-cols-5 w-full">
+      <div className="grid grid-cols-5 w-full">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.key;
