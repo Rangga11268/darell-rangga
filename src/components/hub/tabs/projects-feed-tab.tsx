@@ -46,39 +46,46 @@ export function ProjectsFeedTab({
       transition={{ duration: 0.2 }}
       className="space-y-6"
     >
-      {/* Filters Bar — horizontal scroll, single row */}
-      <div className="flex items-center gap-3 pb-2">
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 flex-1">
+      {/* Segmented Filter Control */}
+      <div className="overflow-x-auto no-scrollbar pb-1">
+        <div className="inline-flex items-center p-1 rounded-2xl bg-muted/70 border border-border/60 gap-0.5 min-w-max">
           {([
-            { key: "all", label: isId ? "Semua (12)" : "All (12)", icon: null },
-            { key: "web", label: "Fullstack Web (8)", icon: "pulse" },
-            { key: "systems", label: isId ? "Sistem & Backend (5)" : "Systems & Backend (5)", icon: "cpu" },
-            { key: "mobile-apps", label: isId ? "Mobile Apps (3)" : "Mobile Apps (3)", icon: "mobile" },
-            { key: "ai-ml", label: "AI & Data (3)", icon: "sparkle" },
-          ] as { key: ProjectFilterKey; label: string; icon: string | null }[]).map(({ key, label, icon }) => {
+            { key: "all",         label: isId ? "Semua" : "All",        count: 12, icon: null },
+            { key: "web",         label: "Fullstack",                    count: 8,  icon: "pulse" },
+            { key: "systems",     label: isId ? "Backend" : "Backend",   count: 5,  icon: "cpu" },
+            { key: "mobile-apps", label: "Mobile",                       count: 3,  icon: "mobile" },
+            { key: "ai-ml",       label: "AI & Data",                    count: 3,  icon: "sparkle" },
+          ] as { key: ProjectFilterKey; label: string; count: number; icon: string | null }[]).map(({ key, label, count, icon }) => {
             const isActive = projectFilter === key || (key === "web" && projectFilter === "live-web");
             return (
               <button
                 key={key}
                 onClick={() => onFilterChange(key)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
-                  isActive
-                    ? "bg-foreground text-background"
-                    : "bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted border border-border/60"
-                }`}
+                className="relative cursor-pointer"
               >
-                {icon === "pulse" && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />}
-                {icon === "cpu" && <Cpu size={12} weight="bold" />}
-                {icon === "mobile" && <DeviceMobile size={12} weight="bold" />}
-                {icon === "sparkle" && <Sparkle size={12} weight="bold" />}
-                {label}
+                {isActive && (
+                  <motion.div
+                    layoutId="filter-pill"
+                    className="absolute inset-0 rounded-xl bg-background shadow-sm"
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
+                <span className={`relative z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-colors ${
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}>
+                  {icon === "pulse" && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />}
+                  {icon === "cpu" && <Cpu size={12} weight="bold" />}
+                  {icon === "mobile" && <DeviceMobile size={12} weight="bold" />}
+                  {icon === "sparkle" && <Sparkle size={12} weight="bold" />}
+                  {label}
+                  <span className={`text-[10px] font-mono tabular-nums ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}>
+                    {count}
+                  </span>
+                </span>
               </button>
             );
           })}
         </div>
-        <span className="text-[11px] font-mono text-muted-foreground hidden sm:inline-block shrink-0">
-          {isId ? "Ketuk untuk baca" : "Tap to read"}
-        </span>
       </div>
 
       {/* Projects Grid */}
