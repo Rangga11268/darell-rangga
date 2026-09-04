@@ -23,7 +23,10 @@ export function Footer() {
               DR
             </div>
             <p className="text-xs sm:text-sm text-muted-foreground font-medium">
-              &copy; {currentYear} Darell Rangga. {language === "id" ? "Hak cipta dilindungi." : "All rights reserved."}
+              &copy; {currentYear} Darell Rangga.{" "}
+              {language === "id"
+                ? "Hak cipta dilindungi."
+                : "All rights reserved."}
             </p>
           </div>
 
@@ -39,7 +42,7 @@ export function Footer() {
               <GithubIcon className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
+              href="https://www.linkedin.com/in/darellrangga/"
               target="_blank"
               rel="noreferrer"
               className="p-2 rounded-lg hover:bg-muted hover:text-[#0a66c2] transition-colors"
@@ -69,7 +72,7 @@ export function Footer() {
               <InstagramIcon className="w-4 h-4" />
             </a>
             <a
-              href="https://wa.me/6281292558509"
+              href="https://wa.me/628978638973"
               target="_blank"
               rel="noreferrer"
               className="p-2 rounded-lg hover:bg-muted hover:text-emerald-500 transition-colors"

@@ -889,7 +889,7 @@ export function PinnedThreadTab({
               </a>
 
               <a
-                href="https://wa.me/6289653528200"
+                href="https://wa.me/628978638973"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-bold text-xs hover:bg-emerald-500/20 active:scale-95 transition-all"

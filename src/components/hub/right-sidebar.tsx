@@ -319,7 +319,7 @@ export function RightSidebar({
           </a>
           <span>·</span>
           <a
-            href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
+            href="https://www.linkedin.com/in/darellrangga/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"

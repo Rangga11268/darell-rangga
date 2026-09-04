@@ -163,7 +163,7 @@ const jsonLd = {
       ],
       sameAs: [
         "https://github.com/Rangga11268",
-        "https://www.linkedin.com/in/darell-rangga-1320b634b/",
+        "https://www.linkedin.com/in/darellrangga/",
         "https://x.com/ranggsdarell",
         "https://www.instagram.com/darellrangga17/",
       ],
@@ -173,6 +173,7 @@ const jsonLd = {
         addressCountry: "ID",
       },
       email: "darellrangga@gmail.com",
+      telephone: "+628978638973",
     },
     {
       "@type": "WebPage",

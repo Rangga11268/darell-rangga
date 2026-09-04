@@ -95,7 +95,7 @@ export function ProfileHeader({
             </a>
 
             <a
-              href="https://wa.me/6281292558509"
+              href="https://wa.me/628978638973"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-foreground text-background text-xs font-extrabold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
@@ -153,14 +153,20 @@ export function ProfileHeader({
               <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-foreground tracking-tight font-display">
                 Darell Rangga
               </h1>
-              <CheckCircle size={20} weight="fill" className="text-primary shrink-0" />
+              <CheckCircle
+                size={20}
+                weight="fill"
+                className="text-primary shrink-0"
+              />
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mt-0.5">
               <span>@ranggsdarell</span>
               <span>·</span>
               <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                {isId ? "Tersedia untuk Rekrutmen Fullstack" : "Open for Fullstack Roles"}
+                {isId
+                  ? "Tersedia untuk Rekrutmen Fullstack"
+                  : "Open for Fullstack Roles"}
               </span>
             </div>
           </div>
@@ -183,7 +189,7 @@ export function ProfileHeader({
               <GithubIcon className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
+              href="https://www.linkedin.com/in/darellrangga/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#0a66c2] transition-colors p-1.5 rounded-xl hover:bg-muted/60"

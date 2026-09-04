@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -61,7 +61,11 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                 <span className="text-xs font-bold text-foreground font-display">
                   Darell Rangga
                 </span>
-                <CheckCircle size={13} weight="fill" className="text-foreground" />
+                <CheckCircle
+                  size={13}
+                  weight="fill"
+                  className="text-foreground"
+                />
               </div>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-medium">
                 Aktif Sekarang • Balas dalam &lt; 2 jam
@@ -79,7 +83,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
 
           <div className="space-y-3">
             <a
-              href="https://wa.me/6281292558509"
+              href="https://wa.me/628978638973"
               target="_blank"
               rel="noopener noreferrer"
               className="p-4 rounded-2xl border border-border/80 bg-background hover:bg-muted transition-all flex items-center justify-between group cursor-pointer"
@@ -136,7 +140,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
             </div>
 
             <a
-              href="https://www.linkedin.com/in/darell-rangga-1320b634b/"
+              href="https://www.linkedin.com/in/darellrangga/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-4 rounded-2xl border border-border/80 bg-background hover:bg-muted transition-all flex items-center justify-between group cursor-pointer"
@@ -150,7 +154,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                     LinkedIn Profile
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    linkedin.com/in/darell-rangga
+                    linkedin.com/in/darellrangga
                   </div>
                 </div>
               </div>
@@ -196,8 +200,12 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                   <XTwitterIcon className="w-4 h-4" />
                 </div>
                 <div className="truncate">
-                  <div className="text-xs font-bold text-foreground">X / Twitter</div>
-                  <div className="text-[11px] text-muted-foreground font-mono truncate">@ranggsdarell</div>
+                  <div className="text-xs font-bold text-foreground">
+                    X / Twitter
+                  </div>
+                  <div className="text-[11px] text-muted-foreground font-mono truncate">
+                    @ranggsdarell
+                  </div>
                 </div>
               </a>
 
@@ -211,8 +219,12 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
                   <InstagramIcon className="w-4 h-4" />
                 </div>
                 <div className="truncate">
-                  <div className="text-xs font-bold text-foreground">Instagram</div>
-                  <div className="text-[11px] text-muted-foreground font-mono truncate">@darellrangga17</div>
+                  <div className="text-xs font-bold text-foreground">
+                    Instagram
+                  </div>
+                  <div className="text-[11px] text-muted-foreground font-mono truncate">
+                    @darellrangga17
+                  </div>
                 </div>
               </a>
             </div>
@@ -231,9 +243,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
       {/* Right Column: Direct Message Form */}
       <div className="p-5 sm:p-6 rounded-3xl bg-card border border-border/80 shadow-xs">
         <h4 className="text-base font-bold text-foreground font-display mb-1">
-          {isId
-            ? "Kirim Pesan Langsung (DM)"
-            : "Direct Message (DM)"}
+          {isId ? "Kirim Pesan Langsung (DM)" : "Direct Message (DM)"}
         </h4>
         <p className="text-xs text-muted-foreground mb-4">
           {isId
@@ -261,9 +271,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
           <form onSubmit={handleFormSubmit} className="space-y-3">
             <div>
               <label className="text-[11px] font-bold text-muted-foreground uppercase font-display block mb-1">
-                {isId
-                  ? "Nama Anda / Perusahaan"
-                  : "Your Name / Company"}
+                {isId ? "Nama Anda / Perusahaan" : "Your Name / Company"}
               </label>
               <input
                 type="text"
@@ -275,9 +283,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
 
             <div>
               <label className="text-[11px] font-bold text-muted-foreground uppercase font-display block mb-1">
-                {isId
-                  ? "Email atau WhatsApp"
-                  : "Contact (Email or WhatsApp)"}
+                {isId ? "Email atau WhatsApp" : "Contact (Email or WhatsApp)"}
               </label>
               <input
                 type="text"
@@ -308,9 +314,7 @@ export function ContactTab({ email, copied, onCopyEmail }: ContactTabProps) {
               className="w-full py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <PaperPlaneRight size={14} weight="bold" />
-              <span>
-                {isId ? "Kirim DM Sekarang" : "Send Message"}
-              </span>
+              <span>{isId ? "Kirim DM Sekarang" : "Send Message"}</span>
             </button>
           </form>
         )}

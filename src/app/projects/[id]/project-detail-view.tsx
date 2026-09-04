@@ -546,7 +546,7 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
                 <span>{isId ? "Kirim DM" : "Send DM"}</span>
               </Link>
               <a
-                href="https://wa.me/6281292558509"
+                href="https://wa.me/628978638973"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 md:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 transition-all shadow-xs"
