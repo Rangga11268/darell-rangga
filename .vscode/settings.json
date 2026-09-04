@@ -8,13 +8,19 @@
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
+    "**/.git/refs/**": true,
+    "**/.git/logs/**": true,
     "**/node_modules/**": true,
     "**/.next/**": true,
     "**/.next-dev/**": true,
     "**/build/**": true,
     "**/out/**": true
   },
-  "git.autorefresh": true,
+  "git.autorefresh": false,
+  "git.autofetch": false,
   "git.decorations.enabled": true,
-  "git.detectSubmodules": false
+  "git.detectSubmodules": false,
+  "git.autoRepositoryDetection": false,
+  "git.statusLimit": 10000,
+  "git.indexLockTimeout": 10
 }
