@@ -69,7 +69,7 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return {
-    title: `${project.title} — Project Details`,
+    title: `${project.title} | Case Study`,
     description: project.shortDescription.en,
   };
 }

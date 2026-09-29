@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -285,7 +285,7 @@ export function ExecutiveHub() {
                       )}
 
                       {project.isLive && (
-                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           Live
                         </span>
@@ -423,7 +423,7 @@ export function ExecutiveHub() {
             <div className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card/70 flex flex-col gap-3">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-xs font-mono font-bold text-foreground">2024 - {isId ? "Sekarang" : "Present"}</span>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-bold">
                   {isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}
                 </span>
               </div>
