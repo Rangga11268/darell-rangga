@@ -73,7 +73,7 @@ export function ExecutiveHub() {
 
   return (
     <div className="w-full min-h-screen bg-background text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
-      {/* 1. Ultra-Minimalist Floating Navbar (Rauno / Emil Kowalski style) */}
+      {/* 1. Ultra-Minimalist Floating Navbar */}
       <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border/60 py-3 px-4 sm:px-6 transition-colors">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link
@@ -128,7 +128,7 @@ export function ExecutiveHub() {
         </div>
       </header>
 
-      {/* 2. Main Content Canvas (Single Clean Column max-w-3xl) */}
+      {/* 2. Main Content Canvas */}
       <main className="w-full max-w-3xl px-4 sm:px-6 py-12 sm:py-20 flex flex-col gap-16 sm:gap-24">
         
         {/* SECTION 1: HERO & STATEMENT */}

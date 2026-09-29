@@ -21,7 +21,7 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.darellrangga.me"),
   title: {
-    default: "Darell Rangga | Web Developer Indonesia",
+    default: "Darell Rangga | Fullstack Software Engineer & System Architect",
     template: "%s | Darell Rangga",
   },
   description:
