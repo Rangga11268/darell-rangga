@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/app/data/projects";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -73,7 +74,7 @@ export function ExecutiveHub() {
 
   return (
     <div className="w-full min-h-screen bg-background text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
-      {/* 1. Ultra-Minimalist Floating Navbar */}
+      {/* 1. Ultra-Minimalist Floating Navbar (Rauno / Emil Kowalski style) */}
       <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border/60 py-3 px-4 sm:px-6 transition-colors">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link
@@ -128,20 +129,11 @@ export function ExecutiveHub() {
         </div>
       </header>
 
-      {/* 2. Main Content Canvas */}
+      {/* 2. Main Content Canvas (Single Clean Column max-w-3xl) */}
       <main className="w-full max-w-3xl px-4 sm:px-6 py-12 sm:py-20 flex flex-col gap-16 sm:gap-24">
         
         {/* SECTION 1: HERO & STATEMENT */}
         <section id="about" className="flex flex-col gap-6 pt-2">
-          {/* Live Status Pill */}
-          <div className="self-start inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-card text-xs font-mono text-muted-foreground shadow-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>
-              {isId
-                ? "Tersedia untuk Rekrutmen Fullstack & Kontrak"
-                : "Available for full-time roles & engineering contracts"}
-            </span>
-          </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display leading-[1.15]">
@@ -229,7 +221,7 @@ export function ExecutiveHub() {
           </div>
         </section>
 
-        {/* SECTION 2: FEATURED WORKS / PROJECTS (100% TEXT-FIRST EDITORIAL ROWS, ZERO IMAGE CLUTTER) */}
+        {/* SECTION 2: FEATURED WORKS / PROJECTS */}
         <section id="projects" className="flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-3 border-b border-border/60">
             <div>
@@ -265,110 +257,123 @@ export function ExecutiveHub() {
             </div>
           </div>
 
-          {/* Text-First Editorial Rows */}
-          <div className="divide-y divide-border/60">
+          {/* Project List */}
+          <div className="grid grid-cols-1 gap-6">
             {filteredProjects.map((project) => {
               return (
                 <div
                   key={project.id}
-                  className="py-5 sm:py-6 first:pt-2 last:pb-2 group hover:bg-muted/30 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-2xl transition-colors flex flex-col gap-3"
+                  className="p-5 sm:p-6 rounded-2xl border border-border/70 bg-card/60 hover:border-foreground/30 transition-all flex flex-col gap-4 group relative"
                 >
-                  {/* Row Header: Year, Title, Badges, Direct Actions */}
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0">
-                        {project.year}
-                      </span>
+                  {/* Media Snapshot */}
+                  {project.imageUrl && (
+                    <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-border/80 bg-zinc-950/40">
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.title}
+                        fill
+                        className="object-cover object-top group-hover:scale-[1.01] transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, 720px"
+                      />
+                    </div>
+                  )}
 
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="text-base sm:text-lg font-bold text-foreground font-display tracking-tight group-hover:text-foreground group-hover:underline underline-offset-4 flex items-center gap-1.5"
-                      >
-                        <span>{project.title}</span>
-                      </Link>
-
-                      {project.id === "titik-aman" && (
-                        <span className="px-2 py-0.5 rounded-md bg-foreground/10 text-foreground text-[10px] font-mono font-bold flex items-center gap-1 border border-foreground/15">
-                          <Trophy size={11} weight="fill" />
-                          Juara 1
+                  {/* Project Info */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-foreground">
+                          {project.year}
                         </span>
-                      )}
-
-                      {project.isLive && (
-                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                          Live
+                        <span className="text-border text-xs">/</span>
+                        <span className="text-xs font-mono text-muted-foreground">
+                          {project.role}
                         </span>
-                      )}
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        {project.isLive && (
+                          <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            Live
+                          </span>
+                        )}
+                        {project.id === "titik-aman" && (
+                          <span className="px-2 py-0.5 rounded-md bg-foreground/10 text-foreground text-[10px] font-mono font-bold flex items-center gap-1 border border-foreground/15">
+                            <Trophy size={11} weight="fill" />
+                            Juara 1
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    {/* Action Links */}
-                    <div className="flex items-center gap-3 self-end sm:self-auto text-xs shrink-0">
+                    <h3 className="text-lg font-bold text-foreground tracking-tight font-display">
+                      {project.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      {project.shortDescription[language]}
+                    </p>
+
+                    {/* Tech Stack Pills */}
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {project.techStack.map((tech) => (
+                        <span
+                          key={tech.name}
+                          className="px-2 py-0.5 rounded-md bg-muted text-foreground text-[11px] font-mono font-medium"
+                        >
+                          {tech.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Card Bottom Links */}
+                  <div className="pt-3 border-t border-border/60 flex items-center justify-between text-xs">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="font-semibold text-foreground hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>{isId ? "Detail Studi Kasus" : "Case Study"}</span>
+                      <ArrowRight size={12} weight="bold" />
+                    </Link>
+
+                    <div className="flex items-center gap-2">
                       {project.liveUrl && project.liveUrl !== "#" && (
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-foreground text-background text-xs font-bold hover:opacity-90 transition-opacity"
                         >
                           <span>Live Demo</span>
                           <ArrowUpRight size={12} weight="bold" />
                         </a>
                       )}
-
                       {project.githubUrl && project.githubUrl !== "#" && (
                         <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
+                          className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                           title="GitHub Source Code"
                         >
-                          <span>Code</span>
-                          <ArrowUpRight size={12} weight="bold" />
+                          <GithubIcon className="w-4 h-4" />
                         </a>
                       )}
-
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline"
-                      >
-                        <span>{isId ? "Studi Kasus" : "Case Study"}</span>
-                        <ArrowRight size={12} weight="bold" />
-                      </Link>
                     </div>
-                  </div>
-
-                  {/* Concise Description */}
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed sm:pl-14">
-                    {project.shortDescription[language]}
-                  </p>
-
-                  {/* Tech Stack Pills */}
-                  <div className="flex flex-wrap items-center gap-1.5 sm:pl-14 pt-0.5">
-                    <span className="text-[11px] font-mono text-muted-foreground/80 mr-1">
-                      {project.role} &middot;
-                    </span>
-                    {project.techStack.map((tech) => (
-                      <span
-                        key={tech.name}
-                        className="px-2 py-0.5 rounded-md bg-muted text-foreground text-[11px] font-mono font-medium"
-                      >
-                        {tech.name}
-                      </span>
-                    ))}
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="pt-4 text-center">
+          <div className="pt-2 text-center">
             <Link
               href="/projects"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground transition-all shadow-xs"
             >
-              <span>{isId ? "Buka Direktori Lengkap 12+ Proyek" : "View Full 12+ Projects Directory"}</span>
+              <span>{isId ? "Lihat Semua 12+ Proyek di Arsip" : "View All 12+ Projects in Archive"}</span>
               <ArrowRight size={14} weight="bold" />
             </Link>
           </div>
