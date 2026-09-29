@@ -134,6 +134,15 @@ export function ExecutiveHub() {
         
         {/* SECTION 1: HERO & STATEMENT */}
         <section id="about" className="flex flex-col gap-6 pt-2">
+          {/* Live Status Pill */}
+          <div className="self-start inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-card text-xs font-mono text-muted-foreground shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>
+              {isId
+                ? "Tersedia untuk Rekrutmen Fullstack & Kontrak"
+                : "Available for full-time roles & engineering contracts"}
+            </span>
+          </div>
 
           <div className="space-y-3">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display leading-[1.15]">
