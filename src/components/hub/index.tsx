@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/app/data/projects";
 import { useLanguage } from "@/app/providers/language-provider";
@@ -18,9 +17,6 @@ import {
   Moon,
   Code,
   PaperPlaneRight,
-  SealCheck,
-  Cpu,
-  GraduationCap,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -43,9 +39,6 @@ export function ExecutiveHub() {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("all");
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
-  const [senderName, setSenderName] = useState("");
-  const [senderEmail, setSenderEmail] = useState("");
-  const [senderMessage, setSenderMessage] = useState("");
 
   const email = "darellrangga@gmail.com";
 
@@ -58,20 +51,7 @@ export function ExecutiveHub() {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSent(true);
-
-    const subject = encodeURIComponent(`Inquiry from ${senderName} (${senderEmail})`);
-    const body = encodeURIComponent(
-      `Name: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${senderMessage}`
-    );
-
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-
-    setTimeout(() => {
-      setFormSent(false);
-      setSenderName("");
-      setSenderEmail("");
-      setSenderMessage("");
-    }, 4000);
+    setTimeout(() => setFormSent(false), 4000);
   };
 
   const filteredProjects = projects.filter((p) => {
@@ -149,88 +129,37 @@ export function ExecutiveHub() {
       </header>
 
       {/* 2. Main Content Canvas (Single Clean Column max-w-3xl) */}
-      <main className="w-full max-w-3xl px-4 sm:px-6 py-10 sm:py-16 flex flex-col gap-14 sm:gap-20">
+      <main className="w-full max-w-3xl px-4 sm:px-6 py-12 sm:py-20 flex flex-col gap-16 sm:gap-24">
         
         {/* SECTION 1: HERO & STATEMENT */}
         <section id="about" className="flex flex-col gap-6 pt-2">
-          {/* Top Row: Avatar & Status Pill */}
-          <div className="flex items-center justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-border/80 bg-muted shrink-0 shadow-xs">
-                <Image
-                  src="/img/saya/saya1.webp"
-                  alt="Darell Rangga"
-                  fill
-                  priority
-                  className="object-cover object-top"
-                />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-bold text-foreground font-display">Darell Rangga</span>
-                  <SealCheck size={16} weight="fill" className="text-primary" />
-                </div>
-                <span className="text-xs text-muted-foreground font-mono">@darellrangga</span>
-              </div>
-            </div>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-card text-xs font-mono text-muted-foreground shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>
-                {isId
-                  ? "Tersedia untuk Rekrutmen Fullstack & Kontrak"
-                  : "Available for full-time roles & contracts"}
-              </span>
-            </div>
+          {/* Live Status Pill */}
+          <div className="self-start inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-card text-xs font-mono text-muted-foreground shadow-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>
+              {isId
+                ? "Tersedia untuk Rekrutmen Fullstack & Kontrak"
+                : "Available for full-time roles & engineering contracts"}
+            </span>
           </div>
 
-          {/* Core Title */}
-          <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display leading-[1.12]">
-              Fullstack Software Engineer & System Architect
+          <div className="space-y-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display leading-[1.15]">
+              Darell Rangga
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
-              {isId
-                ? "Saya merancang dan membangun sistem web performa tinggi, transaksi database atomik, dan arsitektur real-time. Spesialis Laravel 12, React 19, dan Next.js 15. Lead Developer Juara 1 IT Bootcamp 2026 (TitikAman, memimpin tim 11 orang). Mahasiswa S1 Sistem Informasi UBSI dengan IPK 4.00/4.00."
-                : "I design and build high-performance web systems, atomic database transactions, and real-time architectures. Specializing in Laravel 12, React 19, and Next.js 15. Lead Developer Champion at IT Bootcamp 2026 (TitikAman, led 11 engineers). Studying Information Systems at UBSI with a perfect 4.00/4.00 GPA."}
+            <p className="text-base sm:text-lg font-medium text-foreground/80 font-mono">
+              Fullstack Software Engineer & System Architect
             </p>
           </div>
 
-          {/* Recruiter Quick Proof Matrix */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-foreground">
-                <Trophy size={14} weight="fill" className="text-foreground" />
-                <span>{isId ? "Juara 1 IT Bootcamp" : "1st Place Champion"}</span>
-              </div>
-              <p className="text-[11px] text-muted-foreground leading-tight">
-                {isId ? "Memimpin 11 engineer membangun TitikAman (2026)" : "Led 11 engineers building TitikAman (2026)"}
-              </p>
-            </div>
-
-            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-foreground">
-                <Cpu size={14} weight="bold" />
-                <span>{isId ? "12+ Sistem Produksi" : "12+ Production Systems"}</span>
-              </div>
-              <p className="text-[11px] text-muted-foreground leading-tight">
-                {isId ? "Arsitektur database atomik & real-time" : "Atomic transactions & real-time WebSockets"}
-              </p>
-            </div>
-
-            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                <GraduationCap size={14} weight="bold" />
-                <span>{isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}</span>
-              </div>
-              <p className="text-[11px] text-muted-foreground leading-tight">
-                {isId ? "S1 Sistem Informasi di UBSI" : "B.S. Information Systems at UBSI"}
-              </p>
-            </div>
-          </div>
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+            {isId
+              ? "Saya merancang dan membangun sistem web performa tinggi, transaksi database atomik, dan arsitektur real-time. Spesialis Laravel 12, React 19, dan Next.js 15. Lead Developer Juara 1 IT Bootcamp 2026 (TitikAman, memimpin tim 11 orang). Mahasiswa S1 Sistem Informasi di Universitas Bina Sarana Informatika dengan IPK 4.00/4.00."
+              : "I design and build high-performance web systems, atomic database transactions, and real-time architectures. Specializing in Laravel 12, React 19, and Next.js 15. Lead Developer Champion at IT Bootcamp 2026 (TitikAman, led 11 engineers). Studying Information Systems at Universitas Bina Sarana Informatika with a perfect 4.00/4.00 GPA."}
+          </p>
 
           {/* Quick Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3 pt-1">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={handleCopyEmail}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
@@ -300,12 +229,12 @@ export function ExecutiveHub() {
           </div>
         </section>
 
-        {/* SECTION 2: EDITORIAL CRAFT PROJECT LIST (Typography Text Rows - Rauno / Paco style) */}
+        {/* SECTION 2: FEATURED WORKS / PROJECTS (100% TEXT-FIRST EDITORIAL ROWS, ZERO IMAGE CLUTTER) */}
         <section id="projects" className="flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-3 border-b border-border/60">
             <div>
               <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground block mb-1">
-                {isId ? "Karya Terpilih" : "Selected Works"}
+                {isId ? "Karya Pilihan" : "Selected Works"}
               </span>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display">
                 {isId ? "Proyek & Sistem Produksi" : "Projects & Production Systems"}
@@ -336,107 +265,110 @@ export function ExecutiveHub() {
             </div>
           </div>
 
-          {/* Minimalist Text Row List — Zero Scroll Fatigue for Recruiters */}
-          <div className="divide-y divide-border/60 border-y border-border/60">
+          {/* Text-First Editorial Rows */}
+          <div className="divide-y divide-border/60">
             {filteredProjects.map((project) => {
               return (
                 <div
                   key={project.id}
-                  className="py-4 sm:py-5 group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 sm:gap-6 hover:bg-muted/40 px-2 -mx-2 rounded-xl transition-colors"
+                  className="py-5 sm:py-6 first:pt-2 last:pb-2 group hover:bg-muted/30 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-2xl transition-colors flex flex-col gap-3"
                 >
-                  {/* Left Column: Title, Year, Description & Stack */}
-                  <div className="space-y-1.5 flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-mono text-muted-foreground font-semibold">
+                  {/* Row Header: Year, Title, Badges, Direct Actions */}
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0">
                         {project.year}
                       </span>
-                      <span className="text-border text-xs">/</span>
-                      
+
                       <Link
                         href={`/projects/${project.id}`}
-                        className="text-base font-bold text-foreground hover:underline tracking-tight font-display flex items-center gap-1.5"
+                        className="text-base sm:text-lg font-bold text-foreground font-display tracking-tight group-hover:text-foreground group-hover:underline underline-offset-4 flex items-center gap-1.5"
                       >
                         <span>{project.title}</span>
                       </Link>
 
                       {project.id === "titik-aman" && (
-                        <span className="px-2 py-0.2 rounded bg-foreground/10 text-foreground text-[10px] font-mono font-bold inline-flex items-center gap-1 border border-foreground/15">
+                        <span className="px-2 py-0.5 rounded-md bg-foreground/10 text-foreground text-[10px] font-mono font-bold flex items-center gap-1 border border-foreground/15">
                           <Trophy size={11} weight="fill" />
                           Juara 1
                         </span>
                       )}
 
                       {project.isLive && (
-                        <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold inline-flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           Live
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                      {project.shortDescription[language]}
-                    </p>
-
-                    {/* Tech Badges */}
-                    <div className="flex flex-wrap gap-1 pt-0.5">
-                      {project.techStack.slice(0, 4).map((tech) => (
-                        <span
-                          key={tech.name}
-                          className="px-1.5 py-0.2 rounded bg-muted text-[10px] font-mono text-muted-foreground"
+                    {/* Action Links */}
+                    <div className="flex items-center gap-3 self-end sm:self-auto text-xs shrink-0">
+                      {project.liveUrl && project.liveUrl !== "#" && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
                         >
-                          {tech.name}
-                        </span>
-                      ))}
+                          <span>Live Demo</span>
+                          <ArrowUpRight size={12} weight="bold" />
+                        </a>
+                      )}
+
+                      {project.githubUrl && project.githubUrl !== "#" && (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
+                          title="GitHub Source Code"
+                        >
+                          <span>Code</span>
+                          <ArrowUpRight size={12} weight="bold" />
+                        </a>
+                      )}
+
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline"
+                      >
+                        <span>{isId ? "Studi Kasus" : "Case Study"}</span>
+                        <ArrowRight size={12} weight="bold" />
+                      </Link>
                     </div>
                   </div>
 
-                  {/* Right Column: Direct Fast Action Links */}
-                  <div className="flex items-center gap-2 shrink-0 self-start sm:self-center pt-1 sm:pt-0">
-                    {project.liveUrl && project.liveUrl !== "#" && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-foreground text-background text-xs font-bold hover:opacity-90 transition-opacity"
-                        title="Live Demo"
-                      >
-                        <span>Live</span>
-                        <ArrowUpRight size={11} weight="bold" />
-                      </a>
-                    )}
+                  {/* Concise Description */}
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed sm:pl-14">
+                    {project.shortDescription[language]}
+                  </p>
 
-                    {project.githubUrl && project.githubUrl !== "#" && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        title="GitHub Repository"
+                  {/* Tech Stack Pills */}
+                  <div className="flex flex-wrap items-center gap-1.5 sm:pl-14 pt-0.5">
+                    <span className="text-[11px] font-mono text-muted-foreground/80 mr-1">
+                      {project.role} &middot;
+                    </span>
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech.name}
+                        className="px-2 py-0.5 rounded-md bg-muted text-foreground text-[11px] font-mono font-medium"
                       >
-                        <GithubIcon className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                      title={isId ? "Studi Kasus" : "Case Study"}
-                    >
-                      <ArrowRight size={13} weight="bold" />
-                    </Link>
+                        {tech.name}
+                      </span>
+                    ))}
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <div className="pt-2 text-center">
+          <div className="pt-4 text-center">
             <Link
               href="/projects"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground transition-all shadow-xs"
             >
-              <span>{isId ? "Buka Arsip Lengkap Proyek" : "Open Full Project Directory"}</span>
+              <span>{isId ? "Buka Direktori Lengkap 12+ Proyek" : "View Full 12+ Projects Directory"}</span>
               <ArrowRight size={14} weight="bold" />
             </Link>
           </div>
@@ -586,7 +518,7 @@ export function ExecutiveHub() {
           <div className="p-6 sm:p-8 rounded-3xl border border-border/80 bg-card/70 space-y-6">
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {isId
-                ? "Tertarik mendiskusikan posisi Fullstack Engineer, proyek konsultasi, atau arsitektur sistem performa tinggi? Kirim pesan langsung atau hubungi via WhatsApp."
+                ? "Tertarik mendiskusikan posisi Fullstack Engineer, proyek konsultasi, atau pengembangan sistem skala besar? Kirim pesan langsung di bawah ini atau hubungi via WhatsApp."
                 : "Interested in discussing a Fullstack Engineer role, technical consulting, or custom high-performance web architecture? Send a direct note below or reach out via WhatsApp."}
             </p>
 
@@ -599,8 +531,6 @@ export function ExecutiveHub() {
                   <input
                     type="text"
                     required
-                    value={senderName}
-                    onChange={(e) => setSenderName(e.target.value)}
                     placeholder={isId ? "Budi Santoso" : "Sarah Jenkins"}
                     className="w-full bg-background border border-border/80 focus:border-foreground/50 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
                   />
@@ -612,8 +542,6 @@ export function ExecutiveHub() {
                   <input
                     type="email"
                     required
-                    value={senderEmail}
-                    onChange={(e) => setSenderEmail(e.target.value)}
                     placeholder="name@company.com"
                     className="w-full bg-background border border-border/80 focus:border-foreground/50 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
                   />
@@ -627,8 +555,6 @@ export function ExecutiveHub() {
                 <textarea
                   rows={4}
                   required
-                  value={senderMessage}
-                  onChange={(e) => setSenderMessage(e.target.value)}
                   placeholder={
                     isId
                       ? "Ceritakan mengenai proyek, timeline, atau peran yang Anda tawarkan..."
@@ -644,7 +570,7 @@ export function ExecutiveHub() {
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
                 >
                   <PaperPlaneRight size={14} weight="bold" />
-                  <span>{formSent ? (isId ? "Membuka Email..." : "Opening Email...") : (isId ? "Kirim Pesan" : "Send Inquiry")}</span>
+                  <span>{formSent ? (isId ? "Pesan Terkirim!" : "Message Sent!") : (isId ? "Kirim Pesan" : "Send Inquiry")}</span>
                 </button>
 
                 <div className="text-xs text-muted-foreground font-mono">
