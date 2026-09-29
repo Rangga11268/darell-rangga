@@ -135,7 +135,19 @@ export function ProjectDetailView({ project }: ProjectDetailViewProps) {
           </div>
         </div>
 
-
+        {/* Media Preview Container */}
+        {project.imageUrl && (
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-border/80 bg-zinc-950/40 shadow-xs">
+            <Image
+              src={project.imageUrl}
+              alt={project.title}
+              fill
+              priority
+              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 768px"
+            />
+          </div>
+        )}
 
         {/* Detailed Case Study Sections */}
         <div className="space-y-10 pt-4">
