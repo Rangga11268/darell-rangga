@@ -1,70 +1,53 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { projects } from "@/app/data/projects";
-import { AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useTheme } from "next-themes";
-import { TabKey, ProjectFilterKey, ProjectLikesState } from "./types";
-import { LeftSidebar } from "./left-sidebar";
-import { RightSidebar } from "./right-sidebar";
-import { ProfileHeader } from "./profile-header";
-import { TabNavigation } from "./tab-navigation";
-import { ComposeBox } from "./compose-box";
-import { MobileBottomBar } from "./mobile-bottom-bar";
-import { PinnedThreadTab } from "./tabs/pinned-thread-tab";
-import { ProjectsFeedTab } from "./tabs/projects-feed-tab";
-import { ExperienceTab } from "./tabs/experience-tab";
-import { SkillsTab } from "./tabs/skills-tab";
-import { ContactTab } from "./tabs/contact-tab";
-import { ArrowLeft, Translate, Sun, Moon } from "@phosphor-icons/react";
+import {
+  Check,
+  EnvelopeSimple,
+  WhatsappLogo,
+  FilePdf,
+  ArrowUpRight,
+  ArrowRight,
+  Trophy,
+  Sun,
+  Moon,
+  Code,
+  PaperPlaneRight,
+  SealCheck,
+  Cpu,
+  GraduationCap,
+} from "@phosphor-icons/react";
+import {
+  GithubIcon,
+  LinkedinIcon,
+  XTwitterIcon,
+  InstagramIcon,
+  LaravelIcon,
+  NextjsIcon,
+  FlutterIcon,
+} from "@/components/ui/brand-icons";
+
+type ProjectCategory = "all" | "web" | "systems" | "mobile" | "ai";
 
 export function ExecutiveHub() {
   const { language, toggleLanguage } = useLanguage();
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const isId = language === "id";
-  const [activeTab, setActiveTab] = useState<TabKey>("why-hire");
-  const [projectFilter, setProjectFilter] = useState<ProjectFilterKey>("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [linkCopied, setLinkCopied] = useState(false);
-  const [profileLikes, setProfileLikes] = useState(148);
-  const [hasLikedProfile, setHasLikedProfile] = useState(false);
 
-  const [projectLikes, setProjectLikes] = useState<
-    Record<string, ProjectLikesState>
-  >({
-    tujago: { count: 54, userLiked: false },
-    "titik-aman": { count: 96, userLiked: false },
-    makarya: { count: 88, userLiked: false },
-    faktanesia: { count: 64, userLiked: false },
-    "srb-motor-v3": { count: 37, userLiked: false },
-    tirtasense: { count: 32, userLiked: false },
-    "satya-hub": { count: 41, userLiked: false },
-    "phd-trans": { count: 28, userLiked: false },
-    "navara-trans": { count: 22, userLiked: false },
-    "aussie-rain-ai": { count: 35, userLiked: false },
-  });
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("all");
+  const [copied, setCopied] = useState(false);
+  const [formSent, setFormSent] = useState(false);
+  const [senderName, setSenderName] = useState("");
+  const [senderEmail, setSenderEmail] = useState("");
+  const [senderMessage, setSenderMessage] = useState("");
 
   const email = "darellrangga@gmail.com";
-
-  useEffect(() => {
-    if (window.location.hash === "#contact") {
-      setActiveTab("contact");
-    }
-    const handleHashChange = () => {
-      if (window.location.hash === "#contact") {
-        setActiveTab("contact");
-      }
-    };
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, [activeTab]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -72,326 +55,623 @@ export function ExecutiveHub() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setLinkCopied(true);
-    setTimeout(() => setLinkCopied(false), 2000);
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSent(true);
+
+    const subject = encodeURIComponent(`Inquiry from ${senderName} (${senderEmail})`);
+    const body = encodeURIComponent(
+      `Name: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${senderMessage}`
+    );
+
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+
+    setTimeout(() => {
+      setFormSent(false);
+      setSenderName("");
+      setSenderEmail("");
+      setSenderMessage("");
+    }, 4000);
   };
 
-  const handleLikeProfile = () => {
-    if (hasLikedProfile) {
-      setProfileLikes((prev) => prev - 1);
-      setHasLikedProfile(false);
-    } else {
-      setProfileLikes((prev) => prev + 1);
-      setHasLikedProfile(true);
+  const filteredProjects = projects.filter((p) => {
+    if (selectedCategory === "all") return true;
+    if (selectedCategory === "web") {
+      return ["titik-aman", "tujago", "makarya", "phd-trans", "navara-trans", "janguleee-trans", "srb-motor-v3", "have-a-treat"].includes(p.id);
     }
-  };
-
-  const handleLikeProject = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setProjectLikes((prev) => {
-      const current = prev[id] || { count: 20, userLiked: false };
-      return {
-        ...prev,
-        [id]: {
-          count: current.userLiked ? current.count - 1 : current.count + 1,
-          userLiked: !current.userLiked,
-        },
-      };
-    });
-  };
-
-  // Filter project categories
-  const allProjects = [
-    projects.find((p) => p.id === "titik-aman")!,
-    projects.find((p) => p.id === "makarya")!,
-    projects.find((p) => p.id === "tujago")!,
-    projects.find((p) => p.id === "faktanesia")!,
-    projects.find((p) => p.id === "srb-motor-v3")!,
-    projects.find((p) => p.id === "phd-trans")!,
-    projects.find((p) => p.id === "navara-trans")!,
-    projects.find((p) => p.id === "janguleee-trans")!,
-    projects.find((p) => p.id === "satya-hub")!,
-    projects.find((p) => p.id === "tirtasense")!,
-    projects.find((p) => p.id === "cumlaude-area")!,
-    projects.find((p) => p.id === "have-a-treat")!,
-  ].filter(Boolean);
-
-  const webProjects = [
-    projects.find((p) => p.id === "titik-aman")!,
-    projects.find((p) => p.id === "makarya")!,
-    projects.find((p) => p.id === "tujago")!,
-    projects.find((p) => p.id === "phd-trans")!,
-    projects.find((p) => p.id === "navara-trans")!,
-    projects.find((p) => p.id === "janguleee-trans")!,
-    projects.find((p) => p.id === "srb-motor-v3")!,
-    projects.find((p) => p.id === "have-a-treat")!,
-  ].filter(Boolean);
-
-  const systemProjects = [
-    projects.find((p) => p.id === "titik-aman")!,
-    projects.find((p) => p.id === "makarya")!,
-    projects.find((p) => p.id === "tujago")!,
-    projects.find((p) => p.id === "srb-motor-v3")!,
-    projects.find((p) => p.id === "satya-hub")!,
-  ].filter(Boolean);
-
-  const mobileAppProjects = [
-    projects.find((p) => p.id === "makarya")!,
-    projects.find((p) => p.id === "tujago")!,
-    projects.find((p) => p.id === "srb-motor-app")!,
-  ].filter(Boolean);
-
-  const aiProjects = [
-    projects.find((p) => p.id === "faktanesia")!,
-    projects.find((p) => p.id === "tirtasense")!,
-    projects.find((p) => p.id === "aussie-rain-ai")!,
-  ].filter(Boolean);
-
-  const baseProjects =
-    projectFilter === "systems"
-      ? systemProjects
-      : projectFilter === "web" || projectFilter === "live-web"
-        ? webProjects
-        : projectFilter === "mobile-apps"
-          ? mobileAppProjects
-          : projectFilter === "ai-ml"
-            ? aiProjects
-            : allProjects;
-
-  const displayedProjects = searchQuery.trim()
-    ? baseProjects.filter((p) => {
-        const q = searchQuery.toLowerCase();
-        return (
-          p.title.toLowerCase().includes(q) ||
-          p.shortDescription.id.toLowerCase().includes(q) ||
-          p.shortDescription.en.toLowerCase().includes(q) ||
-          p.tags.some((t) => t.toLowerCase().includes(q)) ||
-          p.techStack.some((t) => t.name.toLowerCase().includes(q))
-        );
-      })
-    : baseProjects;
-
-  const getHeaderMeta = () => {
-    switch (activeTab) {
-      case "projects":
-        return {
-          title: isId ? "Karya Terpilih" : "Featured Projects",
-          subtitle: isId
-            ? `${allProjects.length} Sistem Produksi · Fullstack & AI`
-            : `${allProjects.length} Production Systems · Fullstack & AI`,
-        };
-      case "experience":
-        return {
-          title: isId ? "Pencapaian & Riwayat" : "Milestones & Honors",
-          subtitle: isId
-            ? "Juara 1 IT Bootcamp 2026 · IPK 4.00"
-            : "1st Place IT Bootcamp 2026 · GPA 4.00",
-        };
-      case "skills":
-        return {
-          title: isId ? "Tech Radar & Arsitektur" : "Tech Radar & Stack",
-          subtitle: isId
-            ? "Keahlian Inti · Frameworks & Cloud"
-            : "Core Competencies · Frameworks & Cloud",
-        };
-      case "contact":
-        return {
-          title: isId ? "Kirim Pesan & Rekrutmen" : "Get in Touch & Hire",
-          subtitle: isId
-            ? "Tersedia untuk Kontrak & Full-Time"
-            : "Available for Full-Time & Contract",
-        };
-      default:
-        return {
-          title: "Darell Rangga",
-          subtitle: isId
-            ? `${allProjects.length} Karya Rekayasa · Juara 1 Nasional`
-            : `${allProjects.length} Projects · National 1st Place`,
-        };
+    if (selectedCategory === "systems") {
+      return ["titik-aman", "tujago", "makarya", "srb-motor-v3", "satya-hub"].includes(p.id);
     }
-  };
-
-  const headerMeta = getHeaderMeta();
+    if (selectedCategory === "mobile") {
+      return ["makarya", "tujago", "srb-motor-app"].includes(p.id) || Boolean(p.hasMobileApp);
+    }
+    if (selectedCategory === "ai") {
+      return ["faktanesia", "tirtasense", "aussie-rain-ai"].includes(p.id);
+    }
+    return true;
+  });
 
   return (
-    <div className="min-h-screen bg-background text-foreground w-full flex justify-center">
-      {/* 3-Column Outer Container matching X / Twitter Desktop */}
-      <div className="flex w-full min-h-screen justify-between max-w-[1600px]">
-        {/* 1. Left Column: Navigation Sidebar */}
-        <LeftSidebar activeTab={activeTab} onSelectTab={setActiveTab} />
+    <div className="w-full min-h-screen bg-background text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
+      {/* 1. Ultra-Minimalist Floating Navbar (Rauno / Emil Kowalski style) */}
+      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border/60 py-3 px-4 sm:px-6 transition-colors">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <Link
+            href="/"
+            className="flex items-center gap-2 group cursor-pointer"
+          >
+            <div className="w-7 h-7 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-xs font-mono tracking-tight group-hover:scale-105 transition-transform">
+              DR
+            </div>
+            <span className="text-sm font-semibold text-foreground tracking-tight">
+              Darell Rangga
+            </span>
+          </Link>
 
-        {/* 2. Middle Column: Main Feed Timeline with fluid flex-1 filling */}
-        <main className="flex-1 min-w-0 max-w-[800px] xl:max-w-[860px] border-r border-border/60 min-h-screen pb-24 md:pb-12">
-          {/* Top Sticky Header */}
-          <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md px-3.5 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between border-b border-border/60">
-            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-              {activeTab !== "why-hire" && (
-                <button
-                  onClick={() => {
-                    setActiveTab("why-hire");
-                    window.scrollTo({ top: 0, behavior: "instant" });
-                  }}
-                  className="p-1.5 rounded-full hover:bg-muted/80 text-foreground transition-colors cursor-pointer shrink-0"
-                  title={isId ? "Kembali ke Beranda" : "Back to Home"}
-                >
-                  <ArrowLeft size={18} weight="bold" />
-                </button>
-              )}
-              <div className="min-w-0">
-                <div className="text-base font-black font-display text-foreground leading-tight flex items-center gap-1.5 truncate">
-                  {headerMeta.title}
-                  {activeTab === "why-hire" && (
-                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                  )}
+          <nav className="flex items-center gap-4 text-xs font-medium text-muted-foreground">
+            <a href="#about" className="hover:text-foreground transition-colors hidden sm:inline">
+              {isId ? "Tentang" : "About"}
+            </a>
+            <a href="#projects" className="hover:text-foreground transition-colors">
+              {isId ? "Karya" : "Work"}
+            </a>
+            <a href="#experience" className="hover:text-foreground transition-colors hidden sm:inline">
+              {isId ? "Riwayat" : "Experience"}
+            </a>
+            <a href="#stack" className="hover:text-foreground transition-colors hidden sm:inline">
+              {isId ? "Stack" : "Stack"}
+            </a>
+            <a href="#contact" className="hover:text-foreground transition-colors">
+              {isId ? "Kontak" : "Contact"}
+            </a>
+
+            <div className="h-3.5 w-px bg-border/80" />
+
+            {/* Language Switch */}
+            <button
+              onClick={toggleLanguage}
+              className="px-2 py-1 rounded-md text-[11px] font-mono font-bold hover:bg-muted text-foreground transition-colors cursor-pointer"
+              title={isId ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
+            >
+              {language.toUpperCase()}
+            </button>
+
+            {/* Dark/Light Toggle */}
+            <button
+              onClick={() => setTheme(isDark ? "light" : "dark")}
+              className="p-1.5 rounded-md hover:bg-muted text-foreground transition-colors cursor-pointer"
+              title={isDark ? "Switch to Light" : "Switch to Dark"}
+            >
+              {isDark ? <Sun size={15} weight="bold" /> : <Moon size={15} weight="bold" />}
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* 2. Main Content Canvas (Single Clean Column max-w-3xl) */}
+      <main className="w-full max-w-3xl px-4 sm:px-6 py-10 sm:py-16 flex flex-col gap-14 sm:gap-20">
+        
+        {/* SECTION 1: HERO & STATEMENT */}
+        <section id="about" className="flex flex-col gap-6 pt-2">
+          {/* Top Row: Avatar & Status Pill */}
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-border/80 bg-muted shrink-0 shadow-xs">
+                <Image
+                  src="/img/saya/saya1.webp"
+                  alt="Darell Rangga"
+                  fill
+                  priority
+                  className="object-cover object-top"
+                />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sm font-bold text-foreground font-display">Darell Rangga</span>
+                  <SealCheck size={16} weight="fill" className="text-primary" />
                 </div>
-                <p className="text-[11px] font-mono text-muted-foreground leading-none truncate">
-                  {headerMeta.subtitle}
-                </p>
+                <span className="text-xs text-muted-foreground font-mono">@darellrangga</span>
               </div>
             </div>
 
-            {/* Quick Controls: Language Switcher & Dark/Light Mode Toggle */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-border/70 bg-muted/40 hover:bg-muted text-xs font-bold font-mono text-foreground transition-all cursor-pointer active:scale-95"
-                title={
-                  isId
-                    ? "Ganti Bahasa ke English"
-                    : "Switch Language to Bahasa Indonesia"
-                }
-                aria-label={
-                  isId
-                    ? "Ganti Bahasa ke English"
-                    : "Switch Language to Bahasa Indonesia"
-                }
-              >
-                <Translate size={14} weight="bold" className="text-primary" />
-                <span className="uppercase text-[11px] font-extrabold">
-                  {language}
-                </span>
-              </button>
-
-              <button
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="p-1.5 sm:p-2 rounded-full border border-border/70 bg-muted/40 hover:bg-muted text-foreground transition-all cursor-pointer active:scale-95"
-                title={
-                  isDark
-                    ? isId
-                      ? "Mode Terang"
-                      : "Light Mode"
-                    : isId
-                      ? "Mode Gelap"
-                      : "Dark Mode"
-                }
-                aria-label={
-                  isDark ? "Switch to Light Mode" : "Switch to Dark Mode"
-                }
-              >
-                {isDark ? (
-                  <Sun size={16} weight="bold" className="text-foreground" />
-                ) : (
-                  <Moon size={16} weight="bold" className="text-foreground" />
-                )}
-              </button>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/80 bg-card text-xs font-mono text-muted-foreground shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>
+                {isId
+                  ? "Tersedia untuk Rekrutmen Fullstack & Kontrak"
+                  : "Available for full-time roles & contracts"}
+              </span>
             </div>
-          </header>
-
-          {/* Profile Header & Banner (Only rendered on Home / Utas tab) */}
-          {activeTab === "why-hire" && (
-            <ProfileHeader
-              profileLikes={profileLikes}
-              hasLikedProfile={hasLikedProfile}
-              onLikeProfile={handleLikeProfile}
-              onCopyEmail={handleCopyEmail}
-              copied={copied}
-              onCopyLink={handleCopyLink}
-              linkCopied={linkCopied}
-            />
-          )}
-
-          {/* Social Navigation Tabs (Desktop/Tablet only - mobile uses MobileBottomBar) */}
-          <div className="hidden md:block">
-            <TabNavigation activeTab={activeTab} onSelectTab={setActiveTab} />
           </div>
 
-          {/* Compose Box (Rendered on Home / Utas tab) */}
-          {activeTab === "why-hire" && (
-            <ComposeBox
-              onSelectTab={setActiveTab}
-              onPostMessage={() => {
-                handleCopyEmail();
-              }}
-            />
-          )}
+          {/* Core Title */}
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-display leading-[1.12]">
+              Fullstack Software Engineer & System Architect
+            </h1>
+            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+              {isId
+                ? "Saya merancang dan membangun sistem web performa tinggi, transaksi database atomik, dan arsitektur real-time. Spesialis Laravel 12, React 19, dan Next.js 15. Lead Developer Juara 1 IT Bootcamp 2026 (TitikAman, memimpin tim 11 orang). Mahasiswa S1 Sistem Informasi UBSI dengan IPK 4.00/4.00."
+                : "I design and build high-performance web systems, atomic database transactions, and real-time architectures. Specializing in Laravel 12, React 19, and Next.js 15. Lead Developer Champion at IT Bootcamp 2026 (TitikAman, led 11 engineers). Studying Information Systems at UBSI with a perfect 4.00/4.00 GPA."}
+            </p>
+          </div>
 
-          {/* Tab Content Bodies */}
-          <div className="min-h-[480px]">
-            <AnimatePresence mode="wait">
-              {activeTab === "why-hire" && (
-                <PinnedThreadTab
-                  profileLikes={profileLikes}
-                  hasLikedProfile={hasLikedProfile}
-                  onLikeProfile={handleLikeProfile}
-                  onSelectTab={setActiveTab}
+          {/* Recruiter Quick Proof Matrix */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-foreground">
+                <Trophy size={14} weight="fill" className="text-foreground" />
+                <span>{isId ? "Juara 1 IT Bootcamp" : "1st Place Champion"}</span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-tight">
+                {isId ? "Memimpin 11 engineer membangun TitikAman (2026)" : "Led 11 engineers building TitikAman (2026)"}
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-foreground">
+                <Cpu size={14} weight="bold" />
+                <span>{isId ? "12+ Sistem Produksi" : "12+ Production Systems"}</span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-tight">
+                {isId ? "Arsitektur database atomik & real-time" : "Atomic transactions & real-time WebSockets"}
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl border border-border/70 bg-card/70 space-y-1">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                <GraduationCap size={14} weight="bold" />
+                <span>{isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}</span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-tight">
+                {isId ? "S1 Sistem Informasi di UBSI" : "B.S. Information Systems at UBSI"}
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
+            >
+              {copied ? <Check size={14} weight="bold" /> : <EnvelopeSimple size={14} weight="bold" />}
+              <span>{copied ? (isId ? "Email Disalin!" : "Email Copied!") : "darellrangga@gmail.com"}</span>
+            </button>
+
+            <a
+              href="https://wa.me/628978638973"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border/80 bg-card hover:bg-muted text-foreground text-xs font-semibold active:scale-95 transition-all shadow-xs cursor-pointer"
+            >
+              <WhatsappLogo size={15} weight="fill" className="text-emerald-500" />
+              <span>WhatsApp</span>
+            </a>
+
+            <a
+              href={isId ? "/pdf/Resume_Darell_Rangga_ID.pdf" : "/pdf/Resume_Darell_Rangga_EN.pdf"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-border/80 bg-card hover:bg-muted text-foreground text-xs font-semibold active:scale-95 transition-all shadow-xs cursor-pointer"
+            >
+              <FilePdf size={14} weight="bold" />
+              <span>{isId ? "Unduh CV" : "Download CV"}</span>
+            </a>
+
+            <div className="flex items-center gap-1 border-l border-border/70 pl-2">
+              <a
+                href="https://github.com/Rangga11268"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                title="GitHub"
+              >
+                <GithubIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/darellrangga/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg text-muted-foreground hover:text-[#0a66c2] hover:bg-muted transition-colors cursor-pointer"
+                title="LinkedIn"
+              >
+                <LinkedinIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://x.com/ranggsdarell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                title="X (Twitter)"
+              >
+                <XTwitterIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/darellrangga17/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-lg text-muted-foreground hover:text-[#E4405F] hover:bg-muted transition-colors cursor-pointer"
+                title="Instagram"
+              >
+                <InstagramIcon className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: EDITORIAL CRAFT PROJECT LIST (Typography Text Rows - Rauno / Paco style) */}
+        <section id="projects" className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-3 border-b border-border/60">
+            <div>
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+                {isId ? "Karya Terpilih" : "Selected Works"}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display">
+                {isId ? "Proyek & Sistem Produksi" : "Projects & Production Systems"}
+              </h2>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex flex-wrap items-center gap-1">
+              {([
+                { key: "all", label: isId ? "Semua" : "All" },
+                { key: "web", label: "Fullstack" },
+                { key: "systems", label: "Backend" },
+                { key: "mobile", label: "Mobile" },
+                { key: "ai", label: "AI & Data" },
+              ] as { key: ProjectCategory; label: string }[]).map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setSelectedCategory(tab.key)}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    selectedCategory === tab.key
+                      ? "bg-foreground text-background shadow-xs"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Minimalist Text Row List — Zero Scroll Fatigue for Recruiters */}
+          <div className="divide-y divide-border/60 border-y border-border/60">
+            {filteredProjects.map((project) => {
+              return (
+                <div
+                  key={project.id}
+                  className="py-4 sm:py-5 group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 sm:gap-6 hover:bg-muted/40 px-2 -mx-2 rounded-xl transition-colors"
+                >
+                  {/* Left Column: Title, Year, Description & Stack */}
+                  <div className="space-y-1.5 flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs font-mono text-muted-foreground font-semibold">
+                        {project.year}
+                      </span>
+                      <span className="text-border text-xs">/</span>
+                      
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="text-base font-bold text-foreground hover:underline tracking-tight font-display flex items-center gap-1.5"
+                      >
+                        <span>{project.title}</span>
+                      </Link>
+
+                      {project.id === "titik-aman" && (
+                        <span className="px-2 py-0.2 rounded bg-foreground/10 text-foreground text-[10px] font-mono font-bold inline-flex items-center gap-1 border border-foreground/15">
+                          <Trophy size={11} weight="fill" />
+                          Juara 1
+                        </span>
+                      )}
+
+                      {project.isLive && (
+                        <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold inline-flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                          Live
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                      {project.shortDescription[language]}
+                    </p>
+
+                    {/* Tech Badges */}
+                    <div className="flex flex-wrap gap-1 pt-0.5">
+                      {project.techStack.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech.name}
+                          className="px-1.5 py-0.2 rounded bg-muted text-[10px] font-mono text-muted-foreground"
+                        >
+                          {tech.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Column: Direct Fast Action Links */}
+                  <div className="flex items-center gap-2 shrink-0 self-start sm:self-center pt-1 sm:pt-0">
+                    {project.liveUrl && project.liveUrl !== "#" && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-foreground text-background text-xs font-bold hover:opacity-90 transition-opacity"
+                        title="Live Demo"
+                      >
+                        <span>Live</span>
+                        <ArrowUpRight size={11} weight="bold" />
+                      </a>
+                    )}
+
+                    {project.githubUrl && project.githubUrl !== "#" && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                        title="GitHub Repository"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                      title={isId ? "Studi Kasus" : "Case Study"}
+                    >
+                      <ArrowRight size={13} weight="bold" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="pt-2 text-center">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground transition-all shadow-xs"
+            >
+              <span>{isId ? "Buka Arsip Lengkap Proyek" : "Open Full Project Directory"}</span>
+              <ArrowRight size={14} weight="bold" />
+            </Link>
+          </div>
+        </section>
+
+        {/* SECTION 3: EXPERIENCE & ACADEMICS */}
+        <section id="experience" className="flex flex-col gap-6">
+          <div className="pb-3 border-b border-border/60">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+              {isId ? "Riwayat & Pengalaman" : "Experience & Milestones"}
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display">
+              {isId ? "Pencapaian & Pendidikan" : "Career History & Education"}
+            </h2>
+          </div>
+
+          <div className="space-y-6">
+            {/* Flagship Milestone */}
+            <div className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card/70 flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="text-xs font-mono font-bold text-foreground">2026</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-foreground/10 text-foreground text-xs font-bold font-display border border-foreground/15 inline-flex items-center gap-1">
+                  <Trophy size={13} weight="fill" />
+                  {isId ? "Juara 1 IT Bootcamp 2026" : "1st Place IT Bootcamp 2026"}
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-foreground font-display">
+                Lead Developer & System Architect: TitikAman
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                {isId
+                  ? "Memimpin tim rekayasa lintas disiplin beranggotakan 11 orang dalam membangun platform keselamatan warga real-time. Mengembangkan arsitektur Laravel 12, MySQL, dan Laravel Reverb WebSockets untuk broadcast darurat instan. Lolos 100% black-box testing secara menyeluruh."
+                  : "Led an 11-member cross-functional engineering team architecting an emergency citizen safety broadcast network using Laravel 12, MySQL, and Laravel Reverb WebSockets. Passed 100% comprehensive black-box testing."}
+              </p>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {["Laravel 12", "WebSockets", "Laravel Reverb", "Team Lead (11)", "Black-Box QA"].map((tech) => (
+                  <span key={tech} className="px-2 py-0.5 rounded bg-muted text-[11px] font-mono text-foreground">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Work History */}
+            <div className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card/70 flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-mono font-bold text-foreground">2024 - {isId ? "Sekarang" : "Present"}</span>
+                <span className="text-xs font-mono text-muted-foreground">Production Experience</span>
+              </div>
+              <h3 className="text-base font-bold text-foreground font-display">
+                Fullstack Software Engineer
+              </h3>
+              <div className="text-xs text-muted-foreground font-mono">Freelance & Software Production</div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                {isId
+                  ? "Membangun lebih dari 10 aplikasi produksi dari nol menggunakan Next.js 15, React 19, dan Laravel 12. Menangani perancangan skema database relasional, integrasi payment gateway Midtrans, dan optimasi performa web."
+                  : "Engineered 10+ production applications end-to-end using Next.js 15, React 19, and Laravel 12. Handled relational schema design, Midtrans payment integration, and core performance tuning."}
+              </p>
+            </div>
+
+            {/* Education */}
+            <div className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card/70 flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-xs font-mono font-bold text-foreground">2024 - {isId ? "Sekarang" : "Present"}</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold">
+                  {isId ? "IPK 4.00 / 4.00" : "4.00 / 4.00 GPA"}
+                </span>
+              </div>
+              <h3 className="text-base font-bold text-foreground font-display">
+                {isId ? "S1 Sistem Informasi" : "B.S. Information Systems"}
+              </h3>
+              <div className="text-xs text-muted-foreground font-mono">Universitas Bina Sarana Informatika</div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                {isId
+                  ? "Fokus riset & komputasi pada Sistem Informasi Enterprise, Rekayasa Perangkat Lunak Terdistribusi, dan Manajemen Basis Data Tingkat Lanjut."
+                  : "Focused on Enterprise Information Systems, Distributed Software Engineering, and Advanced Relational Database Architectures."}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: TECH STACK & ARCHITECTURE */}
+        <section id="stack" className="flex flex-col gap-6">
+          <div className="pb-3 border-b border-border/60">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+              {isId ? "Keahlian Teknis" : "Technical Arsenal"}
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display">
+              {isId ? "Stack & Alat Pengembangan" : "Stack & Engineering Tools"}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-5 rounded-2xl border border-border/80 bg-card/70 space-y-3">
+              <div className="flex items-center gap-2">
+                <LaravelIcon className="w-5 h-5 text-[#FF2D20]" />
+                <h3 className="text-sm font-bold text-foreground font-display">Backend & Systems</h3>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Laravel 12, PHP 8.3+, RESTful APIs, WebSockets (Reverb), Queues & Jobs, Python (FastAPI).
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-border/80 bg-card/70 space-y-3">
+              <div className="flex items-center gap-2">
+                <NextjsIcon className="w-5 h-5" />
+                <h3 className="text-sm font-bold text-foreground font-display">Frontend & React</h3>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS v4, Framer Motion.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-border/80 bg-card/70 space-y-3">
+              <div className="flex items-center gap-2">
+                <FlutterIcon className="w-5 h-5 text-[#02569B]" />
+                <h3 className="text-sm font-bold text-foreground font-display">Mobile Development</h3>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Flutter, Dart, Provider / Bloc State Management, Cross-platform iOS & Android builds.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-border/80 bg-card/70 space-y-3">
+              <div className="flex items-center gap-2">
+                <Code size={18} className="text-foreground" />
+                <h3 className="text-sm font-bold text-foreground font-display">Database & DevOps</h3>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                MySQL, PostgreSQL, Redis Caching, Docker, Git, CI/CD Actions, Midtrans Gateway.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 5: CONTACT */}
+        <section id="contact" className="flex flex-col gap-6">
+          <div className="pb-3 border-b border-border/60">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-muted-foreground block mb-1">
+              {isId ? "Hubungi Saya" : "Get In Touch"}
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display">
+              {isId ? "Mari Membangun Sesuatu yang Luar Biasa" : "Let's Build Something Exceptional"}
+            </h2>
+          </div>
+
+          <div className="p-6 sm:p-8 rounded-3xl border border-border/80 bg-card/70 space-y-6">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              {isId
+                ? "Tertarik mendiskusikan posisi Fullstack Engineer, proyek konsultasi, atau arsitektur sistem performa tinggi? Kirim pesan langsung atau hubungi via WhatsApp."
+                : "Interested in discussing a Fullstack Engineer role, technical consulting, or custom high-performance web architecture? Send a direct note below or reach out via WhatsApp."}
+            </p>
+
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-mono font-semibold text-muted-foreground">
+                    {isId ? "Nama Anda" : "Your Name"}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    placeholder={isId ? "Budi Santoso" : "Sarah Jenkins"}
+                    className="w-full bg-background border border-border/80 focus:border-foreground/50 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-mono font-semibold text-muted-foreground">
+                    {isId ? "Email Anda" : "Your Email"}
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                    placeholder="name@company.com"
+                    className="w-full bg-background border border-border/80 focus:border-foreground/50 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[11px] font-mono font-semibold text-muted-foreground">
+                  {isId ? "Pesan / Detail Kebutuhan" : "Message / Project Scope"}
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={senderMessage}
+                  onChange={(e) => setSenderMessage(e.target.value)}
+                  placeholder={
+                    isId
+                      ? "Ceritakan mengenai proyek, timeline, atau peran yang Anda tawarkan..."
+                      : "Tell me about the role, technical scope, timeline, or objectives..."
+                  }
+                  className="w-full bg-background border border-border/80 focus:border-foreground/50 rounded-xl p-3.5 text-xs text-foreground outline-none transition-colors resize-none"
                 />
-              )}
+              </div>
 
-              {activeTab === "projects" && (
-                <div className="p-3 sm:p-4">
-                  <ProjectsFeedTab
-                    projects={displayedProjects}
-                    projectFilter={projectFilter}
-                    onFilterChange={setProjectFilter}
-                    projectLikes={projectLikes}
-                    onLikeProject={handleLikeProject}
-                    onSelectTab={setActiveTab}
-                  />
-                </div>
-              )}
+              <div className="flex items-center justify-between gap-4 pt-2">
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
+                >
+                  <PaperPlaneRight size={14} weight="bold" />
+                  <span>{formSent ? (isId ? "Membuka Email..." : "Opening Email...") : (isId ? "Kirim Pesan" : "Send Inquiry")}</span>
+                </button>
 
-              {activeTab === "experience" && (
-                <div className="p-3 sm:p-4">
-                  <ExperienceTab />
+                <div className="text-xs text-muted-foreground font-mono">
+                  {isId ? "Respons dalam 24 jam" : "Replies within 24h"}
                 </div>
-              )}
-
-              {activeTab === "skills" && (
-                <div className="p-3 sm:p-4">
-                  <SkillsTab onSelectTab={setActiveTab} />
-                </div>
-              )}
-
-              {activeTab === "contact" && (
-                <div className="p-3 sm:p-4">
-                  <ContactTab
-                    email={email}
-                    copied={copied}
-                    onCopyEmail={handleCopyEmail}
-                  />
-                </div>
-              )}
-            </AnimatePresence>
+              </div>
+            </form>
           </div>
-        </main>
+        </section>
 
-        {/* 3. Right Column: Widgets, Trends, Search & Who to Follow */}
-        <RightSidebar
-          onSelectTab={setActiveTab}
-          onFilterProjects={setProjectFilter}
-          onSearchQuery={(q) => {
-            setSearchQuery(q);
-            setActiveTab("projects");
-          }}
-        />
-      </div>
+      </main>
 
-      {/* Mobile Bottom Navigation Bar (X-style) */}
-      <MobileBottomBar activeTab={activeTab} onSelectTab={setActiveTab} />
+      {/* 3. Minimalist Footer */}
+      <footer className="w-full border-t border-border/60 py-8 px-4 sm:px-6 transition-colors">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span className="font-mono font-bold text-foreground">Darell Rangga</span>
+            <span>&copy; {new Date().getFullYear()}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="https://github.com/Rangga11268" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+            <a href="https://linkedin.com/in/darellrangga" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
+            <a href="https://x.com/ranggsdarell" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">X</a>
+            <a href="mailto:darellrangga@gmail.com" className="hover:text-foreground transition-colors">Email</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
-
-export default ExecutiveHub;

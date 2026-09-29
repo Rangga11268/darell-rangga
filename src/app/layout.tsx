@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Manrope, Sora } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
 import { ClientSideElements } from "@/components/client-side-elements";
 
-const fontSans = Manrope({
+const fontSans = Geist({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
 });
 
-const fontDisplay = Sora({
-  variable: "--font-display",
+const fontMono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
-  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -252,7 +250,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${fontSans.variable} ${fontDisplay.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased bg-background text-foreground selection:bg-foreground selection:text-background`}
       >
         <Suspense fallback={null}>
           <TopLoader />
