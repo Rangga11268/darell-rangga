@@ -7,29 +7,19 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["@phosphor-icons/react", "framer-motion"],
   },
-  images: {
-    remotePatterns: [
+  async redirects() {
+    return [
       {
-        protocol: "https",
-        hostname: "images.unsplash.com",
+        source: "/projects",
+        destination: "/#projects",
+        permanent: true,
       },
       {
-        protocol: "https",
-        hostname: "placehold.co",
+        source: "/projects/:id*",
+        destination: "/#projects",
+        permanent: true,
       },
-      {
-        protocol: "https",
-        hostname: "ghchart.rshah.org",
-      },
-      {
-        protocol: "https",
-        hostname: "skillicons.dev",
-      },
-      {
-        protocol: "https",
-        hostname: "i.scdn.co",
-      },
-    ],
+    ];
   },
 };
 

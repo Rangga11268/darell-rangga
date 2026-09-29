@@ -11,7 +11,6 @@ import {
   WhatsappLogo,
   FilePdf,
   ArrowUpRight,
-  ArrowRight,
   Trophy,
   Sun,
   Moon,
@@ -20,6 +19,9 @@ import {
   SquaresFour,
   PaperPlaneRight,
   Cpu,
+  CaretDown,
+  CaretUp,
+  CheckCircle,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -39,6 +41,7 @@ export function ExecutiveHub() {
 
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
   const [activeCodeTab, setActiveCodeTab] = useState<CodeTab>("titikaman");
@@ -58,6 +61,10 @@ export function ExecutiveHub() {
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const toggleExpandProject = (id: string) => {
+    setExpandedProjectId((prev) => (prev === id ? null : id));
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -188,12 +195,10 @@ export function ExecutiveHub() {
         </div>
       </header>
 
-      {/* 2. Main Multi-Pane Studio Layout (Desktop 2-Column Split, Mobile Stack) */}
+      {/* 2. Main Multi-Pane Studio Layout */}
       <main className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16 flex flex-col lg:flex-row gap-12 lg:gap-14">
         
-        {/* ============================================================ */}
         {/* LEFT COLUMN: Sticky Profile, Proof Matrix & Interactive Terminal */}
-        {/* ============================================================ */}
         <aside className="w-full lg:w-[42%] flex flex-col gap-8 lg:sticky lg:top-20 lg:self-start">
           
           {/* Hero Profile Block */}
@@ -365,9 +370,7 @@ export function ExecutiveHub() {
 
         </aside>
 
-        {/* ============================================================ */}
-        {/* RIGHT COLUMN: Interactive Work Studio, Experience & Code Lab */}
-        {/* ============================================================ */}
+        {/* RIGHT COLUMN: Interactive Work Studio & In-Place Deep Dives */}
         <section className="w-full lg:w-[58%] flex flex-col gap-12">
           
           {/* Works Header with Interactive View Switcher */}
@@ -382,7 +385,7 @@ export function ExecutiveHub() {
                 </h2>
               </div>
 
-              {/* View Switcher: List vs Bento vs Architecture */}
+              {/* View Switcher */}
               <div className="inline-flex items-center p-1 rounded-xl border border-border/80 bg-card self-start sm:self-auto">
                 <button
                   onClick={() => setViewMode("list")}
@@ -451,102 +454,203 @@ export function ExecutiveHub() {
 
           {/* DYNAMIC VIEW CONTAINER */}
           <div>
-            {/* 1. LIST VIEW (Text-First Editorial Stream) */}
+            {/* 1. LIST VIEW (In-Place Interactive Accordion Stream) */}
             {viewMode === "list" && (
               <div className="divide-y divide-border/60">
-                {filteredProjects.map((project) => (
-                  <div
-                    key={project.id}
-                    className="py-5 first:pt-1 last:pb-1 group hover:bg-muted/30 px-3.5 -mx-3.5 rounded-2xl transition-colors flex flex-col gap-2.5"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5">
-                      <div className="flex items-center gap-2.5 flex-wrap">
-                        <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0">
-                          {project.year}
-                        </span>
+                {filteredProjects.map((project) => {
+                  const isExpanded = expandedProjectId === project.id;
+                  const features = project.features?.[language] || [];
+                  const challenges = project.challenges?.[language] || [];
+                  const solutions = project.solutions?.[language] || [];
 
-                        <Link
-                          href={`/projects/${project.id}`}
-                          className="text-base font-bold text-foreground font-display tracking-tight group-hover:underline underline-offset-4 flex items-center gap-1.5"
-                        >
-                          <span>{project.title}</span>
-                        </Link>
-
-                        {project.id === "titik-aman" && (
-                          <span className="px-2 py-0.5 rounded-md bg-foreground/10 text-foreground text-[10px] font-mono font-bold flex items-center gap-1 border border-foreground/15">
-                            <Trophy size={11} weight="fill" />
-                            Juara 1
+                  return (
+                    <div
+                      key={project.id}
+                      className="py-4 first:pt-1 last:pb-1 group hover:bg-muted/20 px-3.5 -mx-3.5 rounded-2xl transition-colors flex flex-col gap-2.5"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5">
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0">
+                            {project.year}
                           </span>
-                        )}
 
-                        {project.isLive && (
-                          <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            Live
-                          </span>
-                        )}
+                          <button
+                            onClick={() => toggleExpandProject(project.id)}
+                            className="text-base font-bold text-foreground font-display tracking-tight hover:underline underline-offset-4 flex items-center gap-1.5 cursor-pointer text-left"
+                          >
+                            <span>{project.title}</span>
+                          </button>
+
+                          {project.id === "titik-aman" && (
+                            <span className="px-2 py-0.5 rounded-md bg-foreground/10 text-foreground text-[10px] font-mono font-bold flex items-center gap-1 border border-foreground/15">
+                              <Trophy size={11} weight="fill" />
+                              Juara 1
+                            </span>
+                          )}
+
+                          {project.isLive && (
+                            <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-emerald-500/20">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              Live
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Direct Action Links */}
+                        <div className="flex items-center gap-2.5 self-end sm:self-auto text-xs shrink-0">
+                          {project.liveUrl && project.liveUrl !== "#" && (
+                            <a
+                              href={project.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              <span>Live</span>
+                              <ArrowUpRight size={12} weight="bold" />
+                            </a>
+                          )}
+
+                          {project.githubUrl && project.githubUrl !== "#" && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
+                              title="GitHub Code"
+                            >
+                              <span>Code</span>
+                              <ArrowUpRight size={12} weight="bold" />
+                            </a>
+                          )}
+
+                          <button
+                            onClick={() => toggleExpandProject(project.id)}
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                              isExpanded
+                                ? "bg-foreground text-background"
+                                : "text-foreground bg-muted hover:bg-muted/80"
+                            }`}
+                          >
+                            <span>{isExpanded ? (isId ? "Tutup" : "Close") : (isId ? "Detail" : "Details")}</span>
+                            {isExpanded ? <CaretUp size={12} weight="bold" /> : <CaretDown size={12} weight="bold" />}
+                          </button>
+                        </div>
                       </div>
 
-                      {/* Direct Links */}
-                      <div className="flex items-center gap-3 self-end sm:self-auto text-xs shrink-0">
-                        {project.liveUrl && project.liveUrl !== "#" && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            <span>Live</span>
-                            <ArrowUpRight size={12} weight="bold" />
-                          </a>
-                        )}
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed sm:pl-14">
+                        {project.shortDescription[language]}
+                      </p>
 
-                        {project.githubUrl && project.githubUrl !== "#" && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 font-medium text-muted-foreground hover:text-foreground transition-colors"
-                            title="GitHub Code"
-                          >
-                            <span>Code</span>
-                            <ArrowUpRight size={12} weight="bold" />
-                          </a>
-                        )}
-
-                        <Link
-                          href={`/projects/${project.id}`}
-                          className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline"
-                        >
-                          <span>{isId ? "Detail" : "Case Study"}</span>
-                          <ArrowRight size={12} weight="bold" />
-                        </Link>
-                      </div>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed sm:pl-14">
-                      {project.shortDescription[language]}
-                    </p>
-
-                    <div className="flex flex-wrap items-center gap-1.5 sm:pl-14 pt-0.5">
-                      <span className="text-[11px] font-mono text-muted-foreground/80 mr-1">
-                        {project.role} &middot;
-                      </span>
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech.name}
-                          className="px-2 py-0.5 rounded-md bg-muted text-foreground text-[11px] font-mono font-medium"
-                        >
-                          {tech.name}
+                      <div className="flex flex-wrap items-center gap-1.5 sm:pl-14 pt-0.5">
+                        <span className="text-[11px] font-mono text-muted-foreground/80 mr-1">
+                          {project.role} &middot;
                         </span>
-                      ))}
+                        {project.techStack.map((tech) => (
+                          <span
+                            key={tech.name}
+                            className="px-2 py-0.5 rounded-md bg-muted text-foreground text-[11px] font-mono font-medium"
+                          >
+                            {tech.name}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* IN-PLACE EXPANDED CASE STUDY ACCORDION */}
+                      {isExpanded && (
+                        <div className="mt-3 sm:ml-14 p-4 sm:p-5 rounded-2xl border border-border/80 bg-card/90 space-y-4 text-xs transition-all shadow-xs">
+                          {/* Full Overview */}
+                          <div className="space-y-1.5">
+                            <span className="font-mono font-bold text-[11px] uppercase tracking-wider text-muted-foreground block">
+                              {isId ? "Arsitektur & Gambaran Sistem" : "System Architecture & Overview"}
+                            </span>
+                            <p className="text-foreground/90 leading-relaxed text-xs sm:text-sm">
+                              {project.fullDescription?.[language] || project.shortDescription[language]}
+                            </p>
+                          </div>
+
+                          {/* Core Engineering Features */}
+                          {features.length > 0 && (
+                            <div className="space-y-2 pt-2 border-t border-border/50">
+                              <span className="font-mono font-bold text-[11px] uppercase tracking-wider text-muted-foreground block">
+                                {isId ? "Kapabilitas & Fitur Utama" : "Key Engineering Capabilities"}
+                              </span>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {features.map((f, idx) => (
+                                  <div key={idx} className="flex items-start gap-2 p-2 rounded-lg bg-muted/40 border border-border/40">
+                                    <CheckCircle size={14} weight="fill" className="text-emerald-700 dark:text-emerald-400 shrink-0 mt-0.5" />
+                                    <span className="text-foreground/90 leading-tight">{f}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Challenges & Solutions */}
+                          {challenges.length > 0 && (
+                            <div className="space-y-2 pt-2 border-t border-border/50">
+                              <span className="font-mono font-bold text-[11px] uppercase tracking-wider text-muted-foreground block">
+                                {isId ? "Tantangan & Solusi Rekayasa" : "Engineering Challenges & Solutions"}
+                              </span>
+                              <div className="space-y-2">
+                                {challenges.map((ch, idx) => (
+                                  <div key={idx} className="p-3 rounded-xl bg-muted/40 border border-border/40 space-y-1">
+                                    <div className="font-bold text-foreground">
+                                      {isId ? `Tantangan #${idx + 1}: ` : `Challenge #${idx + 1}: `}
+                                      <span className="font-normal text-muted-foreground">{ch}</span>
+                                    </div>
+                                    {solutions[idx] && (
+                                      <div className="text-foreground/90 font-medium">
+                                        <span className="text-emerald-700 dark:text-emerald-400 font-bold">{isId ? "Solusi: " : "Solution: "}</span>
+                                        {solutions[idx]}
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Quick Bottom Actions inside Accordion */}
+                          <div className="flex items-center justify-between pt-2 border-t border-border/50 text-xs">
+                            <span className="font-mono text-muted-foreground text-[11px]">
+                              {project.year} &middot; {project.role}
+                            </span>
+
+                            <div className="flex items-center gap-2">
+                              {project.liveUrl && project.liveUrl !== "#" && (
+                                <a
+                                  href={project.liveUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-foreground text-background font-bold text-[11px] hover:opacity-90"
+                                >
+                                  <span>Live Demo</span>
+                                  <ArrowUpRight size={11} weight="bold" />
+                                </a>
+                              )}
+                              {project.githubUrl && project.githubUrl !== "#" && (
+                                <a
+                                  href={project.githubUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-3 py-1 rounded-lg border border-border/80 bg-card hover:bg-muted font-semibold text-foreground text-[11px]"
+                                >
+                                  <GithubIcon className="w-3.5 h-3.5" />
+                                  <span>Source Code</span>
+                                  <ArrowUpRight size={11} weight="bold" />
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
-            {/* 2. BENTO GRID VIEW (Interactive Modular Cards) */}
+            {/* 2. BENTO GRID VIEW */}
             {viewMode === "bento" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {filteredProjects.map((project) => (
@@ -572,9 +676,9 @@ export function ExecutiveHub() {
                       </div>
 
                       <h3 className="text-base font-bold text-foreground font-display tracking-tight group-hover:underline">
-                        <Link href={`/projects/${project.id}`}>
+                        <button onClick={() => { setViewMode("list"); setExpandedProjectId(project.id); }} className="text-left cursor-pointer">
                           {project.title}
-                        </Link>
+                        </button>
                       </h3>
 
                       <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
@@ -595,13 +699,16 @@ export function ExecutiveHub() {
                       </div>
 
                       <div className="flex items-center justify-between text-xs pt-1">
-                        <Link
-                          href={`/projects/${project.id}`}
-                          className="font-semibold text-foreground hover:underline inline-flex items-center gap-1"
+                        <button
+                          onClick={() => {
+                            setViewMode("list");
+                            setExpandedProjectId(project.id);
+                          }}
+                          className="font-semibold text-foreground hover:underline inline-flex items-center gap-1 cursor-pointer"
                         >
-                          <span>{isId ? "Studi Kasus" : "Case Study"}</span>
-                          <ArrowRight size={12} weight="bold" />
-                        </Link>
+                          <span>{isId ? "Buka Kasus" : "Case Study"}</span>
+                          <CaretDown size={12} weight="bold" />
+                        </button>
 
                         <div className="flex items-center gap-2">
                           {project.liveUrl && project.liveUrl !== "#" && (
@@ -889,7 +996,7 @@ export const getCachedFleetSchedules = unstable_cache(
           </div>
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <Link href="/projects" className="hover:text-foreground transition-colors">Archive</Link>
+            <a href="#projects" className="hover:text-foreground transition-colors">Projects</a>
             <a href="https://github.com/Rangga11268" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
             <a href="https://linkedin.com/in/darellrangga" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
             <a href="https://x.com/ranggsdarell" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">X</a>
