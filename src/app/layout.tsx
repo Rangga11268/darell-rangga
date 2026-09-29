@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { LanguageProvider } from "@/app/providers/language-provider";
-
+import { ClientSideElements } from "@/components/client-side-elements";
 
 const fontSans = Geist({
   variable: "--font-sans",
@@ -264,6 +264,7 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <LanguageProvider>
+            <ClientSideElements />
             {children}
           </LanguageProvider>
         </ThemeProvider>
