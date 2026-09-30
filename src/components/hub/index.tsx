@@ -23,7 +23,6 @@ import {
   CaretDown,
   CaretUp,
   CheckCircle,
-  TerminalWindow,
   FolderSimple,
   Globe,
   Sparkle,
@@ -39,6 +38,16 @@ import {
   XTwitterIcon,
   InstagramIcon,
 } from "@/components/ui/brand-icons";
+import {
+  MacCpuIcon,
+  MacGaugeIcon,
+  MacTrophyIcon,
+  MacFinderIcon,
+  MacTimeMachineIcon,
+  MacTerminalIcon,
+  MacMailIcon,
+  MacQuickLookIcon,
+} from "@/components/ui/macos-icons";
 
 import { LiveClock } from "@/components/ui/live-clock";
 
@@ -529,7 +538,7 @@ export function ExecutiveHub() {
                   <FolderSimple size={12} weight="fill" />
                   <span>darell — -zsh — 80×24</span>
                 </div>
-                <TerminalWindow size={13} className="text-muted-foreground" />
+                <MacTerminalIcon className="w-3.5 h-3.5 text-muted-foreground" />
               </div>
 
               {/* Terminal Output Log */}
@@ -648,51 +657,45 @@ export function ExecutiveHub() {
                   </p>
                 </div>
 
-                {/* 3 Core Pillars Bento Grid */}
+                {/* 3 Core Pillars Bento Grid with Apple SF Symbols */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   
-                  {/* Pillar 1 */}
-                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
-                    <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-400 flex items-center justify-center">
-                      <Cpu size={15} weight="bold" />
+                  {/* Pillar 1: Concurrency & Systems */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-2 shadow-xs hover:border-indigo-500/40 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-400 flex items-center justify-center shadow-xs">
+                      <MacCpuIcon className="w-4 h-4" />
                     </div>
                     <h4 className="text-xs font-bold text-foreground">
-                      {isId ? "Konkurensi & Sistem" : "Concurrency & Systems"}
+                      Concurrency & Systems
                     </h4>
                     <p className="text-[11px] text-muted-foreground leading-normal">
-                      {isId
-                        ? "Transaksi atomik, Redis queue, dan WebSockets sub-50ms untuk beban tinggi."
-                        : "Atomic DB locks, Redis queues, and sub-50ms WebSockets for high throughput."}
+                      Atomic DB locks, Redis queues, and sub-50ms WebSockets for high throughput.
                     </p>
                   </div>
 
-                  {/* Pillar 2 */}
-                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
-                    <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
-                      <CheckCircle size={15} weight="bold" />
+                  {/* Pillar 2: Quality & Performance */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-2 shadow-xs hover:border-emerald-500/40 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shadow-xs">
+                      <MacGaugeIcon className="w-4 h-4" />
                     </div>
                     <h4 className="text-xs font-bold text-foreground">
-                      {isId ? "Kualitas & Performa" : "Quality & Performance"}
+                      Quality & Performance
                     </h4>
                     <p className="text-[11px] text-muted-foreground leading-normal">
-                      {isId
-                        ? "Type-safe TypeScript, modul bersih, dan 100/100 Lighthouse standard."
-                        : "Type-safe TypeScript, clean architecture, and strict 100/100 Lighthouse scores."}
+                      Type-safe TypeScript, clean architecture, and strict 100/100 Lighthouse scores.
                     </p>
                   </div>
 
-                  {/* Pillar 3 */}
-                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
-                    <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center">
-                      <Trophy size={15} weight="bold" />
+                  {/* Pillar 3: Leadership & Delivery */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-2 shadow-xs hover:border-amber-500/40 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center shadow-xs">
+                      <MacTrophyIcon className="w-4 h-4" />
                     </div>
                     <h4 className="text-xs font-bold text-foreground">
-                      {isId ? "Kepemimpinan Tim" : "Leadership & Delivery"}
+                      Leadership & Delivery
                     </h4>
                     <p className="text-[11px] text-muted-foreground leading-normal">
-                      {isId
-                        ? "Memimpin 11 engineer (Juara 1 IT Bootcamp 2026) dan 12+ sistem produksi."
-                        : "Led 11 engineers (1st Place Winner Bootcamp 2026) and delivered 12+ prod apps."}
+                      Led 11 engineers (1st Place Winner Bootcamp 2026) and delivered 12+ prod apps.
                     </p>
                   </div>
 
@@ -726,9 +729,12 @@ export function ExecutiveHub() {
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs" />
-                  <h2 className="text-xs font-mono font-bold text-foreground ml-2">
-                    Finder &mdash; {isId ? "Karya & Sistem Produksi" : "Selected Works & Systems"}
-                  </h2>
+                  <div className="flex items-center gap-1.5 ml-1.5">
+                    <MacFinderIcon className="w-3.5 h-3.5 text-foreground" />
+                    <h2 className="text-xs font-mono font-bold text-foreground">
+                      Finder &mdash; {isId ? "Karya & Sistem Produksi" : "Selected Works & Systems"}
+                    </h2>
+                  </div>
                 </div>
 
                 {/* macOS Segmented View Controller (List vs Bento vs Code) */}
@@ -856,8 +862,9 @@ export function ExecutiveHub() {
 
                             <button
                               onClick={() => toggleProjectExpand(project.id)}
-                              className="inline-flex items-center gap-1 font-semibold text-foreground bg-muted hover:bg-muted/80 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1.5 font-semibold text-foreground bg-muted hover:bg-muted/80 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
                             >
+                              <MacQuickLookIcon className="w-3.5 h-3.5" />
                               <span>{isExpanded ? (isId ? "Tutup" : "Close") : (isId ? "Quick Look" : "Quick Look")}</span>
                               {isExpanded ? <CaretUp size={12} weight="bold" /> : <CaretDown size={12} weight="bold" />}
                             </button>
@@ -1060,6 +1067,7 @@ export function ExecutiveHub() {
                             onClick={() => toggleProjectExpand(project.id)}
                             className="w-full py-1.5 rounded-xl bg-muted/80 hover:bg-muted text-foreground text-xs font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
                           >
+                            <MacQuickLookIcon className="w-3.5 h-3.5" />
                             <span>{isExpanded ? (isId ? "Tutup Detail" : "Close") : (isId ? "Buka Studi Kasus" : "Quick Look")}</span>
                             {isExpanded ? <CaretUp size={13} weight="bold" /> : <CaretDown size={13} weight="bold" />}
                           </button>
@@ -1161,9 +1169,12 @@ export function ExecutiveHub() {
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                  <h2 className="text-xs font-mono font-bold text-foreground ml-2">
-                    Time Machine &mdash; {isId ? "Rekam Jejak Rekayasa" : "Career Track & Milestones"}
-                  </h2>
+                  <div className="flex items-center gap-1.5 ml-1.5">
+                    <MacTimeMachineIcon className="w-3.5 h-3.5 text-foreground" />
+                    <h2 className="text-xs font-mono font-bold text-foreground">
+                      Time Machine &mdash; {isId ? "Rekam Jejak Rekayasa" : "Career Track & Milestones"}
+                    </h2>
+                  </div>
                 </div>
               </div>
 
@@ -1246,9 +1257,12 @@ export function ExecutiveHub() {
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                  <h2 className="text-xs font-mono font-bold text-foreground ml-2">
-                    Mail.app &mdash; {isId ? "Kirim Pesan Langsung" : "New Message"}
-                  </h2>
+                  <div className="flex items-center gap-1.5 ml-1.5">
+                    <MacMailIcon className="w-3.5 h-3.5 text-foreground" />
+                    <h2 className="text-xs font-mono font-bold text-foreground">
+                      Mail.app &mdash; {isId ? "Kirim Pesan Langsung" : "New Message"}
+                    </h2>
+                  </div>
                 </div>
                 <span className="text-[10.5px] font-mono text-muted-foreground">To: darellrangga@gmail.com</span>
               </div>

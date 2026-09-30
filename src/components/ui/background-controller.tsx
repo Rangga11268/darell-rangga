@@ -247,20 +247,6 @@ export function BackgroundController() {
         </div>
       )}
 
-      {/* 3. High-Precision macOS Dot Matrix Grid Overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: isDark
-            ? "radial-gradient(rgba(255, 255, 255, 0.15) 1.15px, transparent 1.15px)"
-            : "radial-gradient(rgba(15, 23, 42, 0.11) 1.15px, transparent 1.15px)",
-          backgroundSize: "24px 24px",
-          maskImage:
-            "radial-gradient(ellipse 95% 85% at 50% 40%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.25) 100%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 95% 85% at 50% 40%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.25) 100%)",
-        }}
-      />
 
       {/* 4. Top Specular Edge Horizon Line */}
       <div
