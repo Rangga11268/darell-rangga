@@ -250,7 +250,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased bg-background text-foreground selection:bg-foreground selection:text-background`}
+        className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased bg-transparent text-foreground selection:bg-foreground selection:text-background`}
       >
         <Suspense fallback={null}>
           <TopLoader />

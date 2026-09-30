@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { projects } from "@/app/data/projects";
@@ -26,7 +26,6 @@ import {
   TerminalWindow,
   FolderSimple,
   Globe,
-  Clock,
   Sparkle,
   List,
   X,
@@ -40,6 +39,8 @@ import {
   XTwitterIcon,
   InstagramIcon,
 } from "@/components/ui/brand-icons";
+
+import { LiveClock } from "@/components/ui/live-clock";
 
 type ProjectCategory = "all" | "web" | "systems" | "mobile" | "ai";
 type ViewMode = "list" | "bento" | "architecture";
@@ -62,24 +63,6 @@ export function ExecutiveHub() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
-  const [currentTime, setCurrentTime] = useState<string>("");
-
-  // macOS Realtime Clock
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("id-ID", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: "Asia/Jakarta",
-        })
-      );
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   // macOS Terminal.app Sandbox State
   const [terminalInput, setTerminalInput] = useState("");
@@ -244,12 +227,7 @@ export function ExecutiveHub() {
             <div className="flex items-center gap-1.5 sm:gap-2">
               
               {/* macOS Jakarta Time Pill */}
-              {currentTime && (
-                <div className="hidden sm:flex items-center gap-1 text-[10.5px] font-mono text-muted-foreground bg-muted/60 px-2.5 py-1 rounded-full border border-border/60">
-                  <Clock size={12} weight="bold" />
-                  <span>{currentTime}</span>
-                </div>
-              )}
+              <LiveClock className="hidden sm:flex items-center gap-1 text-[10.5px] font-mono text-muted-foreground bg-muted/60 px-2.5 py-1 rounded-full border border-border/60" />
 
               {/* Language Segmented Toggle */}
               <button
@@ -295,9 +273,7 @@ export function ExecutiveHub() {
                   <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
                   <span className="text-[10px] font-mono text-muted-foreground ml-1 font-bold">Control Center</span>
                 </div>
-                {currentTime && (
-                  <span className="text-[10px] font-mono text-muted-foreground">{currentTime} WIB</span>
-                )}
+                <LiveClock showIcon={false} suffix="WIB" className="text-[10px] font-mono text-muted-foreground" />
               </div>
 
               {/* Navigation Links with Large Touch Targets */}

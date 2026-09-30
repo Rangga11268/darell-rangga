@@ -15,14 +15,14 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 border-t border-border/70 bg-background/50 backdrop-blur-md transition-colors">
+    <footer className="py-8 border-t border-border/70 bg-card/80 dark:bg-card/70 backdrop-blur-md transition-colors">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-[10px]">
               DR
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+            <p className="text-xs sm:text-sm text-foreground/80 font-medium">
               &copy; {currentYear} Darell Rangga.{" "}
               {language === "id"
                 ? "Hak cipta dilindungi."

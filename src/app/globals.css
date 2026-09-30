@@ -77,7 +77,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--background);
+    background-color: transparent;
     color: var(--foreground);
   }
 
