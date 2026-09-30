@@ -84,23 +84,8 @@
   body {
     @apply antialiased selection:bg-primary/20 selection:text-primary;
     font-family: var(--font-sans);
-    background-color: var(--background);
-    background-image:
-      radial-gradient(
-        ellipse at top,
-        rgba(120, 119, 198, 0.08) 0%,
-        transparent 60%
-      ),
-      linear-gradient(to right, var(--border) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-    background-size:
-      100% 600px,
-      4rem 4rem,
-      4rem 4rem;
-    background-position:
-      center top,
-      center top,
-      center top;
+    background-color: transparent;
+    min-height: 100vh;
   }
 
   :focus:not(:focus-visible) {

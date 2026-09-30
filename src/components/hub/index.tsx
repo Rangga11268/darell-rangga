@@ -169,7 +169,7 @@ export function ExecutiveHub() {
   });
 
   return (
-    <div className="w-full min-h-screen bg-background text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
+    <div className="w-full min-h-screen bg-transparent text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
       
       {/* ========================================================================= */}
       {/* 1. macOS Top Menu Bar (Global Header)                                     */}
