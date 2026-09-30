@@ -28,6 +28,11 @@ import {
   Globe,
   Clock,
   Sparkle,
+  List,
+  X,
+  User,
+  Briefcase,
+  PaperPlane,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -53,11 +58,13 @@ export function ExecutiveHub() {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>("titik-aman");
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [formSent, setFormSent] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>("");
 
-  // macOS Clock
+  // macOS Realtime Clock
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -168,94 +175,195 @@ export function ExecutiveHub() {
     return true;
   });
 
+  // Display top 3 flagship projects by default unless expanded
+  const displayedProjects = showAllProjects ? filteredProjects : filteredProjects.slice(0, 3);
+  const remainingCount = Math.max(0, filteredProjects.length - 3);
+
   return (
     <div className="w-full min-h-screen bg-transparent text-foreground font-sans antialiased selection:bg-foreground selection:text-background flex flex-col items-center">
       
       {/* ========================================================================= */}
-      {/* 1. macOS Top Menu Bar (Global Header)                                     */}
+      {/* 1. macOS Floating Island Navbar (Desktop Capsule & Mobile Control Center) */}
       {/* ========================================================================= */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-background/80 border-b border-border/70 py-2.5 px-4 sm:px-6 lg:px-8 transition-colors shadow-xs">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          
-          {/* Left Menu Section ( Apple Mark / Brand / Status) */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-              {/* Apple-style macOS Squircle Badge */}
-              <div className="w-6 h-6 rounded-[7px] bg-foreground text-background flex items-center justify-center font-bold text-[11px] font-mono tracking-tight group-hover:scale-105 transition-transform shadow-xs">
-                DR
+      <header className="sticky top-3 z-50 w-full px-3 sm:px-6 lg:px-8 pointer-events-none transition-all">
+        <div className="max-w-5xl mx-auto pointer-events-auto">
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 rounded-2xl sm:rounded-full bg-card/85 dark:bg-card/75 backdrop-blur-2xl border border-border/80 shadow-lg dark:shadow-2xl transition-all">
+            
+            {/* Left Brand Mark & Status */}
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <Link href="/" className="flex items-center gap-2 group cursor-pointer" aria-label="Darell Rangga Home">
+                {/* macOS Squircle Logo */}
+                <div className="w-7 h-7 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-xs font-mono tracking-tight group-hover:scale-105 transition-transform shadow-xs">
+                  DR
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-bold text-foreground tracking-tight leading-none">
+                    Darell Rangga
+                  </span>
+                  <span className="text-[10px] font-mono text-muted-foreground leading-none mt-0.5 hidden sm:inline">
+                    macOS Studio
+                  </span>
+                </div>
+              </Link>
+
+              <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-mono text-emerald-700 dark:text-emerald-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Ready</span>
               </div>
-              <span className="text-xs font-bold text-foreground tracking-tight hidden sm:inline">
-                Darell Rangga
-              </span>
-            </Link>
-
-            <span className="text-muted-foreground/50 text-xs hidden sm:inline">/</span>
-
-            <div className="hidden md:flex items-center gap-2 text-[11px] font-medium text-muted-foreground">
-              <span className="text-foreground font-semibold">macOS Studio</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-emerald-700 dark:text-emerald-400 font-mono text-[10.5px]">Online</span>
             </div>
-          </div>
 
-          {/* Right Menu Section (macOS Navigation & System Controls) */}
-          <div className="flex items-center gap-2 sm:gap-4 text-xs font-medium text-muted-foreground">
-            <nav className="flex items-center gap-1 sm:gap-2">
+            {/* Desktop Center Navigation Pills */}
+            <nav className="hidden md:flex items-center gap-1 p-0.5 rounded-full bg-muted/50 border border-border/60 text-xs font-medium text-muted-foreground">
               <a
                 href="#about"
-                className="px-2.5 py-1 rounded-md hover:bg-muted/70 hover:text-foreground transition-colors hidden sm:inline"
+                className="px-3 py-1 rounded-full hover:text-foreground hover:bg-background/80 transition-all cursor-pointer"
               >
                 {isId ? "Profil" : "About"}
               </a>
               <a
                 href="#projects"
-                className="px-2.5 py-1 rounded-md hover:bg-muted/70 hover:text-foreground transition-colors"
+                className="px-3 py-1 rounded-full hover:text-foreground hover:bg-background/80 transition-all cursor-pointer"
               >
-                {isId ? "Finder" : "Works"}
+                {isId ? "Karya Pilihan" : "Selected Works"}
               </a>
               <a
                 href="#experience"
-                className="px-2.5 py-1 rounded-md hover:bg-muted/70 hover:text-foreground transition-colors hidden md:inline"
+                className="px-3 py-1 rounded-full hover:text-foreground hover:bg-background/80 transition-all cursor-pointer"
               >
-                {isId ? "Riwayat" : "Milestones"}
+                {isId ? "Rekam Jejak" : "Milestones"}
               </a>
               <a
                 href="#contact"
-                className="px-2.5 py-1 rounded-md hover:bg-muted/70 hover:text-foreground transition-colors"
+                className="px-3 py-1 rounded-full hover:text-foreground hover:bg-background/80 transition-all cursor-pointer"
               >
-                {isId ? "Mail" : "Contact"}
+                {isId ? "Kontak" : "Contact"}
               </a>
             </nav>
 
-            <div className="h-3.5 w-px bg-border/80" />
+            {/* Right Controls (Language, Theme, Clock, Mobile Menu) */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              
+              {/* macOS Jakarta Time Pill */}
+              {currentTime && (
+                <div className="hidden sm:flex items-center gap-1 text-[10.5px] font-mono text-muted-foreground bg-muted/60 px-2.5 py-1 rounded-full border border-border/60">
+                  <Clock size={12} weight="bold" />
+                  <span>{currentTime}</span>
+                </div>
+              )}
 
-            {/* macOS Input Source (Language Toggle) */}
-            <button
-              onClick={toggleLanguage}
-              className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-muted/60 hover:bg-muted text-foreground border border-border/60 transition-colors cursor-pointer"
-              title={isId ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
-            >
-              {language.toUpperCase()}
-            </button>
+              {/* Language Segmented Toggle */}
+              <button
+                onClick={toggleLanguage}
+                className="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold bg-muted/70 hover:bg-muted text-foreground border border-border/70 transition-colors cursor-pointer min-h-[28px]"
+                title={isId ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
+                aria-label="Toggle Language"
+              >
+                {language.toUpperCase()}
+              </button>
 
-            {/* macOS Appearance Toggle (Dark/Light Mode) */}
-            <button
-              onClick={() => setTheme(isDark ? "light" : "dark")}
-              className="p-1.5 rounded-md hover:bg-muted text-foreground transition-colors cursor-pointer"
-              title={isDark ? "Switch to Light" : "Switch to Dark"}
-              aria-label="Toggle Theme"
-            >
-              {isDark ? <Sun size={15} weight="bold" /> : <Moon size={15} weight="bold" />}
-            </button>
+              {/* Theme Toggle (Dark/Light) */}
+              <button
+                onClick={() => setTheme(isDark ? "light" : "dark")}
+                className="p-1.5 rounded-full hover:bg-muted text-foreground border border-border/70 transition-colors cursor-pointer min-h-[28px] min-w-[28px] flex items-center justify-center"
+                title={isDark ? "Switch to Light" : "Switch to Dark"}
+                aria-label="Toggle Theme"
+              >
+                {isDark ? <Sun size={14} weight="bold" /> : <Moon size={14} weight="bold" />}
+              </button>
 
-            {/* macOS Clock Widget */}
-            {currentTime && (
-              <div className="hidden lg:flex items-center gap-1 text-[11px] font-mono text-muted-foreground bg-muted/40 px-2 py-0.5 rounded-md border border-border/50">
-                <Clock size={12} weight="bold" />
-                <span>{currentTime}</span>
-              </div>
-            )}
+              {/* Mobile Menu Trigger Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-1.5 rounded-full hover:bg-muted text-foreground border border-border/70 transition-colors cursor-pointer min-h-[32px] min-w-[32px] flex items-center justify-center"
+                aria-label="Toggle Mobile Menu"
+              >
+                {mobileMenuOpen ? <X size={16} weight="bold" /> : <List size={16} weight="bold" />}
+              </button>
+            </div>
+
           </div>
+
+          {/* Mobile macOS Dropdown Sheet / Island */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-2 p-4 rounded-2xl bg-card/95 backdrop-blur-2xl border border-border/90 shadow-2xl space-y-3 animate-in fade-in slide-in-from-top-3 duration-200">
+              
+              {/* Traffic Light Dots */}
+              <div className="flex items-center justify-between pb-2 border-b border-border/60">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
+                  <span className="text-[10px] font-mono text-muted-foreground ml-1 font-bold">Control Center</span>
+                </div>
+                {currentTime && (
+                  <span className="text-[10px] font-mono text-muted-foreground">{currentTime} WIB</span>
+                )}
+              </div>
+
+              {/* Navigation Links with Large Touch Targets */}
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="#about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-muted/40 hover:bg-muted text-xs font-semibold text-foreground border border-border/50 min-h-[44px]"
+                >
+                  <User size={15} weight="bold" className="text-emerald-700 dark:text-emerald-400" />
+                  <span>{isId ? "Profil & Bio" : "Profile & Bio"}</span>
+                </a>
+
+                <a
+                  href="#projects"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-muted/40 hover:bg-muted text-xs font-semibold text-foreground border border-border/50 min-h-[44px]"
+                >
+                  <Briefcase size={15} weight="bold" className="text-blue-700 dark:text-blue-400" />
+                  <span>{isId ? "Karya Pilihan" : "Selected Works"}</span>
+                </a>
+
+                <a
+                  href="#experience"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-muted/40 hover:bg-muted text-xs font-semibold text-foreground border border-border/50 min-h-[44px]"
+                >
+                  <Trophy size={15} weight="bold" className="text-amber-700 dark:text-amber-400" />
+                  <span>{isId ? "Rekam Jejak" : "Milestones"}</span>
+                </a>
+
+                <a
+                  href="#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-muted/40 hover:bg-muted text-xs font-semibold text-foreground border border-border/50 min-h-[44px]"
+                >
+                  <PaperPlane size={15} weight="bold" className="text-purple-700 dark:text-purple-400" />
+                  <span>{isId ? "Kirim Pesan" : "Direct Message"}</span>
+                </a>
+              </div>
+
+              {/* Mobile Quick Action Strip */}
+              <div className="pt-1 flex items-center gap-2">
+                <a
+                  href="/pdf/Resume_Darell_Rangga_EN.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 p-2 rounded-xl bg-foreground text-background text-xs font-bold min-h-[40px]"
+                >
+                  <FilePdf size={15} weight="bold" />
+                  <span>Download CV</span>
+                </a>
+
+                <a
+                  href="https://wa.me/628978638973"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-bold flex items-center justify-center min-h-[40px] px-3"
+                  title="WhatsApp"
+                >
+                  <WhatsappLogo size={18} weight="bold" />
+                </a>
+              </div>
+
+            </div>
+          )}
 
         </div>
       </header>
@@ -263,13 +371,13 @@ export function ExecutiveHub() {
       {/* ========================================================================= */}
       {/* 2. Main Studio Canvas (Split-Pane macOS Architecture)                     */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12">
+      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 lg:gap-12 items-start">
           
           {/* ===================================================================== */}
           {/* LEFT PANE: macOS User Profile, Photo, Proof Matrix & Terminal.zsh     */}
           {/* ===================================================================== */}
-          <aside className="w-full lg:sticky lg:top-18 flex flex-col gap-5" id="about">
+          <aside className="w-full lg:sticky lg:top-20 flex flex-col gap-5" id="about">
             
             {/* macOS Window: Profile Card & Photo */}
             <div className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl transition-all">
@@ -282,7 +390,7 @@ export function ExecutiveHub() {
                   <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs" />
                 </div>
                 <span className="text-[11px] font-mono font-semibold text-muted-foreground">
-                  profile.app — Darell Rangga
+                  profile.app &mdash; Darell Rangga
                 </span>
                 <div className="w-10" />
               </div>
@@ -357,7 +465,7 @@ export function ExecutiveHub() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleCopyEmail}
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer min-h-[40px]"
                     >
                       {copied ? <Check size={14} weight="bold" /> : <EnvelopeSimple size={14} weight="bold" />}
                       <span className="font-mono">{copied ? (isId ? "Email Tersalin!" : "Copied to Clipboard!") : "darellrangga@gmail.com"}</span>
@@ -367,7 +475,7 @@ export function ExecutiveHub() {
                       href="https://wa.me/628978638973"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl border border-border/80 bg-card hover:bg-emerald-500/10 hover:text-emerald-700 dark:hover:text-emerald-400 text-foreground transition-colors cursor-pointer"
+                      className="p-2.5 rounded-xl border border-border/80 bg-card hover:bg-emerald-500/10 hover:text-emerald-700 dark:hover:text-emerald-400 text-foreground transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
                       title="WhatsApp Direct Chat"
                     >
                       <WhatsappLogo size={17} weight="bold" />
@@ -377,7 +485,7 @@ export function ExecutiveHub() {
                       href="/pdf/Resume_Darell_Rangga_EN.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted text-foreground transition-colors cursor-pointer"
+                      className="p-2.5 rounded-xl border border-border/80 bg-card hover:bg-muted text-foreground transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
                       title="Download CV (PDF)"
                     >
                       <FilePdf size={17} weight="bold" />
@@ -392,7 +500,7 @@ export function ExecutiveHub() {
                         href="https://github.com/Rangga11268"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+                        className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                         title="GitHub"
                       >
                         <GithubIcon className="w-3.5 h-3.5" />
@@ -401,7 +509,7 @@ export function ExecutiveHub() {
                         href="https://www.linkedin.com/in/darellrangga/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1 rounded-md text-muted-foreground hover:text-[#0a66c2] hover:bg-muted transition-all"
+                        className="p-1.5 rounded-md text-muted-foreground hover:text-[#0a66c2] hover:bg-muted transition-all"
                         title="LinkedIn"
                       >
                         <LinkedinIcon className="w-3.5 h-3.5" />
@@ -410,7 +518,7 @@ export function ExecutiveHub() {
                         href="https://x.com/ranggsdarell"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+                        className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
                         title="X"
                       >
                         <XTwitterIcon className="w-3.5 h-3.5" />
@@ -419,7 +527,7 @@ export function ExecutiveHub() {
                         href="https://www.instagram.com/darellrangga17/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1 rounded-md text-muted-foreground hover:text-[#E4405F] hover:bg-muted transition-all"
+                        className="p-1.5 rounded-md text-muted-foreground hover:text-[#E4405F] hover:bg-muted transition-all"
                         title="Instagram"
                       >
                         <InstagramIcon className="w-3.5 h-3.5" />
@@ -586,7 +694,9 @@ export function ExecutiveHub() {
                 ] as { key: ProjectCategory; label: string }[]).map((tab) => (
                   <button
                     key={tab.key}
-                    onClick={() => setSelectedCategory(tab.key)}
+                    onClick={() => {
+                      setSelectedCategory(tab.key);
+                    }}
                     className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       selectedCategory === tab.key
                         ? "bg-background text-foreground border border-border shadow-xs font-bold"
@@ -601,7 +711,7 @@ export function ExecutiveHub() {
               {/* VIEW 1: macOS FINDER LIST VIEW WITH INLINE QUICK LOOK ACCORDION */}
               {viewMode === "list" && (
                 <div className="p-4 sm:p-5 divide-y divide-border/60">
-                  {filteredProjects.map((project) => {
+                  {displayedProjects.map((project) => {
                     const isExpanded = expandedProjectId === project.id;
                     return (
                       <article
@@ -791,7 +901,7 @@ export function ExecutiveHub() {
               {/* VIEW 2: macOS BENTO GRID VIEW */}
               {viewMode === "bento" && (
                 <div className="p-4 sm:p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {filteredProjects.map((project) => {
+                  {displayedProjects.map((project) => {
                     const isExpanded = expandedProjectId === project.id;
                     return (
                       <div
@@ -899,7 +1009,7 @@ export function ExecutiveHub() {
               {/* VIEW 3: macOS XCODE CODE INSPECTOR VIEW */}
               {viewMode === "architecture" && (
                 <div className="p-4 sm:p-5 space-y-5">
-                  {filteredProjects.slice(0, 4).map((project) => (
+                  {displayedProjects.map((project) => (
                     <div key={project.id} className="p-5 rounded-2xl border border-border bg-background space-y-4 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
@@ -929,6 +1039,32 @@ export function ExecutiveHub() {
                       )}
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* macOS SHOW MORE / SHOW LESS TOGGLE FOOTER */}
+              {filteredProjects.length > 3 && (
+                <div className="p-3.5 border-t border-border/70 bg-muted/30 flex items-center justify-center">
+                  <button
+                    onClick={() => setShowAllProjects(!showAllProjects)}
+                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-background border border-border/80 hover:border-foreground/40 text-foreground text-xs font-bold shadow-xs hover:shadow-md transition-all cursor-pointer group"
+                  >
+                    <span>
+                      {showAllProjects
+                        ? (isId ? "Tampilkan 3 Unggulan Saja" : "Show Top 3 Only")
+                        : (isId ? `Tampilkan Semua Proyek (${filteredProjects.length})` : `Show All Systems (${filteredProjects.length})`)}
+                    </span>
+                    {!showAllProjects && (
+                      <span className="px-2 py-0.5 rounded-full bg-foreground/10 text-foreground text-[10.5px] font-mono">
+                        +{remainingCount} {isId ? "Lainnya" : "More"}
+                      </span>
+                    )}
+                    {showAllProjects ? (
+                      <CaretUp size={13} weight="bold" className="group-hover:-translate-y-0.5 transition-transform" />
+                    ) : (
+                      <CaretDown size={13} weight="bold" className="group-hover:translate-y-0.5 transition-transform" />
+                    )}
+                  </button>
                 </div>
               )}
 
@@ -1080,7 +1216,7 @@ export function ExecutiveHub() {
                   <div className="flex items-center justify-between gap-4 pt-1">
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs cursor-pointer min-h-[40px]"
                     >
                       <PaperPlaneRight size={14} weight="bold" />
                       <span>{formSent ? (isId ? "Pesan Terkirim!" : "Message Sent!") : (isId ? "Kirim Pesan" : "Send Inquiry")}</span>
