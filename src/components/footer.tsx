@@ -15,8 +15,8 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 border-t border-border/70 bg-card/80 dark:bg-card/70 backdrop-blur-md transition-colors">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+    <footer className="py-8 border-t border-border/70 bg-card transition-colors">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl xl:max-w-7xl">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-[10px]">

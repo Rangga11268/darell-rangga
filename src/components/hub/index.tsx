@@ -354,18 +354,18 @@ export function ExecutiveHub() {
       </header>
 
       {/* ========================================================================= */}
-      {/* 2. Main Studio Canvas (Split-Pane macOS Architecture)                     */}
+      {/* 2. Main Studio Canvas (Ergonomic Split-Pane macOS Architecture)          */}
       {/* ========================================================================= */}
-      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 lg:gap-12 items-start">
+      <div className="w-full max-w-6xl xl:max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[330px_1fr] xl:grid-cols-[360px_1fr] gap-6 lg:gap-8 xl:gap-10 items-start">
           
           {/* ===================================================================== */}
           {/* LEFT PANE: macOS User Profile, Photo, Proof Matrix & Terminal.zsh     */}
           {/* ===================================================================== */}
-          <aside className="w-full lg:sticky lg:top-20 flex flex-col gap-5" id="profile">
+          <aside className="w-full flex flex-col gap-5" id="profile">
             
             {/* macOS Window: Profile Card & Photo */}
-            <div className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl transition-all">
+            <div className="rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm dark:shadow-xl transition-all">
               
               {/* macOS Window Titlebar with Traffic Lights */}
               <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex items-center justify-between">
@@ -479,7 +479,7 @@ export function ExecutiveHub() {
 
                   {/* macOS Dock-styled Social Strip */}
                   <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-background border border-border/60 text-xs">
-                    <span className="text-muted-foreground font-mono text-[10.5px]">Socials & Dock:</span>
+                    <span className="text-muted-foreground font-mono text-[10.5px]">Socials:</span>
                     <div className="flex items-center gap-3">
                       <a
                         href="https://github.com/Rangga11268"
@@ -525,7 +525,7 @@ export function ExecutiveHub() {
             </div>
 
             {/* macOS Window: Terminal.app Sandbox */}
-            <div className="rounded-3xl border border-border/90 bg-card/90 backdrop-blur-md overflow-hidden text-xs shadow-lg dark:shadow-2xl font-mono">
+            <div className="rounded-3xl border border-border/80 bg-card overflow-hidden text-xs shadow-sm dark:shadow-xl font-mono">
               
               {/* Terminal Titlebar */}
               <div className="px-4 py-2.5 bg-muted/70 border-b border-border/70 flex items-center justify-between">
@@ -591,7 +591,7 @@ export function ExecutiveHub() {
             </div>
 
             {/* macOS System Info / Hardware Specs Widget */}
-            <div className="p-4 rounded-2xl border border-border/70 bg-card/60 space-y-2.5 font-mono text-[11px]">
+            <div className="p-4 rounded-2xl border border-border/80 bg-card space-y-2.5 font-mono text-[11px] shadow-xs">
               <div className="flex items-center justify-between text-muted-foreground font-bold uppercase tracking-wider text-[10px]">
                 <span>{isId ? "Spesifikasi Arsitektur" : "System Specs"}</span>
                 <Globe size={12} weight="bold" />
@@ -622,7 +622,7 @@ export function ExecutiveHub() {
             {/* ========================================================================= */}
             {/* macOS Window: About Me / Executive Brief                                 */}
             {/* ========================================================================= */}
-            <section id="about" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl transition-all">
+            <section id="about" className="rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm dark:shadow-xl transition-all">
               
               {/* macOS Window Titlebar */}
               <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex items-center justify-between">
@@ -721,7 +721,7 @@ export function ExecutiveHub() {
             </section>
 
             {/* macOS Window: Finder Selected Works */}
-            <section id="projects" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl">
+            <section id="projects" className="rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm dark:shadow-xl">
               
               {/* Finder Titlebar & View Switcher */}
               <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -1162,7 +1162,7 @@ export function ExecutiveHub() {
             </section>
 
             {/* macOS Window: Timeline & Experience */}
-            <section id="experience" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl">
+            <section id="experience" className="rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm dark:shadow-xl">
               
               <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -1249,7 +1249,7 @@ export function ExecutiveHub() {
             </section>
 
             {/* macOS Window: Mail.app Compose Inquiry */}
-            <section id="contact" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl">
+            <section id="contact" className="rounded-3xl border border-border/80 bg-card overflow-hidden shadow-sm dark:shadow-xl">
               
               {/* Mail Compose Titlebar */}
               <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex items-center justify-between">

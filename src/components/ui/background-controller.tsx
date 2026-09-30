@@ -28,18 +28,20 @@ export function BackgroundController() {
 
       {/* 2. Custom Bespoke macOS Vector Waves & Glowing Ribbons */}
       {isDark ? (
-        // DARK MODE: Deep Obsidian & Cyber Wave Sculptures
-        <div className="absolute inset-0 transition-opacity duration-700 opacity-100">
-          
-          {/* Ambient Luminescent Spotlights (Depth Glows) */}
+        // DARK MODE: Deep Obsidian, Midnight Indigo & Sapphire Wave Sculptures (Zero Green)
+        <div
+          className="absolute inset-0 transition-opacity duration-700 opacity-100"
+          style={{ transform: "translate3d(0, 0, 0)", willChange: "transform" }}
+        >
+          {/* Ambient Luminescent Spotlights (Depth Glows: Indigo, Sapphire, Slate) */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
               backgroundImage: `
-                radial-gradient(circle 800px at 15% 15%, rgba(99, 102, 241, 0.22), transparent 70%),
-                radial-gradient(circle 750px at 85% 25%, rgba(16, 185, 129, 0.18), transparent 65%),
-                radial-gradient(circle 900px at 70% 85%, rgba(168, 85, 247, 0.15), transparent 70%),
-                radial-gradient(circle 600px at 10% 75%, rgba(14, 165, 233, 0.16), transparent 65%)
+                radial-gradient(circle 800px at 15% 15%, rgba(99, 102, 241, 0.18), transparent 70%),
+                radial-gradient(circle 750px at 85% 25%, rgba(59, 130, 246, 0.14), transparent 65%),
+                radial-gradient(circle 900px at 70% 85%, rgba(139, 92, 246, 0.12), transparent 70%),
+                radial-gradient(circle 600px at 10% 75%, rgba(30, 41, 59, 0.35), transparent 65%)
               `,
             }}
           />
@@ -56,22 +58,22 @@ export function BackgroundController() {
               {/* Wave Gradient 1: Deep Indigo to Violet Ribbon */}
               <linearGradient id="darkWave1" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#1e1b4b" stopOpacity="0.85" />
-                <stop offset="50%" stopColor="#311042" stopOpacity="0.65" />
+                <stop offset="50%" stopColor="#2e1065" stopOpacity="0.65" />
                 <stop offset="100%" stopColor="#0f172a" stopOpacity="0.9" />
               </linearGradient>
 
-              {/* Wave Gradient 2: Emerald-Cyan Flow Ribbon */}
+              {/* Wave Gradient 2: Sapphire to Slate Flow Ribbon (Zero Green) */}
               <linearGradient id="darkWave2" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#064e3b" stopOpacity="0.6" />
-                <stop offset="45%" stopColor="#0f766e" stopOpacity="0.45" />
-                <stop offset="100%" stopColor="#022c22" stopOpacity="0.75" />
+                <stop offset="0%" stopColor="#1e293b" stopOpacity="0.75" />
+                <stop offset="45%" stopColor="#1e3a8a" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#090d16" stopOpacity="0.85" />
               </linearGradient>
 
               {/* Wave Gradient 3: Obsidian Surface Layer */}
               <linearGradient id="darkWave3" x1="20%" y1="0%" x2="80%" y2="100%">
-                <stop offset="0%" stopColor="#131522" stopOpacity="0.9" />
-                <stop offset="60%" stopColor="#0d0e17" stopOpacity="0.85" />
-                <stop offset="100%" stopColor="#06070c" stopOpacity="0.95" />
+                <stop offset="0%" stopColor="#11131e" stopOpacity="0.95" />
+                <stop offset="60%" stopColor="#0a0b12" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#05060a" stopOpacity="0.98" />
               </linearGradient>
 
               {/* Specular Edge Line Gradients */}
@@ -82,15 +84,15 @@ export function BackgroundController() {
               </linearGradient>
 
               <linearGradient id="darkStroke2" x1="100%" y1="20%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#34d399" stopOpacity="0.75" />
-                <stop offset="60%" stopColor="#22d3ee" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#818cf8" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.75" />
+                <stop offset="60%" stopColor="#818cf8" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.15" />
               </linearGradient>
 
               <linearGradient id="darkStroke3" x1="0%" y1="30%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.7" />
                 <stop offset="50%" stopColor="#60a5fa" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#34d399" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#94a3b8" stopOpacity="0.2" />
               </linearGradient>
             </defs>
 
@@ -106,7 +108,7 @@ export function BackgroundController() {
               fill="none"
             />
 
-            {/* Layer 2: Middle Cascading Teal/Cyan Wave Ribbon */}
+            {/* Layer 2: Middle Cascading Sapphire/Slate Wave Ribbon */}
             <path
               d="M1600 900 C 1200 650, 950 820, 550 580 C 250 400, 100 550, -100 480 L -100 900 Z"
               fill="url(#darkWave2)"
@@ -253,8 +255,8 @@ export function BackgroundController() {
         className="absolute top-0 left-0 right-0 h-[1px] pointer-events-none"
         style={{
           background: isDark
-            ? "linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.6), rgba(52, 211, 153, 0.6), transparent)"
-            : "linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.35), rgba(20, 184, 166, 0.35), transparent)",
+            ? "linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.6), rgba(96, 165, 250, 0.5), transparent)"
+            : "linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.35), rgba(59, 130, 246, 0.35), transparent)",
         }}
       />
     </div>
