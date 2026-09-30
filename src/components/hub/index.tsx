@@ -353,7 +353,7 @@ export function ExecutiveHub() {
           {/* ===================================================================== */}
           {/* LEFT PANE: macOS User Profile, Photo, Proof Matrix & Terminal.zsh     */}
           {/* ===================================================================== */}
-          <aside className="w-full lg:sticky lg:top-20 flex flex-col gap-5" id="about">
+          <aside className="w-full lg:sticky lg:top-20 flex flex-col gap-5" id="profile">
             
             {/* macOS Window: Profile Card & Photo */}
             <div className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl transition-all">
@@ -610,6 +610,113 @@ export function ExecutiveHub() {
           {/* ===================================================================== */}
           <main className="w-full flex flex-col gap-10 lg:gap-12">
             
+            {/* ========================================================================= */}
+            {/* macOS Window: About Me / Executive Brief                                 */}
+            {/* ========================================================================= */}
+            <section id="about" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl transition-all">
+              
+              {/* macOS Window Titlebar */}
+              <div className="px-4 py-3 bg-muted/60 border-b border-border/70 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/40 shadow-xs" />
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/40 shadow-xs" />
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/40 shadow-xs" />
+                  <h2 className="text-xs font-mono font-bold text-foreground ml-2">
+                    about.app &mdash; {isId ? "Tentang Saya & Filosofi Rekayasa" : "About Me & Engineering Philosophy"}
+                  </h2>
+                </div>
+                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/5 border border-border/60 text-[10.5px] font-mono text-muted-foreground">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span>fullstack.sys</span>
+                </div>
+              </div>
+
+              {/* About Me Content */}
+              <div className="p-5 sm:p-7 space-y-6">
+                
+                {/* Executive Summary Paragraph */}
+                <div className="space-y-3">
+                  <h3 className="text-base sm:text-lg font-bold text-foreground tracking-tight font-display">
+                    {isId
+                      ? "Membangun sistem web yang tangguh, cepat, dan siap skala produksi."
+                      : "Engineering resilient, high-throughput web systems built for scale."}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {isId
+                      ? "Saya adalah Fullstack Software Engineer & mahasiswa Sistem Informasi (IPK 4.00/4.00) di Universitas Bina Sarana Informatika. Fokus utama saya adalah merancang arsitektur backend yang aman dan efisien dengan transaksi database atomik (Laravel 12, PostgreSQL, MySQL), antrean asinkron (Redis), serta antarmuka frontend reaktif sub-milidetik (React 19, Next.js 15, TypeScript)."
+                      : "I am a Fullstack Software Engineer and Information Systems scholar (4.00/4.00 GPA) at Universitas Bina Sarana Informatika. My primary focus is architecting secure, reliable backend infrastructure with atomic database transactions (Laravel 12, PostgreSQL, MySQL), asynchronous queues (Redis), and sub-millisecond reactive frontends (React 19, Next.js 15, TypeScript)."}
+                  </p>
+                </div>
+
+                {/* 3 Core Pillars Bento Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  
+                  {/* Pillar 1 */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-700 dark:text-indigo-400 flex items-center justify-center">
+                      <Cpu size={15} weight="bold" />
+                    </div>
+                    <h4 className="text-xs font-bold text-foreground">
+                      {isId ? "Konkurensi & Sistem" : "Concurrency & Systems"}
+                    </h4>
+                    <p className="text-[11px] text-muted-foreground leading-normal">
+                      {isId
+                        ? "Transaksi atomik, Redis queue, dan WebSockets sub-50ms untuk beban tinggi."
+                        : "Atomic DB locks, Redis queues, and sub-50ms WebSockets for high throughput."}
+                    </p>
+                  </div>
+
+                  {/* Pillar 2 */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
+                      <CheckCircle size={15} weight="bold" />
+                    </div>
+                    <h4 className="text-xs font-bold text-foreground">
+                      {isId ? "Kualitas & Performa" : "Quality & Performance"}
+                    </h4>
+                    <p className="text-[11px] text-muted-foreground leading-normal">
+                      {isId
+                        ? "Type-safe TypeScript, modul bersih, dan 100/100 Lighthouse standard."
+                        : "Type-safe TypeScript, clean architecture, and strict 100/100 Lighthouse scores."}
+                    </p>
+                  </div>
+
+                  {/* Pillar 3 */}
+                  <div className="p-3.5 rounded-2xl bg-muted/40 border border-border/70 space-y-1.5 shadow-xs">
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center">
+                      <Trophy size={15} weight="bold" />
+                    </div>
+                    <h4 className="text-xs font-bold text-foreground">
+                      {isId ? "Kepemimpinan Tim" : "Leadership & Delivery"}
+                    </h4>
+                    <p className="text-[11px] text-muted-foreground leading-normal">
+                      {isId
+                        ? "Memimpin 11 engineer (Juara 1 IT Bootcamp 2026) dan 12+ sistem produksi."
+                        : "Led 11 engineers (1st Place Winner Bootcamp 2026) and delivered 12+ prod apps."}
+                    </p>
+                  </div>
+
+                </div>
+
+                {/* Tech Stack Chips Bar */}
+                <div className="pt-2 border-t border-border/50 flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground">
+                    Core Stack:
+                  </span>
+                  {["Laravel 12", "React 19", "Next.js 15", "TypeScript", "Tailwind CSS v4", "PostgreSQL", "MySQL", "Redis", "WebSockets"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-0.5 rounded-md bg-muted/70 text-foreground font-mono text-[10.5px] border border-border/60"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+              </div>
+
+            </section>
+
             {/* macOS Window: Finder Selected Works */}
             <section id="projects" className="rounded-3xl border border-border/90 bg-card/85 backdrop-blur-md overflow-hidden shadow-lg dark:shadow-2xl">
               
