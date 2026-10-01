@@ -151,7 +151,7 @@ export function ExecutiveHub() {
                 </p>
               </div>
 
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-mono text-emerald-700 dark:text-emerald-400">
+              <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{isId ? "Tersedia untuk Rekrutmen" : "Available for select roles"}</span>
               </div>
@@ -409,7 +409,7 @@ export function ExecutiveHub() {
                             )}
 
                             {project.isLive && (
-                              <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1">
+                              <span className="px-2 py-0.5 rounded bg-muted text-foreground text-[10px] font-mono font-medium flex items-center gap-1 border border-border/60">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                 Live
                               </span>
@@ -543,7 +543,7 @@ export function ExecutiveHub() {
                             className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
                           />
                           {project.isLive && (
-                            <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-background/80 backdrop-blur-md text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold flex items-center gap-1 border border-border/50">
+                            <span className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-card/90 backdrop-blur-md text-foreground text-[10px] font-mono font-medium flex items-center gap-1 border border-border/70">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                               Live
                             </span>
@@ -628,7 +628,7 @@ export function ExecutiveHub() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {/* Pillar 1 */}
                 <div className="p-4 rounded-xl border border-border/70 bg-card/60 space-y-2">
-                  <div className="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-muted text-foreground flex items-center justify-center border border-border/60">
                     <MacCpuIcon className="w-4 h-4" />
                   </div>
                   <h3 className="text-xs font-bold text-foreground">
@@ -641,7 +641,7 @@ export function ExecutiveHub() {
 
                 {/* Pillar 2 */}
                 <div className="p-4 rounded-xl border border-border/70 bg-card/60 space-y-2">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-muted text-foreground flex items-center justify-center border border-border/60">
                     <MacGaugeIcon className="w-4 h-4" />
                   </div>
                   <h3 className="text-xs font-bold text-foreground">
@@ -654,7 +654,7 @@ export function ExecutiveHub() {
 
                 {/* Pillar 3 */}
                 <div className="p-4 rounded-xl border border-border/70 bg-card/60 space-y-2">
-                  <div className="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center">
+                  <div className="w-7 h-7 rounded-lg bg-muted text-foreground flex items-center justify-center border border-border/60">
                     <MacTrophyIcon className="w-4 h-4" />
                   </div>
                   <h3 className="text-xs font-bold text-foreground">
@@ -704,7 +704,7 @@ export function ExecutiveHub() {
                     <span className="text-xs sm:text-sm font-bold text-foreground">
                       Juara 1 IT Bootcamp 2026 & Lead Developer
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-[10px] font-mono font-bold">
+                    <span className="px-2 py-0.5 rounded bg-foreground/10 text-foreground text-[10px] font-mono font-bold">
                       TitikAman Platform
                     </span>
                   </div>
