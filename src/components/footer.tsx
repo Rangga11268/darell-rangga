@@ -16,7 +16,7 @@ export function Footer() {
 
   return (
     <footer className="py-8 border-t border-border/70 bg-card transition-colors">
-      <div className="w-full max-w-2xl sm:max-w-[700px] mx-auto px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-[10px]">
