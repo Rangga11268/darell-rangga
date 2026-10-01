@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "@/app/data/projects";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useTheme } from "next-themes";
@@ -18,6 +19,8 @@ import {
   CaretDown,
   CaretUp,
   CheckCircle,
+  Command,
+  Lightning,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -32,6 +35,7 @@ import {
   MacQuickLookIcon,
 } from "@/components/ui/macos-icons";
 import { LiveClock } from "@/components/ui/live-clock";
+import { playMicroTick } from "@/lib/sound";
 
 type ProjectCategory = "all" | "web" | "systems" | "mobile" | "ai";
 type ViewMode = "list" | "bento";
@@ -45,12 +49,97 @@ export function ExecutiveHub() {
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>("titik-aman");
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("overview");
 
   const email = "darellrangga@gmail.com";
+
+  // Trigger toast with auto-dismiss
+  const showToast = useCallback((msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 2400);
+  }, []);
+
+  // Copy email handler
+  const handleCopyEmail = useCallback(() => {
+    navigator.clipboard.writeText(email);
+    playMicroTick();
+    setCopied(true);
+    showToast(isId ? "Email disalin ke clipboard!" : "Email copied to clipboard!");
+    setTimeout(() => setCopied(false), 2000);
+  }, [email, isId, showToast]);
+
+  // Section jumping
+  const jumpToSection = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      playMicroTick();
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
+
+  // Global Keyboard Shortcuts (Cmd+K, C, T, 1-5)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger when user is typing in form inputs or textareas
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      const key = e.key.toLowerCase();
+
+      // C: Copy Email
+      if (key === "c" && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        handleCopyEmail();
+        return;
+      }
+
+      // T: Toggle Theme
+      if (key === "t" && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        playMicroTick();
+        setTheme(isDark ? "light" : "dark");
+        showToast(
+          isDark
+            ? (isId ? "Tema Terang Diaktifkan" : "Light Mode Activated")
+            : (isId ? "Tema Gelap Diaktifkan" : "Dark Mode Activated")
+        );
+        return;
+      }
+
+      // 1-5: Section Navigation
+      if (["1", "2", "3", "4", "5"].includes(key)) {
+        e.preventDefault();
+        const sectionMap: Record<string, string> = {
+          "1": "overview",
+          "2": "projects",
+          "3": "architecture",
+          "4": "experience",
+          "5": "contact",
+        };
+        const section = sectionMap[key];
+        if (section) {
+          jumpToSection(section);
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleCopyEmail, isDark, isId, jumpToSection, setTheme, showToast]);
 
   // Active section scroll spy
   useEffect(() => {
@@ -75,19 +164,15 @@ export function ExecutiveHub() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    playMicroTick();
     setFormSent(true);
     setTimeout(() => setFormSent(false), 4000);
   };
 
   const toggleProjectExpand = (id: string) => {
+    playMicroTick();
     setExpandedProjectId((prev) => (prev === id ? null : id));
   };
 
@@ -119,7 +204,24 @@ export function ExecutiveHub() {
   const remainingCount = Math.max(0, filteredProjects.length - 4);
 
   return (
-    <div className="w-full min-h-screen selection:bg-foreground selection:text-background font-sans antialiased text-foreground">
+    <div className="w-full min-h-screen selection:bg-foreground selection:text-background font-sans antialiased text-foreground relative">
+      
+      {/* Micro Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.95 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="fixed bottom-6 right-6 z-50 px-3.5 py-2 rounded-xl bg-foreground text-background text-xs font-mono font-medium shadow-lg flex items-center gap-2 border border-background/20 pointer-events-none"
+          >
+            <Lightning size={14} weight="fill" className="text-amber-400 shrink-0" />
+            <span>{toastMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12 py-10 lg:py-16">
         <div className="lg:grid lg:grid-cols-12 lg:gap-12 xl:gap-16 items-start">
           
@@ -152,7 +254,7 @@ export function ExecutiveHub() {
               </div>
 
               <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                 <span>{isId ? "Tersedia untuk Rekrutmen" : "Available for select roles"}</span>
               </div>
             </div>
@@ -167,31 +269,34 @@ export function ExecutiveHub() {
             {/* Numbered Section Index Navigation (Desktop only) */}
             <nav className="hidden lg:block space-y-1 font-mono text-xs pt-1">
               {[
-                { href: "#overview", id: "overview", label: isId ? "Ringkasan" : "Overview", num: "01" },
-                { href: "#projects", id: "projects", label: isId ? "Karya Pilihan" : "Selected Works", num: "02" },
-                { href: "#architecture", id: "architecture", label: isId ? "Pilar Rekayasa" : "Architecture", num: "03" },
-                { href: "#experience", id: "experience", label: isId ? "Rekam Jejak" : "Experience", num: "04" },
-                { href: "#contact", id: "contact", label: isId ? "Kontak" : "Contact", num: "05" },
+                { href: "#overview", id: "overview", label: isId ? "Ringkasan" : "Overview", num: "01", key: "1" },
+                { href: "#projects", id: "projects", label: isId ? "Karya Pilihan" : "Selected Works", num: "02", key: "2" },
+                { href: "#architecture", id: "architecture", label: isId ? "Pilar Rekayasa" : "Architecture", num: "03", key: "3" },
+                { href: "#experience", id: "experience", label: isId ? "Rekam Jejak" : "Experience", num: "04", key: "4" },
+                { href: "#contact", id: "contact", label: isId ? "Kontak" : "Contact", num: "05", key: "5" },
               ].map((item) => {
                 const isActive = activeSection === item.id;
                 return (
-                  <a
+                  <button
                     key={item.num}
-                    href={item.href}
-                    className={`group flex items-center gap-3 py-1.5 transition-colors ${
+                    onClick={() => jumpToSection(item.id)}
+                    className={`w-full group flex items-center gap-3 py-1.5 transition-colors text-left cursor-pointer ${
                       isActive ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    <span className={`text-[10.5px] transition-colors ${
+                    <span className={`text-[10.5px] tabular-nums transition-colors ${
                       isActive ? "text-foreground font-bold" : "text-muted-foreground/60 group-hover:text-foreground"
                     }`}>
                       {item.num}
                     </span>
                     <span className="font-sans text-xs tracking-tight">{item.label}</span>
+                    <span className="text-[9px] font-mono text-muted-foreground/40 group-hover:text-muted-foreground transition-colors ml-1">
+                      [{item.key}]
+                    </span>
                     {isActive && (
                       <span className="ml-auto w-1 h-3 rounded-full bg-foreground" />
                     )}
-                  </a>
+                  </button>
                 );
               })}
             </nav>
@@ -199,18 +304,24 @@ export function ExecutiveHub() {
             {/* Utility Strip: Clock, Lang, Theme, CV, Email */}
             <div className="pt-4 border-t border-border/60 space-y-3.5">
               <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                <LiveClock className="flex items-center gap-1 text-[11px]" suffix="WIB" />
+                <LiveClock className="flex items-center gap-1 text-[11px] tabular-nums" suffix="WIB" />
                 <div className="flex items-center gap-1.5">
                   <button
-                    onClick={toggleLanguage}
+                    onClick={() => {
+                      playMicroTick();
+                      toggleLanguage();
+                    }}
                     className="px-2 py-0.5 rounded text-[10.5px] font-mono font-bold bg-muted hover:bg-muted/80 text-foreground transition-colors cursor-pointer"
                   >
                     {language.toUpperCase()}
                   </button>
                   <button
-                    onClick={() => setTheme(isDark ? "light" : "dark")}
+                    onClick={() => {
+                      playMicroTick();
+                      setTheme(isDark ? "light" : "dark");
+                    }}
                     className="p-1 rounded hover:bg-muted text-foreground transition-colors cursor-pointer"
-                    title="Toggle theme"
+                    title="Toggle theme (Press T)"
                   >
                     {isDark ? <Sun size={13} weight="bold" /> : <Moon size={13} weight="bold" />}
                   </button>
@@ -222,6 +333,7 @@ export function ExecutiveHub() {
                   href="/pdf/Resume_Darell_Rangga_EN.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => playMicroTick()}
                   className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-foreground text-background text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-xs"
                 >
                   <FilePdf size={14} weight="bold" />
@@ -230,7 +342,7 @@ export function ExecutiveHub() {
                 <button
                   onClick={handleCopyEmail}
                   className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors cursor-pointer"
-                  title="Copy Email"
+                  title="Copy Email (Press C)"
                 >
                   {copied ? <Check size={15} weight="bold" className="text-emerald-500" /> : <EnvelopeSimple size={15} weight="bold" />}
                 </button>
@@ -238,7 +350,8 @@ export function ExecutiveHub() {
                   href="https://wa.me/628978638973"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-xl border border-border bg-card hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400 text-foreground transition-colors"
+                  onClick={() => playMicroTick()}
+                  className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors"
                   title="WhatsApp"
                 >
                   <WhatsappLogo size={15} weight="bold" />
@@ -260,12 +373,18 @@ export function ExecutiveHub() {
                   <InstagramIcon className="w-3.5 h-3.5" />
                 </a>
               </div>
+
+              {/* Keyboard Shortcuts Hint */}
+              <div className="pt-2 hidden lg:flex items-center gap-1.5 text-[10px] font-mono text-muted-foreground/60">
+                <Command size={11} className="shrink-0" />
+                <span>Press <kbd className="px-1 py-0.2 rounded bg-muted text-foreground border border-border/60">C</kbd> to copy, <kbd className="px-1 py-0.2 rounded bg-muted text-foreground border border-border/60">T</kbd> for theme</span>
+              </div>
             </div>
 
           </aside>
 
           {/* ===================================================================== */}
-          {/* RIGHT COLUMN: Open Editorial Content Stream (Zero Nested Card Slop)   */}
+          {/* RIGHT COLUMN: Open Editorial Content Stream                           */}
           {/* ===================================================================== */}
           <main className="lg:col-span-8 space-y-16 sm:space-y-20 pt-10 lg:pt-0">
             
@@ -289,10 +408,10 @@ export function ExecutiveHub() {
                 </p>
               </div>
 
-              {/* 3 Core Stats (Open Editorial Layout, High Contrast) */}
+              {/* 3 Core Stats (Open Editorial Layout, High Contrast, Tabular Nums) */}
               <div className="grid grid-cols-3 gap-4 pt-3 pb-4 border-y border-border/70">
                 <div className="space-y-0.5">
-                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block">
+                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
                     Juara 1
                   </span>
                   <span className="text-xs text-muted-foreground block">
@@ -300,7 +419,7 @@ export function ExecutiveHub() {
                   </span>
                 </div>
                 <div className="space-y-0.5 sm:border-l sm:border-border/60 sm:pl-4">
-                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block">
+                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
                     12+
                   </span>
                   <span className="text-xs text-muted-foreground block">
@@ -308,7 +427,7 @@ export function ExecutiveHub() {
                   </span>
                 </div>
                 <div className="space-y-0.5 sm:border-l sm:border-border/60 sm:pl-4">
-                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block">
+                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
                     4.00
                   </span>
                   <span className="text-xs text-muted-foreground block">
@@ -319,7 +438,7 @@ export function ExecutiveHub() {
             </section>
 
             {/* ------------------------------------------------------------------- */}
-            {/* 02. SELECTED WORKS (Paco Coursey / Pedro Duarte Typographic Stream) */}
+            {/* 02. SELECTED WORKS (Gliding Spring Spotlight & Structured ADR)      */}
             {/* ------------------------------------------------------------------- */}
             <section id="projects" className="space-y-6 scroll-mt-16">
               
@@ -338,7 +457,10 @@ export function ExecutiveHub() {
                   {/* View Mode Toggle */}
                   <div className="flex items-center gap-1 p-0.5 rounded-lg bg-muted/60 border border-border/70 self-start sm:self-auto">
                     <button
-                      onClick={() => setViewMode("list")}
+                      onClick={() => {
+                        playMicroTick();
+                        setViewMode("list");
+                      }}
                       className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors cursor-pointer ${
                         viewMode === "list" ? "bg-background text-foreground shadow-xs font-bold" : "text-muted-foreground hover:text-foreground"
                       }`}
@@ -346,7 +468,10 @@ export function ExecutiveHub() {
                       List
                     </button>
                     <button
-                      onClick={() => setViewMode("bento")}
+                      onClick={() => {
+                        playMicroTick();
+                        setViewMode("bento");
+                      }}
                       className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors cursor-pointer ${
                         viewMode === "bento" ? "bg-background text-foreground shadow-xs font-bold" : "text-muted-foreground hover:text-foreground"
                       }`}
@@ -367,7 +492,10 @@ export function ExecutiveHub() {
                   ] as { key: ProjectCategory; label: string }[]).map((tab) => (
                     <button
                       key={tab.key}
-                      onClick={() => setSelectedCategory(tab.key)}
+                      onClick={() => {
+                        playMicroTick();
+                        setSelectedCategory(tab.key);
+                      }}
                       className={`px-2.5 py-0.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
                         selectedCategory === tab.key
                           ? "bg-foreground text-background font-bold"
@@ -380,24 +508,39 @@ export function ExecutiveHub() {
                 </div>
               </div>
 
-              {/* LIST VIEW (Paco / Pedro Duarte Craft Style) */}
+              {/* LIST VIEW with Gliding Spring Spotlight (Paco Coursey / Rauno Style) */}
               {viewMode === "list" && (
-                <div className="divide-y divide-border/60">
+                <div
+                  className="space-y-1 relative"
+                  onMouseLeave={() => setHoveredProjectId(null)}
+                >
                   {displayedProjects.map((project) => {
                     const isExpanded = expandedProjectId === project.id;
+                    const isHovered = hoveredProjectId === project.id;
+
                     return (
                       <article
                         key={project.id}
-                        className="py-5 first:pt-0 last:pb-0 group transition-all flex flex-col gap-2.5"
+                        onMouseEnter={() => setHoveredProjectId(project.id)}
+                        className="relative group rounded-xl p-3.5 sm:p-4 transition-colors flex flex-col gap-2.5 border border-transparent hover:border-border/40"
                       >
+                        {/* Gliding Spring Hover Pill */}
+                        {isHovered && (
+                          <motion.div
+                            layoutId="project-hover-pill"
+                            className="absolute inset-0 bg-muted/60 dark:bg-muted/40 rounded-xl -z-10 border border-border/60"
+                            transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                          />
+                        )}
+
                         {/* Title Row */}
                         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5">
                           <div className="flex items-center gap-2.5 flex-wrap">
-                            <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0">
+                            <span className="text-xs font-mono font-bold text-muted-foreground w-11 shrink-0 tabular-nums">
                               {project.year}
                             </span>
 
-                            <h3 className="text-base font-bold text-foreground font-display tracking-tight group-hover:text-foreground">
+                            <h3 className="text-base font-bold text-foreground font-display tracking-tight">
                               {project.title}
                             </h3>
 
@@ -423,6 +566,7 @@ export function ExecutiveHub() {
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() => playMicroTick()}
                                 className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground font-medium transition-colors"
                               >
                                 <span>Demo</span>
@@ -435,6 +579,7 @@ export function ExecutiveHub() {
                                 href={project.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                onClick={() => playMicroTick()}
                                 className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground font-medium transition-colors"
                                 title="Source Code"
                               >
@@ -445,7 +590,7 @@ export function ExecutiveHub() {
 
                             <button
                               onClick={() => toggleProjectExpand(project.id)}
-                              className="inline-flex items-center gap-1 text-foreground bg-muted hover:bg-muted/80 px-2 py-0.5 rounded text-xs font-medium transition-colors cursor-pointer"
+                              className="inline-flex items-center gap-1 text-foreground bg-muted hover:bg-muted/80 px-2 py-0.5 rounded text-xs font-medium transition-colors cursor-pointer border border-border/50"
                             >
                               <MacQuickLookIcon className="w-3 h-3" />
                               <span>{isExpanded ? (isId ? "Tutup" : "Close") : "Detail"}</span>
@@ -467,14 +612,14 @@ export function ExecutiveHub() {
                           {project.techStack.map((tech) => (
                             <span
                               key={tech.name}
-                              className="px-2 py-0.5 rounded bg-muted/60 text-foreground text-[10.5px] font-mono border border-border/50"
+                              className="px-2 py-0.5 rounded bg-muted/80 text-foreground text-[10.5px] font-mono border border-border/60"
                             >
                               {tech.name}
                             </span>
                           ))}
                         </div>
 
-                        {/* Inline Case Details (with screenshot preview) */}
+                        {/* Structured Architectural Decision Record (ADR) Detail Drawer */}
                         {isExpanded && (
                           <div className="mt-2.5 p-4 sm:p-5 rounded-xl bg-card border border-border sm:ml-13.5 space-y-4 text-xs shadow-xs animate-in fade-in duration-150">
                             
@@ -491,30 +636,51 @@ export function ExecutiveHub() {
                               </div>
                             )}
 
-                            <div className="space-y-1">
-                              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground block">
-                                {isId ? "Arsitektur & Solusi" : "Architecture & Solution"}
-                              </span>
-                              <p className="text-foreground/90 leading-relaxed text-xs sm:text-[12.5px]">
-                                {project.fullDescription[language]}
-                              </p>
+                            {/* ADR 3-Line Structured Layout */}
+                            <div className="space-y-3 pt-1">
+                              {/* 1. Problem / Challenge */}
+                              {project.challenges && (
+                                <div className="space-y-1">
+                                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                                    <span>[01]</span>
+                                    <span>{isId ? "Tantangan Rekayasa & Bottleneck" : "Engineering Challenge & Problem"}</span>
+                                  </span>
+                                  <p className="text-foreground/85 leading-relaxed text-xs">
+                                    {project.challenges[language]?.[0] || project.shortDescription[language]}
+                                  </p>
+                                </div>
+                              )}
+
+                              {/* 2. Architecture & Decision */}
+                              <div className="space-y-1">
+                                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                                  <span>[02]</span>
+                                  <span>{isId ? "Keputusan Arsitektur & Solusi" : "Architectural Decision & Solution"}</span>
+                                </span>
+                                <p className="text-foreground/90 leading-relaxed text-xs">
+                                  {project.solutions ? project.solutions[language]?.[0] : project.fullDescription[language]}
+                                </p>
+                              </div>
+
+                              {/* 3. Impact & Key Features */}
+                              {project.features && (
+                                <div className="space-y-1.5 pt-1 border-t border-border/60">
+                                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                                    <span>[03]</span>
+                                    <span>{isId ? "Hasil & Fitur Kunci" : "Impact & Key Deliverables"}</span>
+                                  </span>
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-0.5">
+                                    {project.features[language]?.map((f, i) => (
+                                      <div key={i} className="flex items-start gap-1.5 text-muted-foreground text-[11.5px]">
+                                        <CheckCircle size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" weight="fill" />
+                                        <span>{f}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
                             </div>
 
-                            {project.features && (
-                              <div className="space-y-1.5 pt-1">
-                                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-muted-foreground block">
-                                  {isId ? "Fitur Utama" : "Key Features"}
-                                </span>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                                  {project.features[language]?.map((f, i) => (
-                                    <div key={i} className="flex items-start gap-1.5 text-muted-foreground text-[11.5px]">
-                                      <CheckCircle size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" weight="fill" />
-                                      <span>{f}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
                           </div>
                         )}
 
@@ -554,16 +720,16 @@ export function ExecutiveHub() {
                       <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                            <span>{project.year}</span>
+                            <span className="tabular-nums">{project.year}</span>
                             <div className="flex items-center gap-2.5">
                               {project.liveUrl && project.liveUrl !== "#" && (
-                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground font-medium flex items-center gap-0.5">
+                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={() => playMicroTick()} className="hover:text-foreground font-medium flex items-center gap-0.5">
                                   <span>Demo</span>
                                   <ArrowUpRight size={11} weight="bold" />
                                 </a>
                               )}
                               {project.githubUrl && project.githubUrl !== "#" && (
-                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground font-medium flex items-center gap-0.5">
+                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={() => playMicroTick()} className="hover:text-foreground font-medium flex items-center gap-0.5">
                                   <span>Code</span>
                                   <ArrowUpRight size={11} weight="bold" />
                                 </a>
@@ -597,7 +763,10 @@ export function ExecutiveHub() {
               {filteredProjects.length > 4 && (
                 <div className="pt-2 flex items-center justify-start">
                   <button
-                    onClick={() => setShowAllProjects(!showAllProjects)}
+                    onClick={() => {
+                      playMicroTick();
+                      setShowAllProjects(!showAllProjects);
+                    }}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:underline cursor-pointer"
                   >
                     <span>
@@ -700,7 +869,7 @@ export function ExecutiveHub() {
                 <div className="space-y-1 relative">
                   <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-foreground border-2 border-background" />
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono font-bold text-foreground">2026</span>
+                    <span className="text-xs font-mono font-bold text-foreground tabular-nums">2026</span>
                     <span className="text-xs sm:text-sm font-bold text-foreground">
                       Juara 1 IT Bootcamp 2026 & Lead Developer
                     </span>
@@ -719,7 +888,7 @@ export function ExecutiveHub() {
                 <div className="space-y-1 relative">
                   <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground border-2 border-background" />
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono font-bold text-foreground">2024 &ndash; Sekarang</span>
+                    <span className="text-xs font-mono font-bold text-foreground tabular-nums">2024 &ndash; Sekarang</span>
                     <span className="text-xs sm:text-sm font-bold text-foreground">
                       Fullstack Software Engineer & Technical Consultant
                     </span>
@@ -735,11 +904,11 @@ export function ExecutiveHub() {
                 <div className="space-y-1 relative">
                   <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-muted-foreground border-2 border-background" />
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono font-bold text-foreground">2024 &ndash; 2028 (Expected)</span>
+                    <span className="text-xs font-mono font-bold text-foreground tabular-nums">2024 &ndash; 2028 (Expected)</span>
                     <span className="text-xs sm:text-sm font-bold text-foreground">
                       S1 Sistem Informasi, Universitas Bina Sarana Informatika
                     </span>
-                    <span className="px-2 py-0.5 rounded bg-foreground/10 text-foreground text-[10px] font-mono font-bold">
+                    <span className="px-2 py-0.5 rounded bg-foreground/10 text-foreground text-[10px] font-mono font-bold tabular-nums">
                       IPK 4.00 / 4.00
                     </span>
                   </div>
