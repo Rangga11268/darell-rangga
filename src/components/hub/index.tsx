@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { projects } from "@/app/data/projects";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { projects, Project } from "@/app/data/projects";
 import { useLanguage } from "@/app/providers/language-provider";
 import { useTheme } from "next-themes";
 import {
@@ -21,6 +21,11 @@ import {
   CheckCircle,
   Command,
   Lightning,
+  Sparkle,
+  SquaresFour,
+  Code,
+  ClockCounterClockwise,
+  ChatCircleDots,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -50,11 +55,18 @@ export function ExecutiveHub() {
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>("titik-aman");
   const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
+  const [activePreviewProject, setActivePreviewProject] = useState<Project | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [copied, setCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("overview");
+
+  // Floating Cursor Preview Motion Values (Signature Moment)
+  const mouseX = useMotionValue(-500);
+  const mouseY = useMotionValue(-500);
+  const springX = useSpring(mouseX, { stiffness: 350, damping: 28 });
+  const springY = useSpring(mouseY, { stiffness: 350, damping: 28 });
 
   const email = "darellrangga@gmail.com";
 
@@ -84,10 +96,18 @@ export function ExecutiveHub() {
     }
   }, []);
 
+  // Mouse move handler for floating image preview
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      mouseX.set(e.clientX + 24);
+      mouseY.set(e.clientY - 90);
+    },
+    [mouseX, mouseY]
+  );
+
   // Global Keyboard Shortcuts (Cmd+K, C, T, 1-5)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger when user is typing in form inputs or textareas
       const target = e.target as HTMLElement;
       if (
         target &&
@@ -145,7 +165,7 @@ export function ExecutiveHub() {
   useEffect(() => {
     const sections = ["overview", "projects", "architecture", "experience", "contact"];
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 220;
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -204,8 +224,58 @@ export function ExecutiveHub() {
   const remainingCount = Math.max(0, filteredProjects.length - 4);
 
   return (
-    <div className="w-full min-h-screen selection:bg-foreground selection:text-background font-sans antialiased text-foreground relative">
-      
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      onMouseMove={handleMouseMove}
+      className="w-full min-h-screen selection:bg-foreground selection:text-background font-sans antialiased text-foreground relative"
+    >
+      {/* ===================================================================== */}
+      {/* SIGNATURE MOMENT: Floating Cursor Project Preview (Desktop Only)       */}
+      {/* ===================================================================== */}
+      <AnimatePresence>
+        {activePreviewProject && (
+          <motion.div
+            style={{
+              x: springX,
+              y: springY,
+            }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="hidden lg:block fixed top-0 left-0 z-50 pointer-events-none w-72 rounded-2xl overflow-hidden border border-border/80 bg-card/95 backdrop-blur-xl shadow-2xl p-2.5 space-y-2"
+          >
+            {activePreviewProject.imageUrl && (
+              <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-muted/60 border border-border/50">
+                <Image
+                  src={activePreviewProject.imageUrl}
+                  alt={activePreviewProject.title}
+                  fill
+                  sizes="300px"
+                  className="object-cover object-center"
+                />
+                {activePreviewProject.isLive && (
+                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-background/90 backdrop-blur-md text-[10px] font-mono font-bold text-foreground border border-border/60 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Live
+                  </span>
+                )}
+              </div>
+            )}
+            <div className="px-1 py-0.5 flex items-center justify-between">
+              <span className="text-xs font-bold text-foreground truncate max-w-[170px]">
+                {activePreviewProject.title}
+              </span>
+              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                Preview ↗
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Micro Toast Notification */}
       <AnimatePresence>
         {toastMessage && (
@@ -222,6 +292,47 @@ export function ExecutiveHub() {
         )}
       </AnimatePresence>
 
+      {/* ===================================================================== */}
+      {/* MOBILE FLOATING QUICK-NAV HUD (Viewport < 1024px)                     */}
+      {/* ===================================================================== */}
+      <nav
+        aria-label="Mobile Quick Navigation"
+        className="lg:hidden fixed bottom-5 inset-x-0 mx-auto w-fit z-40 px-3 py-1.5 rounded-full bg-card/85 backdrop-blur-xl border border-border/80 shadow-xl flex items-center gap-1"
+      >
+        {[
+          { id: "overview", label: "Overview", icon: Sparkle },
+          { id: "projects", label: "Works", icon: SquaresFour },
+          { id: "architecture", label: "Stack", icon: Code },
+          { id: "experience", label: "Career", icon: ClockCounterClockwise },
+          { id: "contact", label: "Contact", icon: ChatCircleDots },
+        ].map((item) => {
+          const isActive = activeSection === item.id;
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => jumpToSection(item.id)}
+              className={`relative px-3 py-1.5 rounded-full text-[11px] font-medium flex items-center gap-1.5 transition-all ${
+                isActive
+                  ? "text-background font-bold"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="mobile-nav-pill"
+                  className="absolute inset-0 bg-foreground rounded-full -z-10"
+                  transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                />
+              )}
+              <Icon size={13} weight={isActive ? "bold" : "regular"} />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Main Dual-Column Container */}
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12 py-10 lg:py-16">
         <div className="lg:grid lg:grid-cols-12 lg:gap-12 xl:gap-16 items-start">
           
@@ -245,7 +356,7 @@ export function ExecutiveHub() {
               </div>
 
               <div>
-                <h1 className="text-2xl sm:text-[26px] font-bold tracking-tight text-foreground font-display">
+                <h1 className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-foreground font-display">
                   Darell Rangga
                 </h1>
                 <p className="text-xs sm:text-[13px] font-mono text-muted-foreground mt-0.5">
@@ -262,7 +373,7 @@ export function ExecutiveHub() {
             {/* Concise Value Proposition */}
             <p className="text-xs sm:text-[13px] text-muted-foreground leading-relaxed">
               {isId
-                ? "Merancang dan membangun arsitektur backend berkecepatan tinggi dengan transaksi database atomik (Laravel 12, PostgreSQL), antrean Redis, dan frontend reaktif sub-milidetik (React 19, Next.js 15)."
+                ? "Merancang arsitektur backend berkecepatan tinggi dengan transaksi database atomik (Laravel 12, PostgreSQL), antrean Redis, dan antarmuka reaktif sub-milidetik (React 19, Next.js 15)."
                 : "Architecting high-throughput backend infrastructure with atomic database locks (Laravel 12, PostgreSQL), Redis queues, and sub-millisecond reactive frontends (React 19, Next.js 15)."}
             </p>
 
@@ -341,7 +452,7 @@ export function ExecutiveHub() {
                 </a>
                 <button
                   onClick={handleCopyEmail}
-                  className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors cursor-pointer"
+                  className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors cursor-pointer active:scale-95"
                   title="Copy Email (Press C)"
                 >
                   {copied ? <Check size={15} weight="bold" className="text-emerald-500" /> : <EnvelopeSimple size={15} weight="bold" />}
@@ -351,7 +462,7 @@ export function ExecutiveHub() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => playMicroTick()}
-                  className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors"
+                  className="p-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-colors active:scale-95"
                   title="WhatsApp"
                 >
                   <WhatsappLogo size={15} weight="bold" />
@@ -389,49 +500,67 @@ export function ExecutiveHub() {
           <main className="lg:col-span-8 space-y-16 sm:space-y-20 pt-10 lg:pt-0">
             
             {/* ------------------------------------------------------------------- */}
-            {/* 01. OVERVIEW & PROOF METRICS                                        */}
+            {/* 01. OVERVIEW & PROOF METRICS (Editorial Typographic Scale)          */}
             {/* ------------------------------------------------------------------- */}
             <section id="overview" className="space-y-6 scroll-mt-16">
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider block">
                   01 / {isId ? "Ringkasan Eksekutif" : "Executive Overview"}
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-display leading-snug">
-                  {isId
-                    ? "Membangun sistem web tangguh dengan konsistensi data mutlak dan respons sub-50ms."
-                    : "Engineering resilient web platforms with strict data consistency and sub-50ms response times."}
+                
+                {/* Editorial Headline ("The Poster Frame") */}
+                <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-extrabold tracking-[-0.03em] text-foreground font-display leading-[1.15]">
+                  {isId ? (
+                    <>
+                      Membangun platform web tangguh dengan{" "}
+                      <span className="underline decoration-border/80 underline-offset-4">konsistensi atomik</span>{" "}
+                      dan respons sub-50ms.
+                    </>
+                  ) : (
+                    <>
+                      Engineering resilient web platforms with{" "}
+                      <span className="underline decoration-border/80 underline-offset-4">strict data consistency</span>{" "}
+                      and sub-50ms response times.
+                    </>
+                  )}
                 </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+
+                <p className="text-sm sm:text-[15px] text-muted-foreground leading-relaxed pt-1">
                   {isId
-                    ? "Saya berfokus pada perancangan arsitektur backend berkinerja tinggi, manajemen konkurensi data, dan integrasi API real-time. Berpengalaman memimpin tim engineering membangun solusi digital untuk sektor logistik, keselamatan publik, dan ekosistem bisnis."
+                    ? "Berfokus pada perancangan arsitektur backend berkinerja tinggi, manajemen konkurensi data, dan integrasi API real-time. Berpengalaman memimpin tim engineering membangun solusi digital untuk sektor logistik armada, keselamatan publik, dan ekosistem bisnis."
                     : "Focused on high-performance backend architecture, database concurrency control, and real-time API integrations. Experienced leading engineering teams delivering production platforms across transport logistics, citizen safety, and enterprise operations."}
                 </p>
               </div>
 
-              {/* 3 Core Stats (Open Editorial Layout, High Contrast, Tabular Nums) */}
-              <div className="grid grid-cols-3 gap-4 pt-3 pb-4 border-y border-border/70">
-                <div className="space-y-0.5">
-                  <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
-                    Juara 1
-                  </span>
-                  <span className="text-xs text-muted-foreground block">
-                    {isId ? "IT Bootcamp 2026 (Lead)" : "IT Bootcamp 2026 (Lead)"}
+              {/* 3 Core Stats (Open Architectural Proof Grid) */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 pb-4 border-y border-border/70">
+                <div className="space-y-1 p-2 sm:p-0">
+                  <div className="flex items-center gap-1.5 text-foreground">
+                    <Trophy size={16} weight="fill" className="text-amber-500" />
+                    <span className="text-xl sm:text-2xl font-mono font-bold block tabular-nums">
+                      Juara 1
+                    </span>
+                  </div>
+                  <span className="text-xs text-muted-foreground block font-medium">
+                    {isId ? "IT Bootcamp 2026 (Lead 11 Engineer)" : "IT Bootcamp 2026 (Lead 11 Engineers)"}
                   </span>
                 </div>
-                <div className="space-y-0.5 sm:border-l sm:border-border/60 sm:pl-4">
+
+                <div className="space-y-1 p-2 sm:p-0 sm:border-l sm:border-border/60 sm:pl-5">
                   <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
                     12+
                   </span>
-                  <span className="text-xs text-muted-foreground block">
-                    {isId ? "Aplikasi Produksi" : "Production Systems"}
+                  <span className="text-xs text-muted-foreground block font-medium">
+                    {isId ? "Sistem Produksi Aktif" : "Active Production Systems"}
                   </span>
                 </div>
-                <div className="space-y-0.5 sm:border-l sm:border-border/60 sm:pl-4">
+
+                <div className="space-y-1 p-2 sm:p-0 sm:border-l sm:border-border/60 sm:pl-5">
                   <span className="text-xl sm:text-2xl font-mono font-bold text-foreground block tabular-nums">
                     4.00
                   </span>
-                  <span className="text-xs text-muted-foreground block">
-                    {isId ? "IPK S1 UBSI" : "GPA (Information Systems)"}
+                  <span className="text-xs text-muted-foreground block font-medium">
+                    {isId ? "IPK S1 Sistem Informasi UBSI" : "GPA (Information Systems)"}
                   </span>
                 </div>
               </div>
@@ -512,7 +641,10 @@ export function ExecutiveHub() {
               {viewMode === "list" && (
                 <div
                   className="space-y-1 relative"
-                  onMouseLeave={() => setHoveredProjectId(null)}
+                  onMouseLeave={() => {
+                    setHoveredProjectId(null);
+                    setActivePreviewProject(null);
+                  }}
                 >
                   {displayedProjects.map((project) => {
                     const isExpanded = expandedProjectId === project.id;
@@ -521,7 +653,10 @@ export function ExecutiveHub() {
                     return (
                       <article
                         key={project.id}
-                        onMouseEnter={() => setHoveredProjectId(project.id)}
+                        onMouseEnter={() => {
+                          setHoveredProjectId(project.id);
+                          setActivePreviewProject(project);
+                        }}
                         className="relative group rounded-xl p-3.5 sm:p-4 transition-colors flex flex-col gap-2.5 border border-transparent hover:border-border/40"
                       >
                         {/* Gliding Spring Hover Pill */}
@@ -922,7 +1057,7 @@ export function ExecutiveHub() {
             </section>
 
             {/* ------------------------------------------------------------------- */}
-            {/* 05. DIRECT INQUIRY & CONTACT                                        */}
+            {/* 05. DIRECT INQUIRY & CONTACT (A11y Semantic Form Polish)           */}
             {/* ------------------------------------------------------------------- */}
             <section id="contact" className="space-y-5 scroll-mt-16">
               <div className="space-y-1">
@@ -933,35 +1068,56 @@ export function ExecutiveHub() {
                   {isId ? "Kirim Pesan atau Pertanyaan" : "Get In Touch"}
                 </h2>
                 <p className="text-xs text-muted-foreground">
-                  {isId ? "Kirim pesan langsung untuk peluang kerja sama atau proyek." : "Reach out directly for engineering roles or technical projects."}
+                  {isId ? "Kirim pesan langsung untuk peluang rekrutmen atau kolaborasi proyek teknis." : "Reach out directly for engineering roles or technical projects."}
                 </p>
               </div>
 
               <form onSubmit={handleFormSubmit} className="space-y-3">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <input
-                    type="text"
+                  <div className="space-y-1">
+                    <label htmlFor="contact-name" className="sr-only">
+                      {isId ? "Nama Anda" : "Your Name"}
+                    </label>
+                    <input
+                      id="contact-name"
+                      name="name"
+                      type="text"
+                      required
+                      placeholder={isId ? "Nama Anda" : "Your Name"}
+                      className="w-full bg-card border border-border/80 focus:border-foreground/80 focus-visible:ring-1 focus-visible:ring-foreground rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-all"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label htmlFor="contact-email" className="sr-only">
+                      Email
+                    </label>
+                    <input
+                      id="contact-email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="name@company.com"
+                      className="w-full bg-card border border-border/80 focus:border-foreground/80 focus-visible:ring-1 focus-visible:ring-foreground rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-all"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <label htmlFor="contact-message" className="sr-only">
+                    {isId ? "Pesan / Kebutuhan" : "Message"}
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    name="message"
+                    rows={3}
                     required
-                    placeholder={isId ? "Nama Anda" : "Your Name"}
-                    className="w-full bg-card border border-border/80 focus:border-foreground/70 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
-                  />
-                  <input
-                    type="email"
-                    required
-                    placeholder="name@company.com"
-                    className="w-full bg-card border border-border/80 focus:border-foreground/70 rounded-xl px-3.5 py-2.5 text-xs text-foreground outline-none transition-colors"
+                    placeholder={
+                      isId
+                        ? "Ceritakan tentang posisi rekrutmen, proyek, atau kebutuhan arsitektur Anda..."
+                        : "Tell me about the role, project timeline, or system requirements..."
+                    }
+                    className="w-full bg-card border border-border/80 focus:border-foreground/80 focus-visible:ring-1 focus-visible:ring-foreground rounded-xl p-3.5 text-xs text-foreground outline-none transition-all resize-none"
                   />
                 </div>
-                <textarea
-                  rows={3}
-                  required
-                  placeholder={
-                    isId
-                      ? "Ceritakan tentang posisi, proyek, atau kebutuhan arsitektur Anda..."
-                      : "Tell me about the role, project timeline, or system requirements..."
-                  }
-                  className="w-full bg-card border border-border/80 focus:border-foreground/70 rounded-xl p-3.5 text-xs text-foreground outline-none transition-colors resize-none"
-                />
                 <div className="flex items-center justify-between gap-4 pt-1">
                   <button
                     type="submit"
@@ -981,6 +1137,6 @@ export function ExecutiveHub() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
