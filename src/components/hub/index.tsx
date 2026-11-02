@@ -26,7 +26,6 @@ import {
   Code,
   ClockCounterClockwise,
   ChatCircleDots,
-  MagnifyingGlass,
   X,
   Pulse,
   ShieldCheck,
@@ -48,6 +47,7 @@ import {
 } from "@/components/ui/macos-icons";
 import { LiveClock } from "@/components/ui/live-clock";
 import { playMicroTick, getSoundMuted, toggleSound } from "@/lib/sound";
+import { CommandPalette } from "./command-palette";
 
 type ProjectCategory = "all" | "web" | "systems" | "mobile" | "ai";
 type ViewMode = "list" | "bento";
@@ -77,8 +77,6 @@ export function ExecutiveHub() {
 
   // Command Palette State
   const [isCommandOpen, setIsCommandOpen] = useState(false);
-  const [commandSearch, setCommandSearch] = useState("");
-  const [selectedCommandIndex, setSelectedCommandIndex] = useState(0);
 
   // Floating Cursor Preview Motion Values (Signature Moment)
   const mouseX = useMotionValue(-500);
@@ -87,6 +85,17 @@ export function ExecutiveHub() {
   const springY = useSpring(mouseY, { stiffness: 350, damping: 28 });
 
   const email = "darellrangga@gmail.com";
+
+  // Lock background scroll when Case Study Modal is open
+  useEffect(() => {
+    if (selectedModalProject) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
+  }, [selectedModalProject]);
 
   // Check initial sound state
   useEffect(() => {
@@ -130,13 +139,14 @@ export function ExecutiveHub() {
     }
   }, []);
 
-  // Mouse move handler for floating image preview
+  // Mouse move handler for floating image preview (strictly active only when project hovered)
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
+      if (!hoveredProjectId || isCommandOpen || selectedModalProject) return;
       mouseX.set(e.clientX + 24);
       mouseY.set(e.clientY - 90);
     },
-    [mouseX, mouseY]
+    [hoveredProjectId, isCommandOpen, mouseX, mouseY, selectedModalProject]
   );
 
   // Run interactive concurrency benchmark test
@@ -162,7 +172,7 @@ export function ExecutiveHub() {
 
   // Command Palette Items
   const commandItems = useMemo(() => {
-    const items = [
+    return [
       // Navigation
       {
         id: "nav-overview",
@@ -259,23 +269,11 @@ export function ExecutiveHub() {
         shortcut: "↗",
       })),
     ];
-
-    if (!commandSearch.trim()) return items;
-    return items.filter((item) =>
-      item.title.toLowerCase().includes(commandSearch.toLowerCase())
-    );
-  }, [commandSearch, handleCopyEmail, handleToggleSound, isDark, isId, jumpToSection, runConcurrencySimulation, setTheme, showToast, toggleLanguage]);
+  }, [handleCopyEmail, handleToggleSound, isDark, isId, jumpToSection, runConcurrencySimulation, setTheme, showToast, toggleLanguage]);
 
   // Global Keyboard Shortcuts (Cmd+K, C, T, 1-5, Esc)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement;
-      const isInput =
-        target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.isContentEditable);
-
       // Close Case Study Modal
       if (e.key === "Escape" && selectedModalProject) {
         e.preventDefault();
@@ -289,46 +287,18 @@ export function ExecutiveHub() {
         e.preventDefault();
         playMicroTick();
         setIsCommandOpen((prev) => !prev);
-        setCommandSearch("");
-        setSelectedCommandIndex(0);
         return;
       }
 
-      // Esc: Close Command Palette
-      if (e.key === "Escape" && isCommandOpen) {
-        e.preventDefault();
-        playMicroTick();
-        setIsCommandOpen(false);
-        return;
-      }
+      // If Command Palette is open, let CommandPalette handle inner navigation
+      if (isCommandOpen) return;
 
-      // Inside Command Palette Navigation
-      if (isCommandOpen) {
-        if (e.key === "ArrowDown") {
-          e.preventDefault();
-          playMicroTick();
-          setSelectedCommandIndex((prev) =>
-            prev < commandItems.length - 1 ? prev + 1 : 0
-          );
-          return;
-        }
-        if (e.key === "ArrowUp") {
-          e.preventDefault();
-          playMicroTick();
-          setSelectedCommandIndex((prev) =>
-            prev > 0 ? prev - 1 : commandItems.length - 1
-          );
-          return;
-        }
-        if (e.key === "Enter" && commandItems[selectedCommandIndex]) {
-          e.preventDefault();
-          playMicroTick();
-          commandItems[selectedCommandIndex].action();
-          setIsCommandOpen(false);
-          return;
-        }
-        return;
-      }
+      const target = e.target as HTMLElement;
+      const isInput =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable);
 
       if (isInput) return;
 
@@ -381,14 +351,12 @@ export function ExecutiveHub() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [
-    commandItems,
     handleCopyEmail,
     handleToggleSound,
     isCommandOpen,
     isDark,
     isId,
     jumpToSection,
-    selectedCommandIndex,
     selectedModalProject,
     setTheme,
     showToast,
@@ -470,22 +438,23 @@ export function ExecutiveHub() {
       <AnimatePresence>
         {selectedModalProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10">
-            {/* Backdrop */}
+            {/* Backdrop Scrim (GPU Accelerated Dimmer) */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               onClick={() => setSelectedModalProject(null)}
-              className="absolute inset-0 bg-background/80 backdrop-blur-md"
+              className="fixed inset-0 bg-black/65 dark:bg-black/80 z-40 transform-gpu"
             />
 
             {/* Modal Dialog */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 16 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-3xl rounded-3xl border border-border/80 bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh]"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="relative w-full max-w-3xl rounded-3xl border border-border bg-card shadow-2xl overflow-hidden flex flex-col max-h-[88vh] z-50 transform-gpu"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-5 sm:p-6 border-b border-border/70">
@@ -647,113 +616,12 @@ export function ExecutiveHub() {
       {/* ===================================================================== */}
       {/* COMMAND PALETTE MODAL (Cmd + K / Studio-Tier Standard)                */}
       {/* ===================================================================== */}
-      <AnimatePresence>
-        {isCommandOpen && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4">
-            {/* Backdrop Scrim */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsCommandOpen(false)}
-              className="absolute inset-0 bg-background/70 backdrop-blur-md"
-            />
-
-            {/* Dialog Container */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: -8 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -8 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative w-full max-w-lg rounded-2xl border border-border/80 bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col max-h-[75vh]"
-            >
-              {/* Input Header */}
-              <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border/70">
-                <MagnifyingGlass size={16} className="text-muted-foreground shrink-0" />
-                <input
-                  type="text"
-                  autoFocus
-                  value={commandSearch}
-                  onChange={(e) => {
-                    setCommandSearch(e.target.value);
-                    setSelectedCommandIndex(0);
-                  }}
-                  placeholder={isId ? "Ketik perintah, bagian, atau nama proyek..." : "Type a command, jump to section, or search..."}
-                  className="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
-                />
-                <button
-                  onClick={() => setIsCommandOpen(false)}
-                  className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
-                  title="Close (Esc)"
-                >
-                  <X size={14} />
-                </button>
-              </div>
-
-              {/* Items List */}
-              <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                {commandItems.length === 0 ? (
-                  <div className="p-8 text-center text-xs text-muted-foreground">
-                    {isId ? "Tidak ada hasil yang cocok." : "No matching commands found."}
-                  </div>
-                ) : (
-                  commandItems.map((item, idx) => {
-                    const isSelected = idx === selectedCommandIndex;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => {
-                          playMicroTick();
-                          item.action();
-                          setIsCommandOpen(false);
-                        }}
-                        onMouseEnter={() => setSelectedCommandIndex(idx)}
-                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left text-xs transition-colors cursor-pointer ${
-                          isSelected
-                            ? "bg-foreground text-background font-semibold"
-                            : "text-foreground hover:bg-muted"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5 truncate">
-                          <span
-                            className={`text-[10px] uppercase font-mono tracking-wider ${
-                              isSelected ? "text-background/70" : "text-muted-foreground"
-                            }`}
-                          >
-                            [{item.group}]
-                          </span>
-                          <span className="truncate">{item.title}</span>
-                        </div>
-                        <kbd
-                          className={`px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${
-                            isSelected
-                              ? "bg-background/20 text-background"
-                              : "bg-muted text-muted-foreground border border-border/60"
-                          }`}
-                        >
-                          {item.shortcut}
-                        </kbd>
-                      </button>
-                    );
-                  })
-                )}
-              </div>
-
-              {/* Footer Hint */}
-              <div className="px-4 py-2 border-t border-border/60 bg-muted/30 flex items-center justify-between text-[10.5px] font-mono text-muted-foreground">
-                <span className="flex items-center gap-1.5">
-                  <span>Navigation:</span>
-                  <kbd className="px-1 rounded bg-muted border border-border/60">↑</kbd>
-                  <kbd className="px-1 rounded bg-muted border border-border/60">↓</kbd>
-                  <span>Select:</span>
-                  <kbd className="px-1 rounded bg-muted border border-border/60">↵</kbd>
-                </span>
-                <span>ESC to close</span>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <CommandPalette
+        isOpen={isCommandOpen}
+        onClose={() => setIsCommandOpen(false)}
+        items={commandItems}
+        isId={isId}
+      />
 
       {/* ===================================================================== */}
       {/* SIGNATURE MOMENT: Floating Cursor Project Preview (Desktop Only)       */}
@@ -768,8 +636,8 @@ export function ExecutiveHub() {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="hidden lg:block fixed top-0 left-0 z-40 pointer-events-none w-72 rounded-2xl overflow-hidden border border-border/80 bg-card/95 backdrop-blur-xl shadow-2xl p-2.5 space-y-2"
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="hidden lg:block fixed top-0 left-0 z-40 pointer-events-none w-72 rounded-2xl overflow-hidden border border-border bg-card shadow-2xl p-2.5 space-y-2 transform-gpu"
           >
             {activePreviewProject.imageUrl && (
               <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-muted/60 border border-border/50">
