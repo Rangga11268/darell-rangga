@@ -31,6 +31,9 @@ import {
   Pulse,
   ShieldCheck,
   Cpu,
+  SpeakerHigh,
+  SpeakerSlash,
+  ArrowRight,
 } from "@phosphor-icons/react";
 import {
   GithubIcon,
@@ -42,10 +45,9 @@ import {
   MacCpuIcon,
   MacGaugeIcon,
   MacTrophyIcon,
-  MacQuickLookIcon,
 } from "@/components/ui/macos-icons";
 import { LiveClock } from "@/components/ui/live-clock";
-import { playMicroTick } from "@/lib/sound";
+import { playMicroTick, getSoundMuted, toggleSound } from "@/lib/sound";
 
 type ProjectCategory = "all" | "web" | "systems" | "mobile" | "ai";
 type ViewMode = "list" | "bento";
@@ -61,11 +63,17 @@ export function ExecutiveHub() {
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>("titik-aman");
   const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
   const [activePreviewProject, setActivePreviewProject] = useState<Project | null>(null);
+  const [selectedModalProject, setSelectedModalProject] = useState<Project | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [copied, setCopied] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [formSent, setFormSent] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("overview");
+  const [soundActive, setSoundActive] = useState(true);
+
+  // Concurrency Simulation State
+  const [simState, setSimState] = useState<"idle" | "running" | "done">("idle");
+  const [simRequests, setSimRequests] = useState(0);
 
   // Command Palette State
   const [isCommandOpen, setIsCommandOpen] = useState(false);
@@ -80,6 +88,11 @@ export function ExecutiveHub() {
 
   const email = "darellrangga@gmail.com";
 
+  // Check initial sound state
+  useEffect(() => {
+    setSoundActive(!getSoundMuted());
+  }, []);
+
   // Trigger toast with auto-dismiss
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
@@ -87,6 +100,17 @@ export function ExecutiveHub() {
       setToastMessage(null);
     }, 2400);
   }, []);
+
+  const handleToggleSound = useCallback(() => {
+    const unmuted = toggleSound();
+    setSoundActive(unmuted);
+    if (unmuted) {
+      playMicroTick();
+      showToast(isId ? "Audio Haptic Aktif" : "Audio Feedback Enabled");
+    } else {
+      showToast(isId ? "Audio Dibisukan" : "Audio Muted");
+    }
+  }, [isId, showToast]);
 
   // Copy email handler
   const handleCopyEmail = useCallback(() => {
@@ -114,6 +138,27 @@ export function ExecutiveHub() {
     },
     [mouseX, mouseY]
   );
+
+  // Run interactive concurrency benchmark test
+  const runConcurrencySimulation = useCallback(() => {
+    if (simState === "running") return;
+    playMicroTick();
+    setSimState("running");
+    setSimRequests(0);
+
+    let count = 0;
+    const interval = setInterval(() => {
+      count += 125;
+      setSimRequests(count);
+      playMicroTick();
+      if (count >= 1000) {
+        clearInterval(interval);
+        setSimState("done");
+        showToast(isId ? "Benchmark Selesai: 0 Race Condition!" : "Benchmark Complete: 0 Race Conditions!");
+        setTimeout(() => setSimState("idle"), 8000);
+      }
+    }, 60);
+  }, [isId, showToast, simState]);
 
   // Command Palette Items
   const commandItems = useMemo(() => {
@@ -173,6 +218,23 @@ export function ExecutiveHub() {
         shortcut: "T",
       },
       {
+        id: "act-sound",
+        group: isId ? "Aksi Cepat" : "Quick Actions",
+        title: isId ? "Bisu / Aktifkan Audio Haptic" : "Toggle Haptic Sound",
+        action: () => handleToggleSound(),
+        shortcut: "S",
+      },
+      {
+        id: "act-sim",
+        group: isId ? "Aksi Cepat" : "Quick Actions",
+        title: isId ? "Jalankan Simulasi Konkurensi 1.000 Request" : "Run 1,000 Concurrency Stress Test",
+        action: () => {
+          jumpToSection("architecture");
+          runConcurrencySimulation();
+        },
+        shortcut: "⚡",
+      },
+      {
         id: "act-lang",
         group: isId ? "Aksi Cepat" : "Quick Actions",
         title: isId ? "Ganti Bahasa (English / ID)" : "Toggle Language (ID / EN)",
@@ -192,8 +254,7 @@ export function ExecutiveHub() {
         group: isId ? "Proyek Terpilih" : "Featured Projects",
         title: `${p.title} (${p.year})`,
         action: () => {
-          jumpToSection("projects");
-          setExpandedProjectId(p.id);
+          setSelectedModalProject(p);
         },
         shortcut: "↗",
       })),
@@ -203,7 +264,7 @@ export function ExecutiveHub() {
     return items.filter((item) =>
       item.title.toLowerCase().includes(commandSearch.toLowerCase())
     );
-  }, [commandSearch, handleCopyEmail, isDark, isId, jumpToSection, setTheme, showToast, toggleLanguage]);
+  }, [commandSearch, handleCopyEmail, handleToggleSound, isDark, isId, jumpToSection, runConcurrencySimulation, setTheme, showToast, toggleLanguage]);
 
   // Global Keyboard Shortcuts (Cmd+K, C, T, 1-5, Esc)
   useEffect(() => {
@@ -214,6 +275,14 @@ export function ExecutiveHub() {
         (target.tagName === "INPUT" ||
           target.tagName === "TEXTAREA" ||
           target.isContentEditable);
+
+      // Close Case Study Modal
+      if (e.key === "Escape" && selectedModalProject) {
+        e.preventDefault();
+        playMicroTick();
+        setSelectedModalProject(null);
+        return;
+      }
 
       // Cmd+K / Ctrl+K: Open/Close Command Palette
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -285,6 +354,13 @@ export function ExecutiveHub() {
         return;
       }
 
+      // S: Toggle Sound
+      if (key === "s" && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        handleToggleSound();
+        return;
+      }
+
       // 1-5: Section Navigation
       if (["1", "2", "3", "4", "5"].includes(key)) {
         e.preventDefault();
@@ -307,11 +383,13 @@ export function ExecutiveHub() {
   }, [
     commandItems,
     handleCopyEmail,
+    handleToggleSound,
     isCommandOpen,
     isDark,
     isId,
     jumpToSection,
     selectedCommandIndex,
+    selectedModalProject,
     setTheme,
     showToast,
   ]);
@@ -386,6 +464,186 @@ export function ExecutiveHub() {
       onMouseMove={handleMouseMove}
       className="w-full min-h-screen selection:bg-foreground selection:text-background font-sans antialiased text-foreground relative"
     >
+      {/* ===================================================================== */}
+      {/* IMMERSIVE ARCHITECTURAL CASE STUDY MODAL (Studio Deep-Dive)           */}
+      {/* ===================================================================== */}
+      <AnimatePresence>
+        {selectedModalProject && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedModalProject(null)}
+              className="absolute inset-0 bg-background/80 backdrop-blur-md"
+            />
+
+            {/* Modal Dialog */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative w-full max-w-3xl rounded-3xl border border-border/80 bg-card/95 backdrop-blur-2xl shadow-2xl overflow-hidden flex flex-col max-h-[88vh]"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-5 sm:p-6 border-b border-border/70">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold text-muted-foreground tabular-nums">
+                      {selectedModalProject.year}
+                    </span>
+                    <span className="text-muted-foreground/40">•</span>
+                    <span className="text-xs font-mono font-semibold text-foreground">
+                      {selectedModalProject.role}
+                    </span>
+                    {selectedModalProject.isLive && (
+                      <span className="px-2 py-0.5 rounded-full bg-muted text-[10px] font-mono text-foreground border border-border/60 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        Live
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                    {selectedModalProject.title}
+                  </h2>
+                </div>
+
+                <button
+                  onClick={() => {
+                    playMicroTick();
+                    setSelectedModalProject(null);
+                  }}
+                  className="p-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                  title="Close (Esc)"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              {/* Scrollable Body */}
+              <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+                {/* Hero Screenshot */}
+                {selectedModalProject.imageUrl && (
+                  <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-border/70 bg-muted/40 shadow-sm">
+                    <Image
+                      src={selectedModalProject.imageUrl}
+                      alt={selectedModalProject.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      className="object-cover object-center"
+                    />
+                  </div>
+                )}
+
+                {/* Overview Description */}
+                <div className="space-y-2">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground block">
+                    {isId ? "Ringkasan Sistem & Masalah Bisnis" : "Executive Overview & Problem Scope"}
+                  </span>
+                  <p className="text-sm text-foreground/90 leading-relaxed">
+                    {selectedModalProject.fullDescription[language]}
+                  </p>
+                </div>
+
+                {/* ADR Deep-Dive */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {selectedModalProject.challenges && (
+                    <div className="p-4 rounded-2xl border border-border/70 bg-muted/30 space-y-1.5">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block">
+                        [01] {isId ? "Tantangan Konkurensi & Skala" : "Concurrency & Scale Bottleneck"}
+                      </span>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {selectedModalProject.challenges[language]?.[0] || selectedModalProject.shortDescription[language]}
+                      </p>
+                    </div>
+                  )}
+
+                  {selectedModalProject.solutions && (
+                    <div className="p-4 rounded-2xl border border-border/70 bg-muted/30 space-y-1.5">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 block">
+                        [02] {isId ? "Arsitektur Atomik & Mitigasi" : "Atomic Architectural Solution"}
+                      </span>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {selectedModalProject.solutions[language]?.[0] || selectedModalProject.fullDescription[language]}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Key Deliverables & Features */}
+                {selectedModalProject.features && (
+                  <div className="space-y-2 pt-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block">
+                      [03] {isId ? "Hasil Terverifikasi & Fitur Utama" : "Verified Deliverables & Features"}
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {selectedModalProject.features[language]?.map((f, i) => (
+                        <div key={i} className="flex items-start gap-2 p-2.5 rounded-xl border border-border/60 bg-card text-xs text-muted-foreground">
+                          <CheckCircle size={14} className="text-emerald-500 shrink-0 mt-0.5" weight="fill" />
+                          <span>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Tech Stack Pills */}
+                <div className="space-y-2 pt-2">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground block">
+                    Core Technologies
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedModalProject.techStack.map((tech) => (
+                      <span
+                        key={tech.name}
+                        className="px-2.5 py-1 rounded-lg bg-muted text-foreground font-mono text-xs border border-border/60"
+                      >
+                        {tech.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer Actions */}
+              <div className="p-4 sm:p-5 border-t border-border/70 bg-muted/20 flex items-center justify-between gap-4">
+                <span className="text-xs font-mono text-muted-foreground hidden sm:inline">
+                  Press ESC to return
+                </span>
+                <div className="flex items-center gap-2 ml-auto">
+                  {selectedModalProject.githubUrl && selectedModalProject.githubUrl !== "#" && (
+                    <a
+                      href={selectedModalProject.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => playMicroTick()}
+                      className="px-4 py-2 rounded-xl border border-border/80 bg-card hover:bg-muted text-xs font-semibold text-foreground flex items-center gap-1.5 transition-all"
+                    >
+                      <span>Repository</span>
+                      <ArrowUpRight size={12} weight="bold" />
+                    </a>
+                  )}
+                  {selectedModalProject.liveUrl && selectedModalProject.liveUrl !== "#" && (
+                    <a
+                      href={selectedModalProject.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => playMicroTick()}
+                      className="px-4 py-2 rounded-xl bg-foreground text-background text-xs font-bold flex items-center gap-1.5 hover:opacity-90 active:scale-95 transition-all shadow-xs"
+                    >
+                      <span>Live Production</span>
+                      <ArrowUpRight size={12} weight="bold" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* ===================================================================== */}
       {/* COMMAND PALETTE MODAL (Cmd + K / Studio-Tier Standard)                */}
       {/* ===================================================================== */}
@@ -678,7 +936,7 @@ export function ExecutiveHub() {
               })}
             </nav>
 
-            {/* Utility Strip: Clock, Lang, Theme, CV, Email, Cmd+K */}
+            {/* Utility Strip: Clock, Lang, Theme, Audio, CV, Email, Cmd+K */}
             <div className="pt-4 border-t border-border/60 space-y-3.5">
               <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
                 <LiveClock className="flex items-center gap-1 text-[11px] tabular-nums" suffix="WIB" />
@@ -701,6 +959,17 @@ export function ExecutiveHub() {
                     title="Toggle theme (Press T)"
                   >
                     {isDark ? <Sun size={13} weight="bold" /> : <Moon size={13} weight="bold" />}
+                  </button>
+                  <button
+                    onClick={handleToggleSound}
+                    className="p-1 rounded hover:bg-muted text-foreground transition-colors cursor-pointer"
+                    title={soundActive ? "Mute audio (Press S)" : "Enable audio (Press S)"}
+                  >
+                    {soundActive ? (
+                      <SpeakerHigh size={13} weight="bold" className="text-emerald-500" />
+                    ) : (
+                      <SpeakerSlash size={13} weight="bold" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -839,6 +1108,31 @@ export function ExecutiveHub() {
                   <span className="text-xs text-muted-foreground block font-medium">
                     {isId ? "IPK S1 Sistem Informasi UBSI" : "GPA (Information Systems)"}
                   </span>
+                </div>
+              </div>
+
+              {/* KINETIC ENGINEERING MARQUEE (Continuous Idle Motion) */}
+              <div className="overflow-hidden whitespace-nowrap py-2 border-b border-border/50 text-[11px] font-mono text-muted-foreground select-none">
+                <div className="inline-block animate-marquee">
+                  {[
+                    "Laravel 12",
+                    "React 19",
+                    "Next.js 15",
+                    "Inertia.js",
+                    "PostgreSQL",
+                    "MySQL 8",
+                    "Redis Horizon",
+                    "WebSockets Reverb",
+                    "Tailwind CSS v4",
+                    "TypeScript Strict",
+                    "Sub-50ms Latency",
+                    "Atomic Transactions",
+                  ].map((tech, i) => (
+                    <span key={i} className="inline-flex items-center gap-2 mr-6">
+                      <span className="w-1 h-1 rounded-full bg-foreground/40" />
+                      <span>{tech}</span>
+                    </span>
+                  ))}
                 </div>
               </div>
             </section>
@@ -1001,12 +1295,23 @@ export function ExecutiveHub() {
                             )}
 
                             <button
-                              onClick={() => toggleProjectExpand(project.id)}
+                              onClick={() => {
+                                playMicroTick();
+                                setSelectedModalProject(project);
+                              }}
                               className="inline-flex items-center gap-1 text-foreground bg-muted hover:bg-muted/80 px-2 py-0.5 rounded text-xs font-medium transition-colors cursor-pointer border border-border/50"
+                              title="Open Full Architectural Case Study"
                             >
-                              <MacQuickLookIcon className="w-3 h-3" />
-                              <span>{isExpanded ? (isId ? "Tutup" : "Close") : "Detail"}</span>
-                              {isExpanded ? <CaretUp size={11} weight="bold" /> : <CaretDown size={11} weight="bold" />}
+                              <span>Case Study</span>
+                              <ArrowRight size={11} weight="bold" />
+                            </button>
+
+                            <button
+                              onClick={() => toggleProjectExpand(project.id)}
+                              className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-muted/70 transition-colors cursor-pointer"
+                              title={isExpanded ? "Collapse" : "Expand quick view"}
+                            >
+                              {isExpanded ? <CaretUp size={13} weight="bold" /> : <CaretDown size={13} weight="bold" />}
                             </button>
                           </div>
                         </div>
@@ -1134,15 +1439,19 @@ export function ExecutiveHub() {
                           <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
                             <span className="tabular-nums">{project.year}</span>
                             <div className="flex items-center gap-2.5">
+                              <button
+                                onClick={() => {
+                                  playMicroTick();
+                                  setSelectedModalProject(project);
+                                }}
+                                className="hover:text-foreground font-medium flex items-center gap-0.5 cursor-pointer text-xs"
+                              >
+                                <span>Deep-Dive</span>
+                                <ArrowRight size={11} weight="bold" />
+                              </button>
                               {project.liveUrl && project.liveUrl !== "#" && (
                                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" onClick={() => playMicroTick()} className="hover:text-foreground font-medium flex items-center gap-0.5">
                                   <span>Demo</span>
-                                  <ArrowUpRight size={11} weight="bold" />
-                                </a>
-                              )}
-                              {project.githubUrl && project.githubUrl !== "#" && (
-                                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={() => playMicroTick()} className="hover:text-foreground font-medium flex items-center gap-0.5">
-                                  <span>Code</span>
                                   <ArrowUpRight size={11} weight="bold" />
                                 </a>
                               )}
@@ -1249,15 +1558,28 @@ export function ExecutiveHub() {
               </div>
 
               {/* LIVE ARCHITECTURAL TELEMETRY HUD (The Engineering Signature) */}
-              <div className="p-4 rounded-2xl border border-border/80 bg-muted/30 space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono">
+              <div className="p-4 sm:p-5 rounded-2xl border border-border/80 bg-muted/30 space-y-3.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
                   <span className="flex items-center gap-2 text-foreground font-bold">
                     <Pulse size={14} className="text-emerald-500 animate-pulse" />
                     <span>{isId ? "Telemetri Sistem & Integritas Arsitektur" : "Live Architectural Telemetry & Signals"}</span>
                   </span>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                    p95 &lt; 50ms verified
-                  </span>
+                  
+                  {/* Concurrency Simulator Trigger Button */}
+                  <button
+                    onClick={runConcurrencySimulation}
+                    disabled={simState === "running"}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-foreground text-background text-[11px] font-mono font-bold hover:opacity-90 active:scale-95 transition-all cursor-pointer disabled:opacity-50 self-start sm:self-auto shadow-xs"
+                  >
+                    <Lightning size={12} weight="fill" className="text-amber-400" />
+                    <span>
+                      {simState === "running"
+                        ? (isId ? `Stress-Testing (${simRequests}/1000)...` : `Testing (${simRequests}/1000)...`)
+                        : simState === "done"
+                        ? (isId ? "✓ Uji Sukses (0 Overbooked)" : "✓ 100% Atomic Pass")
+                        : (isId ? "Uji Beban 1.000 Request ⚡" : "Run 1,000 Stress Test ⚡")}
+                    </span>
+                  </button>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
@@ -1277,7 +1599,7 @@ export function ExecutiveHub() {
                     </span>
                     <span className="text-xs font-mono font-bold text-foreground flex items-center gap-1.5">
                       <ShieldCheck size={13} className="text-indigo-400" />
-                      Atomic Locks
+                      {simState === "running" ? "Pessimistic Lock Active" : "Atomic Locks"}
                     </span>
                   </div>
 
@@ -1287,7 +1609,7 @@ export function ExecutiveHub() {
                     </span>
                     <span className="text-xs font-mono font-bold text-foreground flex items-center gap-1.5">
                       <Cpu size={13} className="text-amber-400" />
-                      0ms delay
+                      {simState === "running" ? `${simRequests} jobs/s` : "0ms delay"}
                     </span>
                   </div>
 

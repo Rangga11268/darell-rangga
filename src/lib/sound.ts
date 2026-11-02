@@ -2,9 +2,34 @@
 // Uses native browser AudioContext to produce a subtle, tactile 3ms mechanical "tick"
 
 let audioCtx: AudioContext | null = null;
+let isMuted = false;
+
+if (typeof window !== "undefined") {
+  try {
+    isMuted = localStorage.getItem("sound-muted") === "true";
+  } catch {
+    isMuted = false;
+  }
+}
+
+export const getSoundMuted = () => isMuted;
+
+export const setSoundMuted = (muted: boolean) => {
+  isMuted = muted;
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.setItem("sound-muted", String(muted));
+    } catch {}
+  }
+};
+
+export const toggleSound = () => {
+  setSoundMuted(!isMuted);
+  return !isMuted;
+};
 
 export const playMicroTick = () => {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || isMuted) return;
   try {
     const AudioContextClass =
       window.AudioContext ||
